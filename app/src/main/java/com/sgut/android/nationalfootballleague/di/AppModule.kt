@@ -33,7 +33,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideBeerApi(okHttpClient: OkHttpClient): NflApi =
+    fun provideNflApi(okHttpClient: OkHttpClient): NflApi =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
