@@ -11,6 +11,6 @@ data class Leagues (
   @SerializedName("abbreviation" ) var abbreviation : String?          = null,
   @SerializedName("shortName"    ) var shortName    : String?          = null,
   @SerializedName("slug"         ) var slug         : String?          = null,
-  @SerializedName("teams"        ) var teams        : List<Team>? = listOf()
+  @SerializedName("teams"        ) var teams        :List<Teams>? = null
 
 )

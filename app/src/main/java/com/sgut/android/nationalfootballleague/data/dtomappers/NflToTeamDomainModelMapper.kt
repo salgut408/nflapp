@@ -1,31 +1,32 @@
 package com.sgut.android.nationalfootballleague.data.dtomappers
 
 import com.sgut.android.nationalfootballleague.Team
+import com.sgut.android.nationalfootballleague.Teams
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 
-class NflToTeamDomainModelMapper : DomainMapper<Team, TeamDomainModel> {
-    override fun mapToDomainModel(model: Team): TeamDomainModel {
+class NflToTeamDomainModelMapper : DomainMapper<Teams, TeamDomainModel> {
+    override fun mapToDomainModel(model: Teams): TeamDomainModel {
         return TeamDomainModel(
-            abbreviation = model.abbreviation,
-            alternateColor = model.alternateColor,
-            color = model.color,
-            displayName =model.displayName,
-            id = model.id,
-            isActive = model.isActive,
-            isAllStar = model.isAllStar,
-            logos = model.logos,
-            name = model.name,
-            nickname = model.nickname,
-            shortDisplayName = model.shortDisplayName,
-            slug = model.slug,
-            uid = model.uid
+            abbreviation = model.teamsz?.abbreviation,
+            alternateColor = model.teamsz?.alternateColor,
+            color = model.teamsz?.color,
+            displayName =model.teamsz?.displayName,
+            id = model.teamsz?.id,
+            isActive = model.teamsz?.isActive,
+            isAllStar = model.teamsz?.isAllStar,
+            logos = model.teamsz?.logos,
+            name = model.teamsz?.name,
+            nickname = model.teamsz?.nickname,
+            shortDisplayName = model.teamsz?.shortDisplayName,
+            slug = model.teamsz?.slug,
+            uid = model.teamsz?.uid
 
         )
     }
 
 
 
-    fun toDomainList(initial: List<Team>): List<TeamDomainModel> {
+    fun toDomainList(initial: List<Teams>): List<TeamDomainModel> {
         return initial.map { mapToDomainModel(it) }
     }
 
