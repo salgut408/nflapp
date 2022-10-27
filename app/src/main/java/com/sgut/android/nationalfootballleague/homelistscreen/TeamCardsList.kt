@@ -1,5 +1,7 @@
 package com.sgut.android.nationalfootballleague.homelistscreen
 
+import android.graphics.Color
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
