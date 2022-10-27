@@ -26,6 +26,7 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = nflRepository.getNflTeams()
             teamsList.value = result
+            Log.i("tag", result.toString())
         } catch (e: Exception) {
             Log.i("tag",e.message.toString())
         }

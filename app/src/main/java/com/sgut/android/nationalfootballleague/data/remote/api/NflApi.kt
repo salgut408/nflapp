@@ -5,6 +5,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface NflApi {
-    @GET("sports/football/nfl/teams/")
+    @GET("sports/football/nfl/teams")
     suspend fun getAllNflTeams(): Response<NFLTeamsResponse>
 }
