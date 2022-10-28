@@ -1,11 +1,8 @@
 package com.sgut.android.nationalfootballleague.data.domainmodels
 
-import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.Links
 import com.sgut.android.nationalfootballleague.Logos
 
 data class TeamDomainModel(
-
     var id: String? = null,
     var uid: String? = null,
     var slug: String? = null,
@@ -20,5 +17,4 @@ data class TeamDomainModel(
     var isActive: Boolean? = null,
     var isAllStar: Boolean? = null,
     var logos: ArrayList<Logos>? = arrayListOf(),
-) {
-}
+)

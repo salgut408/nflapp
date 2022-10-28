@@ -17,12 +17,10 @@ class NflRepository @Inject constructor(
             val teamsResponse = nflApi.getAllNflTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
             Log.e("tag", "Response successful")
             return teamDomainModelMapper.toDomainList(teamsResponse!!)
-
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
         }
         var result = nflApi.getAllNflTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-      //  var result = nflApi.getAllNflTeams().body()
         return teamDomainModelMapper.toDomainList(result!!)
     }
 }

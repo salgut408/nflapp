@@ -1,6 +1,5 @@
 package com.sgut.android.nationalfootballleague.data.dtomappers
 
-import com.sgut.android.nationalfootballleague.Team
 import com.sgut.android.nationalfootballleague.Teams
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 

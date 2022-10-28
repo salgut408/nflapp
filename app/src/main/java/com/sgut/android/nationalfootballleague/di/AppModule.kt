@@ -40,5 +40,4 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(NflApi::class.java)
-
 }

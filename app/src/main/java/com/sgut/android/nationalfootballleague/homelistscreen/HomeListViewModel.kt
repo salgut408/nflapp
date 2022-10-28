@@ -31,5 +31,4 @@ class HomeListViewModel @Inject constructor(
             Log.i("tag",e.message.toString())
         }
     }
-
 }
