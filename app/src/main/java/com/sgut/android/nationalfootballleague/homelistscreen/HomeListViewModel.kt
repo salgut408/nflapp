@@ -18,11 +18,19 @@ class HomeListViewModel @Inject constructor(
     var nflTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
     var collegeTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
     var baseballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+    var hockeyTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+    var basketballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+    var soccerTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+
+
 
     init {
-        loadAllNflTeams()
-        loadAllCollegeTeams()
-        loadAllBaseballTeams()
+//        loadAllNflTeams()
+//        loadAllCollegeTeams()
+//        loadAllBaseballTeams()
+//        loadAllHockeyTeams()
+//        loadAllBasketballTeams()
+        loadAllSoccerTeams()
     }
 
     fun loadAllBaseballTeams() = viewModelScope.launch {
@@ -49,6 +57,42 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getAllCollegeTeams()
             collegeTeamsList.value = result
+            Log.i("tag", result.toString())
+
+        } catch (e: Exception) {
+            Log.i("tag",e.message.toString())
+
+        }
+    }
+
+    fun loadAllHockeyTeams() = viewModelScope.launch {
+        try {
+            val result = espnRepository.getAllHockeyTeams()
+            hockeyTeamsList.value = result
+            Log.i("tag", result.toString())
+
+        } catch (e: Exception) {
+            Log.i("tag",e.message.toString())
+
+        }
+    }
+
+    fun loadAllBasketballTeams() = viewModelScope.launch {
+        try {
+            val result = espnRepository.getAllBasketballTeams()
+            basketballTeamsList.value = result
+            Log.i("tag", result.toString())
+
+        } catch (e: Exception) {
+            Log.i("tag",e.message.toString())
+
+        }
+    }
+
+    fun loadAllSoccerTeams() = viewModelScope.launch {
+        try {
+            val result = espnRepository.getAllSoccerTeams()
+            soccerTeamsList.value = result
             Log.i("tag", result.toString())
 
         } catch (e: Exception) {

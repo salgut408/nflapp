@@ -49,4 +49,46 @@ class EspnRepository @Inject constructor(
         var result = espnApi.getAllBaseballTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
         return teamDomainModelMapper.toDomainList(result!!)
     }
+
+
+    suspend fun getAllHockeyTeams(): List<TeamDomainModel> {
+        val response = espnApi.getAllHockeyTeams()
+        if(response.isSuccessful){
+            val teamsResponse = espnApi.getAllHockeyTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
+            Log.e("tag", "Response successful")
+            return teamDomainModelMapper.toDomainList(teamsResponse!!)
+        } else {
+            Log.e(javaClass.name, response.errorBody().toString())
+        }
+        var result = espnApi.getAllHockeyTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+        return teamDomainModelMapper.toDomainList(result!!)
+    }
+
+    suspend fun getAllBasketballTeams(): List<TeamDomainModel> {
+        val response = espnApi.getAllBasketballTeams()
+        if(response.isSuccessful){
+            val teamsResponse = espnApi.getAllBasketballTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
+            Log.e("tag", "Response successful")
+            return teamDomainModelMapper.toDomainList(teamsResponse!!)
+        } else {
+            Log.e(javaClass.name, response.errorBody().toString())
+        }
+        var result = espnApi.getAllBasketballTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+        return teamDomainModelMapper.toDomainList(result!!)
+    }
+
+    suspend fun getAllSoccerTeams(): List<TeamDomainModel> {
+        val response = espnApi.getAllSoccerTeams()
+        if(response.isSuccessful){
+            val teamsResponse = espnApi.getAllSoccerTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
+            Log.e("tag", "Response successful")
+            return teamDomainModelMapper.toDomainList(teamsResponse!!)
+        } else {
+            Log.e(javaClass.name, response.errorBody().toString())
+        }
+        var result = espnApi.getAllSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+        return teamDomainModelMapper.toDomainList(result!!)
+    }
+
+
 }

@@ -26,6 +26,7 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier) {
 
     Card(
         shape = RoundedCornerShape(10.dp),
+        colors = CardDefaults.elevatedCardColors(),
         elevation = CardDefaults.elevatedCardElevation(),
         modifier = modifier
            ) {
@@ -47,6 +48,13 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier) {
                     .padding(8.dp)
             )
             team.displayName?.let { Text(text = it,   style = MaterialTheme.typography.displaySmall, )  }
+
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            team.nickname?.let { Text(text = it,   style = MaterialTheme.typography.titleSmall, )  }
 
         }
     }

@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun TeamCardsList(
     homeListViewModel: HomeListViewModel = hiltViewModel(),
 ) {
-    val teamsList by remember {homeListViewModel.baseballTeamsList}
+    val teamsList by remember {homeListViewModel.soccerTeamsList}
 
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
         items(items = teamsList) { team ->
