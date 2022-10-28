@@ -4,7 +4,13 @@ import com.sgut.android.nationalfootballleague.NFLTeamsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 
-interface NflApi {
+interface EspnApi {
     @GET("sports/football/nfl/teams")
     suspend fun getAllNflTeams(): Response<NFLTeamsResponse>
+
+    @GET("sports/football/college-football/teams")
+    suspend fun getAllCollegeTeams(): Response<NFLTeamsResponse>
+
+    @GET("sports/baseball/mlb/teams")
+    suspend fun getAllBaseballTeams(): Response<NFLTeamsResponse>
 }

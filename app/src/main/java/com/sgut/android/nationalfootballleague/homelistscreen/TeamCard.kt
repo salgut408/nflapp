@@ -46,7 +46,7 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier) {
                     .size(150.dp)
                     .padding(8.dp)
             )
-            team.displayName?.let { Text(text = it, style = MaterialTheme.typography.displaySmall, )  }
+            team.displayName?.let { Text(text = it,   style = MaterialTheme.typography.displaySmall, )  }
 
         }
     }

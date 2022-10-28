@@ -1,8 +1,8 @@
 package com.sgut.android.nationalfootballleague.di
 
-import com.sgut.android.nationalfootballleague.data.dtomappers.NflToTeamDomainModelMapper
-import com.sgut.android.nationalfootballleague.data.remote.api.NflApi
-import com.sgut.android.nationalfootballleague.repository.NflRepository
+import com.sgut.android.nationalfootballleague.data.dtomappers.NetworkToTeamDomainModelMapper
+import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
+import com.sgut.android.nationalfootballleague.repository.EspnRepository
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -19,12 +19,12 @@ object AppModule {
 
     @Provides
     fun provideNflRepository(
-        nflApi: NflApi,
-        nflMapper: NflToTeamDomainModelMapper
-    ): NflRepository = NflRepository(nflMapper, nflApi)
+        espnApi: EspnApi,
+        nflMapper: NetworkToTeamDomainModelMapper
+    ): EspnRepository = EspnRepository(nflMapper, espnApi)
 
     @Provides
-    fun provideNflResponseMapper():  NflToTeamDomainModelMapper = NflToTeamDomainModelMapper()
+    fun provideNetworkToTeamDomMapper():  NetworkToTeamDomainModelMapper = NetworkToTeamDomainModelMapper()
 
     @Singleton
     @Provides
@@ -33,11 +33,11 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideNflApi(okHttpClient: OkHttpClient): NflApi =
+    fun provideNflApi(okHttpClient: OkHttpClient): EspnApi =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(NflApi::class.java)
+            .create(EspnApi::class.java)
 }

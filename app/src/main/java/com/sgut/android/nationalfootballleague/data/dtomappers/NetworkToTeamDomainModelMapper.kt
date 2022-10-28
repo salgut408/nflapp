@@ -3,7 +3,7 @@ package com.sgut.android.nationalfootballleague.data.dtomappers
 import com.sgut.android.nationalfootballleague.Teams
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 
-class NflToTeamDomainModelMapper : DomainMapper<Teams, TeamDomainModel> {
+class NetworkToTeamDomainModelMapper : DomainMapper<Teams, TeamDomainModel> {
     override fun mapToDomainModel(model: Teams): TeamDomainModel {
         return TeamDomainModel(
             abbreviation = model.teamsz?.abbreviation,
