@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.homelistscreen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -33,5 +34,6 @@ fun SeachBar(
      modifier = modifier
          .fillMaxWidth()
          .heightIn(min = 56.dp)
+         .clickable {  }
          )
 }

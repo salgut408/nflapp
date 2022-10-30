@@ -3,6 +3,7 @@ package com.sgut.android.nationalfootballleague.homelistscreen
 import android.graphics.Color.parseColor
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,6 +30,7 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier) {
         colors = CardDefaults.elevatedCardColors(),
         elevation = CardDefaults.elevatedCardElevation(),
         modifier = modifier
+            .clickable {  }
            ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -53,6 +55,7 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
+
         ) {
             team.nickname?.let { Text(text = it,   style = MaterialTheme.typography.titleSmall, )  }
 

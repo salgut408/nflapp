@@ -15,22 +15,29 @@ class HomeListViewModel @Inject constructor(
     private val espnRepository: EspnRepository
 ) : ViewModel() {
 
-    var nflTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var collegeTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var baseballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var hockeyTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var basketballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var soccerTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+    var allLists = mutableStateOf<List<TeamDomainModel>>(listOf())
+
+     var nflTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+     var collegeTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+     var baseballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+     var hockeyTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+     var basketballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+     var soccerTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+     var womensBasketballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+
+
+
 
 
 
     init {
 //        loadAllNflTeams()
 //        loadAllCollegeTeams()
-//        loadAllBaseballTeams()
+        loadAllBaseballTeams()
 //        loadAllHockeyTeams()
 //        loadAllBasketballTeams()
-        loadAllSoccerTeams()
+//        loadAllSoccerTeams()
+//        loadAllWomensBasketballTeams()
     }
 
     fun loadAllBaseballTeams() = viewModelScope.launch {
@@ -100,5 +107,19 @@ class HomeListViewModel @Inject constructor(
 
         }
     }
+
+    fun loadAllWomensBasketballTeams() = viewModelScope.launch {
+        try {
+            val result = espnRepository.getAllWomensBasketballTeams()
+            womensBasketballTeamsList.value = result
+            Log.i("tag", result.toString())
+
+        } catch (e: Exception) {
+            Log.i("tag",e.message.toString())
+
+        }
+    }
+
+
 
 }
