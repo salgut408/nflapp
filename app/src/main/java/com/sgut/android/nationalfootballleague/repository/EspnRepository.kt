@@ -1,14 +1,18 @@
 package com.sgut.android.nationalfootballleague.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.data.dtomappers.NetworkToTeamDomainModelMapper
+import com.sgut.android.nationalfootballleague.data.dtomappers.TeamDetailNetworkToModelMapper
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import javax.inject.Inject
 
 class EspnRepository @Inject constructor(
     val teamDomainModelMapper: NetworkToTeamDomainModelMapper,
     val espnApi: EspnApi,
+    val teamDetailNetworkToModelMapper: TeamDetailNetworkToModelMapper
 ) {
     suspend fun getTeams(): List<TeamDomainModel> {
         val response = espnApi.getAllNflTeams()
@@ -102,6 +106,19 @@ class EspnRepository @Inject constructor(
         }
         var result = espnApi.getAllSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
         return teamDomainModelMapper.toDomainList(result!!)
+    }
+
+    suspend fun getSpecificNflTeam(): TeamDetailModel {
+        val response = espnApi.getSpecificNflTeam()
+        if(response.isSuccessful){
+            val teamDetailResponse = espnApi.getSpecificNflTeam().body()?.team2
+            Log.e("tag", "Response successful $teamDetailResponse")
+            return teamDetailNetworkToModelMapper.mapToDomainModel(teamDetailResponse!!)
+        } else {
+            Log.e(javaClass.name, response.errorBody().toString())
+        }
+        var result = espnApi.getSpecificNflTeam().body()?.team2
+        return teamDetailNetworkToModelMapper.mapToDomainModel(result!!)
     }
 
 

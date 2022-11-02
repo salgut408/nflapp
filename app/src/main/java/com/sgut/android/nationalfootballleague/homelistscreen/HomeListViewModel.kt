@@ -31,9 +31,9 @@ class HomeListViewModel @Inject constructor(
 
 
     init {
-//        loadAllNflTeams()
+        loadAllNflTeams()
 //        loadAllCollegeTeams()
-        loadAllBaseballTeams()
+//        loadAllBaseballTeams()
 //        loadAllHockeyTeams()
 //        loadAllBasketballTeams()
 //        loadAllSoccerTeams()

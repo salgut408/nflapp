@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague.data.dtomappers
 
 import com.sgut.android.nationalfootballleague.Team2
+import com.sgut.android.nationalfootballleague.TeamDetailResponse
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailModel
 
 class TeamDetailNetworkToModelMapper: DomainMapper <Team2, TeamDetailModel> {

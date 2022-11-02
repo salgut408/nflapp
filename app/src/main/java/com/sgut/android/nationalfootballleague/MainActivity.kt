@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.sgut.android.nationalfootballleague.di.MainToolBar
 import com.sgut.android.nationalfootballleague.homelistscreen.SeachBar
 import com.sgut.android.nationalfootballleague.homelistscreen.TeamCardsList
+import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 import com.sgut.android.nationalfootballleague.ui.theme.NationalFootballLeagueTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,7 +34,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background) {
 
 
-                   TeamCardsList()
+//                   TeamCardsList()
+                    TeamDetailScreen()
                 }
             }
         }
