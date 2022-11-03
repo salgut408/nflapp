@@ -17,6 +17,6 @@ data class Franchise (
   @SerializedName("color"            ) var color            : String?  = null,
   @SerializedName("isActive"         ) var isActive         : Boolean? = null,
   @SerializedName("venue"            ) var venue            : Venue?   = Venue(),
-  @SerializedName("team"             ) var team2             : Team2?    = Team2()
+//  @SerializedName("team"             ) var team2             : Team2?    = Team2()
 
 )

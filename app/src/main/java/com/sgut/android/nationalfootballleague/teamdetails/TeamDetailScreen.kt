@@ -13,7 +13,10 @@ fun TeamDetailScreen(
     teamDetailViewModel: TeamDetailViewModel = hiltViewModel(),
 ) {
     val team by remember {teamDetailViewModel.team}
+    val msg by remember {teamDetailViewModel.toastMessageObserver}
 
     team?.let { TeamDetailCard(team = it, modifier = Modifier.padding(8.dp)) }
+
+
 
 }
