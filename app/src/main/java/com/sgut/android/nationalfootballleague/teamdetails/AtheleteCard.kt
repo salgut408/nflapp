@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -59,9 +62,10 @@ fun AltheleteCard2(
     athelete: Athletes,
     modifier: Modifier ,
 ) {
-    Card(
+    OutlinedCard(
         shape = RoundedCornerShape(10.dp),
-        elevation = CardDefaults.outlinedCardElevation(),
+        elevation = CardDefaults.cardElevation(),
+        colors = CardDefaults.cardColors(),
         modifier = Modifier.fillMaxWidth()) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -85,11 +89,19 @@ fun AltheleteCard2(
             Column(modifier = Modifier.padding(16.dp)) {
                 athelete.displayName?.let { Text(it) }
                 athelete.position?.displayName?.let { Text(it) }
-                athelete.jersey?.let { Text(it) }
-                athelete.age.let { Text(it.toString()) }
+                athelete.jersey?.let { Text("# $it") }
 //                athelete { Text(it.toString()) }
 
-
+                FloatingActionButton(
+                    onClick = { /* do something */ },
+                    shape = FloatingActionButtonDefaults.smallShape,
+                    modifier = Modifier.size(30.dp)
+                ) {
+                    Icon(
+                        Icons.Filled.Favorite,
+                        "Localized description"
+                    )
+                }
 
             }
         }
