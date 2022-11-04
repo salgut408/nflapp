@@ -109,7 +109,10 @@ fun TeamDetailCard(
 
 
             }
+
         }
+        team.nextEvent[0].shortName?.let { Text(text = it) }
+
     }
 
 
