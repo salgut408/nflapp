@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import java.util.Objects
 
 
 data class Athletes (
@@ -29,7 +30,7 @@ data class Athletes (
   @SerializedName("headshot"       ) var headshot       : Headshot?         = Headshot(),
   @SerializedName("jersey"         ) var jersey         : String?           = null,
   @SerializedName("position"       ) var position       : Position?         = Position(),
-  @SerializedName("injuries"       ) var injuries       : Any? = null,
+  @SerializedName("injuries"       ) var injuries       : List<Objects>? = listOf(),
   @SerializedName("linked"         ) var linked         : Boolean?          = null,
 //  @SerializedName("teams"          ) var teams          : List<Teams>  = listOf(),
 //  @SerializedName("projections"    ) var projections    : Projections?      = Projections(),

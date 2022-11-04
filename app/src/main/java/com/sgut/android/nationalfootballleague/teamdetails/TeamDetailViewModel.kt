@@ -3,6 +3,7 @@ package com.sgut.android.nationalfootballleague.teamdetails
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.Athletes
@@ -27,6 +28,10 @@ class TeamDetailViewModel @Inject constructor(
 
     val nextEvents: MutableState<List<NextEvent3?>> = mutableStateOf(listOf())
 
+    val primaryColor: MutableState<String?> = mutableStateOf(null)
+    val alternateColor: MutableState<String?> = mutableStateOf(null)
+
+
     var toastMessageObserver: MutableState<String?> = mutableStateOf(null)
 
     init {
@@ -43,6 +48,8 @@ class TeamDetailViewModel @Inject constructor(
             team.value = result
             atheletes.value = result.athletes
             nextEvents.value = result.nextEvent
+            primaryColor.value = HexToJetpackColor.getColor(result.color!!).toString()
+            alternateColor.value = HexToJetpackColor.getColor(result.alternateColor!!).toString()
             Log.i("tag", result.toString())
 
         } catch (e: Exception){
@@ -53,4 +60,11 @@ class TeamDetailViewModel @Inject constructor(
     }
 
 
+
+
+}
+object HexToJetpackColor {
+    fun getColor(colorString: String): Color {
+        return Color(android.graphics.Color.parseColor("#" + colorString))
+    }
 }

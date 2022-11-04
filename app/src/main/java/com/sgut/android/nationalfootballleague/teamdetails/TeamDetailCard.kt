@@ -8,10 +8,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -30,15 +27,16 @@ import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithR
 fun TeamDetailCard(
     team: TeamDetailWithRosterModel, modifier: Modifier,
 ) {
+
     Card(
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.elevatedCardColors(),
 //        elevation = CardDefaults.elevatedCardElevation(),
-        modifier = modifier
+        modifier = modifier.fillMaxSize()
             //toast here?
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ) {
             //image
@@ -49,41 +47,32 @@ fun TeamDetailCard(
                     .crossfade(true)
                     .build()
             )
+
+            team.displayName?.let { Text(text = it, style = MaterialTheme.typography.displayMedium) }
+
+
             Image(
                 painter = painter,
                 contentDescription = team.displayName,
                 modifier = Modifier
-                    .padding(16.dp)
+//                    .padding(8.dp)
+                    .fillMaxWidth()
 
             )
+            team.standingSummary?.let { Text(text = it, style = MaterialTheme.typography.bodySmall) }
 
 
 
         }
 
-        Row() {
-
-        }
-
-        team.displayName?.let { Text(text = it, style = MaterialTheme.typography.displaySmall) }
-
-        team.standingSummary?.let { Text(text = it, style = MaterialTheme.typography.bodySmall) }
-        team.franchise?.shortDisplayName?.let {
-            Text(
-                text = it,
-                style = MaterialTheme.typography.bodySmall,
-            )
-        }
-        team.franchise?.venue?.fullName?.let {
-            Text(
-                text = it,
-                style = MaterialTheme.typography.bodySmall,
-            )
-        }
 
 
-        team.nextEvent[0].shortName?.let { Text(text = it) }
 
+
+
+
+
+        Text(text = "Players", style = MaterialTheme.typography.titleSmall)
 
         AtheleteRow()
         NextEvent(nextEvent3 = team.nextEvent[0], modifier = modifier)

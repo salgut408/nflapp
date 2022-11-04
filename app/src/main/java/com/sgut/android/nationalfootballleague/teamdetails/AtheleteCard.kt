@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague.teamdetails
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.shape.CircleShape
@@ -9,14 +10,18 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
+import androidx.compose.runtime.getValue
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -60,13 +65,20 @@ fun AtheleteCard(
 @Composable
 fun AltheleteCard2(
     athelete: Athletes,
-    modifier: Modifier ,
+    modifier: Modifier,
+    teamDetailViewModel: TeamDetailViewModel = hiltViewModel(),
 ) {
+    val primColor by remember {teamDetailViewModel.primaryColor}
     OutlinedCard(
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(),
         colors = CardDefaults.cardColors(),
-        modifier = Modifier.fillMaxWidth()) {
+        modifier = Modifier.fillMaxWidth()
+
+    ) {
+
+
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
@@ -85,11 +97,16 @@ fun AltheleteCard2(
                     .padding(8.dp)
                     .clip(CircleShape)
             )
+
+
+
             Divider()
             Column(modifier = Modifier.padding(16.dp)) {
                 athelete.displayName?.let { Text(it) }
                 athelete.position?.displayName?.let { Text(it) }
                 athelete.jersey?.let { Text("# $it") }
+//                athelete.injuries?.getOrNull(1).toString().let { Text("# $it") }
+
 //                athelete { Text(it.toString()) }
 
                 FloatingActionButton(

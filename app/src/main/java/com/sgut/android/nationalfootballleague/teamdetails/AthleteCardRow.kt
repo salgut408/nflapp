@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -18,10 +20,15 @@ fun AtheleteRow(
     teamDetailViewModel: TeamDetailViewModel = hiltViewModel(),
 ) {
     val athletesList by remember {teamDetailViewModel.atheletes}
+
+
+
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
+
+
         items(athletesList){ athlete ->
             if (athlete != null) {
                 AltheleteCard2(athelete = athlete, modifier = Modifier.padding(5.dp))

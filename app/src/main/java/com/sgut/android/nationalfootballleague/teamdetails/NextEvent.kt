@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.teamdetails
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,21 +26,18 @@ fun NextEvent(
         modifier = modifier
 
             ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ) {
 
-            Text(text = "Next Event:", style = MaterialTheme.typography.bodyLarge)
+            Text(text = " ${nextEvent3.week?.text} Next Event:", style = MaterialTheme.typography.headlineSmall)
 
-            nextEvent3.name?.let { Text(text = it, style = MaterialTheme.typography.headlineSmall) }
-
-        }
-        Row() {
-
-            nextEvent3.competitions[0].venue?.fullName.let { Text(text = it!!, style = MaterialTheme.typography.headlineSmall) }
+            nextEvent3.name?.let { Text(text = it, style = MaterialTheme.typography.titleLarge) }
+            nextEvent3.competitions[0].venue?.fullName.let { Text(text = it!!, style = MaterialTheme.typography.titleSmall) }
 
         }
+
 
     }
 }
