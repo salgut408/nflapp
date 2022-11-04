@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -30,6 +31,7 @@ fun TeamDetailCard(
 
     Card(
         shape = RoundedCornerShape(10.dp),
+        //hex color
         colors = CardDefaults.elevatedCardColors(),
 //        elevation = CardDefaults.elevatedCardElevation(),
         modifier = modifier.fillMaxSize()
@@ -57,20 +59,10 @@ fun TeamDetailCard(
                 modifier = Modifier
 //                    .padding(8.dp)
                     .fillMaxWidth()
-
             )
             team.standingSummary?.let { Text(text = it, style = MaterialTheme.typography.bodySmall) }
 
-
-
         }
-
-
-
-
-
-
-
 
         Text(text = "Players", style = MaterialTheme.typography.titleSmall)
 
@@ -78,11 +70,6 @@ fun TeamDetailCard(
         NextEvent(nextEvent3 = team.nextEvent[0], modifier = modifier)
 
     }
-
-
-
-
-
 }
 
 
