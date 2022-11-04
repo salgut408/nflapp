@@ -25,7 +25,8 @@ class TeamDetailWithRosterMapper: DomainMapper<Team3, TeamDetailWithRosterModel>
             shortDisplayName = model.shortDisplayName,
             slug = model.slug,
             standingSummary = model.standingSummary,
-            uid = model.uid
+            uid = model.uid,
+
         )
     }
 }

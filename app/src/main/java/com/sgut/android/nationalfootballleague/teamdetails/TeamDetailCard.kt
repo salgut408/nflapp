@@ -32,6 +32,7 @@ fun TeamDetailCard(
 ) {
     Card(
         shape = RoundedCornerShape(10.dp),
+        colors = CardDefaults.elevatedCardColors(),
         elevation = CardDefaults.elevatedCardElevation(),
         modifier = modifier
             //toast here?
@@ -81,37 +82,11 @@ fun TeamDetailCard(
             )
         }
 
-        LazyRow(contentPadding = PaddingValues(8.dp), horizontalArrangement = Arrangement.Start) {
-            items(items = team.athletes) { athlete ->
-                val painter2 = rememberAsyncImagePainter(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(athlete.headshot?.href)
-                        .crossfade(true)
-                        .build()
-                )
-                Image(
-                    painter = painter2,
-                    contentDescription = athlete.displayName,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.Start)
-                        .size(230.dp)
-                        .clip(CircleShape)
-                        .background(Color.Gray)
 
-
-
-                )
-                athlete.displayName?.let { Text(text = it) }
-
-//                athlete.position?.name?.let { Text(text = it, style = MaterialTheme.typography.bodyLarge) }
-//                athlete.jersey?.let { Text(text = it, style = MaterialTheme.typography.bodyLarge) }
-
-
-            }
-
-        }
         team.nextEvent[0].shortName?.let { Text(text = it) }
+
+
+        AtheleteRow()
 
     }
 
