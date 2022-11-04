@@ -96,6 +96,7 @@ fun AltheleteCard2(
                     .size(150.dp)
                     .padding(8.dp)
                     .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.background)
             )
 
 
@@ -106,7 +107,6 @@ fun AltheleteCard2(
                 athelete.position?.displayName?.let { Text(it) }
                 athelete.jersey?.let { Text("# $it") }
 //                athelete.injuries?.getOrNull(1).toString().let { Text("# $it") }
-
 //                athelete { Text(it.toString()) }
 
                 FloatingActionButton(
@@ -116,7 +116,7 @@ fun AltheleteCard2(
                 ) {
                     Icon(
                         Icons.Filled.Favorite,
-                        "Localized description"
+                        ""
                     )
                 }
 
