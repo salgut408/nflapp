@@ -21,9 +21,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailModel
+import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 
 @Composable
-fun TeamDetailCard(team: TeamDetailModel, modifier: Modifier
+fun TeamDetailCard(team: TeamDetailWithRosterModel, modifier: Modifier
 ) {
     Card(
         shape = RoundedCornerShape(10.dp),
@@ -39,7 +40,7 @@ fun TeamDetailCard(team: TeamDetailModel, modifier: Modifier
             //image
             val painter = rememberAsyncImagePainter(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(team.logos2?.get(0)?.href)
+                    .data(team.logos[0].href)
                     .crossfade(true)
                     .build()
             )

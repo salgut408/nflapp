@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.di
 
 import com.sgut.android.nationalfootballleague.data.dtomappers.NetworkToTeamDomainModelMapper
 import com.sgut.android.nationalfootballleague.data.dtomappers.TeamDetailNetworkToModelMapper
+import com.sgut.android.nationalfootballleague.data.dtomappers.TeamDetailWithRosterMapper
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import com.sgut.android.nationalfootballleague.repository.EspnRepository
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASE_URL
@@ -22,11 +23,15 @@ object AppModule {
     fun provideEspnRepository(
         espnApi: EspnApi,
         nflMapper: NetworkToTeamDomainModelMapper,
-        teamDetailNetworkToModelMapper: TeamDetailNetworkToModelMapper
-    ): EspnRepository = EspnRepository(nflMapper, espnApi, teamDetailNetworkToModelMapper)
+        teamDetailNetworkToModelMapper: TeamDetailNetworkToModelMapper,
+        rosterMapper: TeamDetailWithRosterMapper
+    ): EspnRepository = EspnRepository(nflMapper, espnApi, teamDetailNetworkToModelMapper, rosterMapper)
 
     @Provides
     fun provideNetworkToTeamDomMapper():  NetworkToTeamDomainModelMapper = NetworkToTeamDomainModelMapper()
+
+    @Provides
+    fun provideRosterMapper(): TeamDetailWithRosterMapper = TeamDetailWithRosterMapper()
 
     @Provides
     fun provideNetworkToTeamDetailMapper():  TeamDetailNetworkToModelMapper = TeamDetailNetworkToModelMapper()

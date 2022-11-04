@@ -3,16 +3,19 @@ package com.sgut.android.nationalfootballleague.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailModel
+import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.data.dtomappers.NetworkToTeamDomainModelMapper
 import com.sgut.android.nationalfootballleague.data.dtomappers.TeamDetailNetworkToModelMapper
+import com.sgut.android.nationalfootballleague.data.dtomappers.TeamDetailWithRosterMapper
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import javax.inject.Inject
 
 class EspnRepository @Inject constructor(
     val teamDomainModelMapper: NetworkToTeamDomainModelMapper,
     val espnApi: EspnApi,
-    val teamDetailNetworkToModelMapper: TeamDetailNetworkToModelMapper
+    val teamDetailNetworkToModelMapper: TeamDetailNetworkToModelMapper,
+    val rosterMapper: TeamDetailWithRosterMapper
 ) {
     suspend fun getTeams(): List<TeamDomainModel> {
         val response = espnApi.getAllNflTeams()
@@ -108,17 +111,17 @@ class EspnRepository @Inject constructor(
         return teamDomainModelMapper.toDomainList(result!!)
     }
 
-    suspend fun getSpecificNflTeam(): TeamDetailModel {
+    suspend fun getSpecificNflTeam(): TeamDetailWithRosterModel {
         val response = espnApi.getSpecificNflTeam()
         if(response.isSuccessful){
-            val teamDetailResponse = espnApi.getSpecificNflTeam().body()?.team2
+            val teamDetailResponse = espnApi.getSpecificNflTeam().body()?.team
             Log.e("tag", "Response successful $teamDetailResponse")
-            return teamDetailNetworkToModelMapper.mapToDomainModel(teamDetailResponse!!)
+            return rosterMapper.mapToDomainModel(teamDetailResponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
         }
-        var result = espnApi.getSpecificNflTeam().body()?.team2
-        return teamDetailNetworkToModelMapper.mapToDomainModel(result!!)
+        var result = espnApi.getSpecificNflTeam().body()?.team
+        return rosterMapper.mapToDomainModel(result!!)
     }
 
 

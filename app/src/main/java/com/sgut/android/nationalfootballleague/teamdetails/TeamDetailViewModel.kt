@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailModel
+import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.repository.EspnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ class TeamDetailViewModel @Inject constructor(
     private val espnRepository: EspnRepository
 ): ViewModel() {
 
-     val team: MutableState<TeamDetailModel?> = mutableStateOf(null)
+     val team: MutableState<TeamDetailWithRosterModel?> = mutableStateOf(null)
 
 
     var toastMessageObserver: MutableState<String?> = mutableStateOf(null)
