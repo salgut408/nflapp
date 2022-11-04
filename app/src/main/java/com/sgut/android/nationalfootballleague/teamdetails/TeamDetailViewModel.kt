@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.Athletes
+import com.sgut.android.nationalfootballleague.NextEvent3
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.repository.EspnRepository
@@ -18,9 +19,13 @@ class TeamDetailViewModel @Inject constructor(
     private val espnRepository: EspnRepository
 ): ViewModel() {
 
-     val team: MutableState<TeamDetailWithRosterModel?> = mutableStateOf(null)
+    private val _team: MutableState<TeamDetailWithRosterModel?> = mutableStateOf(null)
+    val team: MutableState<TeamDetailWithRosterModel?>
+        get() = _team
+
     val atheletes: MutableState<List<Athletes?>> = mutableStateOf(listOf())
 
+    val nextEvents: MutableState<List<NextEvent3?>> = mutableStateOf(listOf())
 
     var toastMessageObserver: MutableState<String?> = mutableStateOf(null)
 
@@ -37,6 +42,7 @@ class TeamDetailViewModel @Inject constructor(
             val result = espnRepository.getSpecificNflTeam()
             team.value = result
             atheletes.value = result.athletes
+            nextEvents.value = result.nextEvent
             Log.i("tag", result.toString())
 
         } catch (e: Exception){

@@ -33,10 +33,9 @@ fun TeamDetailCard(
     Card(
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.elevatedCardColors(),
-        elevation = CardDefaults.elevatedCardElevation(),
+//        elevation = CardDefaults.elevatedCardElevation(),
         modifier = modifier
             //toast here?
-            .clickable { }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -87,6 +86,7 @@ fun TeamDetailCard(
 
 
         AtheleteRow()
+        NextEvent(nextEvent3 = team.nextEvent[0], modifier = modifier)
 
     }
 

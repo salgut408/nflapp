@@ -3,11 +3,9 @@ package com.sgut.android.nationalfootballleague.teamdetails
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.Absolute.Center
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -50,8 +48,8 @@ fun AtheleteCard(
                 modifier = Modifier
                     .size(150.dp)
                     .padding(8.dp)
-            )
 
+            )
         }
     }
 }
@@ -81,12 +79,15 @@ fun AltheleteCard2(
                 modifier = Modifier
                     .size(150.dp)
                     .padding(8.dp)
+                    .clip(CircleShape)
             )
+            Divider()
             Column(modifier = Modifier.padding(16.dp)) {
                 athelete.displayName?.let { Text(it) }
                 athelete.position?.displayName?.let { Text(it) }
                 athelete.jersey?.let { Text(it) }
                 athelete.age.let { Text(it.toString()) }
+//                athelete { Text(it.toString()) }
 
 
 
