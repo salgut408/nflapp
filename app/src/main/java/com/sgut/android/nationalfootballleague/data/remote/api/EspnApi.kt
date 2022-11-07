@@ -10,7 +10,7 @@ interface EspnApi {
     @GET("sports/football/nfl/teams")
     suspend fun getAllNflTeams(): Response<NFLTeamsResponse>
 
-    @GET("sports/football/nfl/teams/buf?enable=roster,headshot")
+    @GET("sports/football/nfl/teams/lac?enable=roster,headshot")
     suspend fun getSpecificNflTeam(): Response<TeamDetailResponse2>
 
 //    @GET("sports/football/college-football/teams/ucla?enable=roster,headshot")

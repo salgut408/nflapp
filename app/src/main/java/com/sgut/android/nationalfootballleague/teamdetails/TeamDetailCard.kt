@@ -45,6 +45,7 @@ fun TeamDetailCard(
 
             val painter = rememberAsyncImagePainter(
                 model = ImageRequest.Builder(LocalContext.current)
+//                    .data(team.logos[0].href)
                     .data(team.logos[0].href)
                     .crossfade(true)
                     .build()
@@ -58,6 +59,7 @@ fun TeamDetailCard(
                 contentDescription = team.displayName,
                 modifier = Modifier
 //                    .padding(8.dp)
+
                     .fillMaxWidth()
             )
             team.standingSummary?.let { Text(text = it, style = MaterialTheme.typography.bodySmall) }

@@ -16,24 +16,32 @@ import com.sgut.android.nationalfootballleague.ui.theme.md_theme_dark_background
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
-fun SeachBar(
+fun SearchBar(
     modifier: Modifier = Modifier
 ) {
- TextField (
-     value = "",
-     onValueChange = {},
-     leadingIcon = {
-         Icon(
-             imageVector = Icons.Default.Search,
-             contentDescription = null
-         )
-     },
-   placeholder = {
-       Text("Search")
-   },
-     modifier = modifier
-         .fillMaxWidth()
-         .heightIn(min = 56.dp)
-         .clickable {  }
-         )
+    TextField (
+        value = "",
+        onValueChange = {},
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = null
+            )
+        },
+        placeholder = {
+            Text("Search")
+        },
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = 56.dp)
+            .clickable { }
+    )
 }
+
+
+
+
+
+
+
+

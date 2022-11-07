@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.homelistscreen
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,10 +17,14 @@ fun TeamCardsList(
     homeListViewModel: HomeListViewModel = hiltViewModel(),
 ) {
     val teamsList by remember {homeListViewModel.nflTeamsList}
+    Column(){
+        SearchBar()
 
-    LazyColumn(contentPadding = PaddingValues(16.dp)) {
-        items(items = teamsList) { team ->
-            TeamCard(team = team, modifier = Modifier.padding(8.dp))
+        LazyColumn(contentPadding = PaddingValues(16.dp)) {
+            items(items = teamsList) { team ->
+                TeamCard(team = team, modifier = Modifier.padding(8.dp))
+            }
         }
     }
 }
+
