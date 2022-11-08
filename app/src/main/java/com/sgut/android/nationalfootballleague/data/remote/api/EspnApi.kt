@@ -5,13 +5,18 @@ import com.sgut.android.nationalfootballleague.TeamDetailResponse
 import com.sgut.android.nationalfootballleague.TeamDetailResponse2
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface EspnApi {
     @GET("sports/football/nfl/teams")
     suspend fun getAllNflTeams(): Response<NFLTeamsResponse>
 
-    @GET("sports/football/nfl/teams/lac?enable=roster,headshot")
-    suspend fun getSpecificNflTeam(): Response<TeamDetailResponse2>
+    @GET("sports/football/nfl/teams/{teamAbbreviation}?enable=roster,headshot")
+    suspend fun getSpecificNflTeam(
+        @Path("teamAbbreviation")
+        teamAbbreviation: String? = null
+    ): Response<TeamDetailResponse2>
+
 
 //    @GET("sports/football/college-football/teams/ucla?enable=roster,headshot")
 

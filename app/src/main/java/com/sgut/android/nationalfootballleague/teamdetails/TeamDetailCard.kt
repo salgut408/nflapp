@@ -29,14 +29,7 @@ fun TeamDetailCard(
     team: TeamDetailWithRosterModel, modifier: Modifier,
 ) {
 
-    Card(
-        shape = RoundedCornerShape(10.dp),
-        //hex color
-        colors = CardDefaults.elevatedCardColors(),
-//        elevation = CardDefaults.elevatedCardElevation(),
-        modifier = modifier.fillMaxSize()
-            //toast here?
-    ) {
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
@@ -72,6 +65,6 @@ fun TeamDetailCard(
         NextEvent(nextEvent3 = team.nextEvent[0], modifier = modifier)
 
     }
-}
+
 
 

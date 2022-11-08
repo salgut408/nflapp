@@ -15,17 +15,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sgut.android.nationalfootballleague.homelistscreen.SearchBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TeamDetailScreen(
     teamDetailViewModel: TeamDetailViewModel = hiltViewModel(),
+    team: String
 ) {
+    //team vm need abbrv param
     val team by remember {teamDetailViewModel.team}
     val msg by remember {teamDetailViewModel.toastMessageObserver}
 
     Column() {
-//        SearchBar()
+
         team?.let { TeamDetailCard(team = it, modifier = Modifier.padding(8.dp)) }
 
     }

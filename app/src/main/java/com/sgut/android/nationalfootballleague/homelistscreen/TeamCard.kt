@@ -4,10 +4,7 @@ import android.graphics.Color.parseColor
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -17,12 +14,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.sgut.android.nationalfootballleague.commoncomposables.Screen
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 
 @Composable
-fun TeamCard(team: TeamDomainModel, modifier: Modifier) {
+fun TeamCard(team: TeamDomainModel, modifier: Modifier, navController: NavController) {
 
 
     Card(
@@ -30,10 +29,13 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier) {
         colors = CardDefaults.elevatedCardColors(),
         elevation = CardDefaults.elevatedCardElevation(),
         modifier = modifier
-            .clickable {  }
+            .clickable {
+                navController.navigate(Screen.DetailScreenTeam.withArgs(team.abbreviation!!))
+            }
            ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth()) {
 //             image
             val painter = rememberAsyncImagePainter(
@@ -47,9 +49,11 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier) {
                 contentDescription = team.displayName,
                 modifier = Modifier
                     .size(150.dp)
-                    .padding(8.dp)
+//                    .padding(8.dp)
             )
-            team.displayName?.let { Text(text = it,   style = MaterialTheme.typography.displaySmall, )  }
+            team.shortDisplayName?.let { Text(text = it,   style = MaterialTheme.typography.headlineMedium, )  }
+
+
 
         }
         Row(
@@ -57,7 +61,7 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier) {
             modifier = Modifier.fillMaxWidth()
 
         ) {
-            team.nickname?.let { Text(text = it,   style = MaterialTheme.typography.titleSmall, )  }
+            team.abbreviation?.let { Text(text = it,   style = MaterialTheme.typography.titleSmall, )  }
 
         }
     }

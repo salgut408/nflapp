@@ -20,9 +20,7 @@ class TeamDetailViewModel @Inject constructor(
     private val espnRepository: EspnRepository
 ): ViewModel() {
 
-    private val _team: MutableState<TeamDetailWithRosterModel?> = mutableStateOf(null)
-    val team: MutableState<TeamDetailWithRosterModel?>
-        get() = _team
+     val team: MutableState<TeamDetailWithRosterModel?> = mutableStateOf(null)
 
     val atheletes: MutableState<List<Athletes?>> = mutableStateOf(listOf())
 
@@ -41,19 +39,19 @@ class TeamDetailViewModel @Inject constructor(
     }
 
 
-
+        //team abrv here
     fun loadTeamDetails() = viewModelScope.launch {
         try {
-            val result = espnRepository.getSpecificNflTeam()
+            val result = espnRepository.getSpecificNflTeam("lac")
             team.value = result
             atheletes.value = result.athletes
             nextEvents.value = result.nextEvent
             primaryColor.value = HexToJetpackColor.getColor(result.color!!).toString()
             alternateColor.value = HexToJetpackColor.getColor(result.alternateColor!!).toString()
-            Log.i("tag", result.toString())
+            Log.i("DEBUG", result.toString())
 
         } catch (e: Exception){
-            Log.i("tag",e.message.toString())
+            Log.i("DEBUG",e.message.toString())
             toastMessageObserver?.value =  e.toString()
 
         }

@@ -66,9 +66,7 @@ fun AtheleteCard(
 fun AltheleteCard2(
     athelete: Athletes,
     modifier: Modifier,
-    teamDetailViewModel: TeamDetailViewModel = hiltViewModel(),
 ) {
-    val primColor by remember {teamDetailViewModel.primaryColor}
     OutlinedCard(
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(),
