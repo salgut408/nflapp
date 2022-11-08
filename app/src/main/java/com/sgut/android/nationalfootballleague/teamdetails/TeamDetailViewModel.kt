@@ -34,15 +34,15 @@ class TeamDetailViewModel @Inject constructor(
 
     init {
 
-        loadTeamDetails()
+//        loadTeamDetails()
 
     }
 
 
         //team abrv here
-    fun loadTeamDetails() = viewModelScope.launch {
+    fun loadTeamDetails(teamAbv: String) = viewModelScope.launch {
         try {
-            val result = espnRepository.getSpecificNflTeam("lac")
+            val result = espnRepository.getSpecificNflTeam(teamAbv)
             team.value = result
             atheletes.value = result.athletes
             nextEvents.value = result.nextEvent
