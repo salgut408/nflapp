@@ -1,6 +1,8 @@
 package com.sgut.android.nationalfootballleague.teamdetails
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,14 +16,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun TeamDetailScreen(
     teamDetailViewModel: TeamDetailViewModel = hiltViewModel(),
+    modifier: Modifier = Modifier,
     team: String
 ) {
     //team vm need abbrv param
     teamDetailViewModel.loadTeamDetails(team)
     val team by remember {teamDetailViewModel.team}
-    val msg by remember {teamDetailViewModel.toastMessageObserver}
 
-    Column() {
+    Column(
+        modifier.verticalScroll(rememberScrollState())
+            .padding(vertical = 8.dp)
+    ) {
+
 
         team?.let { TeamDetailCard(team = it, modifier = Modifier.padding(8.dp)) }
 

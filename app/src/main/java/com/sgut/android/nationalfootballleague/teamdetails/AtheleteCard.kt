@@ -28,6 +28,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.util.CoilUtils
 import com.sgut.android.nationalfootballleague.Athletes
+import com.sgut.android.nationalfootballleague.R
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 
 @Composable
@@ -87,6 +88,7 @@ fun AltheleteCard2(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(athelete.headshot?.href)
                     .crossfade(true)
+                    .placeholder(R.drawable.ic_baseline_question_mark_24)
                     .build()
             )
             Image(

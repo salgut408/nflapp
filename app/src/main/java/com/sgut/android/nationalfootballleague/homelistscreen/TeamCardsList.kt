@@ -45,10 +45,11 @@ fun TeamCardsList(navController: NavController,
             },
             bottomBar = {
                 BottomAppBar(modifier = Modifier,) {
-                    IconButton(onClick = { /*TODO*/ }) {
+
+                    IconButton(onClick = { /*TODO*/ },  ) {
                         Icon(Icons.Default.Menu, contentDescription = null)
                     }
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton( onClick = { /*TODO*/ }) {
                         Icon(Icons.Filled.Favorite, contentDescription = null)
                     }
                     

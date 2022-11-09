@@ -26,9 +26,6 @@ class TeamDetailViewModel @Inject constructor(
 
     val nextEvents: MutableState<List<NextEvent3?>> = mutableStateOf(listOf())
 
-//    val primaryColor: MutableState<String?> = mutableStateOf(null)
-//    val alternateColor: MutableState<String?> = mutableStateOf(null)
-
 
     var toastMessageObserver: MutableState<String?> = mutableStateOf(null)
 

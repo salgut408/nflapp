@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavController
@@ -55,7 +56,11 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier, navController: NavContro
                     .size(150.dp)
 //                    .padding(8.dp)
             )
-            team.shortDisplayName?.let { Text(text = it,   style = MaterialTheme.typography.headlineMedium, color = Color(color.value), )  }
+            team.shortDisplayName?.let { Text(
+                                    text = it,
+                                    style = MaterialTheme.typography.headlineMedium
+                                        .copy(fontWeight = FontWeight.ExtraBold),
+                                    color = Color(color.value), )  }
 
 
 
