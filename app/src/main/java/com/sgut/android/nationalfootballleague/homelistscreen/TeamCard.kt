@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import androidx.navigation.NavController
@@ -19,9 +20,12 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sgut.android.nationalfootballleague.commoncomposables.Screen
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
+import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 
 @Composable
 fun TeamCard(team: TeamDomainModel, modifier: Modifier, navController: NavController) {
+
+    val color = HexToJetpackColor2.getColor(team.color!!)
 
 
     Card(
@@ -51,7 +55,7 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier, navController: NavContro
                     .size(150.dp)
 //                    .padding(8.dp)
             )
-            team.shortDisplayName?.let { Text(text = it,   style = MaterialTheme.typography.headlineMedium, )  }
+            team.shortDisplayName?.let { Text(text = it,   style = MaterialTheme.typography.headlineMedium, color = Color(color.value), )  }
 
 
 
