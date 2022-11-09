@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
@@ -25,6 +26,7 @@ import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import coil.util.CoilUtils
 import com.sgut.android.nationalfootballleague.Athletes
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 

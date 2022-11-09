@@ -26,8 +26,8 @@ class TeamDetailViewModel @Inject constructor(
 
     val nextEvents: MutableState<List<NextEvent3?>> = mutableStateOf(listOf())
 
-    val primaryColor: MutableState<String?> = mutableStateOf(null)
-    val alternateColor: MutableState<String?> = mutableStateOf(null)
+//    val primaryColor: MutableState<String?> = mutableStateOf(null)
+//    val alternateColor: MutableState<String?> = mutableStateOf(null)
 
 
     var toastMessageObserver: MutableState<String?> = mutableStateOf(null)
@@ -46,8 +46,7 @@ class TeamDetailViewModel @Inject constructor(
             team.value = result
             atheletes.value = result.athletes
             nextEvents.value = result.nextEvent
-            primaryColor.value = HexToJetpackColor.getColor(result.color!!).toString()
-            alternateColor.value = HexToJetpackColor.getColor(result.alternateColor!!).toString()
+
             Log.i("DEBUG", result.toString())
 
         } catch (e: Exception){

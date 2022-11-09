@@ -9,6 +9,6 @@ data class Competitors3 (
   @SerializedName("type"     ) var type     : String? = null,
   @SerializedName("order"    ) var order    : Int?    = null,
   @SerializedName("homeAway" ) var homeAway : String? = null,
-  @SerializedName("team"     ) var team     : Team?   = Team()
+  @SerializedName("team"     ) var team     : Team3?   = Team3()
 
 )

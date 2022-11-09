@@ -21,6 +21,7 @@ import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.sgut.android.nationalfootballleague.NextEvent3
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 
@@ -30,41 +31,43 @@ fun TeamDetailCard(
 ) {
 
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            //image
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        //image
 
-            val painter = rememberAsyncImagePainter(
-                model = ImageRequest.Builder(LocalContext.current)
+        val painter = rememberAsyncImagePainter(
+            model = ImageRequest.Builder(LocalContext.current)
 //                    .data(team.logos[0].href)
-                    .data(team.logos[0].href)
-                    .crossfade(true)
-                    .build()
-            )
+                .data(team.logos[0].href)
+                .crossfade(true)
+                .build()
+        )
 
-            team.displayName?.let { Text(text = it, style = MaterialTheme.typography.displayMedium) }
+        team.displayName?.let { Text(text = it, style = MaterialTheme.typography.displayMedium) }
 
 
-            Image(
-                painter = painter,
-                contentDescription = team.displayName,
-                modifier = Modifier
-//                    .padding(8.dp)
-
-                    .fillMaxWidth()
-            )
-            team.standingSummary?.let { Text(text = it, style = MaterialTheme.typography.bodySmall) }
-
-        }
-
-        Text(text = "Players", style = MaterialTheme.typography.titleSmall)
-
-        AtheleteRow()
-        NextEvent(nextEvent3 = team.nextEvent[0], modifier = modifier)
+        Image(
+            painter = painter,
+            contentDescription = team.displayName,
+            modifier = Modifier
+//                    .padding(8.dp
+                .fillMaxWidth()
+        )
+        team.standingSummary?.let { Text(text = it, style = MaterialTheme.typography.bodySmall) }
 
     }
+
+    Text(text = "Players", style = MaterialTheme.typography.titleSmall)
+
+    AtheleteRow()
+
+
+
+    team.nextEvent.getOrNull(0)?.let { NextEvent(nextEvent3 = it, modifier = modifier) }
+
+}
 
 
 

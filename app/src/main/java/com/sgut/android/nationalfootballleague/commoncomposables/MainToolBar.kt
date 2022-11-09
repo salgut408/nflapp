@@ -11,10 +11,9 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@Preview
-fun MainToolBar() {
+fun MainToolBar(title: @Composable () -> Unit,) {
     TopAppBar(
-        title = { Text("Sports!", color = Color.Red) },
+        title = title,
         navigationIcon = {
             Icon(imageVector = Icons.Default.Menu, contentDescription = null)
         },

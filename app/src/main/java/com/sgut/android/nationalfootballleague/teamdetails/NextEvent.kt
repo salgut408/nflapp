@@ -31,6 +31,8 @@ fun NextEvent(
             modifier = Modifier.fillMaxWidth()
         ) {
 
+
+
             Text(text = " ${nextEvent3.week?.text} Next Event:", style = MaterialTheme.typography.headlineSmall)
 
             nextEvent3.name?.let { Text(text = it, style = MaterialTheme.typography.titleLarge) }

@@ -27,3 +27,4 @@ data class Team3 (
   @SerializedName("standingSummary"  ) var standingSummary  : String?              = null
 
 )
+
