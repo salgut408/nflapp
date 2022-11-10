@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.sgut.android.nationalfootballleague.commoncomposables.DrawerNav
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,3 +21,23 @@ fun MainToolBar(title: @Composable () -> Unit,) {
 
     )
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+@Preview
+fun MyNewToolBar() {
+    CenterAlignedTopAppBar(
+
+        title = {Text(text = "Sports", style = MaterialTheme.typography.titleMedium)},
+        navigationIcon = {
+            IconButton(
+                onClick = {}
+            ) {
+                Icon(Icons.Filled.Menu, "")
+            }
+        },
+    )
+
+
+}
+

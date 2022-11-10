@@ -13,12 +13,15 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.di.MainToolBar
+import com.sgut.android.nationalfootballleague.di.MyNewToolBar
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,12 +31,20 @@ fun TeamCardsList(navController: NavController,
     val teamsList by remember {homeListViewModel.nflTeamsList}
 
 
-        Scaffold(
-            topBar = { TopAppBar(title = { Text("Sports") },
-                    colors = TopAppBarDefaults.smallTopAppBarColors()) },
+    val scope = rememberCoroutineScope()
 
-            content = { padding ->
-                Column(modifier = Modifier.padding(8.dp)) {
+
+    Scaffold(
+
+
+            topBar = { MyNewToolBar() },
+
+
+
+
+           content = { padding ->
+                Column(modifier = Modifier.padding(top=8.dp)) {
+
                     SearchBar()
 
                     LazyColumn(contentPadding = PaddingValues(16.dp)) {
@@ -43,10 +54,13 @@ fun TeamCardsList(navController: NavController,
                     }
                 }
             },
+
+
+
             bottomBar = {
                 BottomAppBar(modifier = Modifier,) {
 
-                    IconButton(onClick = { /*TODO*/ },  ) {
+                    IconButton(onClick = {  },  ) {
                         Icon(Icons.Default.Menu, contentDescription = null)
                     }
                     IconButton( onClick = { /*TODO*/ }) {

@@ -32,6 +32,8 @@ fun TeamDetailCard(
 
     val scrollState = rememberScrollState()
 
+
+
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
