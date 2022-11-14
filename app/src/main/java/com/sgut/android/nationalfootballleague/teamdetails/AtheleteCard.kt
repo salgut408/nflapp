@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.teamdetails
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.shape.CircleShape
@@ -74,7 +75,7 @@ fun AltheleteCard2(
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(),
         colors = CardDefaults.cardColors(),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().clickable {  } // navigate.to.athletedetailsScreen
 
     ) {
 

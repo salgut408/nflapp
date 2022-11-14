@@ -34,7 +34,7 @@ fun Navigation() {
                 val context = LocalContext.current
 
                 TeamDetailScreen(team = it,
-                    sendButtonOnclick = { subject: String, summary: String -> shareTeamAndNextEvent(context, subject, summary)}) }
+                    sendButtonOnclick = { subject: String, summary: String -> shareTeamAndNextEvent2(context, subject, summary)}) }
         }
     }
 }
@@ -42,7 +42,7 @@ fun Navigation() {
 
 
 
-private fun shareTeamAndNextEvent(
+private fun shareTeamAndNextEvent2(
     context: Context,
     subject: String,
     summary: String
