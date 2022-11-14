@@ -25,11 +25,7 @@ class MainActivity : ComponentActivity() {
             NationalFootballLeagueTheme {
 
 
-
-Navigation()
-//                TeamCardsList()
-//                    TeamDetailScreen()
-
+                Navigation()
 
 
             }

@@ -69,9 +69,7 @@ fun TeamCardsList(navController: NavController,
                     
                 }
             }
-//            bottomBar = {
-//                BottomAppBar(modifier = Modifier, contentColorFor(backgroundColor = MaterialTheme.colorScheme.onPrimaryContainer) ) { Text("BottomAppBar") }
-//            }
+
         )
 
 

@@ -1,11 +1,10 @@
 package com.sgut.android.nationalfootballleague.commoncomposables
 
-sealed class Screen (val route: String) {
-    object MainScreen: Screen("main_screen")
-    object DetailScreen: Screen("detail_screen")
+sealed class NavigationScreens (val route: String) {
+    object MainScreenTeamsList: NavigationScreens("team_cards_list")
+    object DetailScreenTeam: NavigationScreens("team_detail_screen")
+    object AthleteDetailScreen: NavigationScreens("athlete_detail_screen")
 
-    object MainScreenTeamsList: Screen("team_cards_list")
-    object DetailScreenTeam: Screen("team_detail_screen")
 
 
     fun withArgs(vararg args: String): String {

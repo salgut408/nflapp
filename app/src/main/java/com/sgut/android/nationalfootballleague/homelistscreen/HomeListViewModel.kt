@@ -5,12 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
-import com.sgut.android.nationalfootballleague.domain.ListUiState
+import com.sgut.android.nationalfootballleague.domain.UiState
 import com.sgut.android.nationalfootballleague.repository.EspnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,8 +20,8 @@ class HomeListViewModel @Inject constructor(
     private val espnRepository: EspnRepository
 ) : ViewModel() {
 
-    private val _listUiState = MutableStateFlow(ListUiState())
-    val listUiState: StateFlow<ListUiState> = _listUiState.asStateFlow()
+    private val _UiState = MutableStateFlow(UiState())
+    val uiState: StateFlow<UiState> = _UiState.asStateFlow()
 
 
     var allLists = mutableStateOf<List<TeamDomainModel>>(listOf())
@@ -43,6 +44,9 @@ class HomeListViewModel @Inject constructor(
 //        loadAllCollegeTeams()
 //        loadAllBaseballTeams()
         loadAllHockeyTeams()
+        _UiState.update { currentState ->
+            currentState.copy(list = nflTeamsList, isError = false, isLoading = true)
+        }
 //        loadAllBasketballTeams()
 //        loadAllSoccerTeams()
 //        loadAllWomensBasketballTeams()

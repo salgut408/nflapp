@@ -1,6 +1,9 @@
 package com.sgut.android.nationalfootballleague.commoncomposables
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,23 +12,50 @@ import androidx.navigation.navArgument
 import com.sgut.android.nationalfootballleague.homelistscreen.TeamCardsList
 import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 
+
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.MainScreenTeamsList.route){
-        composable(route = Screen.MainScreenTeamsList.route) {
+    NavHost(navController = navController, startDestination = NavigationScreens.MainScreenTeamsList.route){
+        composable(route = NavigationScreens.MainScreenTeamsList.route) {
                 TeamCardsList(navController = navController)
         }
         composable(
-            route = Screen.DetailScreenTeam.route + "/{teamName}",
+            route = NavigationScreens.DetailScreenTeam.route + "/{teamName}",
             arguments = listOf(
                 navArgument("teamName") {
                     type = NavType.StringType
                 }
-            )
+
+        )
 
         ) { entry ->
-            entry.arguments?.getString("teamName")?.let { TeamDetailScreen(team = it) }
+            entry.arguments?.getString("teamName")?.let {
+                val context = LocalContext.current
+
+                TeamDetailScreen(team = it,
+                    sendButtonOnclick = { subject: String, summary: String -> shareTeamAndNextEvent(context, subject, summary)}) }
         }
     }
+}
+
+
+
+
+private fun shareTeamAndNextEvent(
+    context: Context,
+    subject: String,
+    summary: String
+) {
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        putExtra(Intent.EXTRA_TEXT, summary)
+    }
+    context.startActivity(
+        Intent.createChooser(
+            intent,
+            "Check this out"
+        )
+    )
 }
