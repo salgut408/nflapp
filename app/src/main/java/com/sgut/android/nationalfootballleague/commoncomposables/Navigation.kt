@@ -2,8 +2,12 @@ package com.sgut.android.nationalfootballleague.commoncomposables
 
 import android.content.Context
 import android.content.Intent
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,9 +18,9 @@ import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 
 
 @Composable
-fun Navigation() {
+fun Navigation(navController: NavHostController, padding: PaddingValues) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = NavigationScreens.MainScreenTeamsList.route){
+    NavHost(navController = navController, startDestination = NavigationScreens.MainScreenTeamsList.route, modifier = Modifier.padding(padding)){
         composable(route = NavigationScreens.MainScreenTeamsList.route) {
                 TeamCardsList(navController = navController)
         }
@@ -34,7 +38,11 @@ fun Navigation() {
                 val context = LocalContext.current
 
                 TeamDetailScreen(team = it,
-                    sendButtonOnclick = { subject: String, summary: String -> shareTeamAndNextEvent2(context, subject, summary)}) }
+                    sendButtonOnclick = {
+                            subject: String, summary: String ->
+                        shareTeamAndNextEvent2(context, subject, summary)
+                    })
+            }
         }
     }
 }

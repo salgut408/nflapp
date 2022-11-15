@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -20,8 +19,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.sgut.android.nationalfootballleague.atheletedetail.AthleteDetailScreen
+import com.sgut.android.nationalfootballleague.commoncomposables.Navigation
 import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScreens
-import com.sgut.android.nationalfootballleague.di.MyNewToolBar
+import com.sgut.android.nationalfootballleague.di.MyNewToolBar2
 import com.sgut.android.nationalfootballleague.homelistscreen.HomeListViewModel
 import com.sgut.android.nationalfootballleague.homelistscreen.TeamCardsList
 import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
@@ -40,8 +41,13 @@ fun EspnApp(
 
     Scaffold(
         topBar = {
-            MyNewToolBar()
+            MyNewToolBar2(
+                currentScreen = backStackEntry?.destination?.route ?: NavigationScreens.MainScreenTeamsList.route,
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = {navController.navigateUp()}
+            )
         },
+
         bottomBar = {
             BottomAppBar(modifier = Modifier,) {
 
@@ -56,6 +62,8 @@ fun EspnApp(
         },
 
     ) { innerPadding ->
+
+//        Navigation(navController = navController, padding = innerPadding)
 
         NavHost(navController = navController, startDestination = NavigationScreens.MainScreenTeamsList.route, modifier.padding(innerPadding)){
             composable(route = NavigationScreens.MainScreenTeamsList.route) {
@@ -76,6 +84,12 @@ fun EspnApp(
 
                     TeamDetailScreen(team = it,
                         sendButtonOnclick = { subject: String, summary: String -> shareTeamAndNextEvent(context, subject, summary) }) }
+            }
+
+            composable(
+                route = NavigationScreens.AthleteDetailScreen.route,
+            ) {
+               AthleteDetailScreen()
             }
         }
 

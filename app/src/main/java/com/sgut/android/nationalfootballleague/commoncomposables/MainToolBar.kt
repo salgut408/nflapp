@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.di
 
 import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -22,10 +23,43 @@ fun MainToolBar(title: @Composable () -> Unit,) {
     )
 }
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyNewToolBar2(
+currentScreen: String,
+canNavigateBack: Boolean,
+navigateUp: ()->Unit,
+modifier: Modifier = Modifier
+) {
+    CenterAlignedTopAppBar(
+
+        title = {Text(text = "Sports!", style = MaterialTheme.typography.titleMedium)},
+        modifier = modifier,
+        navigationIcon = {
+            if(canNavigateBack) {
+                IconButton(onClick = navigateUp) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = ""
+                    )
+                }
+
+            }
+
+        },
+    )
+
+
+}
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
-fun MyNewToolBar() {
+fun MyNewToolBar(
+
+) {
     CenterAlignedTopAppBar(
 
         title = {Text(text = "Sports", style = MaterialTheme.typography.titleMedium)},

@@ -55,7 +55,7 @@ fun TeamDetailCard(
             painter = painter,
             contentDescription = team.displayName,
             modifier = Modifier
-                .fillMaxWidth()
+                .size(200.dp)
         )
 
         team.standingSummary?.let { Text(text = it, style = MaterialTheme.typography.displaySmall) }

@@ -8,10 +8,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sgut.android.nationalfootballleague.domain.TeamDetailsScreenUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,33 +27,47 @@ fun TeamDetailScreen(
 ) {
     //team vm need abbrv param
     teamDetailViewModel.loadTeamDetails(team)
-    val team by remember {teamDetailViewModel.team}
-
-    Column(
-        modifier
-            .verticalScroll(rememberScrollState())
-            .padding(vertical = 8.dp)
-    ) {
+    val team by remember { teamDetailViewModel.team }
 
 
-        team?.let { TeamDetailCard(team = it, modifier = Modifier.padding(8.dp)) }
+    if (team != null) {
 
-        Button(onClick = { sendButtonOnclick(team?.name!!, team!!.nextEvent[0].shortName!!) }) {
-            Text("Send")
+        Column(
+            modifier
+                .verticalScroll(rememberScrollState())
+                .padding(vertical = 8.dp)
+        ) {
+
+
+            team?.let { TeamDetailCard(team = it, modifier = Modifier.padding(8.dp)) }
+
+            Button(onClick = { sendButtonOnclick(team?.name!!, team!!.nextEvent[0].shortName!!) }) {
+                Text("Send")
+
+            }
 
         }
 
+
+    } else {
+        DataLoadingComponent()
     }
-
-
-
-
-
-
 }
 
 
 
+@Composable
+fun DataLoadingComponent() {
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        CircularProgressIndicator(modifier = Modifier.wrapContentWidth(CenterHorizontally))
+    }
+}
 
 
 
