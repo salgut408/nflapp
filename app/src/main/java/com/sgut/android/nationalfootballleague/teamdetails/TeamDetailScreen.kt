@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sgut.android.nationalfootballleague.commoncomposables.DataLoadingComponent
 import com.sgut.android.nationalfootballleague.domain.TeamDetailsScreenUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,8 +42,8 @@ fun TeamDetailScreen(
 
             team?.let { TeamDetailCard(team = it, modifier = Modifier.padding(8.dp)) }
 
-            Button(onClick = { sendButtonOnclick(team?.name!!, team!!.nextEvent[0].shortName!!) }) {
-                Text("Send")
+            Button(onClick = { sendButtonOnclick(team?.name!!, team!!.nextEvent[0].shortName!!) }, modifier.fillMaxWidth()) {
+                Text("Share Next Event")
 
             }
 
@@ -56,18 +57,7 @@ fun TeamDetailScreen(
 
 
 
-@Composable
-fun DataLoadingComponent() {
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        CircularProgressIndicator(modifier = Modifier.wrapContentWidth(CenterHorizontally))
-    }
-}
 
 
 

@@ -8,6 +8,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,11 +21,13 @@ import com.sgut.android.nationalfootballleague.ui.theme.md_theme_dark_background
 @Composable
 @Preview
 fun SearchBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+
 ) {
+    var searchString by remember {mutableStateOf("")}
     TextField (
-        value = "",
-        onValueChange = {},
+        value = searchString,
+        onValueChange = {searchString = it},
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,

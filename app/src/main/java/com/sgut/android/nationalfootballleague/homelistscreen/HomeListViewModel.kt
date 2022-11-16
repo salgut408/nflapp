@@ -41,8 +41,8 @@ class HomeListViewModel @Inject constructor(
 
     init {
         loadAllNflTeams()
-//        loadAllCollegeTeams()
-//        loadAllBaseballTeams()
+        loadAllCollegeTeams()
+        loadAllBaseballTeams()
         loadAllHockeyTeams()
         _UiState.update { currentState ->
             currentState.copy( isError = false, isLoading = false)

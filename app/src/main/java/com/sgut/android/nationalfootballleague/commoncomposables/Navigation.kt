@@ -17,6 +17,8 @@ import com.sgut.android.nationalfootballleague.homelistscreen.TeamCardsList
 import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 
 
+// this can be used OR spread out like in scaffold in app fx
+
 @Composable
 fun Navigation(navController: NavHostController, padding: PaddingValues) {
     val navController = rememberNavController()

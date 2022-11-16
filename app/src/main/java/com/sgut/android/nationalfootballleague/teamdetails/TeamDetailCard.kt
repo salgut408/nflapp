@@ -70,6 +70,7 @@ fun TeamDetailCard(
         team.nextEvent.getOrNull(0)?.let { NextEvent(nextEvent3 = it, modifier = modifier) }
 
 
+
     }
 
 

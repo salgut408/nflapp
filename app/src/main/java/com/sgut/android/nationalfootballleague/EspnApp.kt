@@ -54,8 +54,11 @@ fun EspnApp(
                 IconButton(onClick = {  },  ) {
                     Icon(Icons.Default.Menu, contentDescription = null)
                 }
-                IconButton( onClick = { /*TODO*/ }) {
-                    Icon(Icons.Filled.Favorite, contentDescription = null)
+                Button(onClick = { /*TODO*/ }) {
+                    Text("Basketball")
+                }
+                Button(onClick = { /*TODO*/ }) {
+                    Text("Hockey")
                 }
 
             }

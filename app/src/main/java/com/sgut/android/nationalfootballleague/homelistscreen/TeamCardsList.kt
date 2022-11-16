@@ -1,9 +1,6 @@
 package com.sgut.android.nationalfootballleague.homelistscreen
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -23,38 +20,38 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TeamCardsList(navController: NavController,
+// Team Cards List Screen
+fun TeamCardsList(
+    navController: NavController,
     homeListViewModel: HomeListViewModel = hiltViewModel(),
 ) {
-    val teamsList by remember {homeListViewModel.nflTeamsList}
-    val uiState = homeListViewModel.uiState.collectAsState()
+    val teamsList by remember { homeListViewModel.nflTeamsList }
+    val hockeyTeamsList by remember { homeListViewModel.hockeyTeamsList }
+    val uiState by homeListViewModel.uiState.collectAsState()
 
     val scope = rememberCoroutineScope()
 
-
     Scaffold(
+        topBar = {},
+        content = { padding ->
 
+            Column() {
+                SearchBar(modifier = Modifier.padding( 8.dp))
 
+                Row(){
+                    Button(onClick = { /*TODO*/ }) {
+                        Text("Hockey")
+                    }}
 
-
-
-           content = { padding ->
-                Column(modifier = Modifier.padding(top=8.dp)) {
-
-
-
-                    LazyColumn(contentPadding = PaddingValues(16.dp)) {
-                        items(items = teamsList) { team ->
-                            TeamCard(team = team, modifier = Modifier.padding(8.dp), navController)
-                        }
+                LazyColumn(contentPadding = PaddingValues(16.dp)) {
+                    items(items = teamsList) { team ->
+                        TeamCard(team = team, modifier = Modifier.padding(8.dp), navController)
                     }
-
-
                 }
-            },
-
+            }
+        },
 
         )
-    }
+}
 
 
