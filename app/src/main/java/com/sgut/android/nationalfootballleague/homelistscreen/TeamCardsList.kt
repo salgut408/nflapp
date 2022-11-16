@@ -24,10 +24,12 @@ import kotlinx.coroutines.launch
 fun TeamCardsList(
     navController: NavController,
     homeListViewModel: HomeListViewModel = hiltViewModel(),
+//    onHockeyButtonClicked: () -> Unit
 ) {
     val teamsList by remember { homeListViewModel.nflTeamsList }
     val hockeyTeamsList by remember { homeListViewModel.hockeyTeamsList }
-    val uiState by homeListViewModel.uiState.collectAsState()
+    // ^ Teams moved to listUiState
+    val uiState by homeListViewModel.listUiState.collectAsState()
 
     val scope = rememberCoroutineScope()
 
@@ -39,12 +41,21 @@ fun TeamCardsList(
                 SearchBar(modifier = Modifier.padding( 8.dp))
 
                 Row(){
-                    Button(onClick = { /*TODO*/ }) {
+                    Button(onClick = { homeListViewModel.setHockeyTeam() }) {
                         Text("Hockey")
-                    }}
+                    }
+                    Button(onClick = { homeListViewModel.setBaseballTeam() }) {
+                        Text("Baseball")
+                    }
+                    Button(onClick = { homeListViewModel.setFootballTeam() }) {
+                        Text("Football")
+                    }
+
+                }
 
                 LazyColumn(contentPadding = PaddingValues(16.dp)) {
-                    items(items = teamsList) { team ->
+                    items(items = uiState.currentTeam) { team ->
+
                         TeamCard(team = team, modifier = Modifier.padding(8.dp), navController)
                     }
                 }

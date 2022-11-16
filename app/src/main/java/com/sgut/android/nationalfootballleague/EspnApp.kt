@@ -32,7 +32,6 @@ import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 fun EspnApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    homeListViewModel: HomeListViewModel = hiltViewModel(),
 
     ) {
 
@@ -50,17 +49,9 @@ fun EspnApp(
 
         bottomBar = {
             BottomAppBar(modifier = Modifier,) {
-
                 IconButton(onClick = {  },  ) {
                     Icon(Icons.Default.Menu, contentDescription = null)
                 }
-                Button(onClick = { /*TODO*/ }) {
-                    Text("Basketball")
-                }
-                Button(onClick = { /*TODO*/ }) {
-                    Text("Hockey")
-                }
-
             }
         },
 

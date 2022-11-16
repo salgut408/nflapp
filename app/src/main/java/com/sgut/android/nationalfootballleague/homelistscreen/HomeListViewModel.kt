@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
-import com.sgut.android.nationalfootballleague.domain.UiState
+import com.sgut.android.nationalfootballleague.domain.ListUiState
 import com.sgut.android.nationalfootballleague.repository.EspnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,8 +20,8 @@ class HomeListViewModel @Inject constructor(
     private val espnRepository: EspnRepository
 ) : ViewModel() {
 
-    private val _UiState = MutableStateFlow(UiState())
-    val uiState: StateFlow<UiState> = _UiState.asStateFlow()
+    private val _ListUiState = MutableStateFlow(ListUiState())
+    val listUiState: StateFlow<ListUiState> = _ListUiState.asStateFlow()
 
 
     var allLists = mutableStateOf<List<TeamDomainModel>>(listOf())
@@ -43,13 +43,14 @@ class HomeListViewModel @Inject constructor(
         loadAllNflTeams()
         loadAllCollegeTeams()
         loadAllBaseballTeams()
-        loadAllHockeyTeams()
-        _UiState.update { currentState ->
-            currentState.copy( isError = false, isLoading = false)
-        }
-//        loadAllBasketballTeams()
-//        loadAllSoccerTeams()
-//        loadAllWomensBasketballTeams()
+        loadAllBasketballTeams()
+        loadAllSoccerTeams()
+        loadAllWomensBasketballTeams()
+
+//        when(_ListUiState) {
+//
+//        }
+
     }
 
     fun loadAllBaseballTeams() = viewModelScope.launch {
@@ -66,6 +67,9 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getTeams()
             nflTeamsList.value = result
+                    _ListUiState.update { currentState ->
+            currentState.copy(  currentTeam = result)
+        }
             Log.i("tag", result.toString())
         } catch (e: Exception) {
             Log.i("tag",e.message.toString())
@@ -129,6 +133,26 @@ class HomeListViewModel @Inject constructor(
         } catch (e: Exception) {
             Log.i("tag",e.message.toString())
 
+        }
+    }
+
+    fun setBaseballTeam() {
+       _ListUiState.update {
+           it.copy(currentTeam = baseballTeamsList.value)
+       }
+    }
+
+    fun setFootballTeam() {
+
+        _ListUiState.update {
+            it.copy(currentTeam = nflTeamsList.value)
+        }
+    }
+
+    fun setHockeyTeam() {
+//        loadAllHockeyTeams()
+        _ListUiState.update {
+            it.copy(currentTeam = hockeyTeamsList.value)
         }
     }
 

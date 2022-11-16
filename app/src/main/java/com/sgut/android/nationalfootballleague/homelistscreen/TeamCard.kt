@@ -33,7 +33,7 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier, navController: NavContro
             .clickable {
                 navController.navigate(NavigationScreens.DetailScreenTeam.withArgs(team.abbreviation!!))
             }
-           ) {
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -52,12 +52,14 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier, navController: NavContro
                     .size(150.dp)
 //                    .padding(8.dp)
             )
-            team.shortDisplayName?.let { Text(
-                                    text = it,
-                                    style = MaterialTheme.typography.headlineMedium
-                                        .copy(fontWeight = FontWeight.ExtraBold),
-                                    color = Color(color.value), )  }
-
+            team.shortDisplayName?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.headlineMedium
+                        .copy(fontWeight = FontWeight.ExtraBold),
+                    color = Color(color.value),
+                )
+            }
 
 
         }
@@ -66,12 +68,18 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier, navController: NavContro
             modifier = Modifier.fillMaxWidth()
 
         ) {
-            team.abbreviation?.let { Text(text = it,   style = MaterialTheme.typography.titleSmall, )  }
+            team.abbreviation?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.titleSmall,
+                )
+            }
 
         }
     }
-    
 }
+
+
 
 
 
