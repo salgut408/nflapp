@@ -39,10 +39,12 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier, navController: NavContro
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth()) {
 //             image
+
             val painter = rememberAsyncImagePainter(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(team.logos?.get(0)?.href)
                     .crossfade(true)
+
                     .build()
             )
             Image(

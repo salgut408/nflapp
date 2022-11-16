@@ -24,7 +24,8 @@ fun TeamDetailScreen(
     teamDetailViewModel: TeamDetailViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
     sendButtonOnclick: (String, String) -> Unit,
-    team: String
+    team: String,
+
 ) {
     //team vm need abbrv param
     teamDetailViewModel.loadTeamDetails(team)

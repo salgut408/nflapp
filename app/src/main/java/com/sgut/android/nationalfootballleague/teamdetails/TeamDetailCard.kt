@@ -25,7 +25,8 @@ import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithR
 
 @Composable
 fun TeamDetailCard(
-    team: TeamDetailWithRosterModel, modifier: Modifier,
+    team: TeamDetailWithRosterModel,
+    modifier: Modifier,
 ) {
     val color = HexToJetpackColor2.getColor(team.color!!)
     val altcolor = HexToJetpackColor2.getColor(team.alternateColor!!)

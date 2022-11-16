@@ -31,7 +31,6 @@ fun TeamCardsList(
     // ^ Teams moved to listUiState
     val uiState by homeListViewModel.listUiState.collectAsState()
 
-    val scope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {},
@@ -41,15 +40,22 @@ fun TeamCardsList(
                 SearchBar(modifier = Modifier.padding( 8.dp))
 
                 Row(){
+                    Button(onClick = { homeListViewModel.setFootballTeam() }) {
+                        Text("Football")
+                    }
                     Button(onClick = { homeListViewModel.setHockeyTeam() }) {
                         Text("Hockey")
                     }
                     Button(onClick = { homeListViewModel.setBaseballTeam() }) {
                         Text("Baseball")
                     }
-                    Button(onClick = { homeListViewModel.setFootballTeam() }) {
-                        Text("Football")
-                    }
+
+
+                    AssistChip(
+                        onClick = { homeListViewModel.setBasketballTeam()},
+                        label = { Text("Basketball") },
+
+                    )
 
                 }
 

@@ -85,24 +85,37 @@ fun AltheleteCard2(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            val painter = rememberAsyncImagePainter(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(athelete.headshot?.href)
-                    .crossfade(true)
-                    .placeholder(R.drawable.ic_baseline_question_mark_24)
-                    .build()
-            )
-            Image(
-                painter = painter,
-                contentDescription = athelete.displayName,
-                modifier = Modifier
-                    .size(150.dp)
-                    .padding(8.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.background)
-            )
 
+            Box() {
+                val painter = rememberAsyncImagePainter(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(athelete.headshot?.href)
+                        .crossfade(true)
+                        .placeholder(R.drawable.ic_baseline_question_mark_24)
+                        .build()
+                )
+                Image(
+                    painter = painter,
+                    contentDescription = athelete.displayName,
+                    modifier = Modifier
+                        .size(150.dp)
+                        .padding(8.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.background)
 
+                )
+                FloatingActionButton(
+                    onClick = { /* viewmodel save player ;) */ },
+                    shape = FloatingActionButtonDefaults.smallShape,
+                    modifier = Modifier.size(30.dp).align(Alignment.CenterStart).padding(start = 6.dp)
+                ) {
+                    Icon(
+                        Icons.Filled.Favorite,
+                        ""
+                    )
+                }
+
+            }
 
             Divider()
             Column(modifier = Modifier.padding(16.dp)) {
@@ -112,16 +125,16 @@ fun AltheleteCard2(
 //                athelete.injuries?.getOrNull(1).toString().let { Text("# $it") }
 //                athelete { Text(it.toString()) }
 
-                FloatingActionButton(
-                    onClick = { /* do something */ },
-                    shape = FloatingActionButtonDefaults.smallShape,
-                    modifier = Modifier.size(30.dp)
-                ) {
-                    Icon(
-                        Icons.Filled.Favorite,
-                        ""
-                    )
-                }
+//                FloatingActionButton(
+//                    onClick = { /* viewmodel save player ;) */ },
+//                    shape = FloatingActionButtonDefaults.smallShape,
+//                    modifier = Modifier.size(30.dp)
+//                ) {
+//                    Icon(
+//                        Icons.Filled.Favorite,
+//                        ""
+//                    )
+//                }
 
             }
         }

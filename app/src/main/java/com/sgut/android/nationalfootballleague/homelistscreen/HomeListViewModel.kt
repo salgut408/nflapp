@@ -46,6 +46,7 @@ class HomeListViewModel @Inject constructor(
         loadAllBasketballTeams()
         loadAllSoccerTeams()
         loadAllWomensBasketballTeams()
+        loadAllHockeyTeams()
 
 //        when(_ListUiState) {
 //
@@ -67,8 +68,8 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getTeams()
             nflTeamsList.value = result
-                    _ListUiState.update { currentState ->
-            currentState.copy(  currentTeam = result)
+            _ListUiState.update { currentState ->
+            currentState.copy(currentTeam = result, currentSport = "football", currentLeague = "nfl")
         }
             Log.i("tag", result.toString())
         } catch (e: Exception) {
@@ -138,21 +139,28 @@ class HomeListViewModel @Inject constructor(
 
     fun setBaseballTeam() {
        _ListUiState.update {
-           it.copy(currentTeam = baseballTeamsList.value)
+           it.copy(currentTeam = baseballTeamsList.value, currentSport = "baseball", currentLeague = "mlb")
        }
     }
 
-    fun setFootballTeam() {
-
+    fun setBasketballTeam() {
         _ListUiState.update {
-            it.copy(currentTeam = nflTeamsList.value)
+            it.copy(currentTeam = basketballTeamsList.value, currentSport = "basketball", currentLeague = "nba")
         }
     }
+
+    fun setFootballTeam() {
+        _ListUiState.update {
+            it.copy(currentTeam = nflTeamsList.value, currentSport = "football", currentLeague = "nfl")
+        }
+    }
+
+
 
     fun setHockeyTeam() {
 //        loadAllHockeyTeams()
         _ListUiState.update {
-            it.copy(currentTeam = hockeyTeamsList.value)
+            it.copy(currentTeam = hockeyTeamsList.value, currentSport = "hockey", currentLeague = "nhl")
         }
     }
 

@@ -47,6 +47,8 @@ fun EspnApp(
             )
         },
 
+
+
         bottomBar = {
             BottomAppBar(modifier = Modifier,) {
                 IconButton(onClick = {  },  ) {
@@ -68,7 +70,8 @@ fun EspnApp(
                 arguments = listOf(
                     navArgument("teamName") {
                         type = NavType.StringType
-                    }
+                    },
+
 
                 )
 
@@ -86,6 +89,9 @@ fun EspnApp(
                AthleteDetailScreen()
             }
         }
+
+
+
 
     }
 
