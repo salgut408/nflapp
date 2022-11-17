@@ -58,6 +58,7 @@ fun TeamDetailCard(
                 .build()
         )
 
+
         team.displayName?.let { Text(text = it, style = MaterialTheme.typography.displayMedium, color = altcolor ) }
 
         Image(
@@ -81,6 +82,26 @@ fun TeamDetailCard(
             modifier = Modifier
                 .size(200.dp)
         )
+
+        if(team.franchise?.venue!!.images3.size>1) {
+            val interiorVenuePainter = rememberAsyncImagePainter(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(team.franchise?.venue!!.images3[1].href)
+                    .crossfade(true)
+
+                    .build()
+            )
+            Image(
+                painter = interiorVenuePainter,
+                contentDescription = team.displayName,
+                modifier = Modifier
+                    .size(200.dp)
+            )
+
+        }
+
+
+
 
         team.nextEvent.getOrNull(0)?.let { NextEvent(nextEvent3 = it, modifier = modifier) }
 
