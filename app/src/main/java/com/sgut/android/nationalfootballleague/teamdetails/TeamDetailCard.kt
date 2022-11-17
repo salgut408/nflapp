@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.teamdetails
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -50,6 +51,13 @@ fun TeamDetailCard(
                 .build()
         )
 
+        val venuePainter = rememberAsyncImagePainter(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(team.franchise?.venue!!.images3[0].href)
+                .crossfade(true)
+                .build()
+        )
+
         team.displayName?.let { Text(text = it, style = MaterialTheme.typography.displayMedium, color = altcolor ) }
 
         Image(
@@ -67,10 +75,16 @@ fun TeamDetailCard(
 
         AtheleteRow()
 
+        Image(
+            painter = venuePainter,
+            contentDescription = team.displayName,
+            modifier = Modifier
+                .size(200.dp)
+        )
 
         team.nextEvent.getOrNull(0)?.let { NextEvent(nextEvent3 = it, modifier = modifier) }
 
-
+        team.franchise?.venue!!.images3[0].href?.let { Log.d("TAG", it) }
 
     }
 

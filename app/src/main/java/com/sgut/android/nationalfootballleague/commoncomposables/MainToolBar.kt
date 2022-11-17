@@ -32,9 +32,11 @@ fun MyNewToolBar2(
 currentScreen: String,
 canNavigateBack: Boolean,
 navigateUp: ()->Unit,
-modifier: Modifier = Modifier
+modifier: Modifier = Modifier,
+        scrollBehavior: TopAppBarScrollBehavior
 ) {
-   TopAppBar(
+
+    TopAppBar(
 
         title = {Text(text = currentScreen,)  },
 
@@ -50,6 +52,7 @@ modifier: Modifier = Modifier
             }
 
         },
+       scrollBehavior = scrollBehavior
     )
 
 
