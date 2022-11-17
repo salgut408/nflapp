@@ -38,7 +38,6 @@ fun TeamCardsList(
         content = { padding ->
 
             Column() {
-                SearchBar(modifier = Modifier)
 
                 LazyRow(contentPadding = PaddingValues(16.dp)){
                    item { Button(onClick = { homeListViewModel.setFootballTeam() }) {

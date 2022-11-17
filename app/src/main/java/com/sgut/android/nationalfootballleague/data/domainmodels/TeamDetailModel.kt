@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.*
 
 data class TeamDetailModel(
-
     var id: String? = null,
     var uid: String? = null,
     var slug: String? = null,

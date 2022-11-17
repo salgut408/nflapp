@@ -36,8 +36,8 @@ modifier: Modifier = Modifier
 ) {
    TopAppBar(
 
-        title = {Text(text = "Sports!", style = MaterialTheme.typography.titleMedium)},
-        modifier = modifier.height(46.dp),
+        title = {Text(text = currentScreen,)  },
+
         navigationIcon = {
             if(canNavigateBack) {
                 IconButton(onClick = navigateUp) {

@@ -16,6 +16,15 @@ interface EspnApi {
         teamAbbreviation: String? = null
     ): Response<TeamDetailResponse2>
 
+    @GET("sports/{sport}/{league}/teams/{teamAbbreviation}?enable=roster,headshot")
+    suspend fun getSpecificTeam(
+        @Path("sport")
+        sport: String? = null,
+        @Path("league")
+        league: String? = null,
+        @Path("teamAbbreviation")
+        teamAbbreviation: String? = null
+    ): Response<TeamDetailResponse2>
 
 //    @GET("sports/football/college-football/teams/ucla?enable=roster,headshot")
 
