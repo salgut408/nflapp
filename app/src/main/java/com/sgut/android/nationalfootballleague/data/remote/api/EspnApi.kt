@@ -1,7 +1,6 @@
 package com.sgut.android.nationalfootballleague.data.remote.api
 
 import com.sgut.android.nationalfootballleague.NFLTeamsResponse
-import com.sgut.android.nationalfootballleague.TeamDetailResponse
 import com.sgut.android.nationalfootballleague.TeamDetailResponse2
 import retrofit2.Response
 import retrofit2.http.GET

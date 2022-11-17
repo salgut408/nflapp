@@ -1,11 +1,10 @@
 package com.sgut.android.nationalfootballleague.data.dtomappers
 
-import com.sgut.android.nationalfootballleague.Team2
-import com.sgut.android.nationalfootballleague.TeamDetailResponse
+import com.sgut.android.nationalfootballleague.Team3
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailModel
 
-class TeamDetailNetworkToModelMapper: DomainMapper <Team2, TeamDetailModel> {
-    override fun mapToDomainModel(model: Team2): TeamDetailModel {
+class TeamDetailNetworkToModelMapper: DomainMapper <Team3, TeamDetailModel> {
+    override fun mapToDomainModel(model: Team3): TeamDetailModel {
         return TeamDetailModel(
             abbreviation = model.abbreviation,
             alternateColor = model.alternateColor,
@@ -15,9 +14,9 @@ class TeamDetailNetworkToModelMapper: DomainMapper <Team2, TeamDetailModel> {
             groups = model.groups,
             id = model.id,
             isActive = model.isActive,
-            links2 = model.links2,
+            links2 = model.links,
             location = model.location,
-            logos2 = model.logos2,
+            logos2 = model.logos,
             name = model.name,
             nextEvent = model.nextEvent,
             record = model.record,

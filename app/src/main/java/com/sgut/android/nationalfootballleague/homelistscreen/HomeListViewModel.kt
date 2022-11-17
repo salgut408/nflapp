@@ -23,9 +23,6 @@ class HomeListViewModel @Inject constructor(
     private val _ListUiState = MutableStateFlow(ListUiState())
     val listUiState: StateFlow<ListUiState> = _ListUiState.asStateFlow()
 
-
-    var allLists = mutableStateOf<List<TeamDomainModel>>(listOf())
-
      var nflTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
      var collegeTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
      var baseballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
@@ -33,9 +30,6 @@ class HomeListViewModel @Inject constructor(
      var basketballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
      var soccerTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
      var womensBasketballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
-
-
-
 
 
 
@@ -48,9 +42,7 @@ class HomeListViewModel @Inject constructor(
         loadAllWomensBasketballTeams()
         loadAllHockeyTeams()
 
-//        when(_ListUiState) {
-//
-//        }
+
 
     }
 
@@ -161,6 +153,24 @@ class HomeListViewModel @Inject constructor(
 //        loadAllHockeyTeams()
         _ListUiState.update {
             it.copy(currentTeam = hockeyTeamsList.value, currentSport = "hockey", currentLeague = "nhl")
+        }
+    }
+
+    fun setWnbaTeam() {
+        _ListUiState.update {
+            it.copy(currentTeam = womensBasketballTeamsList.value, currentSport = "womensbasketball", currentLeague = "wnba")
+        }
+    }
+
+    fun setMlsTeam() {
+        _ListUiState.update {
+            it.copy(currentTeam = soccerTeamsList.value, currentSport = "soccer", currentLeague = "mls.us1")
+        }
+    }
+
+    fun setCollegeTeam() {
+        _ListUiState.update {
+            it.copy(currentTeam = collegeTeamsList.value, currentSport = "football", currentLeague = "college-football")
         }
     }
 
