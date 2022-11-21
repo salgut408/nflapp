@@ -25,10 +25,12 @@ fun TeamDetailScreen(
     modifier: Modifier = Modifier,
     sendButtonOnclick: (String, String) -> Unit,
     team: String,
+    sport: String,
+    league: String,
 
 ) {
     //team vm need abbrv param
-    teamDetailViewModel.loadTeamDetails(team)
+    teamDetailViewModel.loadTeamDetails2(team, sport, league)
     val team by remember { teamDetailViewModel.team }
 
 

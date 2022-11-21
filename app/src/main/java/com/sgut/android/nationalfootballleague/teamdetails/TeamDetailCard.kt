@@ -44,71 +44,83 @@ fun TeamDetailCard(
             .background(Color(color.value))
     ) {
         //image
-        val painter = rememberAsyncImagePainter(
+        val logoPainter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(team.logos[0].href)
                 .crossfade(true)
                 .build()
         )
-
-        val venuePainter = rememberAsyncImagePainter(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(team.franchise?.venue!!.images3[0].href)
-                .crossfade(true)
-                .build()
-        )
-
-
         team.displayName?.let { Text(text = it, style = MaterialTheme.typography.displayMedium, color = altcolor ) }
+        team.standingSummary?.let { Text(text = it, style = MaterialTheme.typography.displaySmall) }
+
 
         Image(
-            painter = painter,
+            painter = logoPainter,
             contentDescription = team.displayName,
             modifier = Modifier
                 .size(200.dp)
         )
 
-        team.standingSummary?.let { Text(text = it, style = MaterialTheme.typography.displaySmall) }
+        Card() {
+
+Column(){
+
+            val venuePainter = rememberAsyncImagePainter(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(team.franchise?.venue!!.images3[0].href)
+                    .crossfade(true)
+                    .build()
+            )
+
+
+            Text(text = team.franchise?.venue!!.fullName, style = MaterialTheme.typography.bodyLarge)
+
+
+            Image(
+                painter = venuePainter,
+                contentDescription = team.displayName,
+                modifier = Modifier
+                    .size(200.dp)
+
+            )
+
+            if(team.franchise?.venue!!.images3.size>1) {
+                val interiorVenuePainter = rememberAsyncImagePainter(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(team.franchise?.venue!!.images3[1].href)
+                        .crossfade(true)
+
+                        .build()
+                )
+                Image(
+                    painter = interiorVenuePainter,
+                    contentDescription = team.displayName,
+                    modifier = Modifier
+                        .size(200.dp)
+                )
+
+            }
+
+}
+        }
 
 
 
-        Text(text = "Players", style = MaterialTheme.typography.titleSmall,)
+
+        Text(text = "Team", style = MaterialTheme.typography.titleSmall,)
 
         AtheleteRow()
 
 
-        Image(
-            painter = venuePainter,
-            contentDescription = team.displayName,
-            modifier = Modifier
-                .size(200.dp)
-        )
 
-        Text(text = team.franchise?.venue!!.fullName, style = MaterialTheme.typography.bodyLarge)
 
-        if(team.franchise?.venue!!.images3.size>1) {
-            val interiorVenuePainter = rememberAsyncImagePainter(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(team.franchise?.venue!!.images3[1].href)
-                    .crossfade(true)
 
-                    .build()
-            )
-            Image(
-                painter = interiorVenuePainter,
-                contentDescription = team.displayName,
-                modifier = Modifier
-                    .size(200.dp)
-            )
-
-        }
 
 
 
 
         team.nextEvent.getOrNull(0)?.let { NextEvent(nextEvent3 = it, modifier = modifier) }
 
-        team.franchise?.venue!!.images3[0].href?.let { Log.d("TAG", it) }
 
     }
 

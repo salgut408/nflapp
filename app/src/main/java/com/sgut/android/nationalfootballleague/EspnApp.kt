@@ -21,7 +21,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.sgut.android.nationalfootballleague.atheletedetail.AthleteDetailScreen
-import com.sgut.android.nationalfootballleague.commoncomposables.Navigation
 import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScreens
 import com.sgut.android.nationalfootballleague.di.MyNewToolBar2
 import com.sgut.android.nationalfootballleague.homelistscreen.HomeListViewModel
@@ -71,22 +70,31 @@ fun EspnApp(
                 TeamCardsList(navController = navController)
             }
             composable(
-                route = NavigationScreens.DetailScreenTeam.route + "/{teamName}",
+                route = NavigationScreens.DetailScreenTeam.route + "/{teamName}/{sport}/{league}",
                 arguments = listOf(
                     navArgument("teamName") {
                         type = NavType.StringType
                     },
-
+                    navArgument("sport") {
+                        type = NavType.StringType
+                    },
+                    navArgument("league") {
+                        type = NavType.StringType
+                    },
 
                 )
 
             ) { entry ->
-                entry.arguments?.getString("teamName")?.let {
-                    val context = LocalContext.current
+              var teamName = entry.arguments?.getString("teamName")!!
+                var sportName = entry.arguments?.getString("sport")!!
+                var leagueName = entry.arguments?.getString("league")!!
 
-                    TeamDetailScreen(team = it,
+
+                val context = LocalContext.current
+
+                    TeamDetailScreen(team = teamName, sport = sportName, league = leagueName,
                         sendButtonOnclick = { subject: String, summary: String -> shareTeamAndNextEvent(context, subject, summary) }) }
-            }
+
 
             composable(
                 route = NavigationScreens.AthleteDetailScreen.route,

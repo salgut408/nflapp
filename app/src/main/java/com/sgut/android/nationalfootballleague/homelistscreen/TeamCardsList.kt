@@ -31,6 +31,8 @@ fun TeamCardsList(
 //    val hockeyTeamsList by remember { homeListViewModel.hockeyTeamsList }
     // ^ Teams moved to listUiState current team list
     val uiState by homeListViewModel.listUiState.collectAsState()
+    var sport = uiState.currentSport
+    var league = uiState.currentLeague
 
 
     Scaffold(
@@ -68,7 +70,7 @@ fun TeamCardsList(
                 LazyColumn(contentPadding = PaddingValues(16.dp)) {
                     items(items = uiState.currentTeam) { team ->
 
-                        TeamCard(team = team, modifier = Modifier.padding(8.dp), navController)
+                        TeamCard(team = team, modifier = Modifier.padding(8.dp), navController , sport =sport, league = league)
                     }
                 }
             }

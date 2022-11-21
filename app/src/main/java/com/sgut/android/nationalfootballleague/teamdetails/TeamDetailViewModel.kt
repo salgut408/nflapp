@@ -53,6 +53,22 @@ class TeamDetailViewModel @Inject constructor(
         }
     }
 
+    fun loadTeamDetails2(teamAbv: String, sport:String, league: String) = viewModelScope.launch {
+        try {
+            val result = espnRepository.getSpecificTeam(sport, league, teamAbv)
+            team.value = result
+            atheletes.value = result.athletes
+            nextEvents.value = result.nextEvent
+
+            Log.i("DEBUG", result.toString())
+
+        } catch (e: Exception){
+            Log.i("DEBUG",e.message.toString())
+            toastMessageObserver?.value =  e.toString()
+
+        }
+    }
+
 
 
 

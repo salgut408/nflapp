@@ -20,7 +20,7 @@ import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 
 @Composable
-fun TeamCard(team: TeamDomainModel, modifier: Modifier, navController: NavController) {
+fun TeamCard(team: TeamDomainModel, modifier: Modifier, navController: NavController, sport:String, league:String) {
 
     val color = HexToJetpackColor2.getColor(team.color!!)
 
@@ -31,7 +31,7 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier, navController: NavContro
         elevation = CardDefaults.elevatedCardElevation(),
         modifier = modifier
             .clickable {
-                navController.navigate(NavigationScreens.DetailScreenTeam.withArgs(team.abbreviation!!))
+                navController.navigate(NavigationScreens.DetailScreenTeam.withArgs(team.abbreviation!!, sport, league))
             }
     ) {
         Row(
