@@ -150,7 +150,6 @@ class HomeListViewModel @Inject constructor(
 
 
     fun setHockeyTeam() {
-//        loadAllHockeyTeams()
         _ListUiState.update {
             it.copy(currentTeam = hockeyTeamsList.value, currentSport = "hockey", currentLeague = "nhl")
         }

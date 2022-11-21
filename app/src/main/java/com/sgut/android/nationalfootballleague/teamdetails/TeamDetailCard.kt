@@ -76,12 +76,15 @@ fun TeamDetailCard(
 
         AtheleteRow()
 
+
         Image(
             painter = venuePainter,
             contentDescription = team.displayName,
             modifier = Modifier
                 .size(200.dp)
         )
+
+        Text(text = team.franchise?.venue!!.fullName, style = MaterialTheme.typography.bodyLarge)
 
         if(team.franchise?.venue!!.images3.size>1) {
             val interiorVenuePainter = rememberAsyncImagePainter(

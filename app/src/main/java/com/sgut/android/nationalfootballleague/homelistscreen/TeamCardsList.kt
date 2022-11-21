@@ -40,35 +40,29 @@ fun TeamCardsList(
             Column() {
 
                 LazyRow(contentPadding = PaddingValues(16.dp)){
+
                    item { Button(onClick = { homeListViewModel.setFootballTeam() }) {
-                        Text("NFL")
+                        Text("NFL", style = MaterialTheme.typography.labelSmall)
                     }}
                    item { Button(onClick = { homeListViewModel.setHockeyTeam() }) {
-                        Text("NHL")
+                        Text("NHL", style = MaterialTheme.typography.labelSmall)
                     }}
                    item { Button(onClick = { homeListViewModel.setBaseballTeam() }) {
-                        Text("MLB")
+                        Text("MLB", style = MaterialTheme.typography.labelSmall)
                     }}
                     item { Button(onClick = { homeListViewModel.setWnbaTeam() }) {
-                        Text("WNBA")
+                        Text("WNBA", style = MaterialTheme.typography.labelSmall)
                     }}
 
                     item { Button(onClick = { homeListViewModel.setMlsTeam() }) {
-                        Text("MLS")
+                        Text("MLS", style = MaterialTheme.typography.labelSmall)
                     }}
                     item { Button(onClick = { homeListViewModel.setCollegeTeam() }) {
-                        Text("College Football")
+                        Text("College Football", style = MaterialTheme.typography.labelSmall)
                     }}
-
-
-                    item {
-                        AssistChip(
-                            onClick = { homeListViewModel.setBasketballTeam() },
-                            label = { Text("Basketball") },
-
-                            )
-                    }
-
+                    item { Button(onClick = { homeListViewModel.setBasketballTeam() }) {
+                        Text("NBA", style = MaterialTheme.typography.labelSmall )
+                    } }
                 }
 
                 LazyColumn(contentPadding = PaddingValues(16.dp)) {

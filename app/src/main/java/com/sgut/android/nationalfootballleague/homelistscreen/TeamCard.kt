@@ -62,8 +62,6 @@ fun TeamCard(team: TeamDomainModel, modifier: Modifier, navController: NavContro
                     color = Color(color.value),
                 )
             }
-
-
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
