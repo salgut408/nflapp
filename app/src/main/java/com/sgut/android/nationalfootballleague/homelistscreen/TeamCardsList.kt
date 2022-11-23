@@ -69,6 +69,9 @@ fun TeamCardsList(
                     item { Button(onClick = { homeListViewModel.setBasketballTeam() }) {
                         Text("NBA", style = MaterialTheme.typography.labelSmall )
                     } }
+                    item { Button(onClick = { homeListViewModel.setWorldCupTeam() }) {
+                        Text("World Cup", style = MaterialTheme.typography.labelSmall )
+                    } }
                 }
 
                 LazyColumn(contentPadding = PaddingValues(16.dp)) {

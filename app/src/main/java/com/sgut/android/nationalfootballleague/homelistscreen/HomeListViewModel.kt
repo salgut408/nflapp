@@ -30,6 +30,7 @@ class HomeListViewModel @Inject constructor(
      var basketballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
      var soccerTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
      var womensBasketballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+    var worldCupTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
 
 
 
@@ -41,6 +42,7 @@ class HomeListViewModel @Inject constructor(
         loadAllSoccerTeams()
         loadAllWomensBasketballTeams()
         loadAllHockeyTeams()
+        loadWorldCupTeams()
 
 
 
@@ -117,6 +119,18 @@ class HomeListViewModel @Inject constructor(
         }
     }
 
+    fun loadWorldCupTeams() = viewModelScope.launch {
+        try {
+            val result = espnRepository.getAllWorldCupTeams()
+            worldCupTeams.value = result
+            Log.i("tag", result.toString())
+
+        } catch (e: Exception) {
+            Log.i("tag",e.message.toString())
+
+        }
+    }
+
     fun loadAllWomensBasketballTeams() = viewModelScope.launch {
         try {
             val result = espnRepository.getAllWomensBasketballTeams()
@@ -163,7 +177,7 @@ class HomeListViewModel @Inject constructor(
 
     fun setMlsTeam() {
         _ListUiState.update {
-            it.copy(currentTeam = soccerTeamsList.value, currentSport = "soccer", currentLeague = "fifa.world")
+            it.copy(currentTeam = soccerTeamsList.value, currentSport = "soccer", currentLeague = "usa.1")
         }
     }
 
@@ -173,6 +187,11 @@ class HomeListViewModel @Inject constructor(
         }
     }
 
+    fun setWorldCupTeam() {
+        _ListUiState.update {
+            it.copy(currentTeam = worldCupTeams.value, currentSport = "soccer", currentLeague = "fifa.world")
+        }
+    }
 
 
 }

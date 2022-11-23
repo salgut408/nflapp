@@ -111,11 +111,24 @@ class EspnRepository @Inject constructor(
         return teamDomainModelMapper.toDomainList(result!!)
     }
 
+    suspend fun getAllWorldCupTeams(): List<TeamDomainModel> {
+        val response = espnApi.getAllFifaSoccerTeams()
+        if(response.isSuccessful){
+            val teamsResponse = espnApi.getAllFifaSoccerTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
+            Log.e("tag", "Response successful")
+            return teamDomainModelMapper.toDomainList(teamsResponse!!)
+        } else {
+            Log.e(javaClass.name, response.errorBody().toString())
+        }
+        var result = espnApi.getAllFifaSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+        return teamDomainModelMapper.toDomainList(result!!)
+    }
+
     suspend fun getSpecificNflTeam(team: String): TeamDetailWithRosterModel {
         val response = espnApi.getSpecificNflTeam(team)
         if(response.isSuccessful){
             val teamDetailResponse = espnApi.getSpecificNflTeam(team).body()?.team
-            Log.e("tag-REpository spefici team", "Response successful $teamDetailResponse")
+            Log.e("repository spefici team", "Response successful $teamDetailResponse")
             return rosterMapper.mapToDomainModel(teamDetailResponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
@@ -128,10 +141,10 @@ class EspnRepository @Inject constructor(
         val response = espnApi.getSpecificNflTeam(team)
         if(response.isSuccessful){
             val teamDetailResponse = espnApi.getSpecificTeam(sport, league, team).body()?.team
-            Log.e("SPECIFIC TEAM DEBUG-repo", "Response successful $teamDetailResponse")
+            Log.e("TEAM DEBUG-repo", "Response successful $teamDetailResponse")
             return rosterMapper.mapToDomainModel(teamDetailResponse!!)
         } else {
-            Log.e("SPECIFIC TEAM DEBUG-repo", response.errorBody().toString())
+            Log.e("TEAM DEBUG-repo", response.errorBody().toString())
         }
         var result = espnApi.getSpecificTeam(sport, league, team).body()?.team
         return rosterMapper.mapToDomainModel(result!!)

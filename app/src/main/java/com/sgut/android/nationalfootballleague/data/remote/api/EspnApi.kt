@@ -44,7 +44,7 @@ interface EspnApi {
     @GET("sports/basketball/nba/teams")
     suspend fun getAllBasketballTeams(): Response<NFLTeamsResponse>
 
-    @GET("sports/soccer/fifa.world/teams")
+    @GET("sports/soccer/usa.1/teams")
     suspend fun getAllSoccerTeams(): Response<NFLTeamsResponse>
 
     @GET("sports/soccer/fifa.world/teams")
