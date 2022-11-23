@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.ui.graphics.Brush
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
@@ -39,9 +41,14 @@ fun TeamDetailCard(
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
+
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color(color.value))
+            .background(
+                Brush.verticalGradient(
+                    listOf(color, altcolor)
+                )
+            )
     ) {
         //image
         val logoPainter = rememberAsyncImagePainter(
@@ -63,13 +70,20 @@ fun TeamDetailCard(
 
         Card() {
 
-Column(){
+Column(
+    verticalArrangement = Arrangement.spacedBy(24.dp),
+    horizontalAlignment = Alignment.CenterHorizontally,
+){
 
             val venuePainter = rememberAsyncImagePainter(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(team.franchise?.venue!!.images3[0].href)
-                    .crossfade(true)
-                    .build()
+
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(team.franchise?.venue!!.images3[0].href)
+                        .crossfade(true)
+                        .crossfade(1000)
+                        .build()
+
+
             )
 
 
@@ -89,7 +103,7 @@ Column(){
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(team.franchise?.venue!!.images3[1].href)
                         .crossfade(true)
-
+                        .crossfade(1000)
                         .build()
                 )
                 Image(
@@ -121,6 +135,8 @@ Column(){
 
         team.nextEvent.getOrNull(0)?.let { NextEvent(nextEvent3 = it, modifier = modifier) }
 
+        StatBox(stats = team.record?.items?.get(0)?.summary.toString())
+
 
     }
 
@@ -128,7 +144,6 @@ Column(){
 
 
 
-        StatBox(stats = team.record?.items?.get(0)?.summary.toString())
 
 
 

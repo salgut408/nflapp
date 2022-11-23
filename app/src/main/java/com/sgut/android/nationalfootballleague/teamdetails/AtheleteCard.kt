@@ -91,7 +91,7 @@ fun AltheleteCard2(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(athelete.headshot?.href)
                         .crossfade(true)
-                        .placeholder(R.drawable.ic_baseline_question_mark_24)
+                        .crossfade(100)
                         .build()
                 )
                 Image(
@@ -122,19 +122,16 @@ fun AltheleteCard2(
                 athelete.displayName?.let { Text(it) }
                 athelete.position?.displayName?.let { Text(it) }
                 athelete.jersey?.let { Text("# $it") }
-//                athelete.injuries?.getOrNull(1).toString().let { Text("# $it") }
+                athelete.active.let { Text("Active: $it") }
+
+
+//                for(i in athelete.injuries!!) {
+//                    Text(i.toString())
+//                }
+
 //                athelete { Text(it.toString()) }
 
-//                FloatingActionButton(
-//                    onClick = { /* viewmodel save player ;) */ },
-//                    shape = FloatingActionButtonDefaults.smallShape,
-//                    modifier = Modifier.size(30.dp)
-//                ) {
-//                    Icon(
-//                        Icons.Filled.Favorite,
-//                        ""
-//                    )
-//                }
+
 
             }
         }

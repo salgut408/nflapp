@@ -41,7 +41,11 @@ fun TeamCardsList(
 
             Column() {
 
-                LazyRow(contentPadding = PaddingValues(16.dp)){
+                LazyRow(
+                    contentPadding = PaddingValues(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+
+                    ){
 
                    item { Button(onClick = { homeListViewModel.setFootballTeam() }) {
                         Text("NFL", style = MaterialTheme.typography.labelSmall)

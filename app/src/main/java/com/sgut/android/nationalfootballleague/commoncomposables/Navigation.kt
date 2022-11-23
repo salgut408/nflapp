@@ -50,8 +50,6 @@ import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 //}
 
 
-
-
 private fun shareTeamAndNextEvent2(
     context: Context,
     subject: String,

@@ -33,11 +33,11 @@ fun NextEvent(
 
 
 
-            Text(text = " ${nextEvent3.week?.text} Next Event:", style = MaterialTheme.typography.headlineSmall)
+            Text(text = "Next Event:", style = MaterialTheme.typography.headlineSmall)
 
             nextEvent3.name?.let { Text(text = it, style = MaterialTheme.typography.titleLarge) }
             nextEvent3.competitions[0].venue?.fullName.let { Text(text = it!!, style = MaterialTheme.typography.titleSmall) }
-
+            nextEvent3.date?.let { Text(text = it, style = MaterialTheme.typography.titleSmall) }
         }
 
 

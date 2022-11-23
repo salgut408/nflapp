@@ -15,7 +15,7 @@ data class Competitions3 (
   @SerializedName("ticketsAvailable"  ) var ticketsAvailable  : Boolean?               = null,
   @SerializedName("venue"             ) var venue             : Venue3?                 = Venue3(),
   @SerializedName("competitors"       ) var competitors       : List<Competitors3> = listOf(),
-  @SerializedName("notes"             ) var notes             : List<String>      = listOf(),
+//  @SerializedName("notes"             ) var notes             : List<String>      = listOf(),
 //  @SerializedName("broadcasts"        ) var broadcasts        : List<Broadcasts>  = listOf(),
   @SerializedName("tickets"           ) var tickets           : List<Tickets3>     = listOf(),
   @SerializedName("status"            ) var status            : Status3?                = Status3()

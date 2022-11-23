@@ -115,7 +115,7 @@ class EspnRepository @Inject constructor(
         val response = espnApi.getSpecificNflTeam(team)
         if(response.isSuccessful){
             val teamDetailResponse = espnApi.getSpecificNflTeam(team).body()?.team
-            Log.e("tag", "Response successful $teamDetailResponse")
+            Log.e("tag-REpository spefici team", "Response successful $teamDetailResponse")
             return rosterMapper.mapToDomainModel(teamDetailResponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
@@ -128,12 +128,12 @@ class EspnRepository @Inject constructor(
         val response = espnApi.getSpecificNflTeam(team)
         if(response.isSuccessful){
             val teamDetailResponse = espnApi.getSpecificTeam(sport, league, team).body()?.team
-            Log.e("tag", "Response successful $teamDetailResponse")
+            Log.e("SPECIFIC TEAM DEBUG-repo", "Response successful $teamDetailResponse")
             return rosterMapper.mapToDomainModel(teamDetailResponse!!)
         } else {
-            Log.e(javaClass.name, response.errorBody().toString())
+            Log.e("SPECIFIC TEAM DEBUG-repo", response.errorBody().toString())
         }
-        var result = espnApi.getSpecificNflTeam(team).body()?.team
+        var result = espnApi.getSpecificTeam(sport, league, team).body()?.team
         return rosterMapper.mapToDomainModel(result!!)
     }
 
