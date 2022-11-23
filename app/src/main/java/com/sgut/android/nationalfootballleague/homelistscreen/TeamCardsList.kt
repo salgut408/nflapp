@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
@@ -25,6 +26,7 @@ import kotlinx.coroutines.launch
 fun TeamCardsList(
     navController: NavController,
     homeListViewModel: HomeListViewModel = hiltViewModel(),
+//    onScoreboardClicked: () -> Unit,
 //    onHockeyButtonClicked: () -> Unit
 ) {
 //    val teamsList by remember { homeListViewModel.nflTeamsList }
@@ -34,6 +36,10 @@ fun TeamCardsList(
     var sport = uiState.currentSport
     var league = uiState.currentLeague
 
+    val scrollState = rememberScrollState()
+
+
+    // if current sport is soccer -> radio group/buttons for different leagues
 
     Scaffold(
         topBar = {},
@@ -43,8 +49,7 @@ fun TeamCardsList(
 
                 LazyRow(
                     contentPadding = PaddingValues(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
                     ){
 
                    item { Button(onClick = { homeListViewModel.setFootballTeam() }) {
@@ -91,12 +96,20 @@ fun TeamCardsList(
                     } }
                 }
 
-                LazyColumn(contentPadding = PaddingValues(16.dp)) {
+                OutlinedButton(onClick = { /*TODO-navigate to scoreboardScreen*/ }) {
+                    Text("Scoreboard")
+                }
+
+                LazyColumn(contentPadding = PaddingValues(8.dp)) {
+
                     items(items = uiState.currentTeam) { team ->
 
                         TeamCard(team = team, modifier = Modifier.padding(8.dp), navController , sport =sport, league = league)
                     }
+
                 }
+
+
             }
         },
 
