@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.domain
 
+import com.sgut.android.nationalfootballleague.Athletes
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 
 data class ListUiState(

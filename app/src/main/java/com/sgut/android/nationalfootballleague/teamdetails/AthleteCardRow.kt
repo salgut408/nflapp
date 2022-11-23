@@ -15,13 +15,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 
 @Composable
 fun AtheleteRow(
-    modifier: Modifier = Modifier,
-    teamDetailViewModel: TeamDetailViewModel = hiltViewModel(),
+    team: TeamDetailWithRosterModel
 ) {
-    val athletesList by remember {teamDetailViewModel.atheletes}
+    val athletesList =team.athletes
 
 
 

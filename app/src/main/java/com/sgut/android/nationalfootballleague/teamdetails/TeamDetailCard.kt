@@ -123,7 +123,7 @@ Column(
 
         Text(text = "Team", style = MaterialTheme.typography.titleSmall,)
 
-        AtheleteRow()
+        AtheleteRow(team)
 
 
 

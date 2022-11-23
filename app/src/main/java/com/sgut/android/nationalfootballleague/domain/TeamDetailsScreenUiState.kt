@@ -1,10 +1,14 @@
 package com.sgut.android.nationalfootballleague.domain
 
+import com.sgut.android.nationalfootballleague.Athletes
+import com.sgut.android.nationalfootballleague.NextEvent3
 import com.sgut.android.nationalfootballleague.Team3
+import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 
 data class TeamDetailsScreenUiState(
-    val isLoading: Boolean = false,
-    val throwError: Boolean = false,
-    val team: Team3? = null
-
-)
+    var currentSport: String = "",
+    var currentLeague: String = "",
+    val currentTeamDetails: TeamDetailWithRosterModel? = null,
+    var atheletes: List<Athletes> = listOf(),
+    var nextEvents: List<NextEvent3> = listOf()
+    )

@@ -10,8 +10,12 @@ import com.sgut.android.nationalfootballleague.Athletes
 import com.sgut.android.nationalfootballleague.NextEvent3
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.TeamDetailsScreenUiState
 import com.sgut.android.nationalfootballleague.repository.EspnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,14 +24,15 @@ class TeamDetailViewModel @Inject constructor(
     private val espnRepository: EspnRepository
 ): ViewModel() {
 
+    private val _teamDetailUiState = MutableStateFlow(TeamDetailsScreenUiState())
+    val  teamDetailUiState: StateFlow<TeamDetailsScreenUiState> = _teamDetailUiState
+
+
      val team: MutableState<TeamDetailWithRosterModel?> = mutableStateOf(null)
-
     val atheletes: MutableState<List<Athletes?>> = mutableStateOf(listOf())
-
     val nextEvents: MutableState<List<NextEvent3?>> = mutableStateOf(listOf())
 
 
-    var toastMessageObserver: MutableState<String?> = mutableStateOf(null)
 
     init {
 
@@ -48,7 +53,6 @@ class TeamDetailViewModel @Inject constructor(
 
         } catch (e: Exception){
             Log.i("DEBUG",e.message.toString())
-            toastMessageObserver?.value =  e.toString()
 
         }
     }
@@ -60,13 +64,27 @@ class TeamDetailViewModel @Inject constructor(
             atheletes.value = result.athletes
             nextEvents.value = result.nextEvent
 
+            setTeamDetailUiState(result, sport, league)
+
             Log.i("DEBUG-TEAM DETAIL", result.toString())
+            Log.i("DEBUG-TEAM DETAIL", teamDetailUiState.value.currentLeague +"    " + teamDetailUiState.value.currentTeamDetails?.slug)
+
+
 
         } catch (e: Exception){
             Log.i("DEBUG-TEAM DETAIL",e.message.toString())
         }
     }
 
+    fun setTeamDetailUiState(team: TeamDetailWithRosterModel,
+                             sport: String,
+                             league: String,
+                           ) {
+        _teamDetailUiState.update {
+            it.copy(currentSport = sport, currentLeague = league, currentTeamDetails = team, atheletes = team.athletes, nextEvents = team.nextEvent )
+        }
+
+    }
 
 
 
