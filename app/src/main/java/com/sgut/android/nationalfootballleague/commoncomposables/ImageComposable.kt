@@ -14,7 +14,7 @@ import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 fun TeamLogoImageLoader(team: TeamDomainModel) {
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
-            .data(team.logos?.get(0)?.href)
+            .data(team.logos?.getOrNull(0)?.href)
             .build(),
         loading = {
             CircularProgressIndicator()
