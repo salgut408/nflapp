@@ -15,7 +15,6 @@ import com.sgut.android.nationalfootballleague.homelistscreen.TeamCardsList
 import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 import com.sgut.android.nationalfootballleague.ui.theme.NationalFootballLeagueTheme
 import dagger.hilt.android.AndroidEntryPoint
-
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
