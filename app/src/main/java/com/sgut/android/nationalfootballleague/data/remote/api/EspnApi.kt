@@ -1,7 +1,9 @@
 package com.sgut.android.nationalfootballleague.data.remote.api
 
 import com.sgut.android.nationalfootballleague.NFLTeamsResponse
+import com.sgut.android.nationalfootballleague.NetworkScoreboardResponse
 import com.sgut.android.nationalfootballleague.TeamDetailResponse2
+import com.sgut.android.nationalfootballleague.data.domainmodels.ScoreboardResponseEventModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -65,8 +67,8 @@ interface EspnApi {
     @GET("sports/soccer/fra.1/teams")
     suspend fun getAllFrenchSoccerTeams(): Response<NFLTeamsResponse>
 
-//    @GET("sports/soccer/fifa.world/scoreboard")
-//    suspend fun getWorldCupScoreboard(): Response<ScoreboardResponse>
+    @GET("sports/soccer/fifa.world/scoreboard")
+    suspend fun getWorldCupScoreboard(): Response<NetworkScoreboardResponse>
 
 
 }
