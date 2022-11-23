@@ -56,19 +56,36 @@ fun TeamCardsList(
                    item { Button(onClick = { homeListViewModel.setBaseballTeam() }) {
                         Text("MLB", style = MaterialTheme.typography.labelSmall)
                     }}
+
+                    item { Button(onClick = { homeListViewModel.setBasketballTeam() }) {
+                        Text("NBA", style = MaterialTheme.typography.labelSmall )
+                    } }
+
                     item { Button(onClick = { homeListViewModel.setWnbaTeam() }) {
                         Text("WNBA", style = MaterialTheme.typography.labelSmall)
+                    }}
+
+                    item { Button(onClick = { homeListViewModel.setCollegeTeam() }) {
+                        Text("College Football", style = MaterialTheme.typography.labelSmall)
                     }}
 
                     item { Button(onClick = { homeListViewModel.setMlsTeam() }) {
                         Text("MLS", style = MaterialTheme.typography.labelSmall)
                     }}
-                    item { Button(onClick = { homeListViewModel.setCollegeTeam() }) {
-                        Text("College Football", style = MaterialTheme.typography.labelSmall)
+
+                    item { Button(onClick = {  }) {
+                        Text("Mexican Soccer", style = MaterialTheme.typography.labelSmall)
                     }}
-                    item { Button(onClick = { homeListViewModel.setBasketballTeam() }) {
-                        Text("NBA", style = MaterialTheme.typography.labelSmall )
-                    } }
+
+                    item { Button(onClick = {  }) {
+                        Text("English Premier League", style = MaterialTheme.typography.labelSmall)
+                    }}
+
+                    item { Button(onClick = {  }) {
+                        Text("Spanish Soccer", style = MaterialTheme.typography.labelSmall)
+                    }}
+
+
                     item { Button(onClick = { homeListViewModel.setWorldCupTeam() }) {
                         Text("World Cup", style = MaterialTheme.typography.labelSmall )
                     } }
