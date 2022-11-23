@@ -78,7 +78,7 @@ Column(
             val venuePainter = rememberAsyncImagePainter(
 
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(team.franchise?.venue!!.images3[0].href)
+                        .data(team.franchise?.venue?.images3?.getOrNull(0)?.href)
                         .crossfade(true)
                         .crossfade(1000)
                         .build()

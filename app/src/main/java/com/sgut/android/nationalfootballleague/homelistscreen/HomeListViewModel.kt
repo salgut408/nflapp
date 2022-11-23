@@ -163,7 +163,7 @@ class HomeListViewModel @Inject constructor(
 
     fun setMlsTeam() {
         _ListUiState.update {
-            it.copy(currentTeam = soccerTeamsList.value, currentSport = "soccer", currentLeague = "usa.1")
+            it.copy(currentTeam = soccerTeamsList.value, currentSport = "soccer", currentLeague = "fifa.world")
         }
     }
 
