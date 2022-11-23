@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.loader.content.Loader
 import androidx.navigation.NavController
+import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScreens
 import com.sgut.android.nationalfootballleague.di.MainToolBar
 import com.sgut.android.nationalfootballleague.di.MyNewToolBar
 import kotlinx.coroutines.launch
@@ -96,7 +97,7 @@ fun TeamCardsList(
                     } }
                 }
 
-                OutlinedButton(onClick = { /*TODO-navigate to scoreboardScreen*/ }) {
+                OutlinedButton(onClick = { navController.navigate(NavigationScreens.ScoreboardScreen.route) }) {
                     Text("Scoreboard")
                 }
 

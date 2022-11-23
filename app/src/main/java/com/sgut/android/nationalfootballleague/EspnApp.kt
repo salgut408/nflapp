@@ -25,6 +25,7 @@ import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScree
 import com.sgut.android.nationalfootballleague.di.MyNewToolBar2
 import com.sgut.android.nationalfootballleague.homelistscreen.HomeListViewModel
 import com.sgut.android.nationalfootballleague.homelistscreen.TeamCardsList
+import com.sgut.android.nationalfootballleague.scoreboardscreen.ScoreboardScreen
 import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -93,13 +94,18 @@ fun EspnApp(
                 val context = LocalContext.current
 
                     TeamDetailScreen(team = teamName, sport = sportName, league = leagueName,
-                        sendButtonOnclick = { subject: String, summary: String -> shareTeamAndNextEvent(context, subject, summary) }) }
-
+                        sendButtonOnclick = { subject: String, summary: String -> shareTeamAndNextEvent(context, subject, summary) })
+            }
 
             composable(
                 route = NavigationScreens.AthleteDetailScreen.route,
             ) {
                AthleteDetailScreen()
+            }
+            composable(
+                route = NavigationScreens.ScoreboardScreen.route,
+            ) {
+                ScoreboardScreen()
             }
         }
 
