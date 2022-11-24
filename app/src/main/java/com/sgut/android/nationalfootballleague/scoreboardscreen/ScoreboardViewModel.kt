@@ -42,7 +42,7 @@ class ScoreboardViewModel @Inject constructor(
 
     fun setScoreboardUiState(scoreboardUiStateEvents  : ScoreboardResponseEventModel) {
         _scoreboardUiState.update {
-            it.copy(scoreboardUiStateEvents = scoreboardUiStateEvents.events)
+            it.copy(scoreboardUiStateEvents = scoreboardUiStateEvents)
         }
     }
 
