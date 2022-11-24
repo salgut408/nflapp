@@ -38,35 +38,38 @@ fun EspnApp(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentScreen = backStackEntry?.destination?.route ?: NavigationScreens.MainScreenTeamsList.route
+    val currentScreen =
+        backStackEntry?.destination?.route ?: NavigationScreens.MainScreenTeamsList.route
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
 
         topBar = {
             MyNewToolBar2(
-                currentScreen = backStackEntry?.destination?.route ?: NavigationScreens.MainScreenTeamsList.route,
+                currentScreen = backStackEntry?.destination?.route
+                    ?: NavigationScreens.MainScreenTeamsList.route,
                 canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = {navController.navigateUp()},
+                navigateUp = { navController.navigateUp() },
                 scrollBehavior = scrollBehavior
             )
         },
 
 
-
         bottomBar = {
-            BottomAppBar(modifier = Modifier,) {
-                IconButton(onClick = {  },  ) {
+            BottomAppBar(modifier = Modifier) {
+                IconButton(onClick = { }) {
                     Icon(Icons.Default.Menu, contentDescription = null)
                 }
             }
         },
 
-    ) { innerPadding ->
+        ) { innerPadding ->
 
 //        Navigation(navController = navController, padding = innerPadding)
 
-        NavHost(navController = navController, startDestination = NavigationScreens.MainScreenTeamsList.route, modifier.padding(innerPadding)){
+        NavHost(navController = navController,
+            startDestination = NavigationScreens.MainScreenTeamsList.route,
+            modifier.padding(innerPadding)) {
             composable(route = NavigationScreens.MainScreenTeamsList.route) {
                 TeamCardsList(navController = navController)
             }
@@ -83,33 +86,48 @@ fun EspnApp(
                         type = NavType.StringType
                     },
 
-                )
+                    )
 
             ) { entry ->
-              var teamName = entry.arguments?.getString("teamName")!!
+                var teamName = entry.arguments?.getString("teamName")!!
                 var sportName = entry.arguments?.getString("sport")!!
                 var leagueName = entry.arguments?.getString("league")!!
 
 
                 val context = LocalContext.current
 
-                    TeamDetailScreen(team = teamName, sport = sportName, league = leagueName,
-                        sendButtonOnclick = { subject: String, summary: String -> shareTeamAndNextEvent(context, subject, summary) })
+                TeamDetailScreen(
+                    team = teamName, sport = sportName, league = leagueName,
+                    sendButtonOnclick = { subject: String, summary: String ->
+                        shareTeamAndNextEvent(context,
+                            subject,
+                            summary)
+                    }
+                )
             }
 
             composable(
                 route = NavigationScreens.AthleteDetailScreen.route,
             ) {
-               AthleteDetailScreen()
+                AthleteDetailScreen()
             }
             composable(
-                route = NavigationScreens.ScoreboardScreen.route,
-            ) {
-                ScoreboardScreen()
+                route = NavigationScreens.ScoreboardScreen.route + "/{sport}/{league}",
+                arguments = listOf(
+                    navArgument("sport") {
+                        type = NavType.StringType
+                    },
+                    navArgument("league") {
+                        type = NavType.StringType
+                    },
+                )
+            )  {
+                var sportName = it.arguments?.getString("sport")!!
+                var leagueName = it.arguments?.getString("league")!!
+
+                ScoreboardScreen(sportName, leagueName)
             }
         }
-
-
 
 
     }
@@ -119,7 +137,7 @@ fun EspnApp(
 private fun shareTeamAndNextEvent(
     context: Context,
     subject: String,
-    summary: String
+    summary: String,
 ) {
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"

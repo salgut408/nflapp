@@ -189,5 +189,19 @@ class EspnRepository @Inject constructor(
         return rosterMapper.mapToDomainModel(result!!)
     }
 
+    suspend fun getGeneralScoreboardResponse(sport: String, league: String): ScoreboardResponseEventModel {
+        val response = espnApi.getGeneralScoreboard(sport, league)
+        if
+                (response.isSuccessful) {
+            val scoreBoardresponse = espnApi.getGeneralScoreboard(sport, league).body()
+            Log.e("Scoreboard resp repo", "response succ $scoreBoardresponse")
+            return scoreboardDomainMapper.mapToDomainModel(scoreBoardresponse!!)
+        } else {
+            Log.e(javaClass.name, response.errorBody().toString())
+
+        }
+        val result = espnApi.getGeneralScoreboard(sport, league).body()
+        return scoreboardDomainMapper.mapToDomainModel(result!!)
+    }
 
 }

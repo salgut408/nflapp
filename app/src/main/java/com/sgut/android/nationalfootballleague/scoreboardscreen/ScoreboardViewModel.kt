@@ -27,12 +27,21 @@ class ScoreboardViewModel @Inject constructor(
 
 
     init {
-        loadScoreboard()
+//        loadScoreboard()
     }
 
     fun loadScoreboard() = viewModelScope.launch {
         try{
             val result = espnRepository.getScoreboardResponse()
+            setScoreboardUiState(result)
+        } catch (e: Exception) {
+            Log.i("DEBUG-scoreboard vm",e.message.toString())
+
+        }
+    }
+    fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
+        try{
+            val result = espnRepository.getGeneralScoreboardResponse(sport, league)
             setScoreboardUiState(result)
         } catch (e: Exception) {
             Log.i("DEBUG-scoreboard vm",e.message.toString())

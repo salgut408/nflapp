@@ -97,7 +97,7 @@ fun TeamCardsList(
                     } }
                 }
 
-                OutlinedButton(onClick = { navController.navigate(NavigationScreens.ScoreboardScreen.route) }) {
+                OutlinedButton(onClick = { navController.navigate(NavigationScreens.ScoreboardScreen.withArgs(sport,league)) }) {
                     Text("Scoreboard")
                 }
 
