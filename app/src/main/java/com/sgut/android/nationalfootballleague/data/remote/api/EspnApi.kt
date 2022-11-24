@@ -71,4 +71,27 @@ interface EspnApi {
     suspend fun getWorldCupScoreboard(): Response<NetworkScoreboardResponse>
 
 
+
+
+
+    @GET("sports/{sport}/{league}/scoreboard")
+    suspend fun getGeneralScoreboard(
+        @Path("sport")
+        sport: String? = null,
+        @Path("league")
+        league: String? = null,
+    ): Response<NetworkScoreboardResponse>
+
+
+    @GET("sports/{sport}/{league}/teams/{teamAbbreviation}?enable=roster,headshot")
+    suspend fun getSpecifhicTeam(
+        @Path("sport")
+        sport: String? = null,
+        @Path("league")
+        league: String? = null,
+        @Path("teamAbbreviation")
+        teamAbbreviation: String? = null
+    ): Response<TeamDetailResponse2>
+
+
 }
