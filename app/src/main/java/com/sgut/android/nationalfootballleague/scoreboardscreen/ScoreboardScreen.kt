@@ -30,17 +30,23 @@ fun ScoreboardScreen(
             .verticalScroll(rememberScrollState())
     ) {
         Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?: "", style = MaterialTheme.typography.displayLarge)
+        Text(text = "Headlines", style = MaterialTheme.typography.displaySmall)
+        for (i in scoreboardUiState.scoreboardUiStateEvents.events) {
+            for (j in i.competitions[0].headlines) {
+                Text(text = j.description.toString())
+            }
+        }
 
         for (i in scoreboardUiState.scoreboardUiStateEvents.events ) {
             Text(text = i.shortName  ?: "", style = MaterialTheme.typography.headlineMedium)
             Text(text =  i.competitions[0].competitors[0].team?.name + " " + i.competitions[0].competitors[0].score.toString()  ?: "", style = MaterialTheme.typography.headlineMedium)
             Text(text =  i.competitions[0].competitors[1].team?.name + " " + i.competitions[0].competitors[1].score.toString()  ?: "", style = MaterialTheme.typography.headlineMedium)
+
+            Text(text = i.competitions[0].competitors[0].team?.color ?: "", style = MaterialTheme.typography.headlineMedium)
+            Text(text = i.competitions[0].competitors[1].team?.color ?: "", style = MaterialTheme.typography.headlineMedium)
+
             Spacer(modifier = Modifier.padding(16.dp))
-            for (i in scoreboardUiState.scoreboardUiStateEvents.events) {
-                for (j in i.competitions[0].headlines) {
-                    Text(text = j.description.toString())
-                }
-            }
+
         }
 
     }
