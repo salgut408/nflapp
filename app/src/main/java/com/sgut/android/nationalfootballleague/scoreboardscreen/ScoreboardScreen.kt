@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,6 +17,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +39,7 @@ fun ScoreboardScreen(
             .padding(16.dp)
     ) {
         Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?: "", style = MaterialTheme.typography.displayLarge)
-        Text(text = "Headlines", style = MaterialTheme.typography.displaySmall)
+//        Text(text = "Headlines", style = MaterialTheme.typography.displaySmall)
         for (i in events) {
             for (j in i.competitions[0].headlines) {
                 Text(text = j.description.toString())
@@ -44,28 +47,33 @@ fun ScoreboardScreen(
         }
 
         for (i in events ) {
-            Text(text = i.shortName  ?: "", style = MaterialTheme.typography.headlineMedium)
-            Row(modifier.padding(16.dp)) {
-                i.competitions[0].competitors[0].team?.name?.let { Text(text = it, style = MaterialTheme.typography.headlineMedium) }
-                i.competitions[0].competitors[1].team?.name?.let { Text(text = it, style = MaterialTheme.typography.headlineMedium) }
-            }
-            Row(modifier.padding(16.dp)){
-                Text(text = i.competitions[0].competitors[0].score.toString() ,style = MaterialTheme.typography.headlineMedium)
-                Text(text = "-", style = MaterialTheme.typography.headlineMedium)
-                Text(text = i.competitions[0].competitors[1].score.toString() ,style = MaterialTheme.typography.headlineMedium)
-            }
+            Card() {
+                Text(text = i.name ?: "", style = MaterialTheme.typography.headlineMedium)
+                Row(modifier.padding(16.dp)) {
+
+                    i.competitions[0].date?.let {
+                        Text(text = it,
+                            style = MaterialTheme.typography.headlineMedium)
+                    }
+                    i.competitions[0].competitors[1].team?.name?.let {
+                        Text(text = it,
+                            style = MaterialTheme.typography.headlineMedium)
+                    }
+                }
+
 //            Row(modifier.padding(16.dp)){
 //                Text(text = i.competitions[0].competitors[0].team?.color ?: "", style = MaterialTheme.typography.headlineMedium)
 //                Text(text = i.competitions[0].competitors[1].team?.color ?: "", style = MaterialTheme.typography.headlineMedium)
 //            }
-            Row(modifier.padding(16.dp)) {
+                Row(modifier.padding(16.dp)) {
 
 
-                Text(text = i.competitions[0].competitors[0].team?.name + " " + i.competitions[0].competitors[0].score.toString()
-                    ?: "", style = MaterialTheme.typography.headlineMedium)
-                Text(text = i.competitions[0].competitors[1].team?.name + " " + i.competitions[0].competitors[1].score.toString()
-                    ?: "", style = MaterialTheme.typography.headlineMedium)
+                    Text(text = i.competitions[0].competitors[0].team?.name + " " + i.competitions[0].competitors[0].score.toString()
+                        ?: "", style = MaterialTheme.typography.headlineMedium)
+                    Text(text = i.competitions[0].competitors[1].team?.name + " " + i.competitions[0].competitors[1].score.toString()
+                        ?: "", style = MaterialTheme.typography.headlineMedium)
 
+                }
             }
 
             Spacer(modifier = Modifier.padding(8.dp))
