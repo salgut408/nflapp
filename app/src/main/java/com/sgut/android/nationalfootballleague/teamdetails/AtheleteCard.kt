@@ -132,6 +132,7 @@ fun AltheleteCard2(
                 var injuries = athelete.injuries
 
 
+
                 for(i in injuries!!) {
                     Text(i.injuryStatus.toString())
 

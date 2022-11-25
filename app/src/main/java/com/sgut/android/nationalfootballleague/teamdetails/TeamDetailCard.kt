@@ -125,6 +125,10 @@ Column(
 
         AtheleteRow(team)
 
+        Log.e("TeamDetailCard", team.athletes.filter { it.injuries!!.isNotEmpty() }.toString())
+
+//        Text(text = "Injuries", style = MaterialTheme.typography.titleSmall,)
+//        InjuredAtheleteRow(team)
 
 
 
