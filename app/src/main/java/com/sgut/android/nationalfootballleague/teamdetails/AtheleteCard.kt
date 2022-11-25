@@ -13,7 +13,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
 import androidx.compose.runtime.getValue
-
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -71,11 +71,14 @@ fun AltheleteCard2(
     athelete: Athletes,
     modifier: Modifier,
 ) {
+    var inj = athelete.injuries
     OutlinedCard(
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(),
         colors = CardDefaults.cardColors(),
-        modifier = Modifier.fillMaxWidth().clickable {  } // navigate.to.athletedetailsScreen
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { } // navigate.to.athletedetailsScreen
 
     ) {
 
@@ -107,7 +110,10 @@ fun AltheleteCard2(
                 FloatingActionButton(
                     onClick = { /* viewmodel save player ;) */ },
                     shape = FloatingActionButtonDefaults.smallShape,
-                    modifier = Modifier.size(30.dp).align(Alignment.CenterStart).padding(start = 6.dp)
+                    modifier = Modifier
+                        .size(30.dp)
+                        .align(Alignment.CenterStart)
+                        .padding(start = 6.dp)
                 ) {
                     Icon(
                         Icons.Filled.Favorite,
@@ -122,12 +128,18 @@ fun AltheleteCard2(
                 athelete.displayName?.let { Text(it) }
                 athelete.position?.displayName?.let { Text(it) }
                 athelete.jersey?.let { Text("# $it") }
-                athelete.active.let { Text("Active: $it") }
+
+                var injuries = athelete.injuries
 
 
-//                for(i in athelete.injuries!!) {
-//                    Text(i.toString())
-//                }
+                for(i in injuries!!) {
+                    Text(i.injuryStatus.toString())
+
+                    //type is foot
+                    Text(i.detail?.side.toString() + " " + i.detail?.type .toString())
+
+//                    Text(i.detail?.detail.toString())
+                }
 
 //                athelete { Text(it.toString()) }
 

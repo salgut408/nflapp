@@ -3,7 +3,6 @@ package com.sgut.android.nationalfootballleague.scoreboardscreen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sgut.android.nationalfootballleague.EventsScoreboard
 import com.sgut.android.nationalfootballleague.data.domainmodels.ScoreboardResponseEventModel
 import com.sgut.android.nationalfootballleague.domain.ScoreboardUiState
 import com.sgut.android.nationalfootballleague.repository.EspnRepository

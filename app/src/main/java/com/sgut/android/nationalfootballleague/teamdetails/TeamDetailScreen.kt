@@ -1,19 +1,14 @@
 package com.sgut.android.nationalfootballleague.teamdetails
 
-import android.content.Context
-import android.content.Intent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.commoncomposables.DataLoadingComponent
-import com.sgut.android.nationalfootballleague.domain.TeamDetailsScreenUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

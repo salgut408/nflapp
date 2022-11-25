@@ -17,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,7 +54,7 @@ fun ScoreboardScreen(
                         Text(text = it,
                             style = MaterialTheme.typography.headlineMedium)
                     }
-                    i.competitions[0].competitors[1].team?.name?.let {
+                    i.status.period.toString() .let {
                         Text(text = it,
                             style = MaterialTheme.typography.headlineMedium)
                     }

@@ -30,7 +30,7 @@ data class Athletes (
   @SerializedName("headshot"       ) var headshot       : Headshot?         = Headshot(),
   @SerializedName("jersey"         ) var jersey         : String?           = null,
   @SerializedName("position"       ) var position       : Position?         = Position(),
-  @SerializedName("injuries"       ) var injuries       : List<Objects>? = listOf(),
+  @SerializedName("injuries"       ) var injuries       : List<Injury>? = listOf(),
   @SerializedName("linked"         ) var linked         : Boolean?          = null,
 //  @SerializedName("teams"          ) var teams          : List<Teams>  = listOf(),
 //  @SerializedName("projections"    ) var projections    : Projections?      = Projections(),
@@ -42,3 +42,46 @@ data class Athletes (
 //  @SerializedName("status"         ) var status         : Status?           = Status()
 
 )
+
+  data class Injury (
+    @SerializedName("shortComment"         ) var shortComment         : String?           = null,
+    @SerializedName("longComment"         ) var longComment         : String?           = null,
+    @SerializedName("status"         ) var injuryStatus         : String?           = null,
+    @SerializedName("details"         ) var detail         : Details?         = null,
+
+
+    )
+
+data class Details (
+  @SerializedName("type"         ) var type         : String?           = null,
+  @SerializedName("location"         ) var location         : String?           = null,
+  @SerializedName("side"         ) var side         : String?           = null,
+  @SerializedName("detail"         ) var detail         : String?           = null,
+  @SerializedName("returnDate"         ) var returnDate         : String?           = null,
+  )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
