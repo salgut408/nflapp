@@ -40,6 +40,11 @@ data class Athletes (
 //  @SerializedName("eventLog"       ) var eventLog       : EventLog?         = EventLog(),
   @SerializedName("draft"          ) var draft          : Draft?            = Draft(),
 //  @SerializedName("status"         ) var status         : Status?           = Status()
+  @SerializedName("flag"         ) var flag         : Flag?          = Flag()
+)
+
+data class Flag(
+    @SerializedName("href"         ) var href         : String?           = ""
 
 )
 

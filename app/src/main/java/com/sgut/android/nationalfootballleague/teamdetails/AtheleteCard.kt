@@ -27,6 +27,7 @@ import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import coil.size.Scale
 import coil.util.CoilUtils
 import com.sgut.android.nationalfootballleague.Athletes
 import com.sgut.android.nationalfootballleague.R
@@ -92,8 +93,9 @@ fun AltheleteCard2(
             Box() {
                 val painter = rememberAsyncImagePainter(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(athelete.headshot?.href)
+                        .data(athelete.headshot?.href ?: athelete.flag?.href )
                         .crossfade(true)
+                        .scale(Scale.FILL)
                         .crossfade(100)
                         .build()
                 )
@@ -104,6 +106,7 @@ fun AltheleteCard2(
                         .size(150.dp)
                         .padding(8.dp)
                         .clip(CircleShape)
+
                         .background(MaterialTheme.colorScheme.background)
 
                 )
@@ -142,7 +145,6 @@ fun AltheleteCard2(
 //                    Text(i.detail?.detail.toString())
                 }
 
-//                athelete { Text(it.toString()) }
 
 
 
