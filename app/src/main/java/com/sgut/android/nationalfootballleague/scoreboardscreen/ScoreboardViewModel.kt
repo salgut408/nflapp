@@ -29,28 +29,20 @@ class ScoreboardViewModel @Inject constructor(
 //        loadScoreboard()
     }
 
-    fun loadScoreboard() = viewModelScope.launch {
-        try{
-            val result = espnRepository.getScoreboardResponse()
-            setScoreboardUiState(result)
-        } catch (e: Exception) {
-            Log.i("DEBUG-scoreboard vm",e.message.toString())
 
-        }
-    }
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
         try{
             val result = espnRepository.getGeneralScoreboardResponse(sport, league)
-            setScoreboardUiState(result)
+            setScoreboardUiState(result, sport, league)
         } catch (e: Exception) {
             Log.i("DEBUG-scoreboard vm",e.message.toString())
 
         }
     }
 
-    fun setScoreboardUiState(scoreboardUiStateEvents  : ScoreboardResponseEventModel) {
+    fun setScoreboardUiState(scoreboardUiStateEvents  : ScoreboardResponseEventModel, currentSport: String, currentLeague: String) {
         _scoreboardUiState.update {
-            it.copy(scoreboardUiStateEvents = scoreboardUiStateEvents)
+            it.copy(scoreboardUiStateEvents = scoreboardUiStateEvents, currentSport = currentSport, currentLeague = currentLeague)
         }
     }
 
