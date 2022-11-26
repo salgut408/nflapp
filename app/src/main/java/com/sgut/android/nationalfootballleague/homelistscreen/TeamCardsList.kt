@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.homelistscreen
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -13,7 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScreens
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 // Team Cards List Screen
 fun TeamCardsList(
@@ -96,8 +97,10 @@ fun TeamCardsList(
                 LazyColumn(contentPadding = PaddingValues(8.dp)) {
 
                     items(items = uiState.currentTeam) { team ->
+                        Row(Modifier.animateItemPlacement()) {
+                            TeamCard(team = team, modifier = Modifier.padding(8.dp), navController , sport =sport, league = league)
 
-                        TeamCard(team = team, modifier = Modifier.padding(8.dp), navController , sport =sport, league = league)
+                        }
                     }
 
                 }
