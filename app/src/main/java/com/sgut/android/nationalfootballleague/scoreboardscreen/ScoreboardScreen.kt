@@ -58,10 +58,7 @@ fun ScoreboardScreen(
                     }
                 }
 
-//            Row(modifier.padding(16.dp)){
-//                Text(text = i.competitions[0].competitors[0].team?.color ?: "", style = MaterialTheme.typography.headlineMedium)
-//                Text(text = i.competitions[0].competitors[1].team?.color ?: "", style = MaterialTheme.typography.headlineMedium)
-//            }
+
                 Row(modifier.padding(16.dp)) {
 
 
