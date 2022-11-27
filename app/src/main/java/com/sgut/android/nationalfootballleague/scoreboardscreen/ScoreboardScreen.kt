@@ -47,8 +47,9 @@ fun ScoreboardScreen(
                 Text(text = i.name ?: "", style = MaterialTheme.typography.headlineMedium)
                 Row(modifier.padding(16.dp)) {
 
-                    i.competitions[0].date?.let {
-                        Text(text = it,
+                    //ude id for game details screen
+                    i.competitions[0].id .let {
+                        Text(text = it!!,
                             style = MaterialTheme.typography.headlineMedium)
                     }
                     i.status.period.toString() .let {
