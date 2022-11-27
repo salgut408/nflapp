@@ -57,6 +57,7 @@ fun TeamDetailCard(
                 .crossfade(true)
                 .build()
         )
+        Text(team.abbreviation.toString())
         team.displayName?.let { Text(text = it, style = MaterialTheme.typography.displayMedium, color = altcolor ) }
         team.standingSummary?.let { Text(text = it, style = MaterialTheme.typography.displaySmall) }
 

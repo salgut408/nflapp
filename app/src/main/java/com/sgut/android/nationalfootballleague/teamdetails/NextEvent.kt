@@ -21,7 +21,6 @@ fun NextEvent(
 ) {
     Card (
         shape = RoundedCornerShape(10.dp),
-        colors = CardDefaults.elevatedCardColors(),
         elevation = CardDefaults.elevatedCardElevation(),
         modifier = modifier
 

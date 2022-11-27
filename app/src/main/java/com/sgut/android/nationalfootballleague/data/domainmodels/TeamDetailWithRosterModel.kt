@@ -5,17 +5,17 @@ import com.sgut.android.nationalfootballleague.*
 
 data class TeamDetailWithRosterModel(
 
-    var id: String? = null,
-    var uid: String? = null,
-    var slug: String? = null,
-    var location: String? = null,
-    var name: String? = null,
-    var nickname: String? = null,
-    var abbreviation: String? = null,
-    var displayName: String? = null,
-    var shortDisplayName: String? = null,
-    var color: String? = null,
-    var alternateColor: String? = null,
+    var id: String = "",
+    var uid: String = "",
+    var slug: String = "",
+    var location: String = "",
+    var name: String = "",
+    var nickname: String = "",
+    var abbreviation: String = "",
+    var displayName: String = "",
+    var shortDisplayName: String = "",
+    var color: String = "",
+    var alternateColor: String = "",
     var isActive: Boolean? = null,
     var logos: List<Logos3> = listOf(),
     var record: Record3? = Record3(),
@@ -24,6 +24,6 @@ data class TeamDetailWithRosterModel(
     var links: List<Links3> = listOf(),
     var franchise: Franchise3? = Franchise3(),
     var nextEvent: List<NextEvent3> = listOf(),
-    var standingSummary: String? = null,
+    var standingSummary: String = "",
 
     )

@@ -1,8 +1,6 @@
 package com.sgut.android.nationalfootballleague.teamdetails
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.shape.CircleShape
@@ -21,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
@@ -105,9 +104,9 @@ fun AltheleteCard2(
                     modifier = Modifier
                         .size(150.dp)
                         .padding(8.dp)
+                        .border(BorderStroke(4.dp, Color.Yellow),CircleShape)
                         .clip(CircleShape)
-
-                        .background(MaterialTheme.colorScheme.background)
+                    .background(MaterialTheme.colorScheme.background)
 
                 )
                 FloatingActionButton(
