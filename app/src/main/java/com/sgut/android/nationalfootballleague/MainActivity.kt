@@ -23,7 +23,8 @@ class MainActivity : ComponentActivity() {
             NationalFootballLeagueTheme {
 
 
-                EspnApp()
+//                EspnApp()
+                EspnApp2()
 
 
             }
@@ -31,15 +32,4 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    NationalFootballLeagueTheme {
-        Greeting("Android")
-    }
-}
