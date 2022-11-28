@@ -22,6 +22,7 @@ import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 
 
 // this can be used OR spread out like in scaffold in app fx
+//navifation 2 + espnApp2 use seperated navigation
 
 @Composable
 fun Navigation(navController: NavHostController, padding: PaddingValues) {

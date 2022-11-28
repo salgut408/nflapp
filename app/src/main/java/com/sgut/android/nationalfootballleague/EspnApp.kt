@@ -24,6 +24,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.sgut.android.nationalfootballleague.atheletedetail.AthleteDetailScreen
 import com.sgut.android.nationalfootballleague.commoncomposables.Navigation
+import com.sgut.android.nationalfootballleague.commoncomposables.Navigation2
 import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScreens
 import com.sgut.android.nationalfootballleague.commoncomposables.snackbar.SnackbarManager
 import com.sgut.android.nationalfootballleague.di.MyNewToolBar2
@@ -178,7 +179,7 @@ fun EspnApp2(
 
         ) { innerPadding ->
 
-        Navigation(navController = appState.navController, padding = innerPadding)
+        Navigation2(appState, padding = innerPadding)
 
 //        NavHost(navController = appState.navController,
 //            startDestination = NavigationScreens.MainScreenTeamsList.route,
