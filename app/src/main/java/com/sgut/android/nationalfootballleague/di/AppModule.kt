@@ -22,6 +22,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -79,7 +80,7 @@ object AppModule {
     // services things
 
     @Module
-    @InstallIn(SingletonComponent::class)
+    @InstallIn(ViewModelComponent::class)
     abstract class ServiceModule {
         @Binds abstract fun provideAccountService(impl: AccountServiceImpl): AccountService
 

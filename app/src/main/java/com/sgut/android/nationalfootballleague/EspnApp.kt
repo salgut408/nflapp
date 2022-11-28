@@ -66,7 +66,9 @@ fun EspnApp(
 
         NavHost(navController = navController,
             startDestination = NavigationScreens.MainScreenTeamsList.route,
+
             modifier.padding(innerPadding)) {
+
             composable(route = NavigationScreens.MainScreenTeamsList.route) {
                 TeamCardsList(navController = navController)
             }
@@ -86,9 +88,9 @@ fun EspnApp(
                     )
 
             ) { entry ->
-                var teamName = entry.arguments?.getString("teamName")!!
-                var sportName = entry.arguments?.getString("sport")!!
-                var leagueName = entry.arguments?.getString("league")!!
+                val teamName = entry.arguments?.getString("teamName")!!
+                val sportName = entry.arguments?.getString("sport")!!
+                val leagueName = entry.arguments?.getString("league")!!
 
 
                 val context = LocalContext.current
@@ -118,7 +120,7 @@ fun EspnApp(
                         type = NavType.StringType
                     },
                 )
-            )  {
+            ) {
                 var sportName = it.arguments?.getString("sport")!!
                 var leagueName = it.arguments?.getString("league")!!
 
