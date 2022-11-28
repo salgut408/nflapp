@@ -18,6 +18,7 @@ import com.sgut.android.nationalfootballleague.EspnAppState
 import com.sgut.android.nationalfootballleague.atheletedetail.AthleteDetailScreen
 import com.sgut.android.nationalfootballleague.homelistscreen.TeamCardsList
 import com.sgut.android.nationalfootballleague.scoreboardscreen.ScoreboardScreen
+import com.sgut.android.nationalfootballleague.settings.SettingsScreen
 import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 
 
@@ -73,6 +74,13 @@ fun Navigation(appState: EspnAppState, padding: PaddingValues) {
         ) {
             AthleteDetailScreen()
         }
+
+        composable(
+            route = NavigationScreens.SettingsScreen.route
+        ) {
+            SettingsScreen()
+        }
+
         composable(
             route = NavigationScreens.ScoreboardScreen.route + "/{sport}/{league}",
             arguments = listOf(

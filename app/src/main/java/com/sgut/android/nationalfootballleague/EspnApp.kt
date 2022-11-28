@@ -65,7 +65,7 @@ fun EspnApp(
 
         bottomBar = {
             BottomAppBar(modifier = Modifier) {
-                IconButton(onClick = { }) {
+                IconButton(onClick = { appState.navController.navigate(NavigationScreens.SettingsScreen.route) }) {
                     Icon(Icons.Default.Settings, contentDescription = null)
                 }
             }

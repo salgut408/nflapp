@@ -1,4 +1,3 @@
 package com.sgut.android.nationalfootballleague.settings
 
-class SettingsUiState {
-}
+data class SettingsUiState(val isAnonymousAccount: Boolean = true)

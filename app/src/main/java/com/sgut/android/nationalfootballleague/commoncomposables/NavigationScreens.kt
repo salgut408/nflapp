@@ -5,6 +5,8 @@ sealed class NavigationScreens (val route: String) {
     object DetailScreenTeam: NavigationScreens("team_detail_screen")
     object AthleteDetailScreen: NavigationScreens("athlete_detail_screen")
     object ScoreboardScreen: NavigationScreens("scoreboard_screen")
+    object SettingsScreen: NavigationScreens("settings_screen")
+
 
 
 
