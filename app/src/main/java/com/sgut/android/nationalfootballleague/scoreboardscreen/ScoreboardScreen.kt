@@ -45,6 +45,9 @@ fun ScoreboardScreen(
         for (i in events ) {
             Card() {
                 Text(text = i.name ?: "", style = MaterialTheme.typography.headlineMedium)
+                Button(onClick = { /*TODO*/ }) {
+                    Text("WATCH")
+                }
                 Row(modifier.padding(16.dp)) {
 
                     //use id for game details screen
