@@ -24,74 +24,11 @@ import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 // this can be used OR spread out like in scaffold in app fx
 //navifation 2 + espnApp2 use seperated navigation
 
-@Composable
-fun Navigation(navController: NavHostController, padding: PaddingValues) {
-    val navController = rememberNavController()
-    NavHost(navController = navController,
-        startDestination = NavigationScreens.MainScreenTeamsList.route,
-        modifier = Modifier.padding(padding)){
 
-        composable(route = NavigationScreens.MainScreenTeamsList.route) {
-                TeamCardsList(navController = navController)
-        }
-        composable(
-            route = NavigationScreens.DetailScreenTeam.route + "/{teamName}/{sport}/{league}",
-            arguments = listOf(
-                navArgument("teamName") {
-                    type = NavType.StringType
-                },
-                navArgument("sport") {
-                    type = NavType.StringType
-                },
-                navArgument("league") {
-                    type = NavType.StringType
-                },
-            )
-
-        ) { entry ->
-            var teamName = entry.arguments?.getString("teamName")!!
-            var sportName = entry.arguments?.getString("sport")!!
-            var leagueName = entry.arguments?.getString("league")!!
-
-
-            val context = LocalContext.current
-
-                TeamDetailScreen(
-                    team = teamName, sport = sportName, league = leagueName,
-                    sendButtonOnclick = {
-                            subject: String, summary: String ->
-                        shareTeamAndNextEvent2(context,
-                            subject, summary)
-                    }
-                )
-            }
-        composable(
-            route = NavigationScreens.AthleteDetailScreen.route,
-            ) {
-            AthleteDetailScreen()
-        }
-        composable(
-            route = NavigationScreens.ScoreboardScreen.route + "/{sport}/{league}",
-            arguments = listOf(
-                navArgument("sport") {
-                    type = NavType.StringType
-                },
-                navArgument("league") {
-                    type = NavType.StringType
-                },
-            )
-            ){
-            var sportName = it.arguments?.getString("sport")!!
-            var leagueName = it.arguments?.getString("league")!!
-
-            ScoreboardScreen(sportName, leagueName)
-        }
-    }
-}
 
 
 @Composable
-fun Navigation2(appState: EspnAppState, padding: PaddingValues) {
+fun Navigation(appState: EspnAppState, padding: PaddingValues) {
 
     NavHost(navController = appState.navController,
         startDestination = NavigationScreens.MainScreenTeamsList.route,
