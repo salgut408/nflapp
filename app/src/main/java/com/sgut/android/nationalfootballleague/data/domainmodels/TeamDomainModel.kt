@@ -1,9 +1,10 @@
 package com.sgut.android.nationalfootballleague.data.domainmodels
 
+import com.google.firebase.firestore.DocumentId
 import com.sgut.android.nationalfootballleague.Logos
 
 data class TeamDomainModel(
-    var id:               String = "",
+  @DocumentId  var id:               String = "",
     var uid:              String = "",
     var slug:             String = "",
     var abbreviation:     String = "",

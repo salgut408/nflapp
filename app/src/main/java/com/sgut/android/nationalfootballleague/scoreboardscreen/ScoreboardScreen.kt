@@ -47,7 +47,7 @@ fun ScoreboardScreen(
                 Text(text = i.name ?: "", style = MaterialTheme.typography.headlineMedium)
                 Row(modifier.padding(16.dp)) {
 
-                    //ude id for game details screen
+                    //use id for game details screen
                     i.competitions[0].id .let {
                         Text(text = it!!,
                             style = MaterialTheme.typography.headlineMedium)

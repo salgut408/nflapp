@@ -1,12 +1,24 @@
 package com.sgut.android.nationalfootballleague.di
 
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.sgut.android.nationalfootballleague.data.dtomappers.NetworkScoreboardToDomainModelMapper
 import com.sgut.android.nationalfootballleague.data.dtomappers.NetworkToTeamDomainModelMapper
 import com.sgut.android.nationalfootballleague.data.dtomappers.TeamDetailNetworkToModelMapper
 import com.sgut.android.nationalfootballleague.data.dtomappers.TeamDetailWithRosterMapper
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
+import com.sgut.android.nationalfootballleague.data.service.AccountService
+import com.sgut.android.nationalfootballleague.data.service.LogService
+import com.sgut.android.nationalfootballleague.data.service.StorageService
+import com.sgut.android.nationalfootballleague.data.service.impl.AccountServiceImpl
+import com.sgut.android.nationalfootballleague.data.service.impl.LogServiceImpl
+import com.sgut.android.nationalfootballleague.data.service.impl.StorageServiceImpl
 import com.sgut.android.nationalfootballleague.repository.EspnRepository
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASE_URL
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,4 +67,30 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(EspnApi::class.java)
+
+
+    //Firebase things
+    @Provides
+    fun auth(): FirebaseAuth = Firebase.auth
+
+    @Provides
+    fun firestore(): FirebaseFirestore = Firebase.firestore
+
+    // services things
+
+    @Module
+    @InstallIn(SingletonComponent::class)
+    abstract class ServiceModule {
+        @Binds abstract fun provideAccountService(impl: AccountServiceImpl): AccountService
+
+        @Binds abstract fun provideLogService(impl: LogServiceImpl): LogService
+
+        @Binds abstract fun provideStorageService(impl: StorageServiceImpl): StorageService
+
+
+    }
+
+
+
+
 }
