@@ -40,7 +40,7 @@ fun SettingsScreen(
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
-    val uiState = viewModel.uiState.collectAsState(initial = SettingsUiState(false))
+    val uiState by viewModel.uiState.collectAsState(initial = SettingsUiState(false))
 
 
     Column(
@@ -52,9 +52,7 @@ fun SettingsScreen(
     ) {
         Spacer(modifier = Modifier.spacer())
 
-        BasicToolBar(title = AppText.settings)
-
-        if(uiState.value.isAnonymousAccount) {
+        if(uiState.isAnonymousAccount) {
             RegularCardEditor(
                 title = AppText.sign_in,
                 content = "",

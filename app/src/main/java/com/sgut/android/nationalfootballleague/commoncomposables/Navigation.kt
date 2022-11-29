@@ -80,7 +80,7 @@ fun Navigation(appState: EspnAppState, padding: PaddingValues) {
         composable(
             route = NavigationScreens.SignUpScreen.route
         ) {
-            SignUpScreen()
+            SignUpScreen(openAndPopUp = {route, popUp -> appState.navigateAndPopUp(route, popUp)})
         }
 
         composable(

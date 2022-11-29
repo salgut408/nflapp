@@ -3,6 +3,7 @@ package com.sgut.android.nationalfootballleague.commoncomposables
 import androidx.annotation.StringRes
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
+import com.sgut.android.nationalfootballleague.R.drawable as AppIcon
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -72,8 +73,8 @@ private fun PasswordField(
     var isVisible by remember { mutableStateOf(false) }
 
     val icon =
-        if (isVisible) Icon(Icons.Default.Favorite, null)
-        else Icon(Icons.Default.Favorite, null)
+        if (isVisible) painterResource(AppIcon.ic_visibility_on)
+        else painterResource(AppIcon.ic_visibility_off)
 
     val visualTransformation =
         if (isVisible) VisualTransformation.None else PasswordVisualTransformation()
@@ -86,7 +87,7 @@ private fun PasswordField(
         leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Lock") },
         trailingIcon = {
             IconButton(onClick = { isVisible = !isVisible }) {
-                Icon(Icons.Default.Favorite, null)
+                Icon(painter = icon, contentDescription = "Visibility")
             }
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
