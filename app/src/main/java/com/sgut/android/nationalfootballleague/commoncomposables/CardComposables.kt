@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -65,7 +66,7 @@ private fun CardEditor(
                 Text(text = content, modifier = Modifier.padding(16.dp, 0.dp))
             }
 
-            Icon( Icons.Default.Favorite, contentDescription = "Icon", tint = highlightColor)
+            Icon( Icons.Default.Face, contentDescription = "Icon", tint = highlightColor)
         }
     }
 }
