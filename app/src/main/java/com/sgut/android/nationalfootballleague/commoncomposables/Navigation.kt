@@ -17,8 +17,10 @@ import androidx.navigation.navArgument
 import com.sgut.android.nationalfootballleague.EspnAppState
 import com.sgut.android.nationalfootballleague.atheletedetail.AthleteDetailScreen
 import com.sgut.android.nationalfootballleague.homelistscreen.TeamCardsList
+import com.sgut.android.nationalfootballleague.log_in.LogInScreen
 import com.sgut.android.nationalfootballleague.scoreboardscreen.ScoreboardScreen
 import com.sgut.android.nationalfootballleague.settings.SettingsScreen
+import com.sgut.android.nationalfootballleague.sign_up.SignUpScreen
 import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 
 
@@ -76,9 +78,28 @@ fun Navigation(appState: EspnAppState, padding: PaddingValues) {
         }
 
         composable(
+            route = NavigationScreens.SignUpScreen.route
+        ) {
+            SignUpScreen()
+        }
+
+        composable(
+            route = NavigationScreens.LogInScreen.route
+        ) {
+            LogInScreen()
+        }
+
+        composable(
             route = NavigationScreens.SettingsScreen.route
         ) {
-            SettingsScreen()
+            val restartRoute = NavigationScreens.MainScreenTeamsList.route
+            val openSignUpScreenRoute = NavigationScreens.SignUpScreen.route
+            val openLogInScreenRoute = NavigationScreens.LogInScreen.route
+            SettingsScreen(
+                restartApp = { route -> appState.clearAndNavigate(restartRoute) },
+                openSignUpScreen = { route -> appState.navigate(openSignUpScreenRoute) },
+                openLogInScreen = {route -> appState.navigate(openLogInScreenRoute) }
+            )
         }
 
         composable(

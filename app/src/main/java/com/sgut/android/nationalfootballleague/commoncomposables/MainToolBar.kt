@@ -46,9 +46,11 @@ modifier: Modifier = Modifier,
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BasicToolBar(title: String) {
+fun BasicToolBar(
+    @StringRes title: Int
+) {
     TopAppBar(
-        title = {Text(title)},
+        title = { Text(stringResource(title)) },
 
     )
 }

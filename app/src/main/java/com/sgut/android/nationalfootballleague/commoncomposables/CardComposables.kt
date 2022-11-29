@@ -24,11 +24,12 @@ import com.sgut.android.nationalfootballleague.utils.dropdownSelector
 @Composable
 fun DangerousCardEditor(
     @StringRes title: Int,
+    @DrawableRes icon: Int,
     content: String,
     modifier: Modifier,
     onEditClick: () -> Unit
 ) {
-    CardEditor(title, content, onEditClick, MaterialTheme.colors.primary, modifier)
+    CardEditor(title, icon, content, onEditClick, MaterialTheme.colors.primary, modifier)
 }
 
 @ExperimentalMaterialApi
@@ -36,16 +37,18 @@ fun DangerousCardEditor(
 fun RegularCardEditor(
     @StringRes title: Int,
     content: String,
+    @DrawableRes icon: Int,
     modifier: Modifier,
     onEditClick: () -> Unit
 ) {
-    CardEditor(title, content, onEditClick, MaterialTheme.colors.onSurface, modifier)
+    CardEditor(title, icon, content, onEditClick, MaterialTheme.colors.onSurface, modifier)
 }
 
 @ExperimentalMaterialApi
 @Composable
 private fun CardEditor(
     @StringRes title: Int,
+    @DrawableRes icon: Int,
     content: String,
     onEditClick: () -> Unit,
     highlightColor: Color,
@@ -58,7 +61,9 @@ private fun CardEditor(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth().padding(16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
             Column(modifier = Modifier.weight(1f)) { Text(stringResource(title), color = highlightColor) }
 
@@ -66,7 +71,7 @@ private fun CardEditor(
                 Text(text = content, modifier = Modifier.padding(16.dp, 0.dp))
             }
 
-            Icon( Icons.Default.Face, contentDescription = "Icon", tint = highlightColor)
+            Icon( painter = painterResource(id = icon), contentDescription = "Icon", tint = highlightColor)
         }
     }
 }
