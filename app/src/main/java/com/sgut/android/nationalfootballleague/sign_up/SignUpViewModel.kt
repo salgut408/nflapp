@@ -52,6 +52,7 @@ class SignUpViewModel @Inject constructor(
 
         if (!password.passwordMatches(uiState.value.repeatPassword)) {
             SnackbarManager.showMessage(AppText.password_match_error)
+
             return
         }
 

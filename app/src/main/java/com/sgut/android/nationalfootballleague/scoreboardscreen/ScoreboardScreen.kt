@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague.scoreboardscreen
 
 import android.util.Log
+import com.sgut.android.nationalfootballleague.R.string as AppText
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sgut.android.nationalfootballleague.commoncomposables.BasicButton
+import com.sgut.android.nationalfootballleague.utils.basicButton
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,8 +48,8 @@ fun ScoreboardScreen(
         for (i in events ) {
             Card() {
                 Text(text = i.name ?: "", style = MaterialTheme.typography.headlineMedium)
-                Button(onClick = { /*TODO*/ }) {
-                    Text("WATCH")
+                BasicButton(text = AppText.watc, modifier = Modifier.basicButton() ) {
+
                 }
                 Row(modifier.padding(16.dp)) {
 
@@ -70,7 +73,10 @@ fun ScoreboardScreen(
                     Text(text = i.competitions[0].competitors[1].team?.name + " " + i.competitions[0].competitors[1].score.toString()
                         ?: "", style = MaterialTheme.typography.headlineMedium)
 
-                }
+
+
+                    }
+
             }
 
             Divider(modifier = Modifier.padding(8.dp))

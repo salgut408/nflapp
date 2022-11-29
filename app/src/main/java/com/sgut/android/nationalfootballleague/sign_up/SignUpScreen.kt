@@ -35,7 +35,9 @@ fun SignUpScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         EmailField(uiState.email, viewModel::onEmailChange, fieldModifier)
+
         PasswordField(uiState.password, viewModel::onPasswordChange, fieldModifier)
+
         RepeatPasswordField(uiState.repeatPassword, viewModel::onRepeatPasswordChange, fieldModifier)
 
         BasicButton(AppText.create_account, Modifier.basicButton()) {
