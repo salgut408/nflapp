@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuthException
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
+import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.domain.ListUiState
 import com.sgut.android.nationalfootballleague.repository.EspnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeListViewModel @Inject constructor(
+    private val accountService: AccountService,
     private val espnRepository: EspnRepository
 ) : ViewModel() {
 
@@ -44,7 +47,7 @@ class HomeListViewModel @Inject constructor(
         loadAllHockeyTeams()
         loadWorldCupTeams()
 
-
+        setAccount()
 
     }
 
@@ -191,6 +194,22 @@ class HomeListViewModel @Inject constructor(
         _ListUiState.update {
             it.copy(currentTeam = worldCupTeams.value, currentSport = "soccer", currentLeague = "fifa.world")
         }
+    }
+
+    fun setAccount() = viewModelScope.launch {
+        if(!accountService.hasUser) {
+            createAnonymousAccount()
+        }
+    }
+
+    private fun createAnonymousAccount() = viewModelScope.launch {
+        try {
+            accountService.createAnonymousAccount()
+        } catch (ex: FirebaseAuthException) {
+            throw ex
+            Log.e("TAG", ex.toString())
+        }
+
     }
 
 
