@@ -17,7 +17,7 @@ import androidx.navigation.navArgument
 import com.sgut.android.nationalfootballleague.EspnAppState
 import com.sgut.android.nationalfootballleague.atheletedetail.AthleteDetailScreen
 import com.sgut.android.nationalfootballleague.homelistscreen.TeamCardsList
-import com.sgut.android.nationalfootballleague.log_in.LogInScreen
+import com.sgut.android.nationalfootballleague.log_in.LoginScreen
 import com.sgut.android.nationalfootballleague.scoreboardscreen.ScoreboardScreen
 import com.sgut.android.nationalfootballleague.settings.SettingsScreen
 import com.sgut.android.nationalfootballleague.sign_up.SignUpScreen
@@ -86,7 +86,7 @@ fun Navigation(appState: EspnAppState, padding: PaddingValues) {
         composable(
             route = NavigationScreens.LogInScreen.route
         ) {
-            LogInScreen()
+            LoginScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
         }
 
         composable(
