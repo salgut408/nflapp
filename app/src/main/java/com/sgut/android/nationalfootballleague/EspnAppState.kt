@@ -21,9 +21,17 @@ class EspnAppState(
     private val snackbarManager: SnackbarManager,
     private val resources: Resources,
     coroutineScope: CoroutineScope,
+    snackbarHostState: SnackbarHostState
+
 ) {
     init {
+        coroutineScope.launch{
+            snackbarManager.snackbarMessages.filterNotNull().collect(){snackbarMessage ->
+                val text = snackbarMessage.toMessage(resources)
+                snackbarHostState.showSnackbar(text)
+            }
 
+        }
     }
 
     fun popUp() {
