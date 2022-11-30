@@ -7,15 +7,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.sgut.android.nationalfootballleague.EspnAppState
-import com.sgut.android.nationalfootballleague.SnackbarScreen
 import com.sgut.android.nationalfootballleague.atheletedetail.AthleteDetailScreen
 import com.sgut.android.nationalfootballleague.homelistscreen.TeamCardsList
 import com.sgut.android.nationalfootballleague.log_in.LoginScreen
@@ -24,9 +20,6 @@ import com.sgut.android.nationalfootballleague.settings.SettingsScreen
 import com.sgut.android.nationalfootballleague.sign_up.SignUpScreen
 import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 
-
-// this can be used OR spread out like in scaffold in app fx
-//navifation 2 + espnApp2 use seperated navigation
 
 
 
@@ -67,7 +60,7 @@ fun Navigation(appState: EspnAppState, padding: PaddingValues) {
                 team = teamName, sport = sportName, league = leagueName,
                 sendButtonOnclick = {
                         subject: String, summary: String ->
-                    shareTeamAndNextEvent2(context,
+                    shareTeamAndNextEvent(context,
                         subject, summary)
                 }
             )
@@ -125,7 +118,7 @@ fun Navigation(appState: EspnAppState, padding: PaddingValues) {
 
 
 
-private fun shareTeamAndNextEvent2(
+private fun shareTeamAndNextEvent(
     context: Context,
     subject: String,
     summary: String

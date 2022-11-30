@@ -23,6 +23,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import coil.size.Scale
+import coil.size.ScaleResolver
 import com.sgut.android.nationalfootballleague.commoncomposables.StatBox
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 
@@ -57,9 +59,10 @@ fun TeamDetailCard(
                 .crossfade(true)
                 .build()
         )
-        Text(team.abbreviation.toString())
-        team.displayName?.let { Text(text = it, style = MaterialTheme.typography.displayMedium, color = altcolor ) }
-        team.standingSummary?.let { Text(text = it, style = MaterialTheme.typography.displaySmall) }
+        Text(text = team.displayName,
+            style = MaterialTheme.typography.displayMedium,
+            color = altcolor)
+        Text(text = team.standingSummary, style = MaterialTheme.typography.displaySmall)
 
 
         Image(
@@ -71,58 +74,58 @@ fun TeamDetailCard(
 
         Card() {
 
-Column(
-    verticalArrangement = Arrangement.spacedBy(24.dp),
-    horizontalAlignment = Alignment.CenterHorizontally,
-){
+            Column(
+//                verticalArrangement = Arrangement.SpaceEvenly,
+                horizontalAlignment = Alignment.CenterHorizontally,
 
-            val venuePainter = rememberAsyncImagePainter(
+            ) {
+
+                val venuePainter = rememberAsyncImagePainter(
 
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(team.franchise?.venue?.images3?.getOrNull(0)?.href)
                         .crossfade(true)
-                        .crossfade(1000)
-                        .build()
-
-
-            )
-
-
-            Text(text = team.franchise?.venue!!.fullName, style = MaterialTheme.typography.bodyLarge)
-
-
-            Image(
-                painter = venuePainter,
-                contentDescription = team.displayName,
-                modifier = Modifier
-                    .size(200.dp)
-
-            )
-
-            if(team.franchise?.venue!!.images3.size>1) {
-                val interiorVenuePainter = rememberAsyncImagePainter(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(team.franchise?.venue!!.images3[1].href)
-                        .crossfade(true)
-                        .crossfade(1000)
+                        .crossfade(1000).scale(ScaleResolver { Scale.FILL })
                         .build()
                 )
+
+
+                Text(text = team.franchise?.venue!!.fullName,
+                    style = MaterialTheme.typography.bodyLarge)
+
+
                 Image(
-                    painter = interiorVenuePainter,
+                    painter = venuePainter,
                     contentDescription = team.displayName,
                     modifier = Modifier
                         .size(200.dp)
+
                 )
 
-            }
+                if (team.franchise?.venue!!.images3.size > 1) {
+                    val interiorVenuePainter = rememberAsyncImagePainter(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(team.franchise?.venue!!.images3[1].href)
+                            .crossfade(true)
+                            .crossfade(1000)
+                            .build()
+                    )
+                    Image(
+                        painter = interiorVenuePainter,
+                        contentDescription = team.displayName,
+                        modifier = Modifier
+                            .size(200.dp)
+                    )
 
-}
+                }
+
+            }
         }
 
 
 
 
-        Text(text = "Team", style = MaterialTheme.typography.titleSmall,)
+        Text(text = "Team", style = MaterialTheme.typography.titleSmall)
 
         AtheleteRow(team)
 
@@ -130,12 +133,6 @@ Column(
 
 //        Text(text = "Injuries", style = MaterialTheme.typography.titleSmall,)
 //        InjuredAtheleteRow(team)
-
-
-
-
-
-
 
 
         team.nextEvent.getOrNull(0)?.let { NextEvent(nextEvent3 = it, modifier = modifier) }
@@ -146,17 +143,7 @@ Column(
     }
 
 
-
-
-
-
-
-
-
 }
-
-
-
 
 
 object HexToJetpackColor2 {

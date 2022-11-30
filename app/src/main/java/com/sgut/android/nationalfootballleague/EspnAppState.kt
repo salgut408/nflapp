@@ -1,17 +1,13 @@
 package com.sgut.android.nationalfootballleague
 
 import android.content.res.Resources
-import androidx.compose.material.ScaffoldState
-import androidx.compose.runtime.Stable
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ScaffoldDefaults
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import com.sgut.android.nationalfootballleague.commoncomposables.snackbar.SnackbarManager
 import com.sgut.android.nationalfootballleague.commoncomposables.snackbar.SnackbarMessage.Companion.toMessage
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 

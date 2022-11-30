@@ -3,16 +3,19 @@ package com.sgut.android.nationalfootballleague
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
-import androidx.compose.material.ScaffoldState
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -32,9 +35,10 @@ fun EspnApp(
     val appState = rememberAppState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     val backStackEntry by appState.navController.currentBackStackEntryAsState()
-    val currentScreen = backStackEntry?.destination?.route ?: NavigationScreens.MainScreenTeamsList.route
+    val currentScreen =
+        backStackEntry?.destination?.route ?: NavigationScreens.MainScreenTeamsList.route
     val snackbarHostState = remember { SnackbarHostState() }
-    val scaffoldState: ScaffoldState = rememberScaffoldState()
+
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -49,8 +53,14 @@ fun EspnApp(
             )
         },
 
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState,
+                modifier = Modifier.padding(8.dp),
+                snackbar = { snackbarData ->
+                    Snackbar(snackbarData = snackbarData)
+                }
+            )
+        },
 
 
         bottomBar = {
@@ -72,15 +82,14 @@ fun EspnApp(
 
 @Composable
 fun rememberAppState(
-     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-
-            navController: NavHostController = rememberNavController(),
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
+    navController: NavHostController = rememberNavController(),
     snackbarManager: SnackbarManager = SnackbarManager,
     resources: Resources = resources(),
-    coroutineScope: CoroutineScope = rememberCoroutineScope()
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ) =
-    remember( navController, snackbarManager, resources, coroutineScope) {
-        EspnAppState( navController, snackbarManager, resources, coroutineScope,snackbarHostState)
+    remember(navController, snackbarManager, resources, coroutineScope, snackbarHostState) {
+        EspnAppState(navController, snackbarManager, resources, coroutineScope, snackbarHostState)
     }
 
 @Composable
@@ -91,21 +100,3 @@ fun resources(): Resources {
 }
 
 
-
-private fun shareTeamAndNextEvent(
-    context: Context,
-    subject: String,
-    summary: String,
-) {
-    val intent = Intent(Intent.ACTION_SEND).apply {
-        type = "text/plain"
-        putExtra(Intent.EXTRA_SUBJECT, subject)
-        putExtra(Intent.EXTRA_TEXT, summary)
-    }
-    context.startActivity(
-        Intent.createChooser(
-            intent,
-            "Check this out"
-        )
-    )
-}
