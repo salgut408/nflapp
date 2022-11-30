@@ -3,8 +3,10 @@ package com.sgut.android.nationalfootballleague
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -32,7 +34,7 @@ fun EspnApp(
     val backStackEntry by appState.navController.currentBackStackEntryAsState()
     val currentScreen = backStackEntry?.destination?.route ?: NavigationScreens.MainScreenTeamsList.route
     val snackbarHostState = remember { SnackbarHostState() }
-
+    val scaffoldState: ScaffoldState = rememberScaffoldState()
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
