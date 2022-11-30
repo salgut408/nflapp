@@ -26,7 +26,7 @@ import com.sgut.android.nationalfootballleague.R.string as AppText
 fun LoginScreen(
     openAndPopUp: (String, String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: LogInViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState
 

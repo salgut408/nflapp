@@ -12,7 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.sgut.android.nationalfootballleague.R.string as AppText
+import com.sgut.android.nationalfootballleague.commoncomposables.BasicButton
 import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScreens
+import com.sgut.android.nationalfootballleague.utils.basicButton
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -90,9 +93,15 @@ fun TeamCardsList(
                     } }
                 }
 
-                OutlinedButton(onClick = { navController.navigate(NavigationScreens.ScoreboardScreen.withArgs(sport,league)) }) {
-                    Text("Scoreboard")
-                }
+                BasicButton(
+                    text = AppText.scores_games,
+                    modifier = Modifier.basicButton(),
+                    action ={ navController.navigate(
+                        NavigationScreens.ScoreboardScreen.withArgs(sport,league)
+                    ) })
+
+
+
 
                 LazyColumn(contentPadding = PaddingValues(8.dp)) {
 

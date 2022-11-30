@@ -13,7 +13,7 @@ import javax.inject.Inject
 import com.sgut.android.nationalfootballleague.R.string as AppText
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+class LogInViewModel @Inject constructor(
     private val accountService: AccountService,
 
     ) : ViewModel() {

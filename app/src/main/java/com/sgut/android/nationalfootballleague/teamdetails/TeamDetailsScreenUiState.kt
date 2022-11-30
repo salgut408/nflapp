@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.domain
+package com.sgut.android.nationalfootballleague.teamdetails
 
 import com.sgut.android.nationalfootballleague.Athletes
 import com.sgut.android.nationalfootballleague.NextEvent3

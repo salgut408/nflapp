@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.domain
+package com.sgut.android.nationalfootballleague.homelistscreen
 
 import com.sgut.android.nationalfootballleague.Athletes
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel

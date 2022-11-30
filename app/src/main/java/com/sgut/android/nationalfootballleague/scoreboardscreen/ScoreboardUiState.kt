@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.domain
+package com.sgut.android.nationalfootballleague.scoreboardscreen
 
 import com.sgut.android.nationalfootballleague.data.domainmodels.ScoreboardResponseEventModel
 
