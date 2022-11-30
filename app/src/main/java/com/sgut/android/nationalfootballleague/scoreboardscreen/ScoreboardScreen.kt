@@ -13,10 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.commoncomposables.BasicButton
 import com.sgut.android.nationalfootballleague.utils.basicButton
+import com.sgut.android.nationalfootballleague.utils.card
 import com.sgut.android.nationalfootballleague.utils.spacer
 import java.util.*
 
@@ -93,4 +96,15 @@ fun ScoreboardScreen(
 
     }
     
+}
+
+@Preview
+@Composable
+fun TextMaker() {
+    Text(
+        text = "TEXT",
+        modifier = Modifier
+            .padding(20.dp)
+
+    )
 }

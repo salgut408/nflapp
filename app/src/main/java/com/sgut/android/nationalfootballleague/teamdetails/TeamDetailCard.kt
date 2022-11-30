@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 
 
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -70,6 +71,7 @@ fun TeamDetailCard(
             contentDescription = team.displayName,
             modifier = Modifier
                 .size(200.dp)
+                .clipToBounds()
         )
 
         Card() {
@@ -85,7 +87,7 @@ fun TeamDetailCard(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(team.franchise?.venue?.images3?.getOrNull(0)?.href)
                         .crossfade(true)
-                        .crossfade(1000).scale(ScaleResolver { Scale.FILL })
+                        .crossfade(1000)
                         .build()
                 )
 
@@ -131,14 +133,14 @@ fun TeamDetailCard(
 
         Log.e("TeamDetailCard", team.athletes.filter { it.injuries!!.isNotEmpty() }.toString())
 
-//        Text(text = "Injuries", style = MaterialTheme.typography.titleSmall,)
-//        InjuredAtheleteRow(team)
+
 
 
         team.nextEvent.getOrNull(0)?.let { NextEvent(nextEvent3 = it, modifier = modifier) }
 
-        StatBox(stats = team.record?.items?.get(0)?.summary.toString())
-
+        StatBox(stats = team.record?.items?.get(0)?.summary.toString(),team)
+        Text(text = "Injuries", style = MaterialTheme.typography.titleSmall,)
+//        InjuredAtheleteRow(team)
 
     }
 

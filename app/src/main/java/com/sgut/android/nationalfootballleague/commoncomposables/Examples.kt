@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -20,9 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
+import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.teamdetails.InjuredAtheleteRow
 
 @Composable
-fun StatBox(stats: String) {
+fun StatBox(stats: String, team: TeamDetailWithRosterModel) {
     var expanded by remember { mutableStateOf(false) }
     val extraPadding by animateDpAsState(
         if (expanded) 48.dp else 0.dp,
@@ -41,11 +44,21 @@ fun StatBox(stats: String) {
                 .padding(bottom = extraPadding.coerceAtLeast(0.dp))) {
                 Text(text = "Stats")
                 Text(text = stats)
+                if(expanded){
+                    Text(text = "Injuries", style = MaterialTheme.typography.titleSmall,)
+                    InjuredAtheleteRow(team)
+                }
             }
             ElevatedButton(
                 onClick = { expanded = !expanded}
             ) {
-                Text(if (expanded)"Show less" else "Show More")
+                Text(if (expanded){
+                    "Show less"
+                } else {
+                    "Show Injuries"
+                }
+                )
+
 
             }
         }
