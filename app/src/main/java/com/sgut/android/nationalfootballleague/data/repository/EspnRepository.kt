@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.repository
+package com.sgut.android.nationalfootballleague.data.repository
 
 import android.util.Log
 import com.sgut.android.nationalfootballleague.data.domainmodels.ScoreboardResponseEventModel

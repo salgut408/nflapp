@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuthException
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.data.service.AccountService
-import com.sgut.android.nationalfootballleague.repository.EspnRepository
+import com.sgut.android.nationalfootballleague.data.repository.EspnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
