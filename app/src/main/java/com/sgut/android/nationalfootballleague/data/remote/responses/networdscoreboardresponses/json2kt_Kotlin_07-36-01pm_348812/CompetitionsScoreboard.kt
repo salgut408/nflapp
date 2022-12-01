@@ -15,7 +15,7 @@ data class CompetitionsScoreboard (
   @SerializedName("status"        ) var status        : StatusScoreboard?                  = StatusScoreboard(),
   @SerializedName("venue"         ) var venue         : VenueScoreboard?                   = VenueScoreboard(),
   @SerializedName("format"        ) var format        : FormatScoreboard?                  = FormatScoreboard(),
-  @SerializedName("notes"         ) var notes         : ArrayList<String>        = arrayListOf(),
+//  @SerializedName("notes"         ) var notes         : ArrayList<String>        = arrayListOf(),
   @SerializedName("geoBroadcasts" ) var geoBroadcasts : ArrayList<GeoBroadcastsScoreboard> = arrayListOf(),
   @SerializedName("broadcasts"    ) var broadcasts    : ArrayList<BroadcastsScoreboard>    = arrayListOf(),
   @SerializedName("competitors"   ) var competitors   : ArrayList<CompetitorsScoreboard>   = arrayListOf(),

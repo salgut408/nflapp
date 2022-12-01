@@ -44,6 +44,10 @@ fun TeamDetailScreen(
 
             }
 
+            Text(teamDetailUiState.currentSport, )
+            Text(teamDetailUiState.currentLeague, )
+            Text(teamDetailUiState.currentTeamDetails?.abbreviation ?: "", )
+
         }
 
 

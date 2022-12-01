@@ -15,8 +15,12 @@ import com.sgut.android.nationalfootballleague.R.string as AppText
 @HiltViewModel
 class LogInViewModel @Inject constructor(
     private val accountService: AccountService,
-
     ) : ViewModel() {
+
+    private val _showSnackbar = mutableStateOf(false)
+    val showSnackbar
+        get() = _showSnackbar
+
 
     var uiState = mutableStateOf(LoginUiState())
         private set
@@ -36,12 +40,12 @@ class LogInViewModel @Inject constructor(
 
     fun onSignInClick(openAndPopUp: (String, String) -> Unit) {
         if (!email.isValidEmail()) {
-            SnackbarManager.showMessage(AppText.email_error)
+            _showSnackbar.value = true
             return
         }
 
         if (password.isBlank()) {
-            SnackbarManager.showMessage(AppText.empty_password_error)
+            _showSnackbar.value = true
             return
         }
 
@@ -53,13 +57,17 @@ class LogInViewModel @Inject constructor(
 
     fun onForgotPasswordClick() {
         if (!email.isValidEmail()) {
-            SnackbarManager.showMessage(AppText.email_error)
+            _showSnackbar.value = true
             return
         }
 
         viewModelScope.launch {
             accountService.sendRecoveryEmail(email)
-            SnackbarManager.showMessage(AppText.recovery_email_sent)
+            _showSnackbar.value = true
         }
+    }
+
+    fun dismissSnackbar() {
+        _showSnackbar.value = false
     }
 }

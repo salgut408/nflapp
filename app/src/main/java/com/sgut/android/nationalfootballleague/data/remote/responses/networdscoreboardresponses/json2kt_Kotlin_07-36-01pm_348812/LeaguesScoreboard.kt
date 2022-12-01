@@ -17,6 +17,6 @@ data class LeaguesScoreboard (
   @SerializedName("calendarIsWhitelist" ) var calendarIsWhitelist : Boolean?            = null,
   @SerializedName("calendarStartDate"   ) var calendarStartDate   : String?             = null,
   @SerializedName("calendarEndDate"     ) var calendarEndDate     : String?             = null,
-  @SerializedName("calendar"            ) var calendar            : ArrayList<CalendarScoreboard> = arrayListOf()
+//  @SerializedName("calendar"            ) var calendar            : ArrayList<CalendarScoreboard> = arrayListOf()
 
 )

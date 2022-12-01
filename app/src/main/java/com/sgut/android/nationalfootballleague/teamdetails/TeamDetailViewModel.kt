@@ -64,8 +64,8 @@ class TeamDetailViewModel @Inject constructor(
 
             setTeamDetailUiState(result, sport, league)
 
-            Log.i("DEBUG-TEAM DETAIL", result.toString())
-            Log.i("DEBUG-TEAM DETAIL", teamDetailUiState.value.currentLeague +"    " + teamDetailUiState.value.currentTeamDetails?.slug)
+//            Log.i("DEBUG-TEAM DETAIL", result.toString())
+            Log.i("DEBUG-TEAM DETAIL", "$teamDetailUiState.value.currentLeague $teamDetailUiState.value.currentTeamDetails?.slug ${teamDetailUiState.value.currentSport}?.slug")
 
 
 

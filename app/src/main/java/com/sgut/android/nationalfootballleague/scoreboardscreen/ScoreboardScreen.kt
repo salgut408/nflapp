@@ -1,17 +1,15 @@
 package com.sgut.android.nationalfootballleague.scoreboardscreen
 
 import android.util.Log
+import androidx.compose.foundation.layout.*
 import com.sgut.android.nationalfootballleague.R.string as AppText
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,18 +33,32 @@ fun ScoreboardScreen(
     val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
     Log.e("scoreboard state scrn", scoreboardUiState.scoreboardUiStateEvents.toString())
     var events = scoreboardUiState.scoreboardUiStateEvents.events
+    var leagues = scoreboardUiState.scoreboardUiStateEvents.leagues
     
     Column(
         modifier
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
+        Box(contentAlignment = Alignment.BottomCenter) {
+        Row(horizontalArrangement = Arrangement.SpaceEvenly) {
+            Text(scoreboardUiState.currentLeague, modifier.padding(8.dp))
+//            Text(scoreboardUiState.scoreboardUiStateEvents.leagues., modifier.padding(8.dp))
+//            Text(leagues[0].name ?: "", modifier.padding(8.dp))
+        }
+
+        }
+
         Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?: "", style = MaterialTheme.typography.displayLarge)
 //        Text(text = "Headlines", style = MaterialTheme.typography.displaySmall)
         for (i in events) {
             for (j in i.competitions[0].headlines) {
                 Text(text = j.description.toString())
             }
+        }
+
+        for(i in leagues){
+            Text(i.name?:"")
         }
 
         for (i in events ) {

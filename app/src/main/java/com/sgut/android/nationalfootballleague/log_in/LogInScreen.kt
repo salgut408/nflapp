@@ -33,6 +33,7 @@ fun LoginScreen(
 ) {
     val uiState by viewModel.uiState
 
+    val showSnackbar by viewModel.showSnackbar
 
 
     Column(
@@ -43,7 +44,11 @@ fun LoginScreen(
         EmailField(uiState.email, viewModel::onEmailChange, Modifier.fieldModifier())
         PasswordField(uiState.password, viewModel::onPasswordChange, Modifier.fieldModifier())
 
-        BasicButton(AppText.sign_in, Modifier.basicButton()) { viewModel.onSignInClick(openAndPopUp) }
+        BasicButton(AppText.sign_in, Modifier.basicButton()) {
+
+            viewModel.onSignInClick(openAndPopUp)
+
+        }
 
         BasicTextButton(AppText.forgot_password, Modifier.textButton()) {
             viewModel.onForgotPasswordClick()
