@@ -139,7 +139,6 @@ fun TeamDetailCard(
         team.nextEvent.getOrNull(0)?.let { NextEvent(nextEvent3 = it, modifier = modifier) }
 
         StatBox(stats = team.record?.items?.get(0)?.summary.toString(),team)
-        Text(text = "Injuries", style = MaterialTheme.typography.titleSmall,)
 //        InjuredAtheleteRow(team)
 
     }

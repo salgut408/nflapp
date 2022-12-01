@@ -42,10 +42,9 @@ fun StatBox(stats: String, team: TeamDetailWithRosterModel) {
             Column(modifier = Modifier
                 .weight(1f)
                 .padding(bottom = extraPadding.coerceAtLeast(0.dp))) {
-                Text(text = "Stats")
-                Text(text = stats)
+                Text(text = "Injuries")
                 if(expanded){
-                    Text(text = "Injuries", style = MaterialTheme.typography.titleSmall,)
+                    Text(text = "Injuries:", style = MaterialTheme.typography.titleSmall,)
                     InjuredAtheleteRow(team)
                 }
             }
