@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague.scoreboardscreen
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import com.sgut.android.nationalfootballleague.R.string as AppText
 import androidx.compose.foundation.rememberScrollState
@@ -12,9 +13,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.sgut.android.nationalfootballleague.commoncomposables.BasicButton
 import com.sgut.android.nationalfootballleague.utils.basicButton
 import com.sgut.android.nationalfootballleague.utils.card
@@ -38,31 +42,40 @@ fun ScoreboardScreen(
     Column(
         modifier
             .verticalScroll(rememberScrollState())
-            .padding(16.dp)
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(contentAlignment = Alignment.BottomCenter) {
-        Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-            Text(scoreboardUiState.currentLeague, modifier.padding(8.dp))
-//            Text(scoreboardUiState.scoreboardUiStateEvents.leagues., modifier.padding(8.dp))
-//            Text(leagues[0].name ?: "", modifier.padding(8.dp))
-        }
-
-        }
-
         Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?: "", style = MaterialTheme.typography.displayLarge)
-//        Text(text = "Headlines", style = MaterialTheme.typography.displaySmall)
+        Text(leagues.getOrNull(0)?.name?:"", style = MaterialTheme.typography.headlineMedium)
+
+        val leagueLogoPainter = rememberAsyncImagePainter(
+
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(leagues.getOrNull(0)?.logos?.getOrNull(0)?.href)
+                .crossfade(true)
+                .crossfade(1000)
+                .build()
+        )
+        Image(
+            painter = leagueLogoPainter,
+            contentDescription = leagues.getOrNull(0)?.name?:"",
+            modifier = Modifier
+                .size(300.dp)
+
+        )
+
+
+
         for (i in events) {
             for (j in i.competitions[0].headlines) {
                 Text(text = j.description.toString())
             }
         }
 
-        for(i in leagues){
-            Text(i.name?:"")
-        }
+
 
         for (i in events ) {
-            Card() {
+            Card(modifier.padding(16.dp)) {
                 BasicButton(text = AppText.watc, modifier = Modifier.basicButton() ) {
 
                 }
@@ -70,7 +83,7 @@ fun ScoreboardScreen(
                 Text(text = i.name ?: "", style = MaterialTheme.typography.headlineMedium)
 
 
-                Row(modifier.padding(16.dp)) {
+                Row() {
 
                     //use id for game details screen
                     i.competitions[0].id .let {

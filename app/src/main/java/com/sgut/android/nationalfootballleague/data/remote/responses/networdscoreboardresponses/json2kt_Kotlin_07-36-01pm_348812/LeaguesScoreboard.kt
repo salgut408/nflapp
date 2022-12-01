@@ -12,7 +12,7 @@ data class LeaguesScoreboard (
   @SerializedName("midsizeName"         ) var midsizeName         : String?             = null,
   @SerializedName("slug"                ) var slug                : String?             = null,
   @SerializedName("season"              ) var season              : SeasonScoreboard?             = SeasonScoreboard(),
-  @SerializedName("logos"               ) var logos               : ArrayList<LogosScoreboard>    = arrayListOf(),
+  @SerializedName("logos"               ) var logos               : List<LogosScoreboard>    = listOf(),
   @SerializedName("calendarType"        ) var calendarType        : String?             = null,
   @SerializedName("calendarIsWhitelist" ) var calendarIsWhitelist : Boolean?            = null,
   @SerializedName("calendarStartDate"   ) var calendarStartDate   : String?             = null,
