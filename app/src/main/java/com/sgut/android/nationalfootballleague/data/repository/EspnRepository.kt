@@ -113,6 +113,21 @@ class EspnRepository @Inject constructor(
         return teamDomainModelMapper.toDomainList(result!!)
     }
 
+    suspend fun getAllCollegeBasketballTeams(): List<TeamDomainModel> {
+        val response = espnApi.getAllCollegeBasketballTeams()
+        if (response.isSuccessful) {
+            val teamsResponse =
+                espnApi.getAllCollegeBasketballTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
+            Log.e("fuck", teamsResponse.toString())
+            return teamDomainModelMapper.toDomainList(teamsResponse!!)
+        } else {
+            Log.e(javaClass.name, response.errorBody().toString())
+        }
+        val result = espnApi.getAllCollegeBasketballTeams()
+            .body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+        return teamDomainModelMapper.toDomainList(result!!)
+    }
+
 
     suspend fun getAllWomensBasketballTeams(): List<TeamDomainModel> {
         val response = espnApi.getAllWomensBasketballTeams()

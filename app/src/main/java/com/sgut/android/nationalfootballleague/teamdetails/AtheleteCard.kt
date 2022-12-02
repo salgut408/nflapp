@@ -21,7 +21,9 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
@@ -104,9 +106,9 @@ fun AltheleteCard2(
                     modifier = Modifier
                         .size(150.dp)
                         .padding(8.dp)
-                        .border(BorderStroke(4.dp, Color.Yellow),CircleShape)
+                        .border(BorderStroke(4.dp, Color.Yellow), CircleShape)
                         .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.background)
+                        .background(MaterialTheme.colorScheme.background)
 
                 )
                 FloatingActionButton(
@@ -127,9 +129,10 @@ fun AltheleteCard2(
 
             Divider()
             Column(modifier = Modifier.padding(16.dp)) {
-                athelete.displayName?.let { Text(it) }
-                athelete.position?.displayName?.let { Text(it) }
-                athelete.jersey?.let { Text("# $it") }
+                Text(text =  athelete.displayName)
+                Text(text = athelete.position.displayName)
+                Text("# ${athelete.jersey}")
+
 
                 var injuries = athelete.injuries
 
@@ -152,4 +155,53 @@ fun AltheleteCard2(
 
     }
 
+}
+
+@Composable
+fun AltheleteCard3(
+    athelete: Athletes,
+    modifier: Modifier,
+) {
+    Card(modifier = modifier. fillMaxWidth(0.5f),
+    shape = RoundedCornerShape(15.dp)) {
+        Box(modifier = Modifier.height(200.dp)) {
+            // image ()
+            val painter = rememberAsyncImagePainter(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(athelete.headshot.href ?: athelete.flag?.href )
+                    .crossfade(true)
+                    .scale(Scale.FILL)
+                    .crossfade(100)
+                    .build()
+            )
+            Image(
+                painter = painter,
+                contentDescription = athelete.displayName,
+                modifier = Modifier
+                    .size(350.dp)
+                    .background(Color.Transparent)
+
+            )
+            Box(
+                modifier = Modifier.fillMaxSize().padding(12.dp),
+                contentAlignment = Alignment.TopStart
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ){
+                    Text(athelete.jersey, style = TextStyle(color = Color.Black, fontSize = 96.sp))
+                    Text(athelete.displayName, style = TextStyle(color = Color.Black, fontSize = 16.sp))
+
+                }
+            }
+            Box(
+                modifier = Modifier.fillMaxSize().padding(12.dp),
+                contentAlignment = Alignment.BottomStart
+            ) {
+                Text(athelete.displayName, style = TextStyle(color = Color.Black, fontSize = 16.sp))
+            }
+
+        }
+    }
 }

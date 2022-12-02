@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 
 data class Position (
 
-  @SerializedName("id"           ) var id           : String?  = null,
-  @SerializedName("name"         ) var name         : String?  = null,
-  @SerializedName("displayName"  ) var displayName  : String?  = null,
-  @SerializedName("abbreviation" ) var abbreviation : String?  = null,
+  @SerializedName("id"           ) var id           : String  = "",
+  @SerializedName("name"         ) var name         : String  = "",
+  @SerializedName("displayName"  ) var displayName  : String  = "",
+  @SerializedName("abbreviation" ) var abbreviation : String  = "",
   @SerializedName("leaf"         ) var leaf         : Boolean? = null,
   @SerializedName("parent"       ) var parent       : Parent3?  = Parent3()
 

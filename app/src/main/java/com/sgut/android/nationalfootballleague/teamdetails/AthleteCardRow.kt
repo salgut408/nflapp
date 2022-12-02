@@ -33,7 +33,7 @@ fun AtheleteRow(
 
         items(athletesList){ athlete ->
             if (athlete != null) {
-                AltheleteCard2(athelete = athlete, modifier = Modifier.padding(5.dp))
+                AltheleteCard3(athelete = athlete, modifier = Modifier.padding(5.dp))
             }
         }
     }

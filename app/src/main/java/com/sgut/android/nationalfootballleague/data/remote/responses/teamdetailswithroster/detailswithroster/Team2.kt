@@ -15,7 +15,7 @@ data class Team3 (
   @SerializedName("displayName"      ) var displayName      : String              = "",
   @SerializedName("shortDisplayName" ) var shortDisplayName : String              = "",
   @SerializedName("color"            ) var color            : String              = "",
-  @SerializedName("alternateColor"   ) var alternateColor   : String              = "",
+  @SerializedName("alternateColor"   ) var alternateColor   : String              = "FFFF",
   @SerializedName("isActive"         ) var isActive         : Boolean?             = null,
   @SerializedName("logos"            ) var logos            : List<Logos3>     = listOf(),
   @SerializedName("record"           ) var record           : Record3?              = Record3(),

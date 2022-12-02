@@ -75,39 +75,46 @@ fun ScoreboardScreen(
 
 
         for (i in events ) {
-            Card(modifier.padding(16.dp)) {
+            Card(modifier.padding(16.dp),) {
                 BasicButton(text = AppText.watc, modifier = Modifier.basicButton() ) {
-
                 }
+                Text(text = i.name ?: "", style = MaterialTheme.typography.bodyLarge)
 
-                Text(text = i.name ?: "", style = MaterialTheme.typography.headlineMedium)
 
 
-                Row() {
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = modifier.padding(16.dp)
+                        .fillMaxWidth()
+                ) {
 
                     //use id for game details screen
-                    i.competitions[0].id .let {
-                        Text(text = it!!,
-                            style = MaterialTheme.typography.headlineMedium)
-                    }
+                  Text("Period ", style = MaterialTheme.typography.bodyLarge)
 
 
                     i.status.period.toString() .let {
                         Text(text = it,
-                            style = MaterialTheme.typography.headlineMedium)
+                            style = MaterialTheme.typography.bodyLarge)
                     }
                 }
 
 
-                Row(modifier.padding(16.dp)) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                   modifier = modifier.padding(16.dp)
+                        .fillMaxWidth()
+                ) {
 
 
                     Text(text = i.competitions[0].competitors[0].team?.name + " " + i.competitions[0].competitors[0].score.toString()
-                        ?: "", style = MaterialTheme.typography.headlineMedium)
+                        ?: "", style = MaterialTheme.typography.bodyLarge)
 
 
                     Text(text = i.competitions[0].competitors[1].team?.name + " " + i.competitions[0].competitors[1].score.toString()
-                        ?: "", style = MaterialTheme.typography.headlineMedium)
+                        ?: "", style = MaterialTheme.typography.bodyLarge)
 
 
 
@@ -115,7 +122,7 @@ fun ScoreboardScreen(
 
             }
 
-            Divider(modifier = Modifier.padding(8.dp))
+            Divider(modifier = Modifier.padding(3.dp))
 
         }
 
@@ -126,10 +133,27 @@ fun ScoreboardScreen(
 @Preview
 @Composable
 fun TextMaker() {
-    Text(
-        text = "TEXT",
-        modifier = Modifier
-            .padding(20.dp)
 
-    )
+
+    Card(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ){
+            Text(
+                text = "TEXT",
+                modifier = Modifier.padding(8.dp),
+                style = MaterialTheme.typography.headlineMedium
+                    )
+            Text(
+                text = "TEXT",
+                modifier = Modifier,
+                style = MaterialTheme.typography.headlineMedium
+                    )
+        }
+
+
+    }
+
 }

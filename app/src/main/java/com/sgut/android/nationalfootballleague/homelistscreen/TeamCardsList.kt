@@ -71,21 +71,16 @@ fun TeamCardsList(
                         Text("College Football", style = MaterialTheme.typography.labelSmall)
                     }}
 
+                    item { Button(onClick = { homeListViewModel.setCollegeBasketballTeam() }) {
+                        Text("College Basketball", style = MaterialTheme.typography.labelSmall)
+                    }}
+
                     item { Button(onClick = { homeListViewModel.setMlsTeam() }) {
                         Text("MLS", style = MaterialTheme.typography.labelSmall)
                     }}
 
-                    item { Button(onClick = {  }) {
-                        Text("Mexican Soccer", style = MaterialTheme.typography.labelSmall)
-                    }}
 
-                    item { Button(onClick = {  }) {
-                        Text("English Premier League", style = MaterialTheme.typography.labelSmall)
-                    }}
 
-                    item { Button(onClick = {  }) {
-                        Text("Spanish Soccer", style = MaterialTheme.typography.labelSmall)
-                    }}
 
 
                     item { Button(onClick = { homeListViewModel.setWorldCupTeam() }) {
