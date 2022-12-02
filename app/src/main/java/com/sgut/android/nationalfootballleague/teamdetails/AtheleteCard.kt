@@ -178,7 +178,6 @@ fun AltheleteCard3(
                 modifier = Modifier
                     .size(350.dp)
                     .background(Color.Transparent)
-
             )
             Box(
                 modifier = Modifier.fillMaxWidth(),
@@ -188,16 +187,9 @@ fun AltheleteCard3(
                     horizontalAlignment = Alignment.Start,
                     modifier = Modifier.width(180.dp)
                 ) {
-
                         Text(athelete.jersey, style = TextStyle(color = Color.Black, fontSize = 80.sp))
                         Text(athelete.position.name, style = TextStyle(color = Color.Black, fontSize = 16.sp))
                         Text(athelete.shortName, style = TextStyle(color = Color.Black, fontSize = 16.sp))
-
-
-
-
-
-
                 }
             }
         }

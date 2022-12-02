@@ -44,16 +44,12 @@ fun InjuredAtheleteRow(
     team: TeamDetailWithRosterModel
 ) {
     val athletesList =team.athletes
-//        .filter { it.injuries!!.isNotEmpty() }
-
-
 
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(
             16.dp)
     ) {
-
 
         items(athletesList){ athlete ->
             if (athlete.injuries!!.isNotEmpty()) {

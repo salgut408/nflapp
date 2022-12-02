@@ -45,10 +45,7 @@ fun TeamDetailCard(
 ) {
     val color = HexToJetpackColor2.getColor(team.color)
     val altcolor = HexToJetpackColor2.getColor(team.alternateColor)
-
     val scrollState = rememberScrollState()
-
-
 
     Column(
         verticalArrangement = Arrangement.spacedBy(30.dp),
@@ -70,9 +67,6 @@ fun TeamDetailCard(
                 .build()
         )
         Row(verticalAlignment = Alignment.Top){
-
-
-
             Image(
                 painter = logoPainter,
                 contentDescription = team.displayName,
@@ -86,26 +80,14 @@ fun TeamDetailCard(
                     color = altcolor)
                 Text(text = team.standingSummary, style = MaterialTheme.typography.titleMedium, color = altcolor)
                 Text(text = team.record?.items?.getOrNull(0)?.summary?:"", style = MaterialTheme.typography.titleMedium)
-
             }
-
         }
 
-
-
-
-
-
-            VenueCard(venue3 = team.franchise?.venue ?: Venue3(),
-                modifier = Modifier.fillMaxWidth())
-
-
-
+        VenueCard(
+                venue3 = team.franchise?.venue ?: Venue3(),
+                modifier = Modifier.fillMaxWidth()
+            )
         AtheleteRow(team)
-
-
-
-
 
         team.nextEvent.getOrNull(0)?.let { NextEvent(nextEvent3 = it, modifier = modifier) }
 
