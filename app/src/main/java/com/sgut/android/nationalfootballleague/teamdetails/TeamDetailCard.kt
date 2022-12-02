@@ -99,7 +99,6 @@ fun TeamDetailCard(
 
         AtheleteRow(team)
 
-        Log.e("TeamDetailCard", team.athletes.filter { it.injuries!!.isNotEmpty() }.toString())
 
 
 
@@ -127,17 +126,16 @@ fun VenueCard(
     venue3: Venue3,
     modifier: Modifier,
 ) {
-    Card(modifier = modifier
-        .fillMaxWidth(0.5f)
+    Card(modifier = modifier.background(Color.Transparent)
+        .fillMaxWidth()
         .padding(16.dp),
         shape = RoundedCornerShape(15.dp)) {
-        Box(modifier = Modifier.height(400.dp)) {
+        Box(modifier = Modifier.height(200.dp)) {
             // image ()
             val painter = rememberAsyncImagePainter(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(venue3.images3.getOrNull(1)?.href ?: venue3.images3.getOrNull(0)?.href)
                     .crossfade(true)
-                    .scale(Scale.FILL)
                     .crossfade(100)
                     .build()
             )
@@ -145,7 +143,7 @@ fun VenueCard(
                 painter = painter,
                 contentDescription = "",
                 modifier = Modifier
-                    .size(500.dp).clip(RoundedCornerShape(16.dp))
+                    .width(400.dp).clip(RoundedCornerShape(16.dp))
 
 
             )
