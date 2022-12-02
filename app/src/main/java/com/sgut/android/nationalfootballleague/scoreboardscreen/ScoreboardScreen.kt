@@ -139,7 +139,7 @@ fun TextMaker() {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.width(200.dp)
         ){
             Text(
                 text = "TEXT",

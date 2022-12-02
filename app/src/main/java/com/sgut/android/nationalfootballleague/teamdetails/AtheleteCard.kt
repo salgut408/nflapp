@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
@@ -48,7 +49,7 @@ fun AtheleteCard(
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()) {
+           ) {
 //             image
             val painter = rememberAsyncImagePainter(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -85,16 +86,15 @@ fun AltheleteCard2(
     ) {
 
 
-
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().padding(16.dp)
         ) {
 
             Box() {
                 val painter = rememberAsyncImagePainter(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(athelete.headshot?.href ?: athelete.flag?.href )
+                        .data(athelete.headshot?.href ?: athelete.flag?.href)
                         .crossfade(true)
                         .scale(Scale.FILL)
                         .crossfade(100)
@@ -129,7 +129,7 @@ fun AltheleteCard2(
 
             Divider()
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(text =  athelete.displayName)
+                Text(text = athelete.displayName)
                 Text(text = athelete.position.displayName)
                 Text("# ${athelete.jersey}")
 
@@ -138,16 +138,14 @@ fun AltheleteCard2(
 
 
 
-                for(i in injuries!!) {
+                for (i in injuries!!) {
                     Text(i.injuryStatus.toString())
 
                     //type is foot
-                    Text(i.detail?.side.toString() + " " + i.detail?.type .toString())
+                    Text(i.detail?.side.toString() + " " + i.detail?.type.toString())
 
 //                    Text(i.detail?.detail.toString())
                 }
-
-
 
 
             }
@@ -162,13 +160,13 @@ fun AltheleteCard3(
     athelete: Athletes,
     modifier: Modifier,
 ) {
-    Card(modifier = modifier. fillMaxWidth(0.5f),
-    shape = RoundedCornerShape(15.dp)) {
+    Card(modifier = modifier.fillMaxWidth(2f),
+        shape = RoundedCornerShape(15.dp)) {
         Box(modifier = Modifier.height(200.dp)) {
             // image ()
             val painter = rememberAsyncImagePainter(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(athelete.headshot.href ?: athelete.flag?.href )
+                    .data(athelete.headshot.href ?: athelete.flag?.href)
                     .crossfade(true)
                     .scale(Scale.FILL)
                     .crossfade(100)
@@ -183,25 +181,25 @@ fun AltheleteCard3(
 
             )
             Box(
-                modifier = Modifier.fillMaxSize().padding(12.dp),
-                contentAlignment = Alignment.TopStart
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.TopStart,
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ){
-                    Text(athelete.jersey, style = TextStyle(color = Color.Black, fontSize = 96.sp))
-                    Text(athelete.displayName, style = TextStyle(color = Color.Black, fontSize = 16.sp))
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier.width(180.dp)
+                ) {
+
+                        Text(athelete.jersey, style = TextStyle(color = Color.Black, fontSize = 80.sp))
+                        Text(athelete.position.name, style = TextStyle(color = Color.Black, fontSize = 16.sp))
+                        Text(athelete.shortName, style = TextStyle(color = Color.Black, fontSize = 16.sp))
+
+
+
+
+
 
                 }
             }
-            Box(
-                modifier = Modifier.fillMaxSize().padding(12.dp),
-                contentAlignment = Alignment.BottomStart
-            ) {
-                Text(athelete.displayName, style = TextStyle(color = Color.Black, fontSize = 16.sp))
-            }
-
         }
     }
 }

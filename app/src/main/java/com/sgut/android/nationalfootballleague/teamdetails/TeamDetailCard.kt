@@ -51,7 +51,7 @@ fun TeamDetailCard(
 
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(24.dp),
+        verticalArrangement = Arrangement.spacedBy(30.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
 
         modifier = Modifier
@@ -69,19 +69,29 @@ fun TeamDetailCard(
                 .crossfade(true)
                 .build()
         )
-        Text(text = team.displayName,
-            style = MaterialTheme.typography.displayMedium,
-            color = altcolor)
-        Text(text = team.standingSummary, style = MaterialTheme.typography.displaySmall)
+        Row(verticalAlignment = Alignment.Top){
 
 
-        Image(
-            painter = logoPainter,
-            contentDescription = team.displayName,
-            modifier = Modifier
-                .size(200.dp)
-                .clipToBounds()
-        )
+
+            Image(
+                painter = logoPainter,
+                contentDescription = team.displayName,
+                modifier = Modifier
+                    .size(200.dp)
+                    .clipToBounds()
+            )
+            Column() {
+                Text(text = team.nickname,
+                    style = MaterialTheme.typography.displayMedium,
+                    color = altcolor)
+                Text(text = team.standingSummary, style = MaterialTheme.typography.titleMedium, color = altcolor)
+                Text(text = team.record?.items?.getOrNull(0)?.summary?:"", style = MaterialTheme.typography.titleMedium)
+
+            }
+
+        }
+
+
 
 
 
@@ -90,12 +100,6 @@ fun TeamDetailCard(
                 modifier = Modifier.fillMaxWidth())
 
 
-
-
-
-
-
-        Text(text = "Team", style = MaterialTheme.typography.titleSmall)
 
         AtheleteRow(team)
 
@@ -136,14 +140,13 @@ fun VenueCard(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(venue3.images3.getOrNull(1)?.href ?: venue3.images3.getOrNull(0)?.href)
                     .crossfade(true)
-                    .crossfade(100)
                     .build()
             )
             Image(
                 painter = painter,
                 contentDescription = "",
                 modifier = Modifier
-                    .width(400.dp).clip(RoundedCornerShape(16.dp))
+                    .fillMaxWidth().clip(RoundedCornerShape(16.dp)).fillMaxHeight()
 
 
             )
@@ -151,7 +154,7 @@ fun VenueCard(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(12.dp),
-                contentAlignment = Alignment.TopCenter
+                contentAlignment = Alignment.TopEnd
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth()
