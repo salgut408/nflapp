@@ -1,19 +1,18 @@
 package com.sgut.android.nationalfootballleague.data.repository
 
 import android.util.Log
+import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.ScoreboardResponseEventModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
-import com.sgut.android.nationalfootballleague.data.dtomappers.NetworkScoreboardToDomainModelMapper
-import com.sgut.android.nationalfootballleague.data.dtomappers.NetworkToTeamDomainModelMapper
-import com.sgut.android.nationalfootballleague.data.dtomappers.TeamDetailNetworkToModelMapper
-import com.sgut.android.nationalfootballleague.data.dtomappers.TeamDetailWithRosterMapper
+import com.sgut.android.nationalfootballleague.data.dtomappers.*
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import javax.inject.Inject
 
 class EspnRepository @Inject constructor(
     val teamDomainModelMapper: NetworkToTeamDomainModelMapper,
     val espnApi: EspnApi,
+    val articleMapper: NetworkToDomainArticleMapper,
     val teamDetailNetworkToModelMapper: TeamDetailNetworkToModelMapper,
     val rosterMapper: TeamDetailWithRosterMapper,
     val scoreboardDomainMapper: NetworkScoreboardToDomainModelMapper,
@@ -218,5 +217,22 @@ class EspnRepository @Inject constructor(
         val result = espnApi.getGeneralScoreboard(sport, league).body()
         return scoreboardDomainMapper.mapToDomainModel(result!!)
     }
+
+    suspend fun getArticles(sport: String, league: String): List<ArticleModel> {
+        val response = espnApi.getArticles(sport, league)
+        if
+                (response.isSuccessful) {
+            val articleResponse = espnApi.getArticles(sport, league).body()?.articles
+            Log.e("articles resp repo", "response succ $articleResponse")
+            return articleMapper.toDomainList(articleResponse!!)
+        } else {
+            Log.e(javaClass.name, response.errorBody().toString())
+
+        }
+        val result = espnApi.getArticles(sport, league).body()?.articles
+        return articleMapper.toDomainList(result!!)
+    }
+
+
 
 }

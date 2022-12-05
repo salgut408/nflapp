@@ -5,10 +5,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.sgut.android.nationalfootballleague.data.dtomappers.NetworkScoreboardToDomainModelMapper
-import com.sgut.android.nationalfootballleague.data.dtomappers.NetworkToTeamDomainModelMapper
-import com.sgut.android.nationalfootballleague.data.dtomappers.TeamDetailNetworkToModelMapper
-import com.sgut.android.nationalfootballleague.data.dtomappers.TeamDetailWithRosterMapper
+import com.sgut.android.nationalfootballleague.data.dtomappers.*
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.data.service.LogService
@@ -36,14 +33,18 @@ object AppModule {
     @Provides
     fun provideEspnRepository(
         espnApi: EspnApi,
+        articleMapper: NetworkToDomainArticleMapper,
         nflMapper: NetworkToTeamDomainModelMapper,
         teamDetailNetworkToModelMapper: TeamDetailNetworkToModelMapper,
         rosterMapper: TeamDetailWithRosterMapper,
         scoreboardMapper: NetworkScoreboardToDomainModelMapper,
-    ): EspnRepository = EspnRepository(nflMapper, espnApi, teamDetailNetworkToModelMapper, rosterMapper, scoreboardMapper)
+    ): EspnRepository = EspnRepository(nflMapper, espnApi, articleMapper, teamDetailNetworkToModelMapper, rosterMapper, scoreboardMapper, )
 
     @Provides
     fun provideNetworkToTeamDomMapper():  NetworkToTeamDomainModelMapper = NetworkToTeamDomainModelMapper()
+
+    @Provides
+    fun provideNetworkToDomainArticleMapper(): NetworkToDomainArticleMapper = NetworkToDomainArticleMapper()
 
     @Provides
     fun provideRosterMapper(): TeamDetailWithRosterMapper = TeamDetailWithRosterMapper()
