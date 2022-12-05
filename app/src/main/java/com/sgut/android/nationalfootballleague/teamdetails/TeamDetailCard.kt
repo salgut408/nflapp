@@ -48,7 +48,7 @@ fun TeamDetailCard(
     val scrollState = rememberScrollState()
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(30.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
 
         modifier = Modifier
@@ -66,7 +66,7 @@ fun TeamDetailCard(
                 .crossfade(true)
                 .build()
         )
-        Row(verticalAlignment = Alignment.Top){
+        Row(verticalAlignment = Alignment.CenterVertically){
             Image(
                 painter = logoPainter,
                 contentDescription = team.displayName,
@@ -75,18 +75,15 @@ fun TeamDetailCard(
                     .clipToBounds()
             )
             Column() {
-                Text(text = team.nickname,
-                    style = MaterialTheme.typography.displayMedium,
-                    color = altcolor)
-                Text(text = team.standingSummary, style = MaterialTheme.typography.titleMedium, color = altcolor)
-                Text(text = team.record?.items?.getOrNull(0)?.summary?:"", style = MaterialTheme.typography.titleMedium)
+                Text(text = team.name, style = MaterialTheme.typography.displayMedium, color = altcolor)
+                Text(text = team.record?.items?.getOrNull(0)?.summary?:"", style = MaterialTheme.typography.displayMedium, color = altcolor)
             }
-        }
 
-        VenueCard(
-                venue3 = team.franchise?.venue ?: Venue3(),
-                modifier = Modifier.fillMaxWidth()
-            )
+        }
+        Text(text = team.standingSummary, style = MaterialTheme.typography.displaySmall, color = altcolor)
+
+
+        VenueCard(venue3 = team.franchise?.venue ?: Venue3(), modifier = Modifier.fillMaxWidth())
         AtheleteRow(team)
 
         team.nextEvent.getOrNull(0)?.let { NextEvent(nextEvent3 = it, modifier = modifier) }
