@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague.data.remote.api
 
 import com.sgut.android.nationalfootballleague.NFLTeamsResponse
+import com.sgut.android.nationalfootballleague.NetworkArticleResponse
 import com.sgut.android.nationalfootballleague.NetworkScoreboardResponse
 import com.sgut.android.nationalfootballleague.TeamDetailResponse2
 import com.sgut.android.nationalfootballleague.data.domainmodels.ScoreboardResponseEventModel
@@ -69,7 +70,13 @@ interface EspnApi {
     suspend fun getWorldCupScoreboard(): Response<NetworkScoreboardResponse>
 
 
-
+    @GET("sports/{sport}/{league}/news")
+    suspend fun getArticles(
+        @Path("sport")
+        sport: String? = null,
+        @Path("league")
+        league: String? = null,
+    ): Response<NetworkArticleResponse>
 
 
     @GET("sports/{sport}/{league}/scoreboard")
