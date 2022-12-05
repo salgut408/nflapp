@@ -33,6 +33,7 @@ fun ScoreboardScreen(
     scoreboardViewModel: ScoreboardViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
 ) {
+
     scoreboardViewModel.loadGenericScoreboard(sport, league)
     val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
     Log.e("scoreboard state scrn", scoreboardUiState.scoreboardUiStateEvents.toString())
