@@ -112,12 +112,9 @@ fun VenueCard(
     venue3: Venue3,
     modifier: Modifier,
 ) {
-//    Card(modifier = modifier
-//        .padding(16.dp),
-//        shape = RoundedCornerShape(15.dp)) {
+
         Box(modifier = Modifier.height(200.dp)) {
             // image ()
-
             VenueCardImageLoader(venue3)
 
             Box(
@@ -126,19 +123,28 @@ fun VenueCard(
                     .padding(16.dp),
                 contentAlignment = Alignment.TopEnd
             ) {
-                Row(
-//                    modifier = Modifier.fillMaxWidth()
-                ) {
+                Row() {
                     Text(
-                            text =venue3.fullName,
-                            style = TextStyle(color = Color.White, fontSize = 46.sp),
+                        text =venue3.fullName,
+                        style = TextStyle(color = Color.White, fontSize = 46.sp),
                         textAlign = TextAlign.Right,
                         fontWeight = FontWeight.ExtraBold
 
                     )
 
+
                 }
+                Row(){
+                    Text(
+                        text =venue3.address?.city.toString() + " ," + venue3.address?.state.toString() ,
+                        style = TextStyle(color = Color.White, fontSize = 16.sp),
+                        textAlign = TextAlign.Left,
+
+                        )
+                }
+
             }
+
 
         }
 
