@@ -4,10 +4,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -36,11 +33,12 @@ fun StatBox(stats: String, team: TeamDetailWithRosterModel) {
     )
     Box(
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
-            .background(Color.LightGray)
+            .background(Color.LightGray).fillMaxWidth()
     ) {
         Row(modifier = Modifier.padding(24.dp)) {
             Column(modifier = Modifier
                 .weight(1f)
+                .fillMaxWidth()
                 .padding(bottom = extraPadding.coerceAtLeast(0.dp))) {
                 Text(text = "Injuries")
                 if(expanded){
