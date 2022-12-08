@@ -13,8 +13,8 @@ import com.sgut.android.nationalfootballleague.commoncomposables.DataLoadingComp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TeamDetailScreen(
-    teamDetailViewModel: TeamDetailViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
+    teamDetailViewModel: TeamDetailViewModel = hiltViewModel(),
     sendButtonOnclick: (String, String) -> Unit,
     team: String,
     sport: String,
@@ -23,7 +23,7 @@ fun TeamDetailScreen(
 ) {
     //    val team by remember { teamDetailViewModel.team }
     // ^ Moded to detailUiState
-    teamDetailViewModel.loadTeamDetails2(team, sport, league)
+    teamDetailViewModel.loadTeamDetails(team, sport, league)
 
     val teamDetailUiState by teamDetailViewModel.teamDetailUiState.collectAsState()
     val team = teamDetailUiState.currentTeamDetails
@@ -36,12 +36,10 @@ fun TeamDetailScreen(
                 .padding(vertical = 8.dp)
         ) {
 
-
             TeamDetailCard(team = team, modifier = Modifier.padding(8.dp))
 
             Button(onClick = { sendButtonOnclick(team?.name!!, team!!.nextEvent[0].shortName!!) }, modifier.fillMaxWidth()) {
                 Text("Share Next Event")
-
             }
 
             Text(teamDetailUiState.currentSport, )
@@ -49,7 +47,6 @@ fun TeamDetailScreen(
             Text(teamDetailUiState.currentTeamDetails?.abbreviation ?: "", )
 
         }
-
 
     } else {
         DataLoadingComponent()

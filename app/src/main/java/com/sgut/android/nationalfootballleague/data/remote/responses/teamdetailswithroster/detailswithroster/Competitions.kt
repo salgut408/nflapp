@@ -13,7 +13,7 @@ data class Competitions3 (
   @SerializedName("neutralSite"       ) var neutralSite       : Boolean?               = null,
   @SerializedName("boxscoreAvailable" ) var boxscoreAvailable : Boolean?               = null,
   @SerializedName("ticketsAvailable"  ) var ticketsAvailable  : Boolean?               = null,
-  @SerializedName("venue"             ) var venue             : Venue3?                 = Venue3(),
+  @SerializedName("venue"             ) var venue             : Venue3                 = Venue3(),
   @SerializedName("competitors"       ) var competitors       : List<Competitors3> = listOf(),
 //  @SerializedName("notes"             ) var notes             : List<String>      = listOf(),
 //  @SerializedName("broadcasts"        ) var broadcasts        : List<Broadcasts>  = listOf(),

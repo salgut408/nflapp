@@ -81,7 +81,7 @@ fun TeamDetailCard(
         Text(
             text = team.standingSummary,
             style = MaterialTheme.typography.displaySmall,
-            color = altcolor,
+            color = Color.White,
             textAlign = TextAlign.Center,
             )
 
@@ -113,10 +113,11 @@ fun VenueCard(
     modifier: Modifier,
 ) {
 
-        Box(modifier = Modifier.height(200.dp)) {
+        Box(
+            modifier = Modifier.height(200.dp)
+        ) {
             // image ()
             VenueCardImageLoader(venue3)
-
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -125,7 +126,6 @@ fun VenueCard(
             ) {
                 Row() {
                     val offset = Offset(5.0f, 5.0f)
-
                     Text(
                         text =venue3.fullName,
                         style = TextStyle(
@@ -139,23 +139,15 @@ fun VenueCard(
                         textAlign = TextAlign.Right,
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.White
-
                     )
-
-
                 }
                 Row(){
                     Text(
                         text =venue3.address?.city.toString() + " ," + venue3.address?.state.toString() ,
                         style = TextStyle(color = Color.White, fontSize = 16.sp),
                         textAlign = TextAlign.Left,
-
                         )
                 }
-
             }
-
-
         }
-
 }

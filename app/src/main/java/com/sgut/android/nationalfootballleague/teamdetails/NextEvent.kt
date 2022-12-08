@@ -12,6 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.sgut.android.nationalfootballleague.NextEvent3
 
@@ -35,12 +37,14 @@ fun NextEvent(
 
 
 
-            Text(text = "Next Event:", style = MaterialTheme.typography.headlineSmall)
+            Text(text = "Next Event:",
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+            )
 
-            nextEvent3.name?.let { Text(text = it, style = MaterialTheme.typography.titleLarge) }
-            nextEvent3.competitions[0].venue?.fullName.let { Text(text = it!!, style = MaterialTheme.typography.titleSmall) }
-            nextEvent3.date?.let { Text(text = it, style = MaterialTheme.typography.titleSmall) }
-
+            Text(text = nextEvent3.name, textAlign = TextAlign.Left)
+            Text(text = nextEvent3.competitions[0].venue.fullName)
+            Text(text = nextEvent3.date)
         }
 
 
