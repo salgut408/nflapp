@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sgut.android.nationalfootballleague.commoncomposables.BasicButton
+import com.sgut.android.nationalfootballleague.homelistscreen.ArticleList
 import com.sgut.android.nationalfootballleague.utils.basicButton
 import com.sgut.android.nationalfootballleague.utils.card
 import com.sgut.android.nationalfootballleague.utils.spacer
@@ -39,6 +40,7 @@ fun ScoreboardScreen(
     Log.e("scoreboard state scrn", scoreboardUiState.scoreboardUiStateEvents.toString())
     var events = scoreboardUiState.scoreboardUiStateEvents.events
     var leagues = scoreboardUiState.scoreboardUiStateEvents.leagues
+    var articles = scoreboardUiState.currentArticles
     
     Column(
         modifier
@@ -46,6 +48,9 @@ fun ScoreboardScreen(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+
+
         Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?: "", style = MaterialTheme.typography.displayLarge)
         Text(leagues.getOrNull(0)?.name?:"", style = MaterialTheme.typography.headlineMedium)
 
@@ -87,7 +92,8 @@ fun ScoreboardScreen(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = modifier.padding(16.dp)
+                    modifier = modifier
+                        .padding(16.dp)
                         .fillMaxWidth()
                 ) {
 
@@ -105,8 +111,9 @@ fun ScoreboardScreen(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
-                   modifier = modifier.padding(16.dp)
-                        .fillMaxWidth()
+                   modifier = modifier
+                       .padding(16.dp)
+                       .fillMaxWidth()
                 ) {
 
 
@@ -128,7 +135,10 @@ fun ScoreboardScreen(
         }
 
     }
-    
+
+//    ArticleList(articleList = articles)
+
+
 }
 
 @Preview
@@ -136,7 +146,9 @@ fun ScoreboardScreen(
 fun TextMaker() {
 
 
-    Card(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .padding(8.dp)) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,

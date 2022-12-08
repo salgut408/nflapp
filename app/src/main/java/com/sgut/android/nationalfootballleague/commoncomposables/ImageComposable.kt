@@ -7,6 +7,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 
 
@@ -22,4 +23,18 @@ fun TeamLogoImageLoader(team: TeamDomainModel) {
         contentDescription = team.displayName,
 
     )
+}
+
+@Composable
+fun ArticleCardImageLoader(articleModel: ArticleModel) {
+    SubcomposeAsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(articleModel.images.getOrNull(0)?.url)
+            .build(),
+        loading = {
+            CircularProgressIndicator()
+        },
+        contentDescription = articleModel.headline,
+
+        )
 }
