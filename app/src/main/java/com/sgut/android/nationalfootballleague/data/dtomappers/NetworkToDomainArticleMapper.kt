@@ -7,7 +7,6 @@ class NetworkToDomainArticleMapper: DomainMapper<Articles, ArticleModel> {
     override fun mapToDomainModel(model: Articles): ArticleModel {
         return ArticleModel(
             byline = model.byline,
-            categories = model.categories,
             description = model.description,
             headline = model.headline,
             images = model.images,

@@ -28,8 +28,8 @@ import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
 
 @Composable
 fun ArticleCard(articleModel: ArticleModel, modifier: Modifier) {
-    Card(shape = RoundedCornerShape(10.dp)) {
-        Box(modifier = Modifier.fillMaxWidth()) {
+    Card(shape = RoundedCornerShape(10.dp), modifier = Modifier.width(200.dp).padding(4.dp).height(190.dp)) {
+        Box() {
             Column(modifier = Modifier.fillMaxWidth()) {
 
                 ArticleCardImageLoader(articleModel)
@@ -54,22 +54,19 @@ fun ArticleCard(articleModel: ArticleModel, modifier: Modifier) {
 @Composable
 fun ArticleList(articleList: List<ArticleModel>, ) {
     LazyColumn(contentPadding = PaddingValues(8.dp)) {
-
         items(items = articleList) { article ->
                 ArticleCard(articleModel = article, modifier = Modifier.padding(8.dp))
-
-
         }
-
     }
-
-
-
 }
 
 @Composable
-fun TextCreate() {
-
+fun ArticleRow(articleList: List<ArticleModel>, ) {
+    LazyRow(contentPadding = PaddingValues(8.dp)) {
+        items(items = articleList) { article ->
+            ArticleCard(articleModel = article, modifier = Modifier.padding(8.dp))
+        }
+    }
 }
 
 @Preview

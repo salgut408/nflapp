@@ -20,7 +20,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sgut.android.nationalfootballleague.commoncomposables.BasicButton
+import com.sgut.android.nationalfootballleague.homelistscreen.ArticleCard
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleList
+import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
 import com.sgut.android.nationalfootballleague.utils.basicButton
 import com.sgut.android.nationalfootballleague.utils.card
 import com.sgut.android.nationalfootballleague.utils.spacer
@@ -70,6 +72,8 @@ fun ScoreboardScreen(
 
         )
 
+        Row(){ ArticleRow(articleList = articles)}
+
 
 
         for (i in events) {
@@ -81,7 +85,7 @@ fun ScoreboardScreen(
 
 
         for (i in events ) {
-            Card(modifier.padding(16.dp),) {
+            Card(modifier.padding(8.dp),) {
                 BasicButton(text = AppText.watc, modifier = Modifier.basicButton() ) {
                 }
                 Text(text = i.name ?: "", style = MaterialTheme.typography.bodyLarge)
@@ -93,7 +97,7 @@ fun ScoreboardScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = modifier
-                        .padding(16.dp)
+                        .padding(8.dp)
                         .fillMaxWidth()
                 ) {
 
@@ -112,7 +116,7 @@ fun ScoreboardScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
                    modifier = modifier
-                       .padding(16.dp)
+                       .padding(8.dp)
                        .fillMaxWidth()
                 ) {
 
@@ -136,7 +140,8 @@ fun ScoreboardScreen(
 
     }
 
-//    ArticleList(articleList = articles)
+    
+
 
 
 }

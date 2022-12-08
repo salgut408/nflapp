@@ -10,7 +10,6 @@ data class ArticleModel(
     var description: String = "",
     var published: String = "",
     var type: String? = null,
-    var categories: List<ArticleCategories> = listOf(),
     var headline: String = "",
     var byline: String = "",
 

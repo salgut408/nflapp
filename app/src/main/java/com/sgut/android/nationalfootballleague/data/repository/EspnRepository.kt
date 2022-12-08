@@ -23,7 +23,7 @@ class EspnRepository @Inject constructor(
         if
                 (response.isSuccessful) {
             val scoreBoardresponse = espnApi.getWorldCupScoreboard().body()
-            Log.e("Scoreboard resp repo", "response succ $scoreBoardresponse")
+//            Log.e("Scoreboard resp repo", "response succ $scoreBoardresponse")
             return scoreboardDomainMapper.mapToDomainModel(scoreBoardresponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
@@ -223,7 +223,7 @@ class EspnRepository @Inject constructor(
         if
                 (response.isSuccessful) {
             val articleResponse = espnApi.getArticles(sport, league).body()?.articles
-            Log.e("articles resp repo", "response succ $articleResponse")
+//            Log.e("articles resp repo", "response succ $articleResponse")
             return articleMapper.toDomainList(articleResponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
