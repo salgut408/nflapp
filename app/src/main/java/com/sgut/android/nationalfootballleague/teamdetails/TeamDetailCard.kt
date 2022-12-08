@@ -25,6 +25,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,6 +37,7 @@ import coil.size.ScaleResolver
 import com.sgut.android.nationalfootballleague.Franchise3
 import com.sgut.android.nationalfootballleague.Venue3
 import com.sgut.android.nationalfootballleague.commoncomposables.StatBox
+import com.sgut.android.nationalfootballleague.commoncomposables.VenueCardImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.utils.card
 
@@ -109,40 +112,34 @@ fun VenueCard(
     venue3: Venue3,
     modifier: Modifier,
 ) {
-    Card(modifier = modifier.background(Color.Transparent)
-        .fillMaxWidth()
-        .padding(16.dp),
-        shape = RoundedCornerShape(15.dp)) {
+//    Card(modifier = modifier
+//        .padding(16.dp),
+//        shape = RoundedCornerShape(15.dp)) {
         Box(modifier = Modifier.height(200.dp)) {
             // image ()
-            val painter = rememberAsyncImagePainter(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(venue3.images3.getOrNull(1)?.href ?: venue3.images3.getOrNull(0)?.href)
-                    .crossfade(true)
-                    .build()
-            )
-            Image(
-                painter = painter,
-                contentDescription = "",
-                modifier = Modifier
-                    .fillMaxWidth().clip(RoundedCornerShape(16.dp)).fillMaxHeight()
 
+            VenueCardImageLoader(venue3)
 
-            )
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(12.dp),
+                    .padding(16.dp),
                 contentAlignment = Alignment.TopEnd
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+//                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(venue3.fullName, style = TextStyle(color = Color.White, fontSize = 46.sp))
+                    Text(
+                            text =venue3.fullName,
+                            style = TextStyle(color = Color.White, fontSize = 46.sp),
+                        textAlign = TextAlign.Right,
+                        fontWeight = FontWeight.ExtraBold
+
+                    )
 
                 }
             }
 
         }
-    }
+
 }
