@@ -28,7 +28,7 @@ import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
 
 @Composable
 fun ArticleCard(articleModel: ArticleModel, modifier: Modifier) {
-    Card(shape = RoundedCornerShape(10.dp), modifier = Modifier.width(200.dp).padding(4.dp).height(190.dp)) {
+    Card(shape = RoundedCornerShape(10.dp), modifier = Modifier.width(180.dp).padding(4.dp).height(190.dp)) {
         Box() {
             Column(modifier = Modifier.fillMaxWidth()) {
 
