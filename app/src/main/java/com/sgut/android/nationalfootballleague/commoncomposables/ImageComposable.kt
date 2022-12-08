@@ -11,6 +11,7 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.sgut.android.nationalfootballleague.Venue3
 import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
+import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 
 
@@ -26,6 +27,20 @@ fun TeamLogoImageLoader(team: TeamDomainModel) {
         contentDescription = team.displayName,
 
     )
+}
+
+@Composable
+fun TeamLogoDetailImageLoader(team: TeamDetailWithRosterModel) {
+    SubcomposeAsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(team.logos.getOrNull(0)?.href)
+            .build(),
+        loading = {
+            CircularProgressIndicator()
+        },
+        contentDescription = team.displayName,
+
+        )
 }
 
 @Composable

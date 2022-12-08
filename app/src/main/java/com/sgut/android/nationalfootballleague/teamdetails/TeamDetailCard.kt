@@ -21,7 +21,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -37,6 +39,7 @@ import coil.size.ScaleResolver
 import com.sgut.android.nationalfootballleague.Franchise3
 import com.sgut.android.nationalfootballleague.Venue3
 import com.sgut.android.nationalfootballleague.commoncomposables.StatBox
+import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoDetailImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.VenueCardImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.utils.card
@@ -53,37 +56,34 @@ fun TeamDetailCard(
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-
         modifier = Modifier
             .fillMaxWidth()
-            .background(
-                Brush.verticalGradient(
-                    listOf(color, altcolor)
-                )
+            .background(Brush.verticalGradient(listOf(color, altcolor))
             )
     ) {
-        //image
-        val logoPainter = rememberAsyncImagePainter(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(team.logos[0].href)
-                .crossfade(true)
-                .build()
-        )
+
         Row(verticalAlignment = Alignment.CenterVertically){
-            Image(
-                painter = logoPainter,
-                contentDescription = team.displayName,
-                modifier = Modifier
-                    .size(200.dp)
-                    .clipToBounds()
-            )
+
+            TeamLogoDetailImageLoader(team)
+
             Column() {
-                Text(text = team.name, style = MaterialTheme.typography.displayMedium, color = altcolor)
-                Text(text = team.record?.items?.getOrNull(0)?.summary?:"", style = MaterialTheme.typography.displayMedium, color = altcolor)
+                Text(
+                    text = team.displayName,
+                    style = MaterialTheme.typography.displayMedium,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Justify,
+
+                    color = Color.White
+                )
             }
 
         }
-        Text(text = team.standingSummary, style = MaterialTheme.typography.displaySmall, color = altcolor)
+        Text(
+            text = team.standingSummary,
+            style = MaterialTheme.typography.displaySmall,
+            color = altcolor,
+            textAlign = TextAlign.Center,
+            )
 
 
         VenueCard(venue3 = team.franchise?.venue ?: Venue3(), modifier = Modifier.fillMaxWidth())
@@ -124,11 +124,21 @@ fun VenueCard(
                 contentAlignment = Alignment.TopEnd
             ) {
                 Row() {
+                    val offset = Offset(5.0f, 5.0f)
+
                     Text(
                         text =venue3.fullName,
-                        style = TextStyle(color = Color.White, fontSize = 46.sp),
+                        style = TextStyle(
+                            fontSize = 54.sp,
+                            shadow = Shadow(
+                                color = Color.Black,
+                                offset = offset,
+                                blurRadius = 3f
+                            )
+                        ),
                         textAlign = TextAlign.Right,
-                        fontWeight = FontWeight.ExtraBold
+                        fontWeight = FontWeight.ExtraBold,
+                        color = Color.White
 
                     )
 
