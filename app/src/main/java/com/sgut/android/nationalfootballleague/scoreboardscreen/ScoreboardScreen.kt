@@ -69,7 +69,7 @@ fun ScoreboardScreen(
 
         Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?: "",
             style = MaterialTheme.typography.displayLarge)
-        Text(leagues.getOrNull(0)?.name ?: "", style = MaterialTheme.typography.headlineMedium)
+        Text(leagues.getOrNull(0)?.name ?: "", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
 
         val leagueLogoPainter = rememberAsyncImagePainter(
 
@@ -190,23 +190,38 @@ fun TeamComponent(team: CompetitorsScoreboard, modifier: Modifier) {
             modifier = modifier
                 .fillMaxWidth()
                 .height(50.dp)
-        ){
-            TeamLogoScoreboardImageLoader(team = team.team!! )
+        ) {
+            TeamLogoScoreboardImageLoader(team = team.team!!)
 
 
+            if (team.winner == true) {
+                Text(
+                    text = team.team!!.name,
+                    style = TextStyle(fontSize = 20.sp),
+                    textAlign = TextAlign.Left,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = team.score.toString(),
+                    style = TextStyle(fontSize = 20.sp),
+                    textAlign = TextAlign.Left,
+                    fontWeight = FontWeight.Bold
+                )
+            } else {
 
-            Text(
-                text = team.team!!.name,
-                style = TextStyle(fontSize = 20.sp),
-                textAlign = TextAlign.Left,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = team.score.toString(),
-                style = TextStyle(fontSize = 20.sp),
-                textAlign = TextAlign.Left,
-                fontWeight = FontWeight.Bold
-            )
+                Text(
+                    text = team.team!!.name,
+                    style = TextStyle(fontSize = 20.sp),
+                    textAlign = TextAlign.Left,
+                    fontWeight = FontWeight.Light
+                )
+                Text(
+                    text = team.score.toString(),
+                    style = TextStyle(fontSize = 20.sp),
+                    textAlign = TextAlign.Left,
+                    fontWeight = FontWeight.Light
+                )
+            }
         }
 
     }
