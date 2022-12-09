@@ -20,6 +20,10 @@ data class CompetitionsScoreboard (
   @SerializedName("broadcasts"    ) var broadcasts    : ArrayList<BroadcastsScoreboard>    = arrayListOf(),
   @SerializedName("competitors"   ) var competitors   : ArrayList<CompetitorsScoreboard>   = arrayListOf(),
   @SerializedName("details"       ) var details       : ArrayList<DetailsScoreboard>       = arrayListOf(),
-  @SerializedName("headlines"     ) var headlines     : ArrayList<HeadlinesScoreboard>     = arrayListOf()
+  @SerializedName("headlines"     ) var headlines     : ArrayList<HeadlinesScoreboard>     = arrayListOf(),
+
 
 )
+
+
+

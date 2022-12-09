@@ -19,7 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.sgut.android.nationalfootballleague.TeamScoreboard
 import com.sgut.android.nationalfootballleague.commoncomposables.BasicButton
+import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoImageloadiner2
+import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoScoreboardImageLoader
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleCard
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleList
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
@@ -40,10 +43,10 @@ fun ScoreboardScreen(
     scoreboardViewModel.loadGenericScoreboard(sport, league)
     val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
     Log.e("scoreboard state scrn", scoreboardUiState.scoreboardUiStateEvents.toString())
-    var events = scoreboardUiState.scoreboardUiStateEvents.events
-    var leagues = scoreboardUiState.scoreboardUiStateEvents.leagues
-    var articles = scoreboardUiState.currentArticles
-    
+    val events = scoreboardUiState.scoreboardUiStateEvents.events
+    val leagues = scoreboardUiState.scoreboardUiStateEvents.leagues
+    val articles = scoreboardUiState.currentArticles
+
     Column(
         modifier
             .verticalScroll(rememberScrollState())
@@ -52,9 +55,9 @@ fun ScoreboardScreen(
     ) {
 
 
-
-        Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?: "", style = MaterialTheme.typography.displayLarge)
-        Text(leagues.getOrNull(0)?.name?:"", style = MaterialTheme.typography.headlineMedium)
+        Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?: "",
+            style = MaterialTheme.typography.displayLarge)
+        Text(leagues.getOrNull(0)?.name ?: "", style = MaterialTheme.typography.headlineMedium)
 
         val leagueLogoPainter = rememberAsyncImagePainter(
 
@@ -66,13 +69,12 @@ fun ScoreboardScreen(
         )
         Image(
             painter = leagueLogoPainter,
-            contentDescription = leagues.getOrNull(0)?.name?:"",
+            contentDescription = leagues.getOrNull(0)?.name ?: "",
             modifier = Modifier
                 .size(300.dp)
+            )
 
-        )
-
-        Row(){ ArticleRow(articleList = articles)}
+        Row() { ArticleRow(articleList = articles) }
 
 
 
@@ -84,13 +86,22 @@ fun ScoreboardScreen(
 
 
 
-        for (i in events ) {
-            Card(modifier.padding(8.dp),) {
-                BasicButton(text = AppText.watc, modifier = Modifier.basicButton() ) {
+
+
+        for (i in events) {
+            Card(modifier.padding(8.dp)) {
+                BasicButton(text = AppText.watc, modifier = Modifier.basicButton()) {
                 }
+
                 Text(text = i.name ?: "", style = MaterialTheme.typography.bodyLarge)
+                Text(text = i.id ?: "", style = MaterialTheme.typography.bodyLarge)
 
+                for(i in i.competitions[0].competitors) {
 
+                    TeamComponent(team = i.team!!, modifier = Modifier)
+                    Divider(modifier = Modifier.padding(3.dp))
+
+                }
 
 
                 Row(
@@ -102,76 +113,49 @@ fun ScoreboardScreen(
                 ) {
 
                     //use id for game details screen
-                  Text("Period ", style = MaterialTheme.typography.bodyLarge)
+                    Text("Period ", style = MaterialTheme.typography.bodyLarge)
+
+                    Text(text = i.status.period.toString(), style = MaterialTheme.typography.bodyLarge)
 
 
-                    i.status.period.toString() .let {
-                        Text(text = it,
-                            style = MaterialTheme.typography.bodyLarge)
-                    }
                 }
 
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                   modifier = modifier
-                       .padding(8.dp)
-                       .fillMaxWidth()
-                ) {
 
-
-                    Text(text = i.competitions[0].competitors[0].team?.name + " " + i.competitions[0].competitors[0].score.toString()
-                        ?: "", style = MaterialTheme.typography.bodyLarge)
-
-
-                    Text(text = i.competitions[0].competitors[1].team?.name + " " + i.competitions[0].competitors[1].score.toString()
-                        ?: "", style = MaterialTheme.typography.bodyLarge)
-
-
-
-                    }
 
             }
 
-            Divider(modifier = Modifier.padding(3.dp))
+
+
+
+            
 
         }
 
     }
-
-    
-
 
 
 }
 
-@Preview
+
 @Composable
-fun TextMaker() {
+fun TeamComponent(team: TeamScoreboard, modifier: Modifier) {
+    Box(modifier=modifier.padding(16.dp).fillMaxWidth(2f)) {
 
 
-    Card(modifier = Modifier
-        .fillMaxWidth()
-        .padding(8.dp)) {
+
         Row(
-            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.width(200.dp)
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier.fillMaxWidth().height(50.dp)
         ){
-            Text(
-                text = "TEXT",
-                modifier = Modifier.padding(8.dp),
-                style = MaterialTheme.typography.headlineMedium
-                    )
-            Text(
-                text = "TEXT",
-                modifier = Modifier,
-                style = MaterialTheme.typography.headlineMedium
-                    )
+            TeamLogoScoreboardImageLoader(team = team )
+
+            Text(text = team.shortDisplayName)
+            Text(text = team.score.toString())
         }
-
-
+//        Column(modifier = modifier.width(50.dp)){
+//
+//        }
     }
-
 }

@@ -38,11 +38,11 @@ fun NextEvent(
 
 
             Text(text = "Next Event:",
-                style = MaterialTheme.typography.headlineSmall,
+                style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
             )
 
-            Text(text = nextEvent3.name, textAlign = TextAlign.Left)
+            Text(text = nextEvent3.name)
             Text(text = nextEvent3.competitions[0].venue.fullName)
             Text(text = nextEvent3.date)
         }

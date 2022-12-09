@@ -1,14 +1,18 @@
 package com.sgut.android.nationalfootballleague.commoncomposables
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
+import com.sgut.android.nationalfootballleague.TeamScoreboard
 import com.sgut.android.nationalfootballleague.Venue3
 import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
@@ -41,6 +45,33 @@ fun TeamLogoDetailImageLoader(team: TeamDetailWithRosterModel) {
         contentDescription = team.displayName,
 
         )
+}
+@Composable
+fun TeamLogoScoreboardImageLoader(team: TeamScoreboard) {
+    SubcomposeAsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(team.logo)
+            .build(),
+        loading = {
+            CircularProgressIndicator()
+        },
+        contentDescription = team.displayName,
+
+        )
+}
+
+
+@Composable
+fun TeamLogoImageloadiner2(team: TeamScoreboard) {
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(team.logo)
+            .crossfade(true)
+            .build(),
+        contentDescription = team.displayName,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier.size(140.dp)
+    )
 }
 
 @Composable

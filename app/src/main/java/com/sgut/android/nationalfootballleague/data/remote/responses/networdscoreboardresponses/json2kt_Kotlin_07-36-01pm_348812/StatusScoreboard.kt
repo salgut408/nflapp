@@ -7,7 +7,7 @@ data class StatusScoreboard (
 
   @SerializedName("clock"        ) var clock        : Int?    = null,
   @SerializedName("displayClock" ) var displayClock : String? = null,
-  @SerializedName("period"       ) var period       : Int?    = null,
+  @SerializedName("period"       ) var period       : Int    = 0,
   @SerializedName("type"         ) var type         : TypeScoreboard?   = TypeScoreboard()
 
 )
