@@ -59,9 +59,12 @@ fun ScoreboardScreen(
     val leagues = scoreboardUiState.scoreboardUiStateEvents.leagues
     val articles = scoreboardUiState.currentArticles
 
+
+
     Column(
         modifier
             .verticalScroll(rememberScrollState())
+//            .background()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -108,53 +111,9 @@ fun ScoreboardScreen(
                 .clickable {}
             ) {
 
-//                BasicButton(text = AppText.watc, modifier = Modifier.basicButton()) { }
-//                Text(text = i.name ?: "", style = MaterialTheme.typography.bodyLarge)
-//                Text(text = i.id ?: "", style = MaterialTheme.typography.bodyLarge)
-
-
-//                    for (j in i.competitions[0].competitors) {
-//
-//                        TeamComponent(team = j, modifier = Modifier)
-//                        Divider(modifier = Modifier.padding(3.dp))
-//
-//                    }
-
                 TeamComponent2(compScoreboard = i.competitions[0], modifier = Modifier)
 
 
-
-
-
-                Row(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-
-//                    Row(){}
-
-                    //use id for game details screen
-                    Text("Period ", style = MaterialTheme.typography.bodyLarge)
-
-                    Text(text = i.status.period.toString(),
-                        style = MaterialTheme.typography.bodyLarge)
-
-
-                    FloatingActionButton(
-                        onClick = { /*TODO*/ },
-                        contentColor = Color.White,
-                        modifier = Modifier
-                            .size(30.dp)
-
-                    ) {
-                        Icon(Icons.Outlined.Star, "null")
-                    }
-
-
-                }
 
 
             }
@@ -235,7 +194,7 @@ fun TeamComponent2(compScoreboard: CompetitionsScoreboard, modifier: Modifier) {
     val team2Score = compScoreboard.competitors[1].score
     val whiteColor = Color.White
 
-
+Card(modifier = modifier.fillMaxSize()){
 
     Box(modifier = modifier
         .padding(8.dp)
@@ -244,7 +203,7 @@ fun TeamComponent2(compScoreboard: CompetitionsScoreboard, modifier: Modifier) {
         ))
         .fillMaxWidth(3f)) {
 
-
+        Surface(color = Color.LightGray.copy(alpha = 0.3f), modifier = modifier.fillMaxSize()) {
 
 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -284,6 +243,10 @@ fun TeamComponent2(compScoreboard: CompetitionsScoreboard, modifier: Modifier) {
             }
 
 
+
+
+
+
             Column(horizontalAlignment = Alignment.Start) {
                 Row(
                     horizontalArrangement = Arrangement.End,
@@ -292,7 +255,6 @@ fun TeamComponent2(compScoreboard: CompetitionsScoreboard, modifier: Modifier) {
                         .fillMaxWidth()
                         .height(50.dp)
                 ) {
-                    Spacer(modifier = modifier.padding(8.dp))
 
 
                     Text(
@@ -318,13 +280,24 @@ fun TeamComponent2(compScoreboard: CompetitionsScoreboard, modifier: Modifier) {
 
                     TeamLogoScoreboardImageLoader(team = team2 ?: TeamScoreboard())
 
+                    Spacer(modifier = modifier.padding(8.dp))
+
 
                 }
 
 
             }
+            Text(text = compScoreboard.status?.type?.shortDetail ?: "",
+                style = TextStyle(fontSize = 12.sp),
+                color = Color.White,
+                textAlign = TextAlign.Center)
+
+
+        }
 
 
     }
+
+}
 }
 
