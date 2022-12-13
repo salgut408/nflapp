@@ -245,86 +245,85 @@ fun TeamComponent2(compScoreboard: CompetitionsScoreboard, modifier: Modifier) {
         .fillMaxWidth(3f)) {
 
 
-        Column() {
-            Row(
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
-            ) {
-
-                Spacer(modifier = modifier.padding(8.dp))
-                TeamLogoScoreboardImageLoader(team = team1 ?: TeamScoreboard())
-                Spacer(modifier = modifier.padding(8.dp))
-
-                Text(
-                    text = team1.name,
-                    style = TextStyle(fontSize = 12.sp),
-                    textAlign = TextAlign.Left,
-                    color = whiteColor
-                )
-
-                Spacer(modifier = modifier.padding(8.dp))
-
-                Text(
-                    text = team1Score.toString(),
-                    style = TextStyle(fontSize = 12.sp),
-                    textAlign = TextAlign.Left,
-                    fontWeight = FontWeight.Bold,
-                    color = whiteColor
-
-                )
-
-            }
 
 
-        }
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .height(50.dp)
+                ) {
 
+                    Spacer(modifier = modifier.padding(8.dp))
+                    TeamLogoScoreboardImageLoader(team = team1 ?: TeamScoreboard())
+                    Spacer(modifier = modifier.padding(8.dp))
 
-        Column(horizontalAlignment = Alignment.End) {
-            Row(
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
-            ) {
-                Spacer(modifier = modifier.padding(8.dp))
+                    Text(
+                        text = team1.name,
+                        style = TextStyle(fontSize = 12.sp),
+                        textAlign = TextAlign.Left,
+                        color = whiteColor
+                    )
 
+                    Spacer(modifier = modifier.padding(8.dp))
 
-                Text(
-                    text = team2Score.toString(),
-                    style = TextStyle(fontSize = 12.sp),
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    color = whiteColor
+                    Text(
+                        text = team1Score.toString(),
+                        style = TextStyle(fontSize = 12.sp),
+                        textAlign = TextAlign.Left,
+                        fontWeight = FontWeight.Bold,
+                        color = whiteColor
 
-                )
-                Spacer(modifier = modifier.padding(8.dp))
+                    )
 
-
-                Text(
-                    text = team2.name,
-                    style = TextStyle(fontSize = 12.sp),
-                    textAlign = TextAlign.Center,
-                    color = whiteColor
-
-                )
-                Spacer(modifier = modifier.padding(8.dp))
-
-
-                TeamLogoScoreboardImageLoader(team = team2 ?: TeamScoreboard())
-
+                }
 
 
             }
 
 
+            Column(horizontalAlignment = Alignment.Start) {
+                Row(
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .height(50.dp)
+                ) {
+                    Spacer(modifier = modifier.padding(8.dp))
 
 
+                    Text(
+                        text = team2Score.toString(),
+                        style = TextStyle(fontSize = 12.sp),
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
+                        color = whiteColor
 
-        }
+                    )
+                    Spacer(modifier = modifier.padding(8.dp))
+
+
+                    Text(
+                        text = team2.name,
+                        style = TextStyle(fontSize = 12.sp),
+                        textAlign = TextAlign.Center,
+                        color = whiteColor
+
+                    )
+                    Spacer(modifier = modifier.padding(8.dp))
+
+
+                    TeamLogoScoreboardImageLoader(team = team2 ?: TeamScoreboard())
+
+
+                }
+
+
+            }
+
 
     }
 }
