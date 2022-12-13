@@ -49,43 +49,40 @@ fun TeamCardsList(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                     ){
 
-                   item { Button(onClick = { homeListViewModel.setFootballTeam() }) {
+                   item { FilledTonalButton(onClick = { homeListViewModel.setFootballTeam() }) {
                         Text("NFL", style = MaterialTheme.typography.labelSmall)
-                    }}
-                   item { Button(onClick = { homeListViewModel.setHockeyTeam() }) {
+                    }
+                   }
+                   item { OutlinedButton(onClick = { homeListViewModel.setHockeyTeam() }) {
                         Text("NHL", style = MaterialTheme.typography.labelSmall)
                     }}
-                   item { Button(onClick = { homeListViewModel.setBaseballTeam() }) {
+                   item { OutlinedButton(onClick = { homeListViewModel.setBaseballTeam() }) {
                         Text("MLB", style = MaterialTheme.typography.labelSmall)
                     }}
 
-                    item { Button(onClick = { homeListViewModel.setBasketballTeam() }) {
+                    item { OutlinedButton(onClick = { homeListViewModel.setBasketballTeam() }) {
                         Text("NBA", style = MaterialTheme.typography.labelSmall )
                     } }
 
-                    item { Button(onClick = { homeListViewModel.setWnbaTeam() }) {
+                    item { OutlinedButton(onClick = { homeListViewModel.setWnbaTeam() }) {
                         Text("WNBA", style = MaterialTheme.typography.labelSmall)
                     }}
 
-                    item { Button(onClick = { homeListViewModel.setCollegeTeam() }) {
+                    item { OutlinedButton(onClick = { homeListViewModel.setCollegeTeam() }) {
                         Text("College Football", style = MaterialTheme.typography.labelSmall)
                     }}
 
-                    item { Button(onClick = { homeListViewModel.setCollegeBasketballTeam() }) {
+                    item { OutlinedButton(onClick = { homeListViewModel.setCollegeBasketballTeam() }) {
                         Text("College Basketball", style = MaterialTheme.typography.labelSmall)
                     }}
 
-                    item { Button(onClick = { homeListViewModel.setMlsTeam() }) {
+                    item { OutlinedButton(onClick = { homeListViewModel.setMlsTeam() }) {
                         Text("MLS", style = MaterialTheme.typography.labelSmall)
                     }}
 
-
-
-
-
-                    item { Button(onClick = { homeListViewModel.setWorldCupTeam() }) {
+                    item { OutlinedButton(onClick = { homeListViewModel.setWorldCupTeam() }) {
                         Text("World Cup", style = MaterialTheme.typography.labelSmall )
-                    } }
+                    }}
                 }
 
                 BasicButton(

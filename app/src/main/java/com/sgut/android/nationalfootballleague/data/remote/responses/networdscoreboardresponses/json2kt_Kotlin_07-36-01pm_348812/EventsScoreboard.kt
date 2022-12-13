@@ -11,7 +11,7 @@ data class EventsScoreboard (
   @SerializedName("name"         ) var name         : String?                 = null,
   @SerializedName("shortName"    ) var shortName    : String?                 = null,
   @SerializedName("season"       ) var season       : SeasonScoreboard?                 = SeasonScoreboard(),
-  @SerializedName("competitions" ) var competitions : ArrayList<CompetitionsScoreboard> = arrayListOf(),
+  @SerializedName("competitions" ) var competitions : List<CompetitionsScoreboard> = listOf(),
   @SerializedName("status"       ) var status       : StatusScoreboard                 = StatusScoreboard(),
   @SerializedName("links"        ) var links        : ArrayList<LinksScoreboard>        = arrayListOf()
 
