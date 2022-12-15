@@ -1,28 +1,18 @@
 package com.sgut.android.nationalfootballleague.scoreboardscreen
 
-import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import com.sgut.android.nationalfootballleague.R.string as AppText
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
+
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -31,16 +21,10 @@ import coil.request.ImageRequest
 import com.sgut.android.nationalfootballleague.CompetitionsScoreboard
 import com.sgut.android.nationalfootballleague.CompetitorsScoreboard
 import com.sgut.android.nationalfootballleague.TeamScoreboard
-import com.sgut.android.nationalfootballleague.commoncomposables.BasicButton
-import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoImageloadiner2
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoScoreboardImageLoader
-import com.sgut.android.nationalfootballleague.homelistscreen.ArticleCard
-import com.sgut.android.nationalfootballleague.homelistscreen.ArticleList
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.basicButton
-import com.sgut.android.nationalfootballleague.utils.card
-import com.sgut.android.nationalfootballleague.utils.spacer
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,13 +37,16 @@ fun ScoreboardScreen(
 ) {
 
     scoreboardViewModel.loadGenericScoreboard(sport, league)
+
+
+
+
     val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
-    Log.e("scoreboard state scrn", scoreboardUiState.scoreboardUiStateEvents.toString())
     val events = scoreboardUiState.scoreboardUiStateEvents.events
     val leagues = scoreboardUiState.scoreboardUiStateEvents.leagues
     val articles = scoreboardUiState.currentArticles
-
-
+    val week = scoreboardUiState.scoreboardUiStateEvents.week.week
+    val moreEvents = remember { mutableStateListOf(scoreboardUiState.scoreboardUiStateEvents.events) }
 
     Column(
         modifier
@@ -69,8 +56,10 @@ fun ScoreboardScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+//        Text(text = scoreboardUiState.scoreboardUiStateEvents.week.week.toString() ?: "",
+//            style = MaterialTheme.typography.displayLarge)
 
-        Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?: "",
+        Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?:  "",
             style = MaterialTheme.typography.displayLarge)
         Text(leagues.getOrNull(0)?.name ?: "",
             style = MaterialTheme.typography.headlineMedium,
@@ -93,37 +82,29 @@ fun ScoreboardScreen(
 
         Row() { ArticleRow(articleList = articles) }
 
-
-
-        for (i in events) {
-            for (j in i.competitions[0].headlines) {
-                Text(text = j.description.toString())
-            }
-        }
-
+      when(scoreboardUiState.currentSport) {
+          "football" ->  OutlinedButton(onClick = { scoreboardViewModel.onYesterdayClick(sport, league, week) }, modifier = Modifier.basicButton()) {
+              Text(text = "Last Week")
+          }
+      }
 
 
 
+//        for (i in events) {
+//            for (j in i.competitions[0].headlines) {
+//                Text(text = j.description.toString())
+//            }
+//        }
 
         for (i in events) {
             Card(modifier
                 .padding(8.dp)
                 .clickable {}
             ) {
-
                 TeamComponent2(compScoreboard = i.competitions[0], modifier = Modifier)
-
-
-
-
             }
-
-
         }
-
     }
-
-
 }
 
 
@@ -287,7 +268,12 @@ Card(modifier = modifier.fillMaxSize()){
 
 
             }
-            Text(text = compScoreboard.status?.type?.shortDetail ?: "",
+//            Text(text = compScoreboard.status?.type?.shortDetail ?: "",
+//                style = TextStyle(fontSize = 12.sp),
+//                color = Color.White,
+//                textAlign = TextAlign.Center)
+
+            Text(text = compScoreboard.id ?: "",
                 style = TextStyle(fontSize = 12.sp),
                 color = Color.White,
                 textAlign = TextAlign.Center)

@@ -8,6 +8,7 @@ import com.sgut.android.nationalfootballleague.data.domainmodels.ScoreboardRespo
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface EspnApi {
     @GET("sports/football/nfl/teams")
@@ -85,6 +86,15 @@ interface EspnApi {
         sport: String? = null,
         @Path("league")
         league: String? = null,
+    ): Response<NetworkScoreboardResponse>
+
+    @GET("sports/{sport}/{league}/scoreboard")
+    suspend fun getYesterdayGeneralScoreboard(
+        @Path("sport")
+        sport: String? = null,
+        @Path("league")
+        league: String? = null,
+        @Query("week") week: Int
     ): Response<NetworkScoreboardResponse>
 
 

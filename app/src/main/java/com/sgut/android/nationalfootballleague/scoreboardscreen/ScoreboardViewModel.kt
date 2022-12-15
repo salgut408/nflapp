@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,11 +24,21 @@ class ScoreboardViewModel @Inject constructor(
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())
     val scoreboardUiState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
 
+//    var articles =
+
+
+     var currentDate: Int
+     var week: Int = 0
+
+
+
 
 
 
     init {
 //        loadScoreboard()
+        currentDate = getYesterdaysDate()
+        week = _scoreboardUiState.value.scoreboardUiStateEvents.week.week
     }
 
 
@@ -35,17 +47,50 @@ class ScoreboardViewModel @Inject constructor(
             val result = espnRepository.getGeneralScoreboardResponse(sport, league)
             val articlesListResult = espnRepository.getArticles(sport, league)
             setScoreboardUiState(result, sport, league, articlesListResult)
-            Log.i("DEBUG-Articles vm", articlesListResult.toString())
+//            Log.i("DEBUG-Articles vm", articlesListResult.toString())
 
         } catch (e: Exception) {
             Log.i("DEBUG-rc vm",e.message.toString())
         }
     }
 
-    fun setScoreboardUiState(scoreboardUiStateEvents  : ScoreboardResponseEventModel, currentSport: String, currentLeague: String, currentArticles: List<ArticleModel>) {
-        _scoreboardUiState.update {
-            it.copy(scoreboardUiStateEvents = scoreboardUiStateEvents, currentSport = currentSport, currentLeague = currentLeague, currentArticles = currentArticles )
+    fun onYesterdayClick(sport: String, league: String, week: Int) = viewModelScope.launch {
+       val lastWeek = week -1
+        try{
+            val result = espnRepository.getYesterdayGeneralScoreboardResponse(sport, league, lastWeek)
+            val articlesListResult = espnRepository.getArticles(sport, league)
+            setScoreboardUiState(result, sport, league, articlesListResult, )
+            Log.i("Load_YESTERDAY", result.events.toString())
+
+        } catch (e: Exception) {
+            Log.i("DEBUG-rc vm",e.message.toString())
         }
+    }
+
+    fun setScoreboardUiState(scoreboardUiStateEvents  : ScoreboardResponseEventModel, currentSport: String, currentLeague: String, currentArticles: List<ArticleModel>,  ) {
+        _scoreboardUiState.update {
+            it.copy(scoreboardUiStateEvents = scoreboardUiStateEvents, currentSport = currentSport, currentLeague = currentLeague, currentArticles = currentArticles,  )
+        }
+    }
+
+
+    fun getDate(): Int {
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
+        val formatted = current.format(formatter).toInt()
+        return formatted
+
+
+    }
+
+
+    fun getYesterdaysDate(): Int {
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
+        val formatted = current.format(formatter).toInt()
+        return formatted - 1
+
+
     }
 
 }

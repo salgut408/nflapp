@@ -7,6 +7,6 @@ data class ScoreboardUiState (
     var scoreboardUiStateEvents  : ScoreboardResponseEventModel = ScoreboardResponseEventModel(),
     var currentSport: String = "",
     var currentLeague: String = "",
-    var currentArticles: List<ArticleModel> = listOf()
+    var currentArticles: List<ArticleModel> = listOf(),
 
 )

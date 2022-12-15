@@ -10,6 +10,7 @@ data class ScoreboardResponseEventModel(
     var season:     SeasonScoreboard?      = SeasonScoreboard(),
     var day:        DayScoreboard?         = DayScoreboard(),
     var events:     List<EventsScoreboard> = listOf(),
+    var week: WeekScoreboard= WeekScoreboard()
 
 
     )

@@ -194,7 +194,6 @@ class EspnRepository @Inject constructor(
         val response = espnApi.getSpecificNflTeam(team)
         if (response.isSuccessful) {
             val teamDetailResponse = espnApi.getSpecificTeam(sport, league, team).body()?.team
-            Log.e("TEAM DEBUG-repo", "Response successful $teamDetailResponse")
             return rosterMapper.mapToDomainModel(teamDetailResponse!!)
         } else {
             Log.e("TEAM DEBUG-repo", response.errorBody().toString())
@@ -208,13 +207,28 @@ class EspnRepository @Inject constructor(
         if
                 (response.isSuccessful) {
             val scoreBoardresponse = espnApi.getGeneralScoreboard(sport, league).body()
-            Log.e("Scoreboard resp repo", "response succ $scoreBoardresponse")
+            Log.e("gen board repo", "response succ $scoreBoardresponse")
             return scoreboardDomainMapper.mapToDomainModel(scoreBoardresponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
 
         }
         val result = espnApi.getGeneralScoreboard(sport, league).body()
+        return scoreboardDomainMapper.mapToDomainModel(result!!)
+    }
+
+    suspend fun getYesterdayGeneralScoreboardResponse(sport: String, league: String, week: Int): ScoreboardResponseEventModel {
+        val response = espnApi.getYesterdayGeneralScoreboard(sport, league, week)
+        if
+                (response.isSuccessful) {
+            val scoreBoardresponse = espnApi.getYesterdayGeneralScoreboard(sport, league, week).body()
+            Log.e("Scoreboard_Respo_yestrdy", "yesterday response  $scoreBoardresponse")
+            return scoreboardDomainMapper.mapToDomainModel(scoreBoardresponse!!)
+        } else {
+            Log.e(javaClass.name, response.errorBody().toString())
+
+        }
+        val result = espnApi.getYesterdayGeneralScoreboard(sport, league, week).body()
         return scoreboardDomainMapper.mapToDomainModel(result!!)
     }
 

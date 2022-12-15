@@ -83,6 +83,7 @@ fun TeamCardsList(
                     item { OutlinedButton(onClick = { homeListViewModel.setWorldCupTeam() }) {
                         Text("World Cup", style = MaterialTheme.typography.labelSmall )
                     }}
+
                 }
 
                 BasicButton(

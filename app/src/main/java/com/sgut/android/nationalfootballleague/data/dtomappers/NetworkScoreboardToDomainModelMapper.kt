@@ -11,7 +11,8 @@ class NetworkScoreboardToDomainModelMapper: DomainMapper <NetworkScoreboardRespo
         events = model.events,
             day = model.day,
             leagues = model.leagues,
-            season = model.season
+            season = model.season,
+            week = model.week
         )
     }
 
