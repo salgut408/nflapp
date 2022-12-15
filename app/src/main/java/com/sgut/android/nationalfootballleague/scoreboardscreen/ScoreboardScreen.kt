@@ -22,6 +22,7 @@ import com.sgut.android.nationalfootballleague.CompetitionsScoreboard
 import com.sgut.android.nationalfootballleague.CompetitorsScoreboard
 import com.sgut.android.nationalfootballleague.TeamScoreboard
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoScoreboardImageLoader
+import com.sgut.android.nationalfootballleague.gamedetailscreen.GameDetailViewModel
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.basicButton
@@ -33,13 +34,15 @@ fun ScoreboardScreen(
     sport: String,
     league: String,
     scoreboardViewModel: ScoreboardViewModel = hiltViewModel(),
+    gameDeetViewModel: GameDetailViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
 ) {
 
     scoreboardViewModel.loadGenericScoreboard(sport, league)
 
+    gameDeetViewModel.loadGameDetails(sport,league, "401437901")
 
-
+    val gameDeetUiState by gameDeetViewModel.gameDetailUiState.collectAsState()
 
     val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
     val events = scoreboardUiState.scoreboardUiStateEvents.events
@@ -55,6 +58,14 @@ fun ScoreboardScreen(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        Text(text = gameDeetUiState.currentGameDetails?.gameInfo?.venue?.fullName ?: "49ERS Game")
+        Text(text = gameDeetUiState.currentGameDetails?.predictor?.header.toString() ?: "49ERS Game")
+        Text(text = gameDeetUiState.currentGameDetails?.predictor?.toString() ?: "49ERS Game")
+
+
+
+
 
 //        Text(text = scoreboardUiState.scoreboardUiStateEvents.week.week.toString() ?: "",
 //            style = MaterialTheme.typography.displayLarge)

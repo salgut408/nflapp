@@ -1,10 +1,7 @@
 package com.sgut.android.nationalfootballleague.data.repository
 
 import android.util.Log
-import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
-import com.sgut.android.nationalfootballleague.data.domainmodels.ScoreboardResponseEventModel
-import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
-import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
+import com.sgut.android.nationalfootballleague.data.domainmodels.*
 import com.sgut.android.nationalfootballleague.data.dtomappers.*
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import javax.inject.Inject
@@ -16,6 +13,7 @@ class EspnRepository @Inject constructor(
     val teamDetailNetworkToModelMapper: TeamDetailNetworkToModelMapper,
     val rosterMapper: TeamDetailWithRosterMapper,
     val scoreboardDomainMapper: NetworkScoreboardToDomainModelMapper,
+    val gameDetailsToDomainModelMapper: NetworkGameDetailsToDomainModelMapper
 ) {
 
     suspend fun getScoreboardResponse(): ScoreboardResponseEventModel {
@@ -245,6 +243,21 @@ class EspnRepository @Inject constructor(
         }
         val result = espnApi.getArticles(sport, league).body()?.articles
         return articleMapper.toDomainList(result!!)
+    }
+
+    suspend fun getGameDetails(sport: String, league: String, event: String): GameDetailModel {
+        val response = espnApi.getGameDetails(sport, league, event)
+        if
+                (response.isSuccessful) {
+            val getGameDetailsResponse = espnApi.getGameDetails(sport, league, event).body()
+            Log.e("game_details repo", "response succ $getGameDetailsResponse")
+            return gameDetailsToDomainModelMapper.mapToDomainModel(getGameDetailsResponse!!)
+        } else {
+            Log.e(javaClass.name, response.errorBody().toString())
+
+        }
+        val result = espnApi.getGameDetails(sport, league, event).body()
+        return gameDetailsToDomainModelMapper.mapToDomainModel(result!!)
     }
 
 

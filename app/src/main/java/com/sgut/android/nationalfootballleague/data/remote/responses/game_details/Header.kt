@@ -10,7 +10,7 @@ data class Header (
   @SerializedName("season"       ) var season       : GameDetailsSeason?                 = GameDetailsSeason(),
   @SerializedName("timeValid"    ) var timeValid    : Boolean?                = null,
   @SerializedName("competitions" ) var competitions : ArrayList<GameDetailsCompetitions> = arrayListOf(),
-  @SerializedName("links"        ) var links        : ArrayList<Links>        = arrayListOf(),
+//  @SerializedName("links"        ) var links        : ArrayList<GameDetailsLinks>        = arrayListOf(),
   @SerializedName("week"         ) var week         : Int?                    = null,
   @SerializedName("league"       ) var league       : GameDetailsLeague?                 = GameDetailsLeague()
 

@@ -1,9 +1,6 @@
 package com.sgut.android.nationalfootballleague.data.remote.api
 
-import com.sgut.android.nationalfootballleague.NFLTeamsResponse
-import com.sgut.android.nationalfootballleague.NetworkArticleResponse
-import com.sgut.android.nationalfootballleague.NetworkScoreboardResponse
-import com.sgut.android.nationalfootballleague.TeamDetailResponse2
+import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.data.domainmodels.ScoreboardResponseEventModel
 import retrofit2.Response
 import retrofit2.http.GET
@@ -108,5 +105,13 @@ interface EspnApi {
         teamAbbreviation: String? = null
     ): Response<TeamDetailResponse2>
 
+    @GET("sports/{sport}/{league}/summary")
+    suspend fun getGameDetails(
+        @Path("sport")
+        sport: String? = null,
+        @Path("league")
+        league: String? = null,
+        @Query("event") event: String
+    ): Response<GameDetailResponse>
 
 }

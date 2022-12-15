@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class GameDetailsAwayTeam (
 
-  @SerializedName("\$ref" ) var ref : String? = null
+  @SerializedName("id" ) var id : String? = null,
+  @SerializedName("gameProjection" ) var gameProjection : String? = null,
+  @SerializedName("teamChanceLoss" ) var teamChanceLoss : String? = null,
+  @SerializedName("teamChanceTie" ) var teamChanceTie : String? = null,
 
 )

@@ -38,7 +38,13 @@ object AppModule {
         teamDetailNetworkToModelMapper: TeamDetailNetworkToModelMapper,
         rosterMapper: TeamDetailWithRosterMapper,
         scoreboardMapper: NetworkScoreboardToDomainModelMapper,
-    ): EspnRepository = EspnRepository(nflMapper, espnApi, articleMapper, teamDetailNetworkToModelMapper, rosterMapper, scoreboardMapper, )
+        gameDetailsToDomainModelMapper: NetworkGameDetailsToDomainModelMapper
+    ): EspnRepository = EspnRepository(nflMapper, espnApi, articleMapper, teamDetailNetworkToModelMapper, rosterMapper, scoreboardMapper, gameDetailsToDomainModelMapper)
+
+
+    @Provides
+    fun provideNetworkGameDetailsToDomainModelMapper():  NetworkGameDetailsToDomainModelMapper = NetworkGameDetailsToDomainModelMapper()
+
 
     @Provides
     fun provideNetworkToTeamDomMapper():  NetworkToTeamDomainModelMapper = NetworkToTeamDomainModelMapper()
