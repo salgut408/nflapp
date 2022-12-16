@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.scoreboardscreen
 
+import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -20,6 +21,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sgut.android.nationalfootballleague.CompetitionsScoreboard
 import com.sgut.android.nationalfootballleague.CompetitorsScoreboard
+import com.sgut.android.nationalfootballleague.EventsScoreboard
 import com.sgut.android.nationalfootballleague.TeamScoreboard
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoScoreboardImageLoader
 import com.sgut.android.nationalfootballleague.gamedetailscreen.GameDetailViewModel
@@ -34,22 +36,23 @@ fun ScoreboardScreen(
     sport: String,
     league: String,
     scoreboardViewModel: ScoreboardViewModel = hiltViewModel(),
-    gameDeetViewModel: GameDetailViewModel = hiltViewModel(),
+    gameDetailViewModel: GameDetailViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
 ) {
 
     scoreboardViewModel.loadGenericScoreboard(sport, league)
 
-    gameDeetViewModel.loadGameDetails(sport,league, "401437901")
+    gameDetailViewModel.loadGameDetails(sport, league, "401437901")
 
-    val gameDeetUiState by gameDeetViewModel.gameDetailUiState.collectAsState()
+    val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
+
+    Log.e("GAMEDETAILUISTATE", gameDetailUiState.toString())
 
     val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
     val events = scoreboardUiState.scoreboardUiStateEvents.events
     val leagues = scoreboardUiState.scoreboardUiStateEvents.leagues
     val articles = scoreboardUiState.currentArticles
     val week = scoreboardUiState.scoreboardUiStateEvents.week.week
-    val moreEvents = remember { mutableStateListOf(scoreboardUiState.scoreboardUiStateEvents.events) }
 
     Column(
         modifier
@@ -59,18 +62,18 @@ fun ScoreboardScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(text = gameDeetUiState.currentGameDetails?.gameInfo?.venue?.fullName ?: "49ERS Game")
-        Text(text = gameDeetUiState.currentGameDetails?.predictor?.header.toString() ?: "49ERS Game")
-        Text(text = gameDeetUiState.currentGameDetails?.predictor?.toString() ?: "49ERS Game")
-
-
-
+//        Text(text = gameDeetUiState.currentGameDetails?.gameInfo?.venue?.fullName ?: "49ERS Game")
+//        Text(text = gameDeetUiState.currentGameDetails?.predictor?.header.toString() ?: "49ERS Game")
+//        Text(text = gameDeetUiState.currentGameDetails?.predictor?.toString() ?: "49ERS Game")
+//        Text(text = gameDeetUiState.currentGameDetails?.gameInfo?.weather?.temperature.toString() ?: "49ERS Game")
+//        Text(text = gameDeetUiState.currentGameDetails?.odds?.get(0)?.bettingOdds?.teamOdds?.preMatchTotalOver?.value?: "49ERS Game")
+//
 
 
 //        Text(text = scoreboardUiState.scoreboardUiStateEvents.week.week.toString() ?: "",
 //            style = MaterialTheme.typography.displayLarge)
 
-        Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?:  "",
+        Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?: "",
             style = MaterialTheme.typography.displayLarge)
         Text(leagues.getOrNull(0)?.name ?: "",
             style = MaterialTheme.typography.headlineMedium,
@@ -91,33 +94,43 @@ fun ScoreboardScreen(
                 .size(300.dp)
         )
 
+
         Row() { ArticleRow(articleList = articles) }
 
-      when(scoreboardUiState.currentSport) {
-          "football" ->  OutlinedButton(onClick = { scoreboardViewModel.onYesterdayClick(sport, league, week) }, modifier = Modifier.basicButton()) {
-              Text(text = "Last Week")
-          }
-      }
 
-
-
-//        for (i in events) {
-//            for (j in i.competitions[0].headlines) {
-//                Text(text = j.description.toString())
-//            }
-//        }
-
-        for (i in events) {
-            Card(modifier
-                .padding(8.dp)
-                .clickable {}
-            ) {
-                TeamComponent2(compScoreboard = i.competitions[0], modifier = Modifier)
+        when (scoreboardUiState.currentSport) {
+            "football" -> OutlinedButton(onClick = {
+                scoreboardViewModel.onYesterdayClick(sport, league, week) },
+                modifier = Modifier.basicButton()) {
+                Text(text = "Last Week")
             }
+        }
+        TeamsMatchUpListFromEvents(events, modifier)
+    }
+}
+
+
+@Composable
+fun TeamsMatchUpListFromEvents(events: List<EventsScoreboard>, modifier: Modifier) {
+    for (i in events) {
+        Card(modifier = modifier
+            .padding(8.dp)
+            .clickable { }
+        ) {
+            TeamComponent2(compScoreboard = i.competitions[0], modifier = Modifier)
         }
     }
 }
 
+@Composable
+fun EventsHeadLines(events: List<EventsScoreboard>) {
+    for (i in events) {
+        for (j in i.competitions[0].headlines){
+            Text(text = j.description.toString())
+        }
+    }
+
+}
 
 @Composable
 fun TeamComponent(team: CompetitorsScoreboard, modifier: Modifier) {
@@ -186,115 +199,115 @@ fun TeamComponent2(compScoreboard: CompetitionsScoreboard, modifier: Modifier) {
     val team2Score = compScoreboard.competitors[1].score
     val whiteColor = Color.White
 
-Card(modifier = modifier.fillMaxSize()){
+    Card(modifier = modifier.fillMaxSize()) {
 
-    Box(modifier = modifier
-        .padding(8.dp)
-        .background(Brush.horizontalGradient(
-            listOf(color1, color2)
-        ))
-        .fillMaxWidth(3f)) {
+        Box(modifier = modifier
+            .padding(8.dp)
+            .background(Brush.horizontalGradient(
+                listOf(color1, color2)
+            ))
+            .fillMaxWidth(3f)) {
 
-        Surface(color = Color.LightGray.copy(alpha = 0.3f), modifier = modifier.fillMaxSize()) {
-
-
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                ) {
-
-                    Spacer(modifier = modifier.padding(8.dp))
-                    TeamLogoScoreboardImageLoader(team = team1 ?: TeamScoreboard())
-                    Spacer(modifier = modifier.padding(8.dp))
-
-                    Text(
-                        text = team1.name,
-                        style = TextStyle(fontSize = 12.sp),
-                        textAlign = TextAlign.Left,
-                        color = whiteColor
-                    )
-
-                    Spacer(modifier = modifier.padding(8.dp))
-
-                    Text(
-                        text = team1Score.toString(),
-                        style = TextStyle(fontSize = 12.sp),
-                        textAlign = TextAlign.Left,
-                        fontWeight = FontWeight.Bold,
-                        color = whiteColor
-
-                    )
-
-                }
+            Surface(color = Color.LightGray.copy(alpha = 0.3f), modifier = modifier.fillMaxSize()) {
 
 
-            }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Row(
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .height(50.dp)
+                    ) {
 
+                        Spacer(modifier = modifier.padding(8.dp))
+                        TeamLogoScoreboardImageLoader(team = team1 ?: TeamScoreboard())
+                        Spacer(modifier = modifier.padding(8.dp))
 
+                        Text(
+                            text = team1.name,
+                            style = TextStyle(fontSize = 12.sp),
+                            textAlign = TextAlign.Left,
+                            color = whiteColor
+                        )
 
+                        Spacer(modifier = modifier.padding(8.dp))
 
+                        Text(
+                            text = team1Score.toString(),
+                            style = TextStyle(fontSize = 12.sp),
+                            textAlign = TextAlign.Left,
+                            fontWeight = FontWeight.Bold,
+                            color = whiteColor
 
+                        )
 
-            Column(horizontalAlignment = Alignment.Start) {
-                Row(
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                ) {
-
-
-                    Text(
-                        text = team2Score.toString(),
-                        style = TextStyle(fontSize = 12.sp),
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.Bold,
-                        color = whiteColor
-
-                    )
-                    Spacer(modifier = modifier.padding(8.dp))
-
-
-                    Text(
-                        text = team2.name,
-                        style = TextStyle(fontSize = 12.sp),
-                        textAlign = TextAlign.Center,
-                        color = whiteColor
-
-                    )
-                    Spacer(modifier = modifier.padding(8.dp))
-
-
-                    TeamLogoScoreboardImageLoader(team = team2 ?: TeamScoreboard())
-
-                    Spacer(modifier = modifier.padding(8.dp))
+                    }
 
 
                 }
 
 
-            }
+
+
+
+
+                Column(horizontalAlignment = Alignment.Start) {
+                    Row(
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .height(50.dp)
+                    ) {
+
+
+                        Text(
+                            text = team2Score.toString(),
+                            style = TextStyle(fontSize = 12.sp),
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.Bold,
+                            color = whiteColor
+
+                        )
+                        Spacer(modifier = modifier.padding(8.dp))
+
+
+                        Text(
+                            text = team2.name,
+                            style = TextStyle(fontSize = 12.sp),
+                            textAlign = TextAlign.Center,
+                            color = whiteColor
+
+                        )
+                        Spacer(modifier = modifier.padding(8.dp))
+
+
+                        TeamLogoScoreboardImageLoader(team = team2 ?: TeamScoreboard())
+
+                        Spacer(modifier = modifier.padding(8.dp))
+
+
+                    }
+
+
+                }
 //            Text(text = compScoreboard.status?.type?.shortDetail ?: "",
 //                style = TextStyle(fontSize = 12.sp),
 //                color = Color.White,
 //                textAlign = TextAlign.Center)
 
-            Text(text = compScoreboard.id ?: "",
-                style = TextStyle(fontSize = 12.sp),
-                color = Color.White,
-                textAlign = TextAlign.Center)
+                Text(text = compScoreboard.id ?: "",
+                    style = TextStyle(fontSize = 12.sp),
+                    color = Color.White,
+                    textAlign = TextAlign.Center)
+
+
+            }
 
 
         }
 
-
     }
-
-}
 }
 
