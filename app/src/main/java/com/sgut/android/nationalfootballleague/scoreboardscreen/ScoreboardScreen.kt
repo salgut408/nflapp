@@ -8,6 +8,8 @@ import androidx.compose.runtime.*
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -25,6 +27,7 @@ import com.sgut.android.nationalfootballleague.EventsScoreboard
 import com.sgut.android.nationalfootballleague.TeamScoreboard
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoScoreboardImageLoader
 import com.sgut.android.nationalfootballleague.gamedetailscreen.GameDetailViewModel
+import com.sgut.android.nationalfootballleague.gamedetailscreen.MatchupPredictorGraph
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.basicButton
@@ -42,7 +45,7 @@ fun ScoreboardScreen(
 
     scoreboardViewModel.loadGenericScoreboard(sport, league)
 
-    gameDetailViewModel.loadGameDetails(sport, league, "401437901")
+    gameDetailViewModel.loadGameDetails(sport, league, "401437916")
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
 
@@ -62,16 +65,29 @@ fun ScoreboardScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-//        Text(text = gameDeetUiState.currentGameDetails?.gameInfo?.venue?.fullName ?: "49ERS Game")
-//        Text(text = gameDeetUiState.currentGameDetails?.predictor?.header.toString() ?: "49ERS Game")
-//        Text(text = gameDeetUiState.currentGameDetails?.predictor?.toString() ?: "49ERS Game")
+
+        var prog = gameDetailUiState.currentGameDetails?.predictor?.awayTeam?.gameProjection?.toFloat()
+
+
+        MatchupPredictorGraph()
+
+
+
+
+        Text(text = gameDetailUiState.currentGameDetails?.gameInfo?.venue?.fullName ?: "49ERS Game api resp", )
+        Text(text = gameDetailUiState.currentGameDetails?.predictor?.toString() ?: "49ERS Game", modifier = Modifier
+            .drawBehind {
+                drawRoundRect(
+                    Color(0xFFBBAAEE),
+                    cornerRadius = CornerRadius(10.dp.toPx())
+                )
+            }
+            .padding(8.dp))
+        Text(text = gameDetailUiState.currentGameDetails?.pickcenter?.getOrNull(0)?.details?: "49ERS Game")
 //        Text(text = gameDeetUiState.currentGameDetails?.gameInfo?.weather?.temperature.toString() ?: "49ERS Game")
 //        Text(text = gameDeetUiState.currentGameDetails?.odds?.get(0)?.bettingOdds?.teamOdds?.preMatchTotalOver?.value?: "49ERS Game")
 //
 
-
-//        Text(text = scoreboardUiState.scoreboardUiStateEvents.week.week.toString() ?: "",
-//            style = MaterialTheme.typography.displayLarge)
 
         Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?: "",
             style = MaterialTheme.typography.displayLarge)
@@ -94,9 +110,7 @@ fun ScoreboardScreen(
                 .size(300.dp)
         )
 
-
         Row() { ArticleRow(articleList = articles) }
-
 
         when (scoreboardUiState.currentSport) {
             "football" -> OutlinedButton(onClick = {
