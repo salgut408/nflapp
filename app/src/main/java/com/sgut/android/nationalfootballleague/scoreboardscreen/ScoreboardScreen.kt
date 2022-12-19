@@ -26,6 +26,9 @@ import com.sgut.android.nationalfootballleague.CompetitorsScoreboard
 import com.sgut.android.nationalfootballleague.EventsScoreboard
 import com.sgut.android.nationalfootballleague.TeamScoreboard
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoScoreboardImageLoader
+import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
+import com.sgut.android.nationalfootballleague.gamedetailscreen.DoughnutChart
+import com.sgut.android.nationalfootballleague.gamedetailscreen.DoughnutChart2
 import com.sgut.android.nationalfootballleague.gamedetailscreen.GameDetailViewModel
 import com.sgut.android.nationalfootballleague.gamedetailscreen.MatchupPredictorGraph
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
@@ -66,25 +69,25 @@ fun ScoreboardScreen(
     ) {
 
 
-        var prog = gameDetailUiState.currentGameDetails?.predictor?.awayTeam?.gameProjection?.toFloat()
 
+        DoughnutChart2(
+            gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
+        )
 
-        MatchupPredictorGraph()
-
-
-
-
+//
         Text(text = gameDetailUiState.currentGameDetails?.gameInfo?.venue?.fullName ?: "49ERS Game api resp", )
-        Text(text = gameDetailUiState.currentGameDetails?.predictor?.toString() ?: "49ERS Game", modifier = Modifier
-            .drawBehind {
-                drawRoundRect(
-                    Color(0xFFBBAAEE),
-                    cornerRadius = CornerRadius(10.dp.toPx())
-                )
-            }
-            .padding(8.dp))
-        Text(text = gameDetailUiState.currentGameDetails?.pickcenter?.getOrNull(0)?.details?: "49ERS Game")
-//        Text(text = gameDeetUiState.currentGameDetails?.gameInfo?.weather?.temperature.toString() ?: "49ERS Game")
+//        Text(text = gameDetailUiState.teams[0].team?.name ?: "49ERS Game api resp", )
+
+//        Text(text = gameDetailUiState.currentGameDetails?.predictor?.toString() ?: "49ERS Game", modifier = Modifier
+//            .drawBehind {
+//                drawRoundRect(
+//                    Color(0xFFBBAAEE),
+//                    cornerRadius = CornerRadius(10.dp.toPx())
+//                )
+//            }
+//            .padding(8.dp))
+//        Text(text = gameDetailUiState.currentGameDetails?.pickcenter?.getOrNull(0)?.details?: "49ERS Game")
+        Text(text = gameDetailUiState.currentGameDetails?.gameInfo?.weather?.temperature.toString() ?: "49ERS Game")
 //        Text(text = gameDeetUiState.currentGameDetails?.odds?.get(0)?.bettingOdds?.teamOdds?.preMatchTotalOver?.value?: "49ERS Game")
 //
 
