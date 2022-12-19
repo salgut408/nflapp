@@ -94,7 +94,7 @@ for (i in teams!!){
         for (i in values.indices){
             DisplayLegend(
                 color = colors.getOrElse(i,{color -> Color.White}),
-                legend = legend[i])
+                legend = legends.getOrElse(i, {word -> ""}))
         }
     }
 
@@ -155,7 +155,7 @@ fun DisplayLegend(color: Color, legend: String) {
                 .background(color = color, shape = CircleShape)
         )
         Spacer(modifier = Modifier.width(4.dp))
-        Text(text = legend, color = Color.Blue, fontSize = 18.sp)
+        Text(text = legend, color = Color.Blue, fontSize = 24.sp)
 
     }
 

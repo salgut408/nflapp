@@ -50,8 +50,9 @@ fun ScoreboardScreen(
 
     val packersVsRams = 401437916
     val bruinsVsPanthers = 401459092
+    val sfVsSeattle = 401437901
 
-    gameDetailViewModel.loadGameDetails(sport, league, packersVsRams.toString())
+    gameDetailViewModel.loadGameDetails(sport, league, sfVsSeattle.toString())
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
 
@@ -77,11 +78,13 @@ fun ScoreboardScreen(
             gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
         )
 
-//
-        Text(text = gameDetailUiState.currentGameDetails?.gameInfo?.venue?.fullName ?: "49ERS Game api resp", )
-//        Text(text = gameDetailUiState.teams[0].team?.name ?: "49ERS Game api resp", )
 
-//        Text(text = gameDetailUiState.currentGameDetails?.predictor?.toString() ?: "49ERS Game", modifier = Modifier
+        Text(text = gameDetailUiState.currentGameDetails?.gameInfo?.venue?.fullName ?: "Game api resp", )
+        Text(text = gameDetailUiState.currentGameDetails?.gameInfo?.weather?.temperature.toString() ?: "49ERS Game")
+
+
+//        Text(text = gameDetailUiState.teams[0].team?.name ?: "49ERS Game api resp", )
+//        Text(text = gameDetailUiState.currentGameDetails?.predictor?.toString() ?: "Game api resp", modifier = Modifier
 //            .drawBehind {
 //                drawRoundRect(
 //                    Color(0xFFBBAAEE),
@@ -90,7 +93,6 @@ fun ScoreboardScreen(
 //            }
 //            .padding(8.dp))
 //        Text(text = gameDetailUiState.currentGameDetails?.pickcenter?.getOrNull(0)?.details?: "49ERS Game")
-        Text(text = gameDetailUiState.currentGameDetails?.gameInfo?.weather?.temperature.toString() ?: "49ERS Game")
 //        Text(text = gameDeetUiState.currentGameDetails?.odds?.get(0)?.bettingOdds?.teamOdds?.preMatchTotalOver?.value?: "49ERS Game")
 //
 
