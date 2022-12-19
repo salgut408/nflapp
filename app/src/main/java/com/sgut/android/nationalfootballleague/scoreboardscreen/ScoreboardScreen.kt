@@ -48,7 +48,10 @@ fun ScoreboardScreen(
 
     scoreboardViewModel.loadGenericScoreboard(sport, league)
 
-    gameDetailViewModel.loadGameDetails(sport, league, "401437916")
+    val packersVsRams = 401437916
+    val bruinsVsPanthers = 401459092
+
+    gameDetailViewModel.loadGameDetails(sport, league, packersVsRams.toString())
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
 

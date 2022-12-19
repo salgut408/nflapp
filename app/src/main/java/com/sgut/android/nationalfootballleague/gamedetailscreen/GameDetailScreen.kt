@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
@@ -42,6 +43,7 @@ fun DoughnutChart2 (
     ) {
 
     var colors = mutableListOf<Color>()
+    var legends = mutableListOf<String>()
 
     val teams = gameDetailModel.boxscore?.teams
 
@@ -51,11 +53,16 @@ fun DoughnutChart2 (
 
 for (i in teams!!){
    colors.add(HexToJetpackColor2.getColor(i.team?.color ?: "EmptyString"))
-
+    legends.add(i.team?.name ?: "")
 }
     colors.reverse()
+    legends.reverse()
+
     colors.add(Color.Yellow)
+    legends.add("Tie")
+
     Log.e("COLORS", colors.toString())
+    Log.e("LEGENDS", legends.toString())
 
     val gameProjection = gameDetailModel.predictor?.homeTeam?.gameProjection ?: 0f
     val teamChanceLoss = gameDetailModel.predictor?.homeTeam?.teamChanceLoss ?: 0f
@@ -63,8 +70,7 @@ for (i in teams!!){
     val values = listOf(gameProjection,teamChanceLoss,teamChanceTie)
 
     val sumOfValues = values.sum()
-
-    val proportions = values.map{it * 100 / sumOfValues}
+    val proportions = values.map{ it * 100 / sumOfValues }
     val sweepAngles = proportions.map { it * 360 /100 }
 
     Canvas(
@@ -149,7 +155,7 @@ fun DisplayLegend(color: Color, legend: String) {
                 .background(color = color, shape = CircleShape)
         )
         Spacer(modifier = Modifier.width(4.dp))
-        Text(text = legend, color = Color.Blue)
+        Text(text = legend, color = Color.Blue, fontSize = 18.sp)
 
     }
 
