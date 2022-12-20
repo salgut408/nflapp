@@ -45,12 +45,13 @@ fun ScoreboardScreen(
     val packersVsRams = 401437916
     val bruinsVsPanthers = 401459092
     val sfVsSeattle = 401437901
-    val rocketsVsSpurs = 401468608
+    val pistonsVJazz = 401468616
     val washingtonVsNy = 401437906
     val nxtWeekJaxVsNYJets = 401437917
     val seattleVsKC = 401437922
+    val hockey = 401459101
 
-    gameDetailViewModel.loadGameDetails(sport, league, seattleVsKC.toString())
+    gameDetailViewModel.loadGameDetails(sport, league, nxtWeekJaxVsNYJets.toString())
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
 
@@ -71,10 +72,18 @@ fun ScoreboardScreen(
     ) {
 
 
+        when(gameDetailUiState.currentSport){
+            "basketball" -> DoughnutChartForBasketball(gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),)
+            "football" -> DoughnutChart2(gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),)
+        }
 
-        DoughnutChart2(
-            gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
-        )
+//        DoughnutChart2(
+//            gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
+//        )
+        
+        
+        Injuries(gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel())
+
         GameInformation(
             gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
         )

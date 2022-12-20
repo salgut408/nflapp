@@ -12,6 +12,7 @@ import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
+import com.sgut.android.nationalfootballleague.GameDetailsAthlete
 import com.sgut.android.nationalfootballleague.GameDetailsVenue
 import com.sgut.android.nationalfootballleague.TeamScoreboard
 import com.sgut.android.nationalfootballleague.Venue3
@@ -90,6 +91,21 @@ fun ArticleCardImageLoader(articleModel: ArticleModel) {
 }
 
 @Composable
+fun HeadshotImageLoader(athlete: GameDetailsAthlete, modifier: Modifier) {
+    SubcomposeAsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(athlete.headshot?.href)
+            .build(),
+        modifier = modifier.size(100.dp),
+        loading = {
+            CircularProgressIndicator()
+        },
+        contentDescription = athlete.displayName,
+
+        )
+}
+
+@Composable
 fun VenueCardImageLoader(venue3: Venue3) {
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
@@ -107,7 +123,7 @@ fun VenueCardImageLoader(venue3: Venue3) {
 fun DetailVenueCardImageLoader(venue: GameDetailsVenue) {
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
-            .data(venue.images.getOrNull(1)?.href )
+            .data(venue.images.getOrNull(1)?.href ?: venue.images.getOrNull(0)?.href)
             .build(),
         loading = {
             CircularProgressIndicator()

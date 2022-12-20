@@ -5,6 +5,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -20,10 +21,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sgut.android.nationalfootballleague.GameDetailsLeaders
-import com.sgut.android.nationalfootballleague.GameDetailsVenue
-import com.sgut.android.nationalfootballleague.Weather
+import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
+import com.sgut.android.nationalfootballleague.commoncomposables.HeadshotImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.VenueCardImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
@@ -44,21 +44,64 @@ fun GameDetailsScreen(
 fun Injuries(
     gameDetailModel: GameDetailModel,
 ) {
-    val injuries = gameDetailModel.injuries
-    for (i in injuries){
-       for(j in i.injuries){
-           Text(text = j.athlete.displayName ?: "" )
-       }
-    }
+    val team1 = gameDetailModel.injuries.getOrNull(0)?.team?.displayName
+    val team2 = gameDetailModel.injuries.getOrNull(1)?.team?.displayName
+    val injuries1 = gameDetailModel.injuries.getOrNull(0)
+    val injuries2 = gameDetailModel.injuries.getOrNull(1)
+
+
+ Card(
+     modifier = Modifier.fillMaxWidth()
+ ){
+     Text(text = "Injury Report", style = MaterialTheme.typography.headlineSmall)
+     Divider()
+     Text(text = team1 ?: "", fontWeight = FontWeight.Bold)
+     if (injuries1 != null) {
+         InjuryColumn(injuries = injuries1)
+     }
+     Text(text = team2 ?: "", fontWeight = FontWeight.Bold)
+
+     if (injuries2 != null) {
+         InjuryColumn(injuries = injuries2)
+     }
+
+}
 }
 
+@Composable
+fun InjuryColumn(injuries: GameDetailsInjuries) {
+    Column() {
+        for(i in injuries.injuries){
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(start =8.dp, end = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+               AthleteNameAndPosition(athlete = i.athlete)
+                Text(text = i.status)
+//                HeadshotImageLoader(athlete = i.athlete, modifier = Modifier)
+            }
+        }
+    }
+
+}
+
+@Composable
+fun AthleteNameAndPosition(athlete: GameDetailsAthlete) {
+    Row() {
+        Text(text = athlete.displayName?: "")
+        Text(text = " ")
+        Text(text = athlete.position?.abbreviation ?: "", color = Color.Blue)
+
+
+    }
+}
 
 @Composable
 fun DoughnutChart2(
     gameDetailModel: GameDetailModel,
-    size: Dp = 150.dp,
-    thickness: Dp = 30.dp,
-    ) {
+    size: Dp = 200.dp,
+    thickness: Dp = 20.dp,
+) {
     val colors = mutableListOf<Color>()
     val legends = mutableListOf<String>()
     val teams = gameDetailModel.boxscore?.teams
@@ -73,6 +116,8 @@ fun DoughnutChart2(
     colors.add(Color.Yellow)
     legends.add("Tie")
 
+//for nba only response is "AWAYTEAM"
+
     val gameProjection = gameDetailModel.predictor?.homeTeam?.gameProjection ?: 0f
     val teamChanceLoss = gameDetailModel.predictor?.homeTeam?.teamChanceLoss ?: 0f
     val teamChanceTie = gameDetailModel.predictor?.homeTeam?.teamChanceTie ?: 0f
@@ -86,38 +131,114 @@ fun DoughnutChart2(
     Card(elevation = CardDefaults.elevatedCardElevation(),
         modifier = Modifier
             .fillMaxHeight()
+            .fillMaxWidth()
             .padding(16.dp)) {
-    Column(modifier = Modifier.padding(8.dp)) {
+        Column(
 
-
-        Canvas(
-            modifier = Modifier
-                .size(size = size)
-                .padding(16.dp),
+            modifier = Modifier.padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            var startAngle = -90f
-            for (i in values.indices) {
-                drawArc(
-                    color = colors.getOrElse(i) { color -> Color.White },
-                    startAngle = startAngle,
-                    sweepAngle = sweepAngles[i],
-                    useCenter = false,
-                    style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt)
-                )
-                startAngle += sweepAngles[i]
-            }
 
-        }
-        Spacer(modifier = Modifier.height(32.dp))
-        Column() {
-            Text(text = "Win Prediction", textAlign = TextAlign.Center)
-            for (i in values.indices) {
-                DisplayLegend(
-                    color = colors.getOrElse(i, { color -> Color.White }),
-                    legend = legends.getOrElse(i, { word -> "" }))
+
+            Canvas(
+                modifier = Modifier
+                    .size(size = size)
+                    .padding(16.dp),
+            ) {
+                var startAngle = -90f
+                for (i in values.indices) {
+
+                    drawArc(
+                        color = colors.getOrElse(i) { color -> Color.White },
+                        startAngle = startAngle,
+                        sweepAngle = sweepAngles[i],
+                        useCenter = false,
+                        style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt)
+                    )
+                    startAngle += sweepAngles[i]
+                }
+
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+            Column() {
+                Text(text = "Win Prediction", textAlign = TextAlign.Center)
+                for (i in values.indices) {
+                    DisplayLegend(
+                        color = colors.getOrElse(i, { color -> Color.White }),
+                        legend = legends.getOrElse(i, { word -> "" }))
+                }
             }
         }
     }
+}
+
+
+@Composable
+fun DoughnutChartForBasketball(
+    gameDetailModel: GameDetailModel,
+    size: Dp = 150.dp,
+    thickness: Dp = 20.dp,
+) {
+    val colors = mutableListOf<Color>()
+    val legends = mutableListOf<String>()
+    val teams = gameDetailModel.boxscore?.teams
+
+    for (i in teams!!) {
+        colors.add(HexToJetpackColor2.getColor(i.team?.color ?: "EmptyString"))
+        legends.add(i.team?.name ?: "")
+    }
+
+
+    colors.add(Color.Yellow)
+    legends.add("Tie")
+
+//for nba only response is "AWAYTEAM"
+
+    val gameProjection = gameDetailModel.predictor?.awayTeam?.gameProjection ?: 0f
+    val teamChanceLoss = gameDetailModel.predictor?.awayTeam?.teamChanceLoss ?: 0f
+    val teamChanceTie = gameDetailModel.predictor?.awayTeam?.teamChanceTie ?: 0f
+    val values = listOf(gameProjection, teamChanceLoss, teamChanceTie)
+
+    val sumOfValues = values.sum()
+    val proportions = values.map { it * 100 / sumOfValues }
+    val sweepAngles = proportions.map { it * 360 / 100 }
+
+
+    Card(elevation = CardDefaults.elevatedCardElevation(),
+        modifier = Modifier
+            .fillMaxHeight()
+            .padding(16.dp)) {
+        Column(modifier = Modifier.padding(8.dp)) {
+
+
+            Canvas(
+                modifier = Modifier
+                    .size(size = size)
+                    .padding(16.dp),
+            ) {
+                var startAngle = -90f
+                for (i in values.indices) {
+                    drawArc(
+                        color = colors.getOrElse(i) { color -> Color.White },
+                        startAngle = startAngle,
+                        sweepAngle = sweepAngles[i],
+                        useCenter = false,
+                        style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt),
+                    )
+                    startAngle += sweepAngles[i]
+                }
+
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+            Column() {
+                Text(text = "Win Prediction", textAlign = TextAlign.Center)
+                for (i in values.indices) {
+                    DisplayLegend(
+                        color = colors.getOrElse(i, { color -> Color.White }),
+                        legend = legends.getOrElse(i, { word -> "" }))
+                }
+            }
+        }
     }
 }
 
@@ -236,19 +357,19 @@ fun GameInformation(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-        ){
-            Text(text = "GameInformation", style = MaterialTheme.typography.headlineSmall )
+        ) {
+            Text(text = "GameInformation", style = MaterialTheme.typography.headlineSmall)
 
         }
         Divider()
 
-        DetailVenueCardImageLoader(venue = gameDetailModel.gameInfo?.venue !!)
+        DetailVenueCardImageLoader(venue = gameDetailModel.gameInfo?.venue!!)
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-        ){
+        ) {
             Text(text = gameDetailModel.gameInfo?.weather?.link?.text ?: "")
         }
         Row(
@@ -256,9 +377,10 @@ fun GameInformation(
                 .fillMaxWidth()
                 .padding(8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
-        ){
-           AddressComp(gameDetailModel = gameDetailModel)
-            Text(text = gameDetailModel.gameInfo?.weather?.temperature.toString(), fontWeight = FontWeight.Bold)
+        ) {
+            AddressComp(gameDetailModel = gameDetailModel)
+            Text(text = gameDetailModel.gameInfo?.weather?.temperature.toString(),
+                fontWeight = FontWeight.Bold)
         }
         Divider()
 
@@ -266,9 +388,9 @@ fun GameInformation(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-        ){
+        ) {
             Text(text = "CAPACITY: ", fontSize = 12.sp, fontWeight = FontWeight.Bold)
-            Text(text = gameDetailModel.gameInfo?.venue?.capacity.toString(), fontSize = 12.sp, )
+            Text(text = gameDetailModel.gameInfo?.venue?.capacity.toString(), fontSize = 12.sp)
         }
     }
 }
@@ -300,6 +422,9 @@ fun getTeamsColorsList(gameDetailModel: GameDetailModel): List<Color?> {
     }
     return list
 }
+
+
+
 
 
 

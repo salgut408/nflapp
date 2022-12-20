@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class GameDetailsInjuries(
 
   @SerializedName("team") var team: InjTeam? = InjTeam(),
-  @SerializedName("injuries") var injuries: ArrayList<InjuriesItem> = arrayListOf(),
+  @SerializedName("injuries") var injuries: List<InjuriesItem> = listOf(),
 
   )
 
