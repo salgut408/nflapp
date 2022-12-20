@@ -10,6 +10,6 @@ data class GameDetailsVenue (
   @SerializedName("address"  ) var address  : GameDetailsAddress?          = GameDetailsAddress(),
   @SerializedName("capacity" ) var capacity : Int?              = null,
   @SerializedName("grass"    ) var grass    : Boolean?          = null,
-  @SerializedName("images"   ) var images   : ArrayList<GameDetailsImages> = arrayListOf()
+  @SerializedName("images"   ) var images   : List<GameDetailsImages> = listOf()
 
 )

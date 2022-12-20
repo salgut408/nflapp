@@ -12,6 +12,7 @@ import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
+import com.sgut.android.nationalfootballleague.GameDetailsVenue
 import com.sgut.android.nationalfootballleague.TeamScoreboard
 import com.sgut.android.nationalfootballleague.Venue3
 import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
@@ -101,4 +102,18 @@ fun VenueCardImageLoader(venue3: Venue3) {
         modifier=Modifier.fillMaxWidth()
 
         )
+}
+@Composable
+fun DetailVenueCardImageLoader(venue: GameDetailsVenue) {
+    SubcomposeAsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(venue.images.getOrNull(1)?.href )
+            .build(),
+        loading = {
+            CircularProgressIndicator()
+        },
+        contentDescription = venue.fullName,
+        modifier=Modifier.fillMaxWidth()
+
+    )
 }

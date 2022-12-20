@@ -3,9 +3,29 @@ package com.sgut.android.nationalfootballleague
 import com.google.gson.annotations.SerializedName
 
 
-data class GameDetailsInjuries (
+data class GameDetailsInjuries(
 
-  @SerializedName("team"     ) var team     : GameDetailsTeam?               = GameDetailsTeam(),
-//  @SerializedName("injuries" ) var injuries : ArrayList<Injuries> = arrayListOf()
+  @SerializedName("team") var team: InjTeam? = InjTeam(),
+  @SerializedName("injuries") var injuries: ArrayList<InjuriesItem> = arrayListOf(),
 
-)
+  )
+
+data class InjTeam(
+  @SerializedName("id") var id: String = "",
+  @SerializedName("uid") var uid: String = "",
+  @SerializedName("displayName") var displayName: String = "",
+  @SerializedName("logo") var logo: String = "",
+
+
+  )
+
+data class InjuriesItem(
+  @SerializedName("status") var status: String = "",
+  @SerializedName("date") var date: String = "",
+  @SerializedName("athlete") var athlete: GameDetailsAthlete = GameDetailsAthlete(),
+  @SerializedName("type") var type: GameDetailsType = GameDetailsType(),
+
+
+
+
+  )

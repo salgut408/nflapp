@@ -10,6 +10,8 @@ data class GameDetailsImages (
   @SerializedName("alt"     ) var alt     : String? = null,
   @SerializedName("caption" ) var caption : String? = null,
   @SerializedName("url"     ) var url     : String? = null,
-  @SerializedName("height"  ) var height  : Int?    = null
+  @SerializedName("height"  ) var height  : Int?    = null,
+  @SerializedName("href"     ) var href     : String? = null,
+
 
 )

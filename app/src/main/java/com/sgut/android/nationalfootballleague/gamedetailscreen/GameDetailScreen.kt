@@ -6,21 +6,25 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.traceEventEnd
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sgut.android.nationalfootballleague.GameDetailsLeaders
+import com.sgut.android.nationalfootballleague.GameDetailsVenue
+import com.sgut.android.nationalfootballleague.Weather
+import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
+import com.sgut.android.nationalfootballleague.commoncomposables.VenueCardImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 
@@ -33,6 +37,19 @@ fun GameDetailsScreen(
     gameDetailViewModel: GameDetailViewModel = hiltViewModel(),
 ) {
 
+}
+
+@Composable
+//mult same name fields only last one will be used
+fun Injuries(
+    gameDetailModel: GameDetailModel,
+) {
+    val injuries = gameDetailModel.injuries
+    for (i in injuries){
+       for(j in i.injuries){
+           Text(text = j.athlete.displayName ?: "" )
+       }
+    }
 }
 
 
@@ -68,8 +85,8 @@ fun DoughnutChart2(
 
     Card(elevation = CardDefaults.elevatedCardElevation(),
         modifier = Modifier
-        .fillMaxHeight()
-        .padding(16.dp)) {
+            .fillMaxHeight()
+            .padding(16.dp)) {
     Column(modifier = Modifier.padding(8.dp)) {
 
 
@@ -192,7 +209,7 @@ fun MatchupPredictorGraph() {
 }
 
 @Composable
-fun SeasonTeaders() {
+fun SeasonLeaders() {
 
 }
 
@@ -207,13 +224,64 @@ fun TeamStatsCard() {
 }
 
 @Composable
-fun GameInformation() {
+fun GameInformation(
+    gameDetailModel: GameDetailModel,
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ){
+            Text(text = "GameInformation", style = MaterialTheme.typography.headlineSmall )
 
+        }
+        Divider()
+
+        DetailVenueCardImageLoader(venue = gameDetailModel.gameInfo?.venue !!)
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ){
+            Text(text = gameDetailModel.gameInfo?.weather?.link?.text ?: "")
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+           AddressComp(gameDetailModel = gameDetailModel)
+            Text(text = gameDetailModel.gameInfo?.weather?.temperature.toString(), fontWeight = FontWeight.Bold)
+        }
+        Divider()
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ){
+            Text(text = "CAPACITY: ", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+            Text(text = gameDetailModel.gameInfo?.venue?.capacity.toString(), fontSize = 12.sp, )
+        }
+    }
 }
 
 @Composable
-fun WeatherInfo() {
+fun AddressComp(gameDetailModel: GameDetailModel) {
+    Row() {
+        Text(text = gameDetailModel.gameInfo?.venue?.address?.city ?: "")
+        Text(text = ", ")
+        Text(text = gameDetailModel.gameInfo?.venue?.address?.state ?: "")
 
+
+    }
 }
 
 

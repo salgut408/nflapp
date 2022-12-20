@@ -21,16 +21,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.sgut.android.nationalfootballleague.CompetitionsScoreboard
-import com.sgut.android.nationalfootballleague.CompetitorsScoreboard
-import com.sgut.android.nationalfootballleague.EventsScoreboard
-import com.sgut.android.nationalfootballleague.TeamScoreboard
+import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoScoreboardImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
-import com.sgut.android.nationalfootballleague.gamedetailscreen.DoughnutChart
-import com.sgut.android.nationalfootballleague.gamedetailscreen.DoughnutChart2
-import com.sgut.android.nationalfootballleague.gamedetailscreen.GameDetailViewModel
-import com.sgut.android.nationalfootballleague.gamedetailscreen.MatchupPredictorGraph
+import com.sgut.android.nationalfootballleague.gamedetailscreen.*
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.basicButton
@@ -79,6 +73,9 @@ fun ScoreboardScreen(
 
 
         DoughnutChart2(
+            gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
+        )
+        GameInformation(
             gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
         )
 
