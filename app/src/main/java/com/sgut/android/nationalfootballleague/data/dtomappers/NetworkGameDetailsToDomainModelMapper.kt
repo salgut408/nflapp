@@ -19,7 +19,7 @@ class NetworkGameDetailsToDomainModelMapper: DomainMapper<GameDetailResponse, Ga
             pickcenter = model.pickcenter,
             predictor = model.predictor,
             standings = model.standings,
-            ticketsInfo = model.ticketsInfo
+            ticketsInfo = model.ticketsInfo,
         )
     }
 }

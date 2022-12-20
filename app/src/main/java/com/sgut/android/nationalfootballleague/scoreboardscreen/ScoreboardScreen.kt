@@ -51,8 +51,11 @@ fun ScoreboardScreen(
     val packersVsRams = 401437916
     val bruinsVsPanthers = 401459092
     val sfVsSeattle = 401437901
+    val rocketsVsSpurs = 401468608
+    val washingtonVsNy = 401437906
 
-    gameDetailViewModel.loadGameDetails(sport, league, sfVsSeattle.toString())
+
+    gameDetailViewModel.loadGameDetails(sport, league, packersVsRams.toString())
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
 
