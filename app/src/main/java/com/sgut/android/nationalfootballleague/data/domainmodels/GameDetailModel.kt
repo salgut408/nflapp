@@ -2,6 +2,8 @@ package com.sgut.android.nationalfootballleague.data.domainmodels
 
 import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Drives
+import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Videos
 
 data class GameDetailModel(
 
@@ -21,5 +23,9 @@ data class GameDetailModel(
     var article: GameDetailsArticle? = GameDetailsArticle(),
     var ticketsInfo: GameDetailsTicketsInfo? = GameDetailsTicketsInfo(),
     var standings: GameDetailsStandings? = GameDetailsStandings(),
+    var drives: Drives? = Drives(),
+    var winprobability: List<Winprobability> = listOf(),
+    var scoringPlays: List<ScoringPlays> = listOf(),
+    var videos: List<Videos> = listOf(),
 
     )

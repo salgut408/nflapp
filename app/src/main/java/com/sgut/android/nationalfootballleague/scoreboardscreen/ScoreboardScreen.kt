@@ -53,9 +53,10 @@ fun ScoreboardScreen(
     val sfVsSeattle = 401437901
     val rocketsVsSpurs = 401468608
     val washingtonVsNy = 401437906
+    val nxtWeekJaxVsNYJets = 401437917
+    val seattleVsKC = 401437922
 
-
-    gameDetailViewModel.loadGameDetails(sport, league, packersVsRams.toString())
+    gameDetailViewModel.loadGameDetails(sport, league, seattleVsKC.toString())
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
 
@@ -124,11 +125,15 @@ fun ScoreboardScreen(
         Row() { ArticleRow(articleList = articles) }
 
         when (scoreboardUiState.currentSport) {
-            "football" -> OutlinedButton(onClick = {
+            "football" ->
+
+
+                OutlinedButton(onClick = {
                 scoreboardViewModel.onYesterdayClick(sport, league, week) },
                 modifier = Modifier.basicButton()) {
                 Text(text = "Last Week")
             }
+
         }
         TeamsMatchUpListFromEvents(events, modifier)
     }

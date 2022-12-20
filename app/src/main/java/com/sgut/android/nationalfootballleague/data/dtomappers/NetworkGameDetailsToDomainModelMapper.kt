@@ -20,6 +20,11 @@ class NetworkGameDetailsToDomainModelMapper: DomainMapper<GameDetailResponse, Ga
             predictor = model.predictor,
             standings = model.standings,
             ticketsInfo = model.ticketsInfo,
+            drives = model.drives,
+            winprobability = model.winprobability,
+            scoringPlays = model.scoringPlays,
+            videos = model.videos
+
         )
     }
 }
