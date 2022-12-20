@@ -1,15 +1,12 @@
 package com.sgut.android.nationalfootballleague.gamedetailscreen
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.traceEventEnd
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,8 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
-import com.sgut.android.nationalfootballleague.commoncomposables.HeadshotImageLoader
-import com.sgut.android.nationalfootballleague.commoncomposables.VenueCardImageLoader
+import com.sgut.android.nationalfootballleague.commoncomposables.GameDetailLogoImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 
@@ -40,30 +36,56 @@ fun GameDetailsScreen(
 }
 
 @Composable
-//mult same name fields only last one will be used
-fun Injuries(
+//multiple same name fields only last one will be used
+fun InjuriesReportCard(
     gameDetailModel: GameDetailModel,
 ) {
-    val team1 = gameDetailModel.injuries.getOrNull(0)?.team?.displayName
-    val team2 = gameDetailModel.injuries.getOrNull(1)?.team?.displayName
+    val team1Display = gameDetailModel.injuries.getOrNull(0)?.team?.displayName
+    val team2Display = gameDetailModel.injuries.getOrNull(1)?.team?.displayName
     val injuries1 = gameDetailModel.injuries.getOrNull(0)
     val injuries2 = gameDetailModel.injuries.getOrNull(1)
 
+    val team1Logo = gameDetailModel.injuries.getOrNull(0)?.team
+    val team2Logo = gameDetailModel.injuries.getOrNull(1)?.team
 
- Card(
+
+
+    Card(
      modifier = Modifier.fillMaxWidth()
  ){
      Text(text = "Injury Report", style = MaterialTheme.typography.headlineSmall)
      Divider()
-     Text(text = team1 ?: "", fontWeight = FontWeight.Bold)
-     if (injuries1 != null) {
+     Row(
+         horizontalArrangement = Arrangement.Start,
+     verticalAlignment = Alignment.CenterVertically
+     ){
+         Text(text = team1Display ?: "", fontWeight = FontWeight.Bold)
+
+         if (team1Logo != null) {
+             GameDetailLogoImageLoader(team = team1Logo, modifier = Modifier.size(50.dp))
+         }
+     }
+
+        if (injuries1 != null) {
          InjuryColumn(injuries = injuries1)
      }
-     Text(text = team2 ?: "", fontWeight = FontWeight.Bold)
 
-     if (injuries2 != null) {
-         InjuryColumn(injuries = injuries2)
-     }
+
+
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Text(text = team2Display ?: "", fontWeight = FontWeight.Bold)
+
+            if (team2Logo != null) {
+                GameDetailLogoImageLoader(team = team2Logo, modifier = Modifier.size(50.dp))
+            }
+        }
+
+        if (injuries2 != null) {
+            InjuryColumn(injuries = injuries2)
+        }
 
 }
 }
@@ -71,14 +93,17 @@ fun Injuries(
 @Composable
 fun InjuryColumn(injuries: GameDetailsInjuries) {
     Column() {
+        Row(){
+        }
         for(i in injuries.injuries){
             Row(
-                modifier = Modifier.fillMaxWidth().padding(start =8.dp, end = 8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 8.dp, end = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
                AthleteNameAndPosition(athlete = i.athlete)
                 Text(text = i.status)
-//                HeadshotImageLoader(athlete = i.athlete, modifier = Modifier)
             }
         }
     }
@@ -139,6 +164,10 @@ fun DoughnutChart2(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Text("Win Prediction", fontWeight = FontWeight.Bold)
+            }
+            Divider()
 
             Canvas(
                 modifier = Modifier
