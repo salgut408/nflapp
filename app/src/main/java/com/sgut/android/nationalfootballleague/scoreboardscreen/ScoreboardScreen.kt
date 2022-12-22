@@ -81,6 +81,10 @@ fun ScoreboardScreen(
             )
         }
 
+        GameArticle(gameDetailModel = gameDetailUiState.currentGameDetails
+            ?: GameDetailModel())
+
+
         InjuriesReportCard(gameDetailModel = gameDetailUiState.currentGameDetails
             ?: GameDetailModel())
 

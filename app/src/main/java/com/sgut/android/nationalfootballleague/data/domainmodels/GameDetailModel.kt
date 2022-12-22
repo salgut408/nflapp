@@ -20,7 +20,7 @@ data class GameDetailModel(
     var odds: List<Odds> = listOf(),
     var header: Header? = Header(),
     var news: News? = News(),
-    var article: GameDetailsArticle? = GameDetailsArticle(),
+    var singleArticle: GameDetailsArticle? = GameDetailsArticle(),
     var ticketsInfo: GameDetailsTicketsInfo? = GameDetailsTicketsInfo(),
     var standings: GameDetailsStandings? = GameDetailsStandings(),
     var drives: Drives? = Drives(),

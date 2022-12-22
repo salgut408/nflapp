@@ -32,6 +32,7 @@ import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.GameDetailLogoImageLoader
+import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoDetailImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 
@@ -60,19 +61,56 @@ fun HeaderTeamItem(team : GameDetailsTeam) {
 
 @Composable
 fun HeaderTeamSlot(team: GameDetailsTeam) {
-    Row() {
-        Text(text = team.abbreviation ?: "")
-        Text(text = team.records.toString())
+    Column() {
+
+
+        Row() {
+            Text(text = team.abbreviation ?: "")
+            Text(text = team.records.toString())
+        }
+        Text(text = "IMAGE", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+    }
+}
+
+@Composable
+fun GameArticle(gameDetailModel: GameDetailModel) {
+    Card(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+       Column(modifier = Modifier.fillMaxWidth()) {
+
+           Text(text = gameDetailModel.singleArticle?.headline ?: "")
+
+           Text(text = gameDetailModel.singleArticle?.description ?: "")
+
+           Row() {
+               Text(text = gameDetailModel.singleArticle?.published ?: "")
+               Text(text = " - ")
+
+               Text(text = gameDetailModel.singleArticle?.source ?: "")
+           }
+
+
+
+       }
     }
 }
 
 @Composable
 fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
     Card() {
-        Box(modifier = Modifier.fillMaxWidth()){
-            Text(text = gameDetailModel.header?.competitions?.getOrNull(0)?.competitors?.getOrNull(0)?.team?.name ?: "")
-            Text(text = gameDetailModel.header?.competitions?.getOrNull(0)?.competitors?.getOrNull(0)?.team?.records.toString() ?: "")
+        Box(modifier = Modifier.fillMaxWidth()) {
+            Column() {
 
+
+                Text(text = gameDetailModel.header?.competitions?.getOrNull(0)?.competitors?.getOrNull(
+                    0)?.team?.name ?: "",
+                    )
+                Text(text = gameDetailModel.header?.competitions?.getOrNull(0)?.competitors?.getOrNull(
+                    0)?.team?.records.toString() ?: "",
+                   )
+                val competitors = gameDetailModel.header?.competitions?.getOrNull(0)?.competitors
+            }
         }
     }
 }
