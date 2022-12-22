@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
@@ -46,9 +47,37 @@ fun GameDetailsScreen(
 }
 
 @Composable
-fun GameDetailsHeader(gameDetailModel: GameDetailModel) {
+fun LongGameTimeDetail(gameDetailModel: GameDetailModel) {
+    Text(text = gameDetailModel.header?.competitions?.getOrNull(0)?.status?.type?.gameTimeDetail ?: "", fontSize = 11.sp)
 
 }
+
+
+@Composable
+fun HeaderTeamItem(team : GameDetailsTeam) {
+
+}
+
+@Composable
+fun HeaderTeamSlot(team: GameDetailsTeam) {
+    Row() {
+        Text(text = team.abbreviation ?: "")
+        Text(text = team.records.toString())
+    }
+}
+
+@Composable
+fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
+    Card() {
+        Box(modifier = Modifier.fillMaxWidth()){
+            Text(text = gameDetailModel.header?.competitions?.getOrNull(0)?.competitors?.getOrNull(0)?.team?.name ?: "")
+            Text(text = gameDetailModel.header?.competitions?.getOrNull(0)?.competitors?.getOrNull(0)?.team?.records.toString() ?: "")
+
+        }
+    }
+}
+
+
 
 
 @Composable
@@ -537,6 +566,7 @@ fun GameInformation(
             Text(text = gameDetailModel.broadcasts.getOrNull(0)?.station ?: "", fontSize = 12.sp)
 
         }
+        LongGameTimeDetail(gameDetailModel = gameDetailModel)
 
         Row(
             modifier = Modifier

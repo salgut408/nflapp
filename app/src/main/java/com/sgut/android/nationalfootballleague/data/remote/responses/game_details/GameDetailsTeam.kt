@@ -16,6 +16,9 @@ data class GameDetailsTeam (
   @SerializedName("alternateColor" ) var alternateColor : String?          = null,
   @SerializedName("logos"          ) var logos          : List<GameDetailsLogos> = listOf(),
   @SerializedName("logo"          ) var logo          : String = "",
-  @SerializedName("links"          ) var links          : List<GameDetailsLinks> = listOf()
+  @SerializedName("links"          ) var links          : List<GameDetailsLinks> = listOf(),
+  @SerializedName("record"          ) var records          : List<GameDetailsRecord> = listOf(),
 
-)
+
+
+  )

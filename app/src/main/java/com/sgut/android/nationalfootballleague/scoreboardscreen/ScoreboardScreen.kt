@@ -84,6 +84,9 @@ fun ScoreboardScreen(
         InjuriesReportCard(gameDetailModel = gameDetailUiState.currentGameDetails
             ?: GameDetailModel())
 
+        HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
+            ?: GameDetailModel())
+
         GameInformation(
             gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
         )
