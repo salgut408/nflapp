@@ -17,7 +17,7 @@ data class GameDetailsCompetitions (
   @SerializedName("recent"                ) var recent                : Boolean?               = null,
   @SerializedName("boxscoreSource"        ) var boxscoreSource        : String?                = null,
   @SerializedName("playByPlaySource"      ) var playByPlaySource      : String?                = null,
-  @SerializedName("competitors"           ) var competitors           : ArrayList<GameDetailsCompetitors> = arrayListOf(),
+  @SerializedName("competitors"           ) var competitors           : List<GameDetailsCompetitors> = listOf(),
   @SerializedName("status"                ) var status                : GameDetailsStatus?                = GameDetailsStatus(),
   @SerializedName("broadcasts"            ) var broadcasts            : ArrayList<GameDetailsBroadcasts>  = arrayListOf()
 

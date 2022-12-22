@@ -20,7 +20,7 @@ data class GameDetailResponse (
   @SerializedName("odds"             ) var odds             : List<Odds>             = listOf(),
   @SerializedName("header"           ) var header           : Header?                     = Header(),
   @SerializedName("news"             ) var news             : News?                       = News(),
-  @SerializedName("article"          ) var article          : GameDetailsArticle?                    = GameDetailsArticle(),
+  @SerializedName("article"          ) var singleGameArticle          : GameDetailsArticle?                    = GameDetailsArticle(),
   @SerializedName("ticketsInfo"      ) var ticketsInfo      : GameDetailsTicketsInfo?                = GameDetailsTicketsInfo(),
   @SerializedName("standings"        ) var standings        : GameDetailsStandings?                  = GameDetailsStandings(),
   @SerializedName("drives"           ) var drives           : Drives?                     = Drives(),

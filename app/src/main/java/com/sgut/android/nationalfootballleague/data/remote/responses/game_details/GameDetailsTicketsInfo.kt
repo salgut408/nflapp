@@ -3,9 +3,9 @@ package com.sgut.android.nationalfootballleague
 import com.google.gson.annotations.SerializedName
 
 
-data class GameDetailsTicketsInfo (
+data class GameDetailsTicketsInfo(
 
-  @SerializedName("tickets"       ) var tickets       : ArrayList<GameDetailsTickets> = arrayListOf(),
-  @SerializedName("seatSituation" ) var seatSituation : SeatSituation?     = SeatSituation()
+  @SerializedName("tickets") var tickets: List<GameDetailsTickets> = listOf(),
+  @SerializedName("seatSituation") var seatSituation: SeatSituation? = SeatSituation(),
 
-)
+  )

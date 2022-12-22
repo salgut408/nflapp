@@ -6,6 +6,6 @@ import com.google.gson.annotations.SerializedName
 data class GameDetailsStandings (
 
   @SerializedName("fullViewLink" ) var fullViewLink : FullViewLink?     = FullViewLink(),
-  @SerializedName("groups"       ) var groups       : ArrayList<GameDetailsGroups> = arrayListOf()
+  @SerializedName("groups"       ) var groups       : List<GameDetailsGroups> = listOf()
 
 )

@@ -3,8 +3,9 @@ package com.sgut.android.nationalfootballleague
 import com.google.gson.annotations.SerializedName
 
 
-data class GameDetailsStatus (
+data class GameDetailsStatus(
 
-  @SerializedName("type" ) var type : GameDetailsType? = GameDetailsType()
+  @SerializedName("type") var type: GameDetailsType? = GameDetailsType(),
 
-)
+
+  )

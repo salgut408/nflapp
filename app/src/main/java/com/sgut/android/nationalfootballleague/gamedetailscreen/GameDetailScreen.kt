@@ -45,9 +45,10 @@ fun GameDetailsScreen(
 
 }
 
+@Composable
+fun GameDetailsHeader(gameDetailModel: GameDetailModel) {
 
-
-
+}
 
 
 @Composable
@@ -185,70 +186,100 @@ fun DoughnutChart2(
 
             Box(
                 modifier = Modifier
-                    .background(Color.Yellow)
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ){
+                    .fillMaxSize()
+            ) {
+                Text(
+                    text = "$gameProjection%" ,
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(10.dp)
+                )
+
+                Text(
+                    text = "$teamChanceLoss%" ,
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(10.dp)
+                )
+
                 Box(
-                    modifier = Modifier.height(IntrinsicSize.Max)
+                    modifier = Modifier
+                        .height(IntrinsicSize.Max)
+                        .align(Alignment.Center)
                 ) {
                     Row(
                         modifier = Modifier,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
-                         Text(
-                                text = teams[0].team?.abbreviation ?: "",
-                                fontSize = 16.sp,
-                                color = Color.Black,
-                                fontWeight = FontWeight.Bold
-                            )
+                        Text(
+                            text = teams[0].team?.abbreviation ?: "",
+                            fontSize = 16.sp,
+                            color = Color.Gray,
+                            fontWeight = FontWeight.Bold,
+                        )
                         Spacer(modifier = Modifier.width(8.dp))
-                            Divider(
-                                color = Color.LightGray,
-                                modifier = Modifier
-                                    .height(100.dp)
-                                    .width(1.dp)
-                            )
+                        Divider(
+                            color = Color.LightGray,
+                            modifier = Modifier
+                                .height(100.dp)
+                                .width(1.dp)
+                        )
                         Spacer(modifier = Modifier.width(8.dp))
 
                         Text(
                             text = teams[1].team?.abbreviation ?: "",
                             fontSize = 16.sp,
-                            color = Color.Black,
+                            color = Color.Gray,
                             fontWeight = FontWeight.Bold
                         )
 
 
                     }
+
+
+
                 }
+
+
 
 
 
 
                 Canvas(
-                modifier = Modifier
-                    .size(size = size)
-                    .padding(16.dp),
-            ) {
+                    modifier = Modifier
+                        .size(size = size)
+                        .padding(16.dp)
+                        .align(Alignment.Center),
+                ) {
 
-                var startAngle = -90f
-                for (i in values.indices) {
+                    var startAngle = -90f
+                    for (i in values.indices) {
 
-                    drawArc(
-                        color = colors.getOrElse(i) { color -> Color.White },
-                        startAngle = startAngle,
-                        sweepAngle = sweepAngles[i],
-                        useCenter = false,
-                        style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt)
-                    )
-                    startAngle += sweepAngles[i]
+                        drawArc(
+                            color = colors.getOrElse(i) { color -> Color.White },
+                            startAngle = startAngle,
+                            sweepAngle = sweepAngles[i],
+                            useCenter = false,
+                            style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt)
+                        )
+                        startAngle += sweepAngles[i]
+                    }
                 }
-            }
-        } // box
+            } //end of box
+
             Spacer(modifier = Modifier.height(8.dp))
+
             Column() {
-                Text(text = "Win Prediction", textAlign = TextAlign.Center)
+
+                Text(
+                    text = "Tie: $teamChanceTie%",
+                    color = Color.Gray,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Center,
+                )
                 for (i in values.indices) {
                     DisplayLegend(
                         color = colors.getOrElse(i, { color -> Color.White }),
@@ -258,7 +289,6 @@ fun DoughnutChart2(
         }
     }
 }
-
 
 
 @Composable
@@ -390,7 +420,6 @@ fun DoughnutChart(
         }
     }
 }
-
 
 
 @Composable
@@ -555,6 +584,7 @@ fun AddressComp(gameDetailModel: GameDetailModel) {
 fun TeamVsComponent() {
 
 }
+
 
 
 fun getTeamsColorsList(gameDetailModel: GameDetailModel): List<Color?> {
