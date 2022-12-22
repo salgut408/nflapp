@@ -70,25 +70,30 @@ fun ScoreboardScreen(
     ) {
 
 
-        when(gameDetailUiState.currentSport){
-            "basketball" -> DoughnutChartForBasketball(gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),)
-            "football" -> DoughnutChart2(gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),)
+        when (gameDetailUiState.currentSport) {
+            "basketball" -> DoughnutChartForBasketball(
+                gameDetailModel = gameDetailUiState.currentGameDetails
+                    ?: GameDetailModel(),
+            )
+            "football" -> DoughnutChart2(
+                gameDetailModel = gameDetailUiState.currentGameDetails
+                    ?: GameDetailModel(),
+            )
         }
 
-//        DoughnutChart2(
-//            gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
-//        )
-        
-        
-        InjuriesReportCard(gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel())
+        InjuriesReportCard(gameDetailModel = gameDetailUiState.currentGameDetails
+            ?: GameDetailModel())
 
         GameInformation(
             gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
         )
 
-
-        Text(text = gameDetailUiState.currentGameDetails?.gameInfo?.venue?.fullName ?: "Game api resp", )
-        Text(text = gameDetailUiState.currentGameDetails?.gameInfo?.weather?.temperature.toString() ?: "49ERS Game")
+        Text(
+            text = gameDetailUiState.currentGameDetails?.gameInfo?.venue?.fullName
+                ?: "Game api resp",
+        )
+        Text(text = gameDetailUiState.currentGameDetails?.gameInfo?.weather?.temperature.toString()
+            ?: "49ERS Game")
 
 
 //        Text(text = gameDetailUiState.teams[0].team?.name ?: "49ERS Game api resp", )
@@ -133,10 +138,11 @@ fun ScoreboardScreen(
 
 
                 OutlinedButton(onClick = {
-                scoreboardViewModel.onYesterdayClick(sport, league, week) },
-                modifier = Modifier.basicButton()) {
-                Text(text = "Last Week")
-            }
+                    scoreboardViewModel.onYesterdayClick(sport, league, week)
+                },
+                    modifier = Modifier.basicButton()) {
+                    Text(text = "Last Week")
+                }
 
         }
         TeamsMatchUpListFromEvents(events, modifier)
@@ -159,7 +165,7 @@ fun TeamsMatchUpListFromEvents(events: List<EventsScoreboard>, modifier: Modifie
 @Composable
 fun EventsHeadLines(events: List<EventsScoreboard>) {
     for (i in events) {
-        for (j in i.competitions[0].headlines){
+        for (j in i.competitions[0].headlines) {
             Text(text = j.description.toString())
         }
     }
@@ -326,6 +332,8 @@ fun TeamComponent2(compScoreboard: CompetitionsScoreboard, modifier: Modifier) {
 
 
                 }
+
+//                Game id for info or date
 //            Text(text = compScoreboard.status?.type?.shortDetail ?: "",
 //                style = TextStyle(fontSize = 12.sp),
 //                color = Color.White,

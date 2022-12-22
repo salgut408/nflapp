@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Video (
 
-  @SerializedName("source"              ) var source              : String?               = null,
+  @SerializedName("source"              ) var source              : String               = "",
   @SerializedName("id"                  ) var id                  : Int?                  = null,
   @SerializedName("guid"                ) var guid                : String?               = null,
   @SerializedName("headline"            ) var headline            : String?               = null,

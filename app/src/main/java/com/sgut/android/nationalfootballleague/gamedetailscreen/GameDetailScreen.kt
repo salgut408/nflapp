@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.gamedetailscreen
 
+import android.media.browse.MediaBrowser
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -7,17 +8,26 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.GameDetailLogoImageLoader
@@ -35,6 +45,11 @@ fun GameDetailsScreen(
 
 }
 
+
+
+
+
+
 @Composable
 //multiple same name fields only last one will be used
 fun InjuriesReportCard(
@@ -51,35 +66,36 @@ fun InjuriesReportCard(
 
 
     Card(
-     modifier = Modifier.fillMaxWidth()
- ){
-     Text(text = "Injury Report", style = MaterialTheme.typography.headlineSmall)
-     Divider()
-     Row(
-         horizontalArrangement = Arrangement.Start,
-     verticalAlignment = Alignment.CenterVertically
-     ){
-         Text(text = team1Display ?: "", fontWeight = FontWeight.Bold)
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(text = "Injury Report", style = MaterialTheme.typography.headlineSmall)
+        Divider()
 
-         if (team1Logo != null) {
-             GameDetailLogoImageLoader(team = team1Logo, modifier = Modifier.size(50.dp))
-         }
-     }
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = team1Display ?: "", fontWeight = FontWeight.Bold)
+
+            if (team1Logo != null) {
+                GameDetailLogoImageLoader(team = team1Logo, modifier = Modifier.size(25.dp))
+            }
+        }
 
         if (injuries1 != null) {
-         InjuryColumn(injuries = injuries1)
-     }
+            InjuryColumn(injuries = injuries1)
+        }
 
 
 
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Text(text = team2Display ?: "", fontWeight = FontWeight.Bold)
 
             if (team2Logo != null) {
-                GameDetailLogoImageLoader(team = team2Logo, modifier = Modifier.size(50.dp))
+                GameDetailLogoImageLoader(team = team2Logo, modifier = Modifier.size(20.dp))
             }
         }
 
@@ -87,23 +103,23 @@ fun InjuriesReportCard(
             InjuryColumn(injuries = injuries2)
         }
 
-}
+    }
 }
 
 @Composable
 fun InjuryColumn(injuries: GameDetailsInjuries) {
     Column() {
-        Row(){
+        Row() {
         }
-        for(i in injuries.injuries){
+        for (i in injuries.injuries) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 8.dp, end = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
-            ){
-               AthleteNameAndPosition(athlete = i.athlete)
-                Text(text = i.status)
+            ) {
+                AthleteNameAndPosition(athlete = i.athlete)
+                Text(text = i.status, textAlign = TextAlign.Right)
             }
         }
     }
@@ -113,7 +129,7 @@ fun InjuryColumn(injuries: GameDetailsInjuries) {
 @Composable
 fun AthleteNameAndPosition(athlete: GameDetailsAthlete) {
     Row() {
-        Text(text = athlete.displayName?: "")
+        Text(text = athlete.displayName ?: "")
         Text(text = " ")
         Text(text = athlete.position?.abbreviation ?: "", color = Color.Blue)
 
@@ -132,7 +148,7 @@ fun DoughnutChart2(
     val teams = gameDetailModel.boxscore?.teams
 
     for (i in teams!!) {
-        colors.add(HexToJetpackColor2.getColor(i.team?.color ?: "EmptyString"))
+        colors.add(HexToJetpackColor2.getColor(i.team?.color ?: "EmptyColorString"))
         legends.add(i.team?.name ?: "")
     }
     colors.reverse()
@@ -157,23 +173,65 @@ fun DoughnutChart2(
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
-            .padding(16.dp)) {
+            .padding(8.dp)) {
         Column(
-
             modifier = Modifier.padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Row(modifier = Modifier.fillMaxWidth()) {
-                Text("Win Prediction", fontWeight = FontWeight.Bold)
+                Text("Matchup Predictor", fontWeight = FontWeight.Bold)
             }
             Divider()
 
-            Canvas(
+            Box(
+                modifier = Modifier
+                    .background(Color.Yellow)
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ){
+                Box(
+                    modifier = Modifier.height(IntrinsicSize.Max)
+                ) {
+                    Row(
+                        modifier = Modifier,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                         Text(
+                                text = teams[0].team?.abbreviation ?: "",
+                                fontSize = 16.sp,
+                                color = Color.Black,
+                                fontWeight = FontWeight.Bold
+                            )
+                        Spacer(modifier = Modifier.width(8.dp))
+                            Divider(
+                                color = Color.LightGray,
+                                modifier = Modifier
+                                    .height(100.dp)
+                                    .width(1.dp)
+                            )
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        Text(
+                            text = teams[1].team?.abbreviation ?: "",
+                            fontSize = 16.sp,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold
+                        )
+
+
+                    }
+                }
+
+
+
+
+                Canvas(
                 modifier = Modifier
                     .size(size = size)
                     .padding(16.dp),
             ) {
+
                 var startAngle = -90f
                 for (i in values.indices) {
 
@@ -186,9 +244,9 @@ fun DoughnutChart2(
                     )
                     startAngle += sweepAngles[i]
                 }
-
             }
-            Spacer(modifier = Modifier.height(32.dp))
+        } // box
+            Spacer(modifier = Modifier.height(8.dp))
             Column() {
                 Text(text = "Win Prediction", textAlign = TextAlign.Center)
                 for (i in values.indices) {
@@ -201,6 +259,25 @@ fun DoughnutChart2(
     }
 }
 
+
+
+@Composable
+fun DisplayLegend(color: Color, legend: String) {
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(10.dp)
+                .background(color = color, shape = CircleShape)
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        Text(text = legend, color = Color.Blue, fontSize = 16.sp)
+
+    }
+
+}
 
 @Composable
 fun DoughnutChartForBasketball(
@@ -314,8 +391,10 @@ fun DoughnutChart(
     }
 }
 
+
+
 @Composable
-fun DisplayLegend(color: Color, legend: String) {
+fun DisplayLegend2(color: Color, legend: String, value: Int) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
@@ -327,6 +406,9 @@ fun DisplayLegend(color: Color, legend: String) {
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(text = legend, color = Color.Blue, fontSize = 16.sp)
+        Spacer(modifier = Modifier.width(4.dp))
+
+        Text(text = value.toString(), color = Color.Blue, fontSize = 16.sp)
 
     }
 
@@ -373,6 +455,32 @@ fun TeamStatsCard() {
 
 }
 
+
+@Composable
+fun VideoView(videoUri: String) {
+    val context = LocalContext.current
+
+    val exoPlayer = ExoPlayer.Builder(LocalContext.current)
+        .build()
+        .also { exoPlayer ->
+            val mediaItem = MediaItem.Builder()
+                .setUri(videoUri)
+                .build()
+            exoPlayer.setMediaItem(mediaItem)
+            exoPlayer.prepare()
+        }
+
+    DisposableEffect(
+        AndroidView(factory = {
+            StyledPlayerView(context).apply {
+                player = exoPlayer
+            }
+        })
+    ) {
+        onDispose { exoPlayer.release() }
+    }
+}
+
 @Composable
 fun GameInformation(
     gameDetailModel: GameDetailModel,
@@ -387,12 +495,19 @@ fun GameInformation(
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
+
             Text(text = "GameInformation", style = MaterialTheme.typography.headlineSmall)
 
         }
         Divider()
 
-        DetailVenueCardImageLoader(venue = gameDetailModel.gameInfo?.venue!!)
+        GameInfoCardVenueImage(gameDetailModel = gameDetailModel, modifier = Modifier)
+
+        Row() {
+            Text(text = "Coverage: ", fontSize = 12.sp)
+            Text(text = gameDetailModel.broadcasts.getOrNull(0)?.station ?: "", fontSize = 12.sp)
+
+        }
 
         Row(
             modifier = Modifier
@@ -452,6 +567,39 @@ fun getTeamsColorsList(gameDetailModel: GameDetailModel): List<Color?> {
     return list
 }
 
+
+@Composable
+fun GameInfoCardVenueImage(
+    gameDetailModel: GameDetailModel, modifier: Modifier,
+) {
+    Box(modifier = Modifier.height(200.dp)) {
+        DetailVenueCardImageLoader(venue = gameDetailModel.gameInfo?.venue ?: GameDetailsVenue())
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
+            contentAlignment = Alignment.TopEnd
+        ) {
+            Row() {
+                val offset = Offset(5.0f, 5.0f)
+                Text(
+                    text = gameDetailModel.gameInfo?.venue?.fullName ?: "",
+                    style = TextStyle(
+                        fontSize = 50.sp,
+                        shadow = Shadow(
+                            color = Color.Black,
+                            offset = offset,
+                            blurRadius = 3f
+                        )
+                    ),
+                    textAlign = TextAlign.Right,
+                    color = Color.White
+                )
+            }
+
+        }
+    }
+}
 
 
 

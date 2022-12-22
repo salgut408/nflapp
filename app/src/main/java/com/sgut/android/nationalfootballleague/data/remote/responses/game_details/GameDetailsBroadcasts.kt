@@ -9,6 +9,9 @@ data class GameDetailsBroadcasts (
   @SerializedName("market" ) var market : GameDetailsMarket? = GameDetailsMarket(),
   @SerializedName("media"  ) var media  : GameDetailsMedia?  = GameDetailsMedia(),
   @SerializedName("lang"   ) var lang   : String? = null,
-  @SerializedName("region" ) var region : String? = null
+  @SerializedName("region" ) var region : String? = null,
+  @SerializedName("station" ) var station : String? = null,
 
-)
+
+
+  )
