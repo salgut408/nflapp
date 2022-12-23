@@ -11,6 +11,10 @@ data class GameDetailsType(
   @SerializedName("description") var description: String = "",
   @SerializedName("detail") var gameTimeDetail: String = "",
   @SerializedName("shortDetail") var shortGameTimeDetail: String = "",
+  @SerializedName("text") var text: String = "",
+  @SerializedName("abbreviation") var abbreviation: String = "",
+
+
 
 
 

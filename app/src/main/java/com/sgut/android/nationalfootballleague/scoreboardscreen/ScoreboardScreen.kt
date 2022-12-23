@@ -42,14 +42,15 @@ fun ScoreboardScreen(
 
     val packersVsRams = 401437916
     val bruinsVsPanthers = 401459092
-    val sfVsSeattle = 401437901
+    val sfVs = 401437926
     val pistonsVJazz = 401468616
     val washingtonVsNy = 401437906
     val jaxVsNYJets = 401437917
     val seattleVsKC = 401437922
     val hockey = 401459101
+    val collegefootball = 401442040
 
-    gameDetailViewModel.loadGameDetails(sport, league, jaxVsNYJets.toString())
+    gameDetailViewModel.loadGameDetails(sport, league, sfVs.toString())
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
 
@@ -80,6 +81,10 @@ fun ScoreboardScreen(
                     ?: GameDetailModel(),
             )
         }
+
+
+        SeasonLeaders(gameDetailModel = gameDetailUiState.currentGameDetails
+            ?: GameDetailModel())
 
         GameArticle(gameDetailModel = gameDetailUiState.currentGameDetails
             ?: GameDetailModel())

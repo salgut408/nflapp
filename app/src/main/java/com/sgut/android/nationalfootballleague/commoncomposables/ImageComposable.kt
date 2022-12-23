@@ -87,6 +87,22 @@ fun ArticleCardImageLoader(articleModel: ArticleModel) {
         )
 }
 
+
+@Composable
+fun GenericImageLoader(obj: String, modifier: Modifier) {
+    SubcomposeAsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(obj)
+            .build(),
+        modifier = modifier,
+        loading = {
+            CircularProgressIndicator()
+        },
+        contentDescription = obj,
+
+        )
+}
+
 @Composable
 fun HeadshotImageLoader(athlete: GameDetailsAthlete, modifier: Modifier) {
     SubcomposeAsyncImage(

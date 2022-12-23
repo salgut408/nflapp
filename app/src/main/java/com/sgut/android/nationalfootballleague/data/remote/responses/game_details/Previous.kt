@@ -87,7 +87,7 @@ data class ScoringPlays (
     @SerializedName("homeScore"   ) var homeScore   : Int?         = null,
     @SerializedName("period"      ) var period      : Period?      = Period(),
     @SerializedName("clock"       ) var clock       : Clock?       = Clock(),
-    @SerializedName("team"        ) var team        : Team?        = Team(),
+    @SerializedName("team"        ) var team        : GameDetailsTeam?        = GameDetailsTeam(),
     @SerializedName("scoringType" ) var scoringType : ScoringType? = ScoringType()
 
 )

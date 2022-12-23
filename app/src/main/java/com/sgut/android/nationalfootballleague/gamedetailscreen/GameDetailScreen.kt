@@ -32,6 +32,7 @@ import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.GameDetailLogoImageLoader
+import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoDetailImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
@@ -49,73 +50,147 @@ fun GameDetailsScreen(
 
 @Composable
 fun LongGameTimeDetail(gameDetailModel: GameDetailModel) {
-    Text(text = gameDetailModel.header?.competitions?.getOrNull(0)?.status?.type?.gameTimeDetail ?: "", fontSize = 11.sp)
-
-}
-
-
-@Composable
-fun HeaderTeamItem(team : GameDetailsTeam) {
+    Text(text = gameDetailModel.header?.competitions?.getOrNull(0)?.status?.type?.gameTimeDetail
+        ?: "", fontSize = 11.sp)
 
 }
 
 @Composable
-fun HeaderTeamSlot(team: GameDetailsTeam) {
+fun ScoringPlay(scoringPlays: ScoringPlays) {
     Column() {
+        Text(text = scoringPlays.team?.name ?: "Nul")
+
+        Text(text = scoringPlays.type?.text ?: "Nul")
+        Text(text = "Period: " + scoringPlays.period?.number.toString() ?: "Nul")
+
+    }
+}
 
 
-        Row() {
-            Text(text = team.abbreviation ?: "")
-            Text(text = team.records.toString())
+@Composable
+fun ScoringPlaysList(gameDetailModel: GameDetailModel) {
+    for (i in gameDetailModel.scoringPlays) {
+        ScoringPlay(scoringPlays = i)
+    }
+}
+
+@Composable
+fun WinProbabilityGraph() {
+
+}
+
+@Composable
+fun HeaderTeamLogo(team: GameDetailsTeam) {
+    GenericImageLoader(
+        obj = team.logos.getOrNull(0)?.href ?: "",
+        modifier = Modifier.size(60.dp))
+}
+
+@Composable
+fun HeaderTeamItem(competitors: GameDetailsCompetitors) {
+    Row() {
+        competitors.team?.name
+        competitors.team?.abbreviation
+
+        HeaderTeamLogo(competitors.team ?: GameDetailsTeam())
+
+    }
+}
+
+@Composable
+fun HeaderTeamSlot(competitors: GameDetailsCompetitors) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = competitors.team?.abbreviation ?: "", fontSize = 12.sp)
+            Text(text = competitors.record.getOrNull(0)?.displayValue ?: "")
         }
-        Text(text = "IMAGE", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+        HeaderTeamItem(competitors)
     }
 }
 
 @Composable
 fun GameArticle(gameDetailModel: GameDetailModel) {
     Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)) {
+
+
+            Text(
+                text = gameDetailModel.singleArticle?.headline ?: "",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Text(
+                text = gameDetailModel.singleArticle?.description ?: "",
+                fontSize = 14.sp
+            )
+
+            Row() {
+                Text(text = gameDetailModel.singleArticle?.published ?: "")
+                Text(text = " - ")
+
+                Text(text = gameDetailModel.singleArticle?.source ?: "")
+            }
+
+
+        }
+    }
+}
+
+@Composable
+fun SeasonLeaders(gameDetailModel: GameDetailModel) {
+    Card(
         modifier = Modifier.fillMaxWidth()
     ) {
-       Column(modifier = Modifier.fillMaxWidth()) {
 
-           Text(text = gameDetailModel.singleArticle?.headline ?: "")
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Season Leaders")
 
-           Text(text = gameDetailModel.singleArticle?.description ?: "")
-
-           Row() {
-               Text(text = gameDetailModel.singleArticle?.published ?: "")
-               Text(text = " - ")
-
-               Text(text = gameDetailModel.singleArticle?.source ?: "")
-           }
+                Text(text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(0)?.displayName
+                    ?: "")
+                Text(text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(1)?.displayName
+                    ?: "")
+                Text(text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(2)?.displayName
+                    ?: "")
 
 
 
-       }
+        }
     }
 }
 
 @Composable
 fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
     Card() {
-        Box(modifier = Modifier.fillMaxWidth()) {
-            Column() {
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)) {
 
+            Row() {
 
-                Text(text = gameDetailModel.header?.competitions?.getOrNull(0)?.competitors?.getOrNull(
-                    0)?.team?.name ?: "",
-                    )
-                Text(text = gameDetailModel.header?.competitions?.getOrNull(0)?.competitors?.getOrNull(
-                    0)?.team?.records.toString() ?: "",
-                   )
-                val competitors = gameDetailModel.header?.competitions?.getOrNull(0)?.competitors
+                for (i in gameDetailModel.header?.competitions!!) {
+                    for (j in i.competitors) {
+                        HeaderTeamSlot(competitors = j)
+                    }
+                }
             }
         }
     }
 }
-
-
 
 
 @Composable
@@ -134,7 +209,9 @@ fun InjuriesReportCard(
 
 
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
     ) {
         Text(text = "Injury Report", style = MaterialTheme.typography.headlineSmall)
         Divider()
@@ -143,11 +220,12 @@ fun InjuriesReportCard(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = team1Display ?: "", fontWeight = FontWeight.Bold)
-
             if (team1Logo != null) {
                 GameDetailLogoImageLoader(team = team1Logo, modifier = Modifier.size(25.dp))
             }
+            Text(text = team1Display ?: "", fontWeight = FontWeight.Bold)
+
+
         }
 
         if (injuries1 != null) {
@@ -160,11 +238,14 @@ fun InjuriesReportCard(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = team2Display ?: "", fontWeight = FontWeight.Bold)
 
             if (team2Logo != null) {
                 GameDetailLogoImageLoader(team = team2Logo, modifier = Modifier.size(20.dp))
             }
+
+            Text(text = team2Display ?: "", fontWeight = FontWeight.Bold)
+
+
         }
 
         if (injuries2 != null) {
@@ -187,7 +268,10 @@ fun InjuryColumn(injuries: GameDetailsInjuries) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 AthleteNameAndPosition(athlete = i.athlete)
+
+
                 Text(text = i.status, textAlign = TextAlign.Right)
+
             }
         }
     }
@@ -200,8 +284,6 @@ fun AthleteNameAndPosition(athlete: GameDetailsAthlete) {
         Text(text = athlete.displayName ?: "")
         Text(text = " ")
         Text(text = athlete.position?.abbreviation ?: "", color = Color.Blue)
-
-
     }
 }
 
@@ -256,7 +338,7 @@ fun DoughnutChart2(
                     .fillMaxSize()
             ) {
                 Text(
-                    text = "$gameProjection%" ,
+                    text = "$gameProjection%",
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
@@ -264,7 +346,7 @@ fun DoughnutChart2(
                 )
 
                 Text(
-                    text = "$teamChanceLoss%" ,
+                    text = "$teamChanceLoss%",
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier
                         .align(Alignment.TopStart)
@@ -305,7 +387,6 @@ fun DoughnutChart2(
 
 
                     }
-
 
 
                 }
@@ -447,49 +528,6 @@ fun DoughnutChartForBasketball(
 
 
 @Composable
-fun DoughnutChart(
-    values: List<Float> = listOf(78.0f, 21.7f, 0.2f),
-    colors: List<Color> = listOf(
-        Color(0xFFFF6384),
-        Color(0xFFFFCE56),
-        Color(0xFF36A2EB)),
-    legend: List<String> = listOf("GreenBay", "Rams", "Tie"),
-    size: Dp = 200.dp,
-    thickness: Dp = 36.dp,
-    deetsViewModel: GameDetailViewModel = hiltViewModel(),
-
-    ) {
-    // sum of all values
-    val sumOfValues = values.sum()
-    //calc each proportion
-    val proportions = values.map { it * 100 / sumOfValues }
-    //convert each proportion to angles
-    val sweepAngles = proportions.map { 360 * it / 100 }
-
-    Canvas(modifier = Modifier.size(size = size)) {
-        var startAngle = -90f
-
-        for (i in values.indices) {
-            drawArc(
-                color = deetsViewModel._colorsTeamList[i],
-                startAngle = startAngle,
-                sweepAngle = sweepAngles[i],
-                useCenter = false,
-                style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt)
-            )
-            startAngle += sweepAngles[i]
-        }
-    }
-    Spacer(modifier = Modifier.height(32.dp))
-    Column() {
-        for (i in values.indices) {
-            DisplayLegend(color = deetsViewModel._colorsTeamList[i], legend = legend[i])
-        }
-    }
-}
-
-
-@Composable
 fun DisplayLegend2(color: Color, legend: String, value: Int) {
     Row(
         horizontalArrangement = Arrangement.Center,
@@ -510,31 +548,6 @@ fun DisplayLegend2(color: Color, legend: String, value: Int) {
 
 }
 
-
-@Composable
-fun MatchupPredictorGraph() {
-    Canvas(
-        modifier = Modifier
-            .size(size = 200.dp)
-            .border(color = Color.Magenta, width = 2.dp)
-    ) {
-        drawArc(
-            color = Color.Blue,
-            startAngle = 0f,
-            sweepAngle = 78.12f,
-            useCenter = true,
-
-            )
-        drawArc(
-            color = Color.Green,
-            startAngle = 0f,
-            sweepAngle = -280f,
-            useCenter = true,
-
-            )
-
-    }
-}
 
 @Composable
 fun SeasonLeaders() {
@@ -601,7 +614,9 @@ fun GameInformation(
 
         Row() {
             Text(text = "Coverage: ", fontSize = 12.sp)
-            Text(text = gameDetailModel.broadcasts.getOrNull(0)?.station ?: "", fontSize = 12.sp)
+            Text(text = gameDetailModel.broadcasts.getOrNull(0)?.station
+                ?: gameDetailModel.header?.competitions?.getOrNull(0)?.broadcasts?.getOrNull(1)?.station.toString()
+                ?: "", fontSize = 12.sp)
 
         }
         LongGameTimeDetail(gameDetailModel = gameDetailModel)
@@ -654,7 +669,6 @@ fun TeamVsComponent() {
 }
 
 
-
 fun getTeamsColorsList(gameDetailModel: GameDetailModel): List<Color?> {
     var list = listOf<Color?>()
     for (i in gameDetailModel.boxscore?.teams!!) {
@@ -672,6 +686,7 @@ fun GameInfoCardVenueImage(
 ) {
     Box(modifier = Modifier.height(200.dp)) {
         DetailVenueCardImageLoader(venue = gameDetailModel.gameInfo?.venue ?: GameDetailsVenue())
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
