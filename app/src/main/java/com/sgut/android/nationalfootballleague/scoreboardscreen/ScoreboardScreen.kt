@@ -43,10 +43,10 @@ fun ScoreboardScreen(
     val dallasVTennessee = 401437932
     val arizonaVAtlanta = 401437933
     val collegeOsuVWisco = 401442005
-    val celticsVLakers = 401468660
+    val magicVLakers = 401468660
 
 
-    gameDetailViewModel.loadGameDetails(sport, league, celticsVLakers.toString())
+    gameDetailViewModel.loadGameDetails(sport, league, arizonaVAtlanta.toString())
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
 
@@ -85,6 +85,7 @@ fun ScoreboardScreen(
         GameArticle(gameDetailModel = gameDetailUiState.currentGameDetails
             ?: GameDetailModel())
 
+        FindTickets(gameDetailUiState.currentGameDetails?.ticketsInfo ?: GameDetailsTicketsInfo())
 
         InjuriesReportCard(gameDetailModel = gameDetailUiState.currentGameDetails
             ?: GameDetailModel())

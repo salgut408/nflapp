@@ -823,6 +823,84 @@ fun getTeamsColorsList(gameDetailModel: GameDetailModel): List<Color?> {
 
 
 @Composable
+fun FindTickets(ticketsInfo: GameDetailsTicketsInfo) {
+    val team1 = ticketsInfo.seatSituation?.opponentTeamName
+    val team2 = ticketsInfo.seatSituation?.currentTeamName
+    val venueName = ticketsInfo.seatSituation?.venueName
+    val shortDate = ticketsInfo.seatSituation?.dateShort
+    val dateDay = ticketsInfo.seatSituation?.dateDay
+    Card(
+        modifier = Modifier
+            .fillMaxWidth(),
+
+    ) {
+       Row(
+           modifier = Modifier
+               .fillMaxWidth()
+               .padding(8.dp)
+       ) {
+           Text(
+               text = "Find Tickets",
+               textAlign = TextAlign.Start,
+               fontWeight = FontWeight.Black,
+               fontSize = 16.sp
+           )
+       }
+        Divider()
+
+            Row(
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(
+                    text = "$team1 vs $team2",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+        Row(
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text(
+                text = "$venueName - $dateDay $shortDate",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color.Gray
+            )
+        }
+
+        Row(
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text(
+                text = ticketsInfo.seatSituation?.summary ?: "",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color.Blue
+            )
+        }
+
+        Divider()
+
+        Row(
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text(
+                text = "Buy $team2 tickets with VividSeats",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color.Blue
+            )
+        }
+
+        Divider()
+
+
+
+
+    }
+}
+
+@Composable
 fun GameInfoCardVenueImage(
     gameDetailModel: GameDetailModel, modifier: Modifier,
 ) {
