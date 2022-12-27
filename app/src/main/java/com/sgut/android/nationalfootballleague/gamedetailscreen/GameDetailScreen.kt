@@ -537,7 +537,7 @@ fun DoughnutChartForBasketball(
     }
 
 
-    colors.reverse()
+//    colors.reverse()
     legends.reverse()
 
     colors.add(Color.Yellow)
@@ -599,7 +599,7 @@ fun DoughnutChartForBasketball(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = teams[0].team?.abbreviation ?: "",
+                            text = teams[1].team?.abbreviation ?: "",
                             fontSize = 16.sp,
                             color = Color.Gray,
                             fontWeight = FontWeight.Bold,
@@ -613,7 +613,7 @@ fun DoughnutChartForBasketball(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = teams[1].team?.abbreviation ?: "",
+                            text = teams[0].team?.abbreviation ?: "",
                             fontSize = 16.sp,
                             color = Color.Gray,
                             fontWeight = FontWeight.Bold
