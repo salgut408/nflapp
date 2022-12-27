@@ -50,7 +50,7 @@ fun ScoreboardScreen(
 
 
 
-    gameDetailViewModel.loadGameDetails(sport, league, nhlGame.toString())
+    gameDetailViewModel.loadGameDetails(sport, league, arizonaVAtlanta.toString())
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
 
@@ -89,9 +89,7 @@ fun ScoreboardScreen(
 
         SeasonLeaders2(seasonLeaders = gameDetailUiState.currentGameDetails?.leaders ?: listOf())
 
-
-        LastFiveGames(lastFiveGames = gameDetailUiState.currentGameDetails?.lastFiveGames ?: listOf())
-
+        TabsLastFiveGames(lastFiveGames = gameDetailUiState.currentGameDetails?.lastFiveGames ?: listOf())
 
         GameArticle(gameDetailModel = gameDetailUiState.currentGameDetails
             ?: GameDetailModel())

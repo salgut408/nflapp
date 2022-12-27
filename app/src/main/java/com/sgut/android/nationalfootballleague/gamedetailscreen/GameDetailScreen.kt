@@ -8,8 +8,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -909,6 +908,34 @@ fun SeasonLeaders2 (seasonLeaders: List<GameDetailsLeaders>) {
     }
 }
 
+
+@Composable
+fun TabsLastFiveGames(lastFiveGames: List<LastFiveGames>) {
+    var tabIndex by remember { mutableStateOf(0) }
+    val tabTitles = listOf(lastFiveGames.getOrNull(0)?.team?.abbreviation.toString(),
+        lastFiveGames.getOrNull(1)?.team?.abbreviation.toString())
+Card() {
+
+
+    Column() {
+        TabRow(selectedTabIndex = tabIndex) {
+            tabTitles.forEachIndexed { index, title ->
+                Tab(selected = tabIndex == index,
+                    onClick = { tabIndex = index },
+                    text = { Text(text = title) })
+
+            }
+        }
+        when (tabIndex) {
+            0 -> LastFiveGames2(lastFiveGames = lastFiveGames, 0)
+            1 -> LastFiveGames2(lastFiveGames = lastFiveGames, 1)
+
+        }
+    }
+}
+}
+
+
 @Composable
 fun LastFiveGameRow(lastEvents: GameDetailsEvents) {
     Row(
@@ -985,6 +1012,29 @@ fun LastFiveGames(lastFiveGames: List<LastFiveGames>) {
 //
 //
 //        }
+
+    }
+}
+
+@Composable
+fun LastFiveGames2(lastFiveGames: List<LastFiveGames>, teamInt: Int) {
+    val team1Info = lastFiveGames.getOrNull(teamInt)
+    val team2Info = lastFiveGames.getOrNull(1)
+    Card(
+
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+
+
+
+        ) {
+        Text(text = "Last Five Games")
+        Text(text = team1Info?.team?.abbreviation ?: "")
+        for (i in team1Info?.lastEvents ?: listOf()){
+            LastFiveGameRow(lastEvents = i)
+        }
+
 
     }
 }
