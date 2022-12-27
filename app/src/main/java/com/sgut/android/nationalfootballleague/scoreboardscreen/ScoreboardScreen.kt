@@ -40,17 +40,13 @@ fun ScoreboardScreen(
 
     scoreboardViewModel.loadGenericScoreboard(sport, league)
 
-    val packersVsRams = 401437916
-    val bruinsVsPanthers = 401459092
-    val sfVs = 401437926
-    val pistonsVJazz = 401468616
-    val washingtonVsNy = 401437906
-    val jaxVsNYJets = 401437917
-    val seattleVsKC = 401437922
-    val hockey = 401459101
-    val collegefootball = 401442040
+    val dallasVTennessee = 401437932
+    val arizonaVAtlanta = 401437933
+    val collegeOsuVWisco = 401442005
+    val celticsVLakers = 401468660
 
-    gameDetailViewModel.loadGameDetails(sport, league, sfVs.toString())
+
+    gameDetailViewModel.loadGameDetails(sport, league, celticsVLakers.toString())
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
 
@@ -147,7 +143,6 @@ fun ScoreboardScreen(
 
         when (scoreboardUiState.currentSport) {
             "football" ->
-
 
                 OutlinedButton(onClick = {
                     scoreboardViewModel.onYesterdayClick(sport, league, week)

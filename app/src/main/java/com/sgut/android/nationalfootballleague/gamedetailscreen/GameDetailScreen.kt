@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,6 +37,7 @@ import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoa
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoDetailImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
+import java.time.LocalDate
 
 
 @Composable
@@ -120,6 +122,8 @@ fun GameArticle(gameDetailModel: GameDetailModel) {
             .fillMaxWidth()
             .padding(8.dp)
     ) {
+
+
         Column(modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)) {
@@ -137,9 +141,10 @@ fun GameArticle(gameDetailModel: GameDetailModel) {
             )
 
             Row() {
+
+
                 Text(text = gameDetailModel.singleArticle?.published ?: "")
                 Text(text = " - ")
-
                 Text(text = gameDetailModel.singleArticle?.source ?: "")
             }
 
@@ -154,23 +159,91 @@ fun SeasonLeaders(gameDetailModel: GameDetailModel) {
         modifier = Modifier.fillMaxWidth()
     ) {
 
+        Text(
+            text = "Season Leaders",
+            fontSize = 14.sp,
+            fontWeight = FontWeight.SemiBold
+        )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Season Leaders")
 
-                Text(text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(0)?.displayName
-                    ?: "")
-                Text(text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(1)?.displayName
-                    ?: "")
-                Text(text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(2)?.displayName
-                    ?: "")
+            Text(
+                text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(0)?.displayName
+                    ?: "",
+            )
 
+
+
+            Text(text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(1)?.displayName
+                ?: "")
+            Text(text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(2)?.displayName
+                ?: "")
 
 
         }
+        Row(horizontalArrangement = Arrangement.SpaceBetween) {
+            Column {
+                for (i in gameDetailModel.leaders.getOrNull(1)?.leaders ?: listOf()) {
+                    for (j in i.leadersAthlete) {
+                        SeasonLeadersPlayer(athlete = j)
+                    }
+                }
+            }
+            Column() {
+                for (i in gameDetailModel.leaders.getOrNull(0)?.leaders ?: listOf()) {
+                    for (j in i.leadersAthlete) {
+                        SeasonLeadersPlayer(athlete = j)
+
+
+                    }
+                }
+            }
+
+        }
+
     }
+}
+
+
+@Composable
+fun SeasonLeadersPlayer(athlete: AthleteLeaders) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+
+
+        Column() {
+
+            Text(
+                text = athlete.athlete?.shortName ?: "",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
+
+                )
+            Text(
+                text = athlete.displayValue ?: "",
+                fontSize = 11.sp,
+                color = Color.Gray,
+            )
+        }
+
+        Column() {
+            GenericImageLoader(
+                obj = athlete.athlete?.headshot?.href ?: "",
+                modifier = Modifier
+                    .size(35.dp)
+                    .clip(CircleShape)
+                    .background(Color.White)
+                    .border(width = 1.dp, color = Color.LightGray)
+            )
+
+        }
+
+    }
+
+
 }
 
 @Composable
@@ -319,7 +392,8 @@ fun DoughnutChart2(
     val sweepAngles = proportions.map { it * 360 / 100 }
 
 
-    Card(elevation = CardDefaults.elevatedCardElevation(),
+    Card(
+        elevation = CardDefaults.elevatedCardElevation(),
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
@@ -328,11 +402,12 @@ fun DoughnutChart2(
             modifier = Modifier.padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Text("Matchup Predictor", fontWeight = FontWeight.Bold)
             }
             Divider()
-
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -344,7 +419,6 @@ fun DoughnutChart2(
                         .align(Alignment.BottomEnd)
                         .padding(10.dp)
                 )
-
                 Text(
                     text = "$teamChanceLoss%",
                     style = MaterialTheme.typography.headlineSmall,
@@ -384,18 +458,8 @@ fun DoughnutChart2(
                             color = Color.Gray,
                             fontWeight = FontWeight.Bold
                         )
-
-
                     }
-
-
                 }
-
-
-
-
-
-
                 Canvas(
                     modifier = Modifier
                         .size(size = size)
@@ -460,7 +524,7 @@ fun DisplayLegend(color: Color, legend: String) {
 @Composable
 fun DoughnutChartForBasketball(
     gameDetailModel: GameDetailModel,
-    size: Dp = 150.dp,
+    size: Dp = 200.dp,
     thickness: Dp = 20.dp,
 ) {
     val colors = mutableListOf<Color>()
@@ -472,6 +536,9 @@ fun DoughnutChartForBasketball(
         legends.add(i.team?.name ?: "")
     }
 
+
+    colors.reverse()
+    legends.reverse()
 
     colors.add(Color.Yellow)
     legends.add("Tie")
@@ -488,32 +555,96 @@ fun DoughnutChartForBasketball(
     val sweepAngles = proportions.map { it * 360 / 100 }
 
 
-    Card(elevation = CardDefaults.elevatedCardElevation(),
+    Card(
+        elevation = CardDefaults.elevatedCardElevation(),
         modifier = Modifier
             .fillMaxHeight()
-            .padding(16.dp)) {
-        Column(modifier = Modifier.padding(8.dp)) {
-
-
-            Canvas(
-                modifier = Modifier
-                    .size(size = size)
-                    .padding(16.dp),
+            .fillMaxWidth()
+            .padding(8.dp)) {
+        Column(
+            modifier = Modifier.padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth()
             ) {
-                var startAngle = -90f
-                for (i in values.indices) {
-                    drawArc(
-                        color = colors.getOrElse(i) { color -> Color.White },
-                        startAngle = startAngle,
-                        sweepAngle = sweepAngles[i],
-                        useCenter = false,
-                        style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt),
-                    )
-                    startAngle += sweepAngles[i]
+                Text("Matchup Predictor", fontWeight = FontWeight.Bold)
+            }
+            Divider()
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                Text(
+                    text = "$gameProjection%",
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(10.dp)
+                )
+                Text(
+                    text = "$teamChanceLoss%",
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(10.dp)
+                )
+                Box(
+                    modifier = Modifier
+                        .height(IntrinsicSize.Max)
+                        .align(Alignment.Center)
+                ) {
+                    Row(
+                        modifier = Modifier,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = teams[0].team?.abbreviation ?: "",
+                            fontSize = 16.sp,
+                            color = Color.Gray,
+                            fontWeight = FontWeight.Bold,
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Divider(
+                            color = Color.LightGray,
+                            modifier = Modifier
+                                .height(100.dp)
+                                .width(1.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = teams[1].team?.abbreviation ?: "",
+                            fontSize = 16.sp,
+                            color = Color.Gray,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 }
 
+                Canvas(
+                    modifier = Modifier
+                        .size(size = size)
+                        .padding(16.dp)
+                        .align(Alignment.Center)
+                    ,
+                ) {
+                    var startAngle = -90f
+                    for (i in values.indices) {
+                        drawArc(
+                            color = colors.getOrElse(i) { color -> Color.White },
+                            startAngle = startAngle,
+                            sweepAngle = sweepAngles[i],
+                            useCenter = false,
+                            style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt),
+                        )
+                        startAngle += sweepAngles[i]
+                    }
+
+                }
             }
+
             Spacer(modifier = Modifier.height(32.dp))
+
             Column() {
                 Text(text = "Win Prediction", textAlign = TextAlign.Center)
                 for (i in values.indices) {
