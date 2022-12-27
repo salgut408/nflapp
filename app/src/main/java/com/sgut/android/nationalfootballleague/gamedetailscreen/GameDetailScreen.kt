@@ -168,23 +168,18 @@ fun SeasonLeaders(gameDetailModel: GameDetailModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ) {
-
             Text(
                 text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(0)?.displayName
                     ?: "",
             )
-
-
-
             Text(text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(1)?.displayName
                 ?: "")
             Text(text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(2)?.displayName
                 ?: "")
-
-
         }
-        Row(horizontalArrangement = Arrangement.SpaceBetween) {
-            Column {
+
+        Row(horizontalArrangement = Arrangement.SpaceEvenly) {
+            Column() {
                 for (i in gameDetailModel.leaders.getOrNull(1)?.leaders ?: listOf()) {
                     for (j in i.leadersAthlete) {
                         SeasonLeadersPlayer(athlete = j)
@@ -195,11 +190,33 @@ fun SeasonLeaders(gameDetailModel: GameDetailModel) {
                 for (i in gameDetailModel.leaders.getOrNull(0)?.leaders ?: listOf()) {
                     for (j in i.leadersAthlete) {
                         SeasonLeadersPlayer(athlete = j)
-
-
                     }
                 }
             }
+        }
+    }
+}
+
+
+@Composable
+fun SeasonLeaderPlayerItem(athlete: AthleteLeaders) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        GenericImageLoader(
+            obj = athlete.athlete?.headshot?.href ?: "",
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(Color.White)
+
+                .border(width = 1.dp, color = Color.LightGray)
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Column() {
+            Text(text = athlete.athlete?.shortName ?: "")
+            Text(text = athlete.displayValue)
+
 
         }
 
@@ -210,40 +227,37 @@ fun SeasonLeaders(gameDetailModel: GameDetailModel) {
 @Composable
 fun SeasonLeadersPlayer(athlete: AthleteLeaders) {
     Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+
         verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .padding(start = 8.dp)
+
     ) {
-
-
         Column() {
-
             Text(
                 text = athlete.athlete?.shortName ?: "",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
-
-                )
+            )
             Text(
                 text = athlete.displayValue ?: "",
                 fontSize = 11.sp,
                 color = Color.Gray,
             )
         }
-
         Column() {
             GenericImageLoader(
                 obj = athlete.athlete?.headshot?.href ?: "",
                 modifier = Modifier
-                    .size(35.dp)
+                    .size(40.dp)
                     .clip(CircleShape)
                     .background(Color.White)
+                    .align(Alignment.End)
                     .border(width = 1.dp, color = Color.LightGray)
             )
-
         }
-
     }
-
-
 }
 
 @Composable
@@ -275,11 +289,8 @@ fun InjuriesReportCard(
     val team2Display = gameDetailModel.injuries.getOrNull(1)?.team?.displayName
     val injuries1 = gameDetailModel.injuries.getOrNull(0)
     val injuries2 = gameDetailModel.injuries.getOrNull(1)
-
     val team1Logo = gameDetailModel.injuries.getOrNull(0)?.team
     val team2Logo = gameDetailModel.injuries.getOrNull(1)?.team
-
-
 
     Card(
         modifier = Modifier
@@ -287,6 +298,7 @@ fun InjuriesReportCard(
             .padding(8.dp)
     ) {
         Text(text = "Injury Report", style = MaterialTheme.typography.headlineSmall)
+
         Divider()
 
         Row(
@@ -294,7 +306,7 @@ fun InjuriesReportCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (team1Logo != null) {
-                GameDetailLogoImageLoader(team = team1Logo, modifier = Modifier.size(25.dp))
+                GameDetailLogoImageLoader(team = team1Logo, modifier = Modifier.size(35.dp))
             }
             Text(text = team1Display ?: "", fontWeight = FontWeight.Bold)
 
@@ -538,7 +550,7 @@ fun DoughnutChartForBasketball(
 
 
 //    colors.reverse()
-    legends.reverse()
+//    legends.reverse()
 
     colors.add(Color.Yellow)
     legends.add("Tie")
@@ -625,8 +637,7 @@ fun DoughnutChartForBasketball(
                     modifier = Modifier
                         .size(size = size)
                         .padding(16.dp)
-                        .align(Alignment.Center)
-                    ,
+                        .align(Alignment.Center),
                 ) {
                     var startAngle = -90f
                     for (i in values.indices) {
