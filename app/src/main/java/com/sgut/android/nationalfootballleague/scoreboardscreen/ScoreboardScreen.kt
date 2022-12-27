@@ -40,13 +40,17 @@ fun ScoreboardScreen(
 
     scoreboardViewModel.loadGenericScoreboard(sport, league)
 
-    val dallasVTennessee = 401437932
+    //checking
+    val nhlGame = 401459145
     val arizonaVAtlanta = 401437933
-    val collegeOsuVWisco = 401442005
+    val collegeFootbalGame = 401442005
     val magicVLakers = 401468660
+    val padresVMariners = 401480558
+    val wnbaGame = 401507132
 
 
-    gameDetailViewModel.loadGameDetails(sport, league, arizonaVAtlanta.toString())
+
+    gameDetailViewModel.loadGameDetails(sport, league, nhlGame.toString())
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
 
@@ -82,6 +86,13 @@ fun ScoreboardScreen(
         SeasonLeaders(gameDetailModel = gameDetailUiState.currentGameDetails
             ?: GameDetailModel())
 
+
+        SeasonLeaders2(seasonLeaders = gameDetailUiState.currentGameDetails?.leaders ?: listOf())
+
+
+        LastFiveGames(lastFiveGames = gameDetailUiState.currentGameDetails?.lastFiveGames ?: listOf())
+
+
         GameArticle(gameDetailModel = gameDetailUiState.currentGameDetails
             ?: GameDetailModel())
 
@@ -97,6 +108,7 @@ fun ScoreboardScreen(
             gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
         )
 
+
         Text(
             text = gameDetailUiState.currentGameDetails?.gameInfo?.venue?.fullName
                 ?: "Game api resp",
@@ -104,19 +116,6 @@ fun ScoreboardScreen(
         Text(text = gameDetailUiState.currentGameDetails?.gameInfo?.weather?.temperature.toString()
             ?: "49ERS Game")
 
-
-//        Text(text = gameDetailUiState.teams[0].team?.name ?: "49ERS Game api resp", )
-//        Text(text = gameDetailUiState.currentGameDetails?.predictor?.toString() ?: "Game api resp", modifier = Modifier
-//            .drawBehind {
-//                drawRoundRect(
-//                    Color(0xFFBBAAEE),
-//                    cornerRadius = CornerRadius(10.dp.toPx())
-//                )
-//            }
-//            .padding(8.dp))
-//        Text(text = gameDetailUiState.currentGameDetails?.pickcenter?.getOrNull(0)?.details?: "49ERS Game")
-//        Text(text = gameDeetUiState.currentGameDetails?.odds?.get(0)?.bettingOdds?.teamOdds?.preMatchTotalOver?.value?: "49ERS Game")
-//
 
 
         Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?: "",

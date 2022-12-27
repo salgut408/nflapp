@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague.gamedetailscreen
 
 import android.media.browse.MediaBrowser
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -325,7 +326,7 @@ fun InjuriesReportCard(
         ) {
 
             if (team2Logo != null) {
-                GameDetailLogoImageLoader(team = team2Logo, modifier = Modifier.size(20.dp))
+                GameDetailLogoImageLoader(team = team2Logo, modifier = Modifier.size(35.dp))
             }
 
             Text(text = team2Display ?: "", fontWeight = FontWeight.Bold)
@@ -833,30 +834,30 @@ fun FindTickets(ticketsInfo: GameDetailsTicketsInfo) {
         modifier = Modifier
             .fillMaxWidth(),
 
-    ) {
-       Row(
-           modifier = Modifier
-               .fillMaxWidth()
-               .padding(8.dp)
-       ) {
-           Text(
-               text = "Find Tickets",
-               textAlign = TextAlign.Start,
-               fontWeight = FontWeight.Black,
-               fontSize = 16.sp
-           )
-       }
+        ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Text(
+                text = "Find Tickets",
+                textAlign = TextAlign.Start,
+                fontWeight = FontWeight.Black,
+                fontSize = 16.sp
+            )
+        }
         Divider()
 
-            Row(
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Text(
-                    text = "$team1 vs $team2",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
+        Row(
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text(
+                text = "$team1 vs $team2",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
         Row(
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
@@ -895,7 +896,95 @@ fun FindTickets(ticketsInfo: GameDetailsTicketsInfo) {
         Divider()
 
 
+    }
+}
 
+
+@Composable
+fun SeasonLeaders2 (seasonLeaders: List<GameDetailsLeaders>) {
+    Card() {
+        for (i in seasonLeaders){
+            Text(text = i.team?.name ?: "")
+        }
+    }
+}
+
+@Composable
+fun LastFiveGameRow(lastEvents: GameDetailsEvents) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(text = lastEvents.gameDate, fontSize = 10.sp)
+        Text(text = lastEvents.atVs, fontSize = 11.sp)
+        GenericImageLoader(obj = lastEvents.opponentLogo, modifier = Modifier.size(25.dp))
+        Text(text = lastEvents.opponent.abbreviation, fontSize = 10.sp)
+        Text(text = lastEvents.gameResult, fontSize = 12.sp)
+        Text(text = lastEvents.score, fontSize = 12.sp)
+
+    }
+}
+
+@Composable
+fun LastFiveGames(lastFiveGames: List<LastFiveGames>) {
+    val team1Info = lastFiveGames.getOrNull(0)
+    val team2Info = lastFiveGames.getOrNull(1)
+    Card(
+
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        
+
+
+        ) {
+        Text(text = "Last Five Games")
+        Text(text = team1Info?.team?.abbreviation ?: "")
+        for (i in team1Info?.lastEvents ?: listOf()){
+            LastFiveGameRow(lastEvents = i)
+        }
+//        Box(modifier = Modifier.fillMaxSize()) {
+//          Column(modifier = Modifier.align(Alignment.TopStart)) {
+//              Text(text = "DATE")
+//
+//              for (i in team1Info?.lastEvents ?: listOf()){
+//                  Text(text = i.gameDate)
+//              }
+//          }
+//            
+//
+//            Column(modifier = Modifier.align(Alignment.TopCenter)) {
+//                Text(text = "OPP")
+//                for (i in team1Info?.lastEvents ?: listOf()){
+//                    Row() {
+//                        Text(text = i.atVs)
+//                        GenericImageLoader(obj = i.opponentLogo, modifier = Modifier.size(20.dp))
+//                        Text(text = i.opponent.abbreviation)
+//
+//                    }
+//
+//                }
+//            }
+//
+//            Column(modifier = Modifier.align(Alignment.TopEnd)) {
+//                Text(text = "RESULT")
+//                for (i in team1Info?.lastEvents ?: listOf()) {
+//                    Row() {
+//                        Text(text = i.score)
+//                        Text(text = i.gameResult)
+//
+//
+//                    }
+//                }
+//                
+//            }
+//
+//
+//
+//
+//
+//        }
 
     }
 }
@@ -933,8 +1022,6 @@ fun GameInfoCardVenueImage(
         }
     }
 }
-
-
 
 
 
