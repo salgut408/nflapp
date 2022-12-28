@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -23,18 +22,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.GameDetailLogoImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
+import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Videos
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
-import java.time.Instant
 
 
 @Composable
@@ -158,9 +153,11 @@ fun SeasonLeaders(gameDetailModel: GameDetailModel) {
 
         Text(
             text = "Season Leaders",
+
             fontSize = 14.sp,
             fontWeight = FontWeight.SemiBold
         )
+        Divider()
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
 //            modifier = Modifier.fillMaxWidth()
@@ -218,6 +215,52 @@ fun SeasonLeaderPlayerItem(athlete: AthleteLeaders) {
     }
 }
 
+@Composable
+fun VidList(vidList: List<Videos>) {
+    for (i in vidList) {
+        VideoPreview(video = i)
+    }
+}
+
+@Composable
+fun VideoPreview(video: Videos) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            GenericImageLoader(obj = video.thumbnail ?: "", modifier = Modifier.fillMaxWidth())
+
+        }
+        Text(text = video.headline.toString())
+
+    }
+
+
+}
+
+@Composable
+fun DisplayLabels(list: List<GameDetailsStatistics>) {
+    Column() {
+        for(i in list){
+            Text(text = i.label ?: "", fontWeight = FontWeight.SemiBold)
+            Text(text = i.displayValue ?: "")
+
+        } 
+    }
+    
+}
+
+@Composable
+fun TeamStat(boxscore: GameDetailsBoxscore) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(verticalArrangement = Arrangement.Center) {
+            for (i in boxscore.teams) {
+                Text(text = i.team?.displayName ?: "")
+                Column() {
+                    DisplayLabels(list = i.statistics)
+                }
+            }
+        }
+    }
+}
 
 @Composable
 fun SeasonLeadersPlayer(athlete: AthleteLeaders) {

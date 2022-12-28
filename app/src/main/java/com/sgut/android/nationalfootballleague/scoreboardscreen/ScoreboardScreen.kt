@@ -87,9 +87,9 @@ fun ScoreboardScreen(
             ?: GameDetailModel())
 
 
-//        SznLeaders(leaders  = gameDetailUiState.currentGameDetails?.leaders?.getOrNull(0)?.leaders ?: listOf() )
-
-//        Leadrs(gameDetailsLeaders = gameDetailUiState.currentGameDetails?.leaders ?: listOf())
+        TeamStat(boxscore = gameDetailUiState.currentGameDetails?.boxscore ?: GameDetailsBoxscore())
+        
+        VidList(vidList = gameDetailUiState.currentGameDetails?.videos ?: listOf())
 
         TabsLastFiveGames(lastFiveGames = gameDetailUiState.currentGameDetails?.lastFiveGames ?: listOf())
 
