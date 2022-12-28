@@ -1,7 +1,5 @@
 package com.sgut.android.nationalfootballleague.gamedetailscreen
 
-import android.media.browse.MediaBrowser
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -34,10 +32,9 @@ import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.GameDetailLogoImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoader
-import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoDetailImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
-import java.time.LocalDate
+import java.time.Instant
 
 
 @Composable
@@ -166,34 +163,32 @@ fun SeasonLeaders(gameDetailModel: GameDetailModel) {
         )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
+//            modifier = Modifier.fillMaxWidth()
         ) {
-            Text(
-                text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(0)?.displayName
-                    ?: "",
-            )
-            Text(text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(1)?.displayName
-                ?: "")
-            Text(text = gameDetailModel.leaders.getOrNull(0)?.leaders?.getOrNull(2)?.displayName
-                ?: "")
+
+
+        }
+        Row(horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()) {
+
+            for (i in gameDetailModel.leaders) {
+
+                Column() {
+                    for (j in i.leaders) {
+                        Text(text = j.displayName.uppercase())
+                        Column() {
+                            for (k in j.leadersAthlete) {
+
+                                SeasonLeadersPlayer(athlete = k)
+
+
+                            }
+                        }
+                    }
+                }
+            }
         }
 
-        Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-            Column() {
-                for (i in gameDetailModel.leaders.getOrNull(1)?.leaders ?: listOf()) {
-                    for (j in i.leadersAthlete) {
-                        SeasonLeadersPlayer(athlete = j)
-                    }
-                }
-            }
-            Column() {
-                for (i in gameDetailModel.leaders.getOrNull(0)?.leaders ?: listOf()) {
-                    for (j in i.leadersAthlete) {
-                        SeasonLeadersPlayer(athlete = j)
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -244,17 +239,19 @@ fun SeasonLeadersPlayer(athlete: AthleteLeaders) {
                 text = athlete.displayValue ?: "",
                 fontSize = 11.sp,
                 color = Color.Gray,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis, modifier = Modifier.width(90.dp)
             )
         }
         Column() {
             GenericImageLoader(
                 obj = athlete.athlete?.headshot?.href ?: "",
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(60.dp)
                     .clip(CircleShape)
                     .background(Color.White)
                     .align(Alignment.End)
-                    .border(width = 1.dp, color = Color.LightGray)
+
             )
         }
     }
@@ -706,32 +703,6 @@ fun TeamStatsCard() {
 
 }
 
-
-@Composable
-fun VideoView(videoUri: String) {
-    val context = LocalContext.current
-
-    val exoPlayer = ExoPlayer.Builder(LocalContext.current)
-        .build()
-        .also { exoPlayer ->
-            val mediaItem = MediaItem.Builder()
-                .setUri(videoUri)
-                .build()
-            exoPlayer.setMediaItem(mediaItem)
-            exoPlayer.prepare()
-        }
-
-    DisposableEffect(
-        AndroidView(factory = {
-            StyledPlayerView(context).apply {
-                player = exoPlayer
-            }
-        })
-    ) {
-        onDispose { exoPlayer.release() }
-    }
-}
-
 @Composable
 fun GameInformation(
     gameDetailModel: GameDetailModel,
@@ -832,8 +803,7 @@ fun FindTickets(ticketsInfo: GameDetailsTicketsInfo) {
     Card(
         modifier = Modifier
             .fillMaxWidth(),
-
-        ) {
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -847,7 +817,6 @@ fun FindTickets(ticketsInfo: GameDetailsTicketsInfo) {
             )
         }
         Divider()
-
         Row(
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
@@ -867,7 +836,6 @@ fun FindTickets(ticketsInfo: GameDetailsTicketsInfo) {
                 color = Color.Gray
             )
         }
-
         Row(
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
@@ -878,9 +846,7 @@ fun FindTickets(ticketsInfo: GameDetailsTicketsInfo) {
                 color = Color.Blue
             )
         }
-
         Divider()
-
         Row(
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
@@ -891,19 +857,58 @@ fun FindTickets(ticketsInfo: GameDetailsTicketsInfo) {
                 color = Color.Blue
             )
         }
-
         Divider()
+    }
+}
 
+@Composable
+fun Leadrs(gameDetailsLeaders: List<GameDetailsLeaders>) {
+
+    for (i in gameDetailsLeaders) {
+        Row() {
+            SznLeaders(leaders = i.leaders)
+        }
+    }
+}
+
+@Composable
+fun SznLeaders(leaders: List<GameDetailsLeaders2>) {
+    Card() {
+
+
+        for (i in leaders) {
+            SeasonLeaders2(seasonLeader = i)
+        }
 
     }
 }
 
-
 @Composable
-fun SeasonLeaders2 (seasonLeaders: List<GameDetailsLeaders>) {
-    Card() {
-        for (i in seasonLeaders){
-            Text(text = i.team?.name ?: "")
+fun SeasonLeaders2(seasonLeader: GameDetailsLeaders2) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+
+
+        horizontalArrangement = Arrangement.Start
+    ) {
+
+
+        Column() {
+            Text(text = seasonLeader.displayName.uppercase(), fontSize = 16.sp)
+            Text(text = seasonLeader.leadersAthlete.getOrNull(0)?.athlete?.shortName ?: "",
+                fontSize = 13.sp,
+                fontWeight = FontWeight.SemiBold)
+            Text(text = seasonLeader.leadersAthlete.getOrNull(0)?.displayValue ?: "",
+                fontSize = 10.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.width(80.dp))
+//        GenericImageLoader(obj = , modifier = )
+
+        }
+        Column() {
+            GenericImageLoader(obj = seasonLeader.leadersAthlete.getOrNull(0)?.athlete?.headshot?.href
+                ?: "", modifier = Modifier.size(60.dp))
         }
     }
 }
@@ -914,25 +919,22 @@ fun TabsLastFiveGames(lastFiveGames: List<LastFiveGames>) {
     var tabIndex by remember { mutableStateOf(0) }
     val tabTitles = listOf(lastFiveGames.getOrNull(0)?.team?.abbreviation.toString(),
         lastFiveGames.getOrNull(1)?.team?.abbreviation.toString())
-Card() {
-
-
-    Column() {
-        TabRow(selectedTabIndex = tabIndex) {
-            tabTitles.forEachIndexed { index, title ->
-                Tab(selected = tabIndex == index,
-                    onClick = { tabIndex = index },
-                    text = { Text(text = title) })
+    Card() {
+        Column() {
+            TabRow(selectedTabIndex = tabIndex) {
+                tabTitles.forEachIndexed { index, title ->
+                    Tab(selected = tabIndex == index,
+                        onClick = { tabIndex = index },
+                        text = { Text(text = title) })
+                }
+            }
+            when (tabIndex) {
+                0 -> LastFiveGames2(lastFiveGames = lastFiveGames, 0)
+                1 -> LastFiveGames2(lastFiveGames = lastFiveGames, 1)
 
             }
         }
-        when (tabIndex) {
-            0 -> LastFiveGames2(lastFiveGames = lastFiveGames, 0)
-            1 -> LastFiveGames2(lastFiveGames = lastFiveGames, 1)
-
-        }
     }
-}
 }
 
 
@@ -943,10 +945,12 @@ fun LastFiveGameRow(lastEvents: GameDetailsEvents) {
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
+
+
         Text(text = lastEvents.gameDate, fontSize = 10.sp)
-        Text(text = lastEvents.atVs, fontSize = 11.sp)
-        GenericImageLoader(obj = lastEvents.opponentLogo, modifier = Modifier.size(25.dp))
-        Text(text = lastEvents.opponent.abbreviation, fontSize = 10.sp)
+        Text(text = lastEvents.atVs, fontSize = 16.sp)
+        GenericImageLoader(obj = lastEvents.opponentLogo, modifier = Modifier.size(30.dp))
+        Text(text = lastEvents.opponent.abbreviation, fontSize = 12.sp, textAlign = TextAlign.Start)
         Text(text = lastEvents.gameResult, fontSize = 12.sp)
         Text(text = lastEvents.score, fontSize = 12.sp)
 
@@ -962,13 +966,12 @@ fun LastFiveGames(lastFiveGames: List<LastFiveGames>) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        
 
 
         ) {
         Text(text = "Last Five Games")
         Text(text = team1Info?.team?.abbreviation ?: "")
-        for (i in team1Info?.lastEvents ?: listOf()){
+        for (i in team1Info?.lastEvents ?: listOf()) {
             LastFiveGameRow(lastEvents = i)
         }
 //        Box(modifier = Modifier.fillMaxSize()) {
@@ -1021,21 +1024,14 @@ fun LastFiveGames2(lastFiveGames: List<LastFiveGames>, teamInt: Int) {
     val team1Info = lastFiveGames.getOrNull(teamInt)
     val team2Info = lastFiveGames.getOrNull(1)
     Card(
-
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-
-
-
-        ) {
+    ) {
         Text(text = "Last Five Games")
-        Text(text = team1Info?.team?.abbreviation ?: "")
-        for (i in team1Info?.lastEvents ?: listOf()){
+        for (i in team1Info?.lastEvents ?: listOf()) {
             LastFiveGameRow(lastEvents = i)
         }
-
-
     }
 }
 

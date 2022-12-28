@@ -42,7 +42,7 @@ fun ScoreboardScreen(
 
     //checking
     val nhlGame = 401459145
-    val arizonaVAtlanta = 401437933
+    val jagsVBucks = 401437941
     val collegeFootbalGame = 401442005
     val magicVLakers = 401468660
     val padresVMariners = 401480558
@@ -50,7 +50,7 @@ fun ScoreboardScreen(
 
 
 
-    gameDetailViewModel.loadGameDetails(sport, league, arizonaVAtlanta.toString())
+    gameDetailViewModel.loadGameDetails(sport, league, jagsVBucks.toString())
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
 
@@ -87,7 +87,9 @@ fun ScoreboardScreen(
             ?: GameDetailModel())
 
 
-        SeasonLeaders2(seasonLeaders = gameDetailUiState.currentGameDetails?.leaders ?: listOf())
+//        SznLeaders(leaders  = gameDetailUiState.currentGameDetails?.leaders?.getOrNull(0)?.leaders ?: listOf() )
+
+//        Leadrs(gameDetailsLeaders = gameDetailUiState.currentGameDetails?.leaders ?: listOf())
 
         TabsLastFiveGames(lastFiveGames = gameDetailUiState.currentGameDetails?.lastFiveGames ?: listOf())
 
