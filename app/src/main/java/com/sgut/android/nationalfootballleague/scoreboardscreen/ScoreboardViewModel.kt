@@ -24,16 +24,8 @@ class ScoreboardViewModel @Inject constructor(
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())
     val scoreboardUiState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
 
-//    var articles =
-
-
      var currentDate: Int
      var week: Int = 0
-
-
-
-
-
 
     init {
 //        loadScoreboard()
@@ -55,6 +47,7 @@ class ScoreboardViewModel @Inject constructor(
     }
 
     fun onYesterdayClick(sport: String, league: String, week: Int) = viewModelScope.launch {
+
        val lastWeek = week -1
         try{
             val result = espnRepository.getYesterdayGeneralScoreboardResponse(sport, league, lastWeek)
