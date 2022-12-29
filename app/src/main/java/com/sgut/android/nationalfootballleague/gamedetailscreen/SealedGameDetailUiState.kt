@@ -11,5 +11,5 @@ data class GameDetailsLoaded(
     var currentSport: String = "",
     var currentLeague: String = "",
     val currentGameDetails: GameDetailModel? = null,
-)
+) : SealedGameDetailUiState()
 

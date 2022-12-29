@@ -22,12 +22,23 @@ class GameDetailViewModel @Inject constructor(
     private val _gameDetailUiState = MutableStateFlow(GameDetailsScreenUiState())
     val gameDetailUiState: StateFlow<GameDetailsScreenUiState> = _gameDetailUiState.asStateFlow()
 
+    private val _sealedGameDetailUiState = MutableStateFlow(GameDetailModel())
+    val sealedGameDetailUiState: StateFlow<GameDetailModel> = _sealedGameDetailUiState.asStateFlow()
+
      var _colorsTeamList: MutableList<Color> = mutableListOf()
 
     init {
 
     }
 
+
+    private fun render(viewState: SealedGameDetailUiState) {
+        when(viewState) {
+            Loading -> {}
+            Error -> {}
+            is GameDetailsLoaded -> {}
+        }
+    }
 
     fun loadGameDetails(sport: String, league: String, event: String) = viewModelScope.launch {
         try {
