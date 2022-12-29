@@ -17,9 +17,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScreens
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoScoreboardImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.gamedetailscreen.*
@@ -34,35 +36,21 @@ fun ScoreboardScreen(
     sport: String,
     league: String,
     scoreboardViewModel: ScoreboardViewModel = hiltViewModel(),
-    gameDetailViewModel: GameDetailViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
+    navController: NavController
 ) {
 
     //TODO avoid hardcoding int vals = create constants for each index
     scoreboardViewModel.loadGenericScoreboard(sport, league)
-
-    //checking
-    val titansVCowboys = 401437932
-    val jagsVBucks = 401437941
-
-    val collegeFootbalGame = 401442005
-    val magicVLakers = 401468660
-    val padresVMariners = 401480558
-    val wnbaGame = 401507132
-
-
-
-    gameDetailViewModel.loadGameDetails(sport, league, titansVCowboys.toString())
-
-    val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
-
-    Log.e("GAMEDETAILUISTATE", gameDetailUiState.toString())
 
     val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
     val events = scoreboardUiState.scoreboardUiStateEvents.events
     val leagues = scoreboardUiState.scoreboardUiStateEvents.leagues
     val articles = scoreboardUiState.currentArticles
     val week = scoreboardUiState.scoreboardUiStateEvents.week.week
+    val sport = scoreboardUiState.currentSport
+    val league = scoreboardUiState.currentLeague
+
 
     Column(
         modifier
@@ -72,51 +60,6 @@ fun ScoreboardScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-
-        when (gameDetailUiState.currentSport) {
-            "basketball" -> DoughnutChartForBasketball(
-                gameDetailModel = gameDetailUiState.currentGameDetails
-                    ?: GameDetailModel(),
-            )
-            "football" -> DoughnutChart2(
-                gameDetailModel = gameDetailUiState.currentGameDetails
-                    ?: GameDetailModel(),
-            )
-        }
-
-
-        SeasonLeaders(gameDetailModel = gameDetailUiState.currentGameDetails
-            ?: GameDetailModel())
-
-
-        TeamStat(boxscore = gameDetailUiState.currentGameDetails?.boxscore ?: GameDetailsBoxscore())
-        
-        VidList(vidList = gameDetailUiState.currentGameDetails?.videos ?: listOf())
-
-        TabsLastFiveGames(lastFiveGames = gameDetailUiState.currentGameDetails?.lastFiveGames ?: listOf())
-
-        GameArticle(gameDetailModel = gameDetailUiState.currentGameDetails
-            ?: GameDetailModel())
-
-        FindTickets(gameDetailUiState.currentGameDetails?.ticketsInfo ?: GameDetailsTicketsInfo())
-
-        InjuriesReportCard(gameDetailModel = gameDetailUiState.currentGameDetails
-            ?: GameDetailModel())
-
-        HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
-            ?: GameDetailModel())
-
-        GameInformation(
-            gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
-        )
-
-
-        Text(
-            text = gameDetailUiState.currentGameDetails?.gameInfo?.venue?.fullName
-                ?: "Game api resp",
-        )
-        Text(text = gameDetailUiState.currentGameDetails?.gameInfo?.weather?.temperature.toString()
-            ?: "49ERS Game")
 
 
 
@@ -154,19 +97,31 @@ fun ScoreboardScreen(
                 }
 
         }
-        TeamsMatchUpListFromEvents(events, modifier)
+        TeamsMatchUpListFromEvents(events, modifier, sport, league, navController)
     }
 }
 
 
 @Composable
-fun TeamsMatchUpListFromEvents(events: List<EventsScoreboard>, modifier: Modifier) {
+fun TeamsMatchUpListFromEvents(
+    events: List<EventsScoreboard>,
+    modifier: Modifier,
+    sport: String,
+    league: String,
+    navController: NavController
+) {
     for (i in events) {
         Card(modifier = modifier
             .padding(8.dp)
             .clickable { }
         ) {
-            TeamComponent2(compScoreboard = i.competitions[0], modifier = Modifier)
+            TeamComponent2(
+                compScoreboard = i.competitions[0],
+                modifier = Modifier,
+                sport = sport,
+                league = league,
+                navController = navController
+            )
         }
     }
 }
@@ -239,7 +194,14 @@ fun TeamComponent(team: CompetitorsScoreboard, modifier: Modifier) {
 
 
 @Composable
-fun TeamComponent2(compScoreboard: CompetitionsScoreboard, modifier: Modifier) {
+fun TeamComponent2(
+    compScoreboard: CompetitionsScoreboard,
+    modifier: Modifier,
+    navController: NavController,
+    sport: String,
+    league: String,
+
+) {
     val team1 = compScoreboard.competitors[0].team
     val team2 = compScoreboard.competitors[1].team
     val color1 = HexToJetpackColor2.getColor(team1!!.color)
@@ -248,7 +210,10 @@ fun TeamComponent2(compScoreboard: CompetitionsScoreboard, modifier: Modifier) {
     val team2Score = compScoreboard.competitors[1].score
     val whiteColor = Color.White
 
-    Card(modifier = modifier.fillMaxSize()) {
+    Card(modifier = modifier.fillMaxSize()
+        .clickable {
+            navController.navigate(NavigationScreens.GameDetailScreen.withArgs(sport, league, compScoreboard.id ?: ""))
+        }) {
 
         Box(modifier = modifier
             .padding(8.dp)

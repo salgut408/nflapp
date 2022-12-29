@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.sgut.android.nationalfootballleague.EspnAppState
 import com.sgut.android.nationalfootballleague.atheletedetail.AthleteDetailScreen
+import com.sgut.android.nationalfootballleague.gamedetailscreen.GameDetailsScreen
 import com.sgut.android.nationalfootballleague.homelistscreen.TeamCardsList
 import com.sgut.android.nationalfootballleague.log_in.LoginScreen
 import com.sgut.android.nationalfootballleague.scoreboardscreen.ScoreboardScreen
@@ -21,15 +22,12 @@ import com.sgut.android.nationalfootballleague.sign_up.SignUpScreen
 import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 
 
-
-
-
 @Composable
 fun Navigation(appState: EspnAppState, padding: PaddingValues) {
 
     NavHost(navController = appState.navController,
         startDestination = NavigationScreens.MainScreenTeamsList.route,
-        modifier = Modifier.padding(padding)){
+        modifier = Modifier.padding(padding)) {
 
         composable(route = NavigationScreens.MainScreenTeamsList.route) {
             TeamCardsList(navController = appState.navController)
@@ -58,8 +56,7 @@ fun Navigation(appState: EspnAppState, padding: PaddingValues) {
 
             TeamDetailScreen(
                 team = teamName, sport = sportName, league = leagueName,
-                sendButtonOnclick = {
-                        subject: String, summary: String ->
+                sendButtonOnclick = { subject: String, summary: String ->
                     shareTeamAndNextEvent(context,
                         subject, summary)
                 }
@@ -74,7 +71,7 @@ fun Navigation(appState: EspnAppState, padding: PaddingValues) {
         composable(
             route = NavigationScreens.SignUpScreen.route
         ) {
-            SignUpScreen(openAndPopUp = {route, popUp -> appState.navigateAndPopUp(route, popUp)})
+            SignUpScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
         }
 
         composable(
@@ -92,8 +89,34 @@ fun Navigation(appState: EspnAppState, padding: PaddingValues) {
             SettingsScreen(
                 restartApp = { route -> appState.clearAndNavigate(restartRoute) },
                 openSignUpScreen = { route -> appState.navigate(openSignUpScreenRoute) },
-                openLogInScreen = {route -> appState.navigate(openLogInScreenRoute) }
+                openLogInScreen = { route -> appState.navigate(openLogInScreenRoute) }
             )
+        }
+
+        composable(
+            route = NavigationScreens.GameDetailScreen.route + "/{sport}/{league}/{event}",
+            arguments = listOf(
+                navArgument("sport"){
+                    type = NavType.StringType
+                },
+                navArgument("league"){
+                    type = NavType.StringType
+                },
+                navArgument("event"){
+                    type = NavType.StringType
+                },
+            )
+        ) {
+            var sportName = it.arguments?.getString("sport")!!
+            var leagueName = it.arguments?.getString("league")!!
+            var event = it.arguments?.getString("event")!!
+
+            GameDetailsScreen(
+                sport = sportName ,
+                league = leagueName,
+                event = event,
+            )
+
         }
 
         composable(
@@ -106,22 +129,24 @@ fun Navigation(appState: EspnAppState, padding: PaddingValues) {
                     type = NavType.StringType
                 },
             )
-        ){
+        ) {
             var sportName = it.arguments?.getString("sport")!!
             var leagueName = it.arguments?.getString("league")!!
 
-            ScoreboardScreen(sportName, leagueName)
+            ScoreboardScreen(
+               sport =  sportName,
+              league =   leagueName,
+                navController = appState.navController
+            )
         }
     }
 }
 
 
-
-
 private fun shareTeamAndNextEvent(
     context: Context,
     subject: String,
-    summary: String
+    summary: String,
 ) {
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"

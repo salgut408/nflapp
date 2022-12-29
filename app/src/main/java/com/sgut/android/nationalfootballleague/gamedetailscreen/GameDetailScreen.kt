@@ -1,8 +1,7 @@
 package com.sgut.android.nationalfootballleague.gamedetailscreen
 
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import android.util.Log
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
@@ -38,8 +37,67 @@ fun GameDetailsScreen(
     league: String,
     event: String,
     gameDetailViewModel: GameDetailViewModel = hiltViewModel(),
+    modifier: Modifier = Modifier,
 ) {
 
+    gameDetailViewModel.loadGameDetails(sport, league, event)
+
+    val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
+    Log.e("GAMEDETAILUISTATE", gameDetailUiState.toString())
+
+
+    Column(
+        modifier
+            .verticalScroll(rememberScrollState())
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
+            ?: GameDetailModel())
+
+        when (gameDetailUiState.currentSport) {
+            "basketball" -> DoughnutChartForBasketball(
+                gameDetailModel = gameDetailUiState.currentGameDetails
+                    ?: GameDetailModel(),
+            )
+            "football" -> DoughnutChart2(
+                gameDetailModel = gameDetailUiState.currentGameDetails
+                    ?: GameDetailModel(),
+            )
+        }
+
+
+
+
+
+        SeasonLeaders(gameDetailModel = gameDetailUiState.currentGameDetails
+            ?: GameDetailModel())
+
+
+
+        VidList(vidList = gameDetailUiState.currentGameDetails?.videos ?: listOf())
+
+        TabsLastFiveGames(lastFiveGames = gameDetailUiState.currentGameDetails?.lastFiveGames
+            ?: listOf())
+
+        GameArticle(gameDetailModel = gameDetailUiState.currentGameDetails
+            ?: GameDetailModel())
+
+        FindTickets(gameDetailUiState.currentGameDetails?.ticketsInfo ?: GameDetailsTicketsInfo())
+
+        InjuriesReportCard(gameDetailModel = gameDetailUiState.currentGameDetails
+            ?: GameDetailModel())
+
+
+        GameInformation(
+            gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
+        )
+
+        TeamStat(boxscore = gameDetailUiState.currentGameDetails?.boxscore ?: GameDetailsBoxscore())
+
+
+    }
 }
 
 @Composable
@@ -94,7 +152,8 @@ fun HeaderTeamItem(competitors: GameDetailsCompetitors) {
 @Composable
 fun HeaderTeamSlot(competitors: GameDetailsCompetitors) {
     Row(
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
 
         Column(
@@ -239,13 +298,13 @@ fun VideoPreview(video: Videos) {
 @Composable
 fun DisplayLabels(list: List<GameDetailsStatistics>) {
     Column() {
-        for(i in list){
+        for (i in list) {
             Text(text = i.label ?: "", fontWeight = FontWeight.SemiBold)
             Text(text = i.displayValue ?: "")
 
-        } 
+        }
     }
-    
+
 }
 
 @Composable

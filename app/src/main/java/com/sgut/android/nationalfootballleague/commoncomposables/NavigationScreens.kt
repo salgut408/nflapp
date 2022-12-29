@@ -10,11 +10,6 @@ sealed class NavigationScreens (val route: String) {
     object LogInScreen: NavigationScreens("log_in_screen")
     object GameDetailScreen: NavigationScreens("game_detail_screen")
 
-
-
-
-
-
     fun withArgs(vararg args: String): String {
         return buildString {
             append(route)
@@ -23,5 +18,4 @@ sealed class NavigationScreens (val route: String) {
             }
         }
     }
-
 }

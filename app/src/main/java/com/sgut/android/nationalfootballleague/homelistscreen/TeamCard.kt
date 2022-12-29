@@ -19,7 +19,13 @@ import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 
 @Composable
-fun TeamCard(team: TeamDomainModel, modifier: Modifier, navController: NavController, sport:String, league:String) {
+fun TeamCard(
+    team: TeamDomainModel,
+    modifier: Modifier,
+    navController: NavController,
+    sport:String,
+    league:String
+) {
 
     val color = HexToJetpackColor2.getColor(team.color)
 
