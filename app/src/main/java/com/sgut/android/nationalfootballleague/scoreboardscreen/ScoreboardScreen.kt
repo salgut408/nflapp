@@ -38,11 +38,13 @@ fun ScoreboardScreen(
     modifier: Modifier = Modifier,
 ) {
 
+    //TODO avoid hardcoding int vals = create constants for each index
     scoreboardViewModel.loadGenericScoreboard(sport, league)
 
     //checking
-    val nhlGame = 401459145
+    val titansVCowboys = 401437932
     val jagsVBucks = 401437941
+
     val collegeFootbalGame = 401442005
     val magicVLakers = 401468660
     val padresVMariners = 401480558
@@ -50,7 +52,7 @@ fun ScoreboardScreen(
 
 
 
-    gameDetailViewModel.loadGameDetails(sport, league, jagsVBucks.toString())
+    gameDetailViewModel.loadGameDetails(sport, league, titansVCowboys.toString())
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
 
