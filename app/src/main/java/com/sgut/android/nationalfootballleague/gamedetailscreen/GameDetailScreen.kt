@@ -50,7 +50,9 @@ fun GameDetailsScreen(
         modifier
             .verticalScroll(rememberScrollState())
             .padding(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly
     ) {
 
         HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
@@ -160,7 +162,7 @@ fun HeaderTeamSlot(competitors: GameDetailsCompetitors) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = competitors.team?.abbreviation ?: "", fontSize = 12.sp)
-            Text(text = competitors.record.getOrNull(0)?.displayValue ?: "")
+            Text(text = competitors.record.getOrNull(0)?.displayValue ?: "", fontSize = 10.sp)
         }
         HeaderTeamItem(competitors)
     }
