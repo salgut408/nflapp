@@ -37,8 +37,6 @@ class GameDetailViewModel @Inject constructor(
             result.boxscore?.teams?.forEach { i->
                 _colorsTeamList.add(HexToJetpackColor2.getColor(i.team?.color ?: "Color"))
                 Log.i("DEBUGDETAIL vm", _colorsTeamList.toString())
-
-
             }
             _colorsTeamList.add(Color.Black)
 

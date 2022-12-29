@@ -23,14 +23,23 @@ import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 
 
 @Composable
-fun Navigation(appState: EspnAppState, padding: PaddingValues) {
+fun Navigation(
+    appState: EspnAppState,
+    padding: PaddingValues
+) {
 
-    NavHost(navController = appState.navController,
+    NavHost(
+        navController = appState.navController,
         startDestination = NavigationScreens.MainScreenTeamsList.route,
-        modifier = Modifier.padding(padding)) {
+        modifier = Modifier.padding(padding)
+    ) {
 
-        composable(route = NavigationScreens.MainScreenTeamsList.route) {
-            TeamCardsList(navController = appState.navController)
+        composable(
+            route = NavigationScreens.MainScreenTeamsList.route
+        ) {
+            TeamCardsList(
+                navController = appState.navController
+            )
         }
         composable(
             route = NavigationScreens.DetailScreenTeam.route + "/{teamName}/{sport}/{league}",
@@ -71,7 +80,9 @@ fun Navigation(appState: EspnAppState, padding: PaddingValues) {
         composable(
             route = NavigationScreens.SignUpScreen.route
         ) {
-            SignUpScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
+            SignUpScreen(
+                openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) }
+            )
         }
 
         composable(
