@@ -1,9 +1,13 @@
 package com.sgut.android.nationalfootballleague.gamedetailscreen
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.*
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -215,7 +220,7 @@ fun SeasonLeaders(gameDetailModel: GameDetailModel) {
         Text(
             text = "Season Leaders",
 
-            fontSize = 14.sp,
+            fontSize = 26.sp,
             fontWeight = FontWeight.SemiBold
         )
         Divider()
@@ -398,7 +403,8 @@ fun InjuriesReportCard(
             .fillMaxWidth()
             .padding(8.dp)
     ) {
-        Text(text = "Injury Report", style = MaterialTheme.typography.headlineSmall)
+        Text(text = "Injury Report", fontSize = 26.sp,
+            fontWeight = FontWeight.SemiBold)
 
         Divider()
 
@@ -518,7 +524,8 @@ fun DoughnutChart2(
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Matchup Predictor", fontWeight = FontWeight.Bold)
+                Text("Matchup Predictor", fontSize = 26.sp,
+                    fontWeight = FontWeight.SemiBold)
             }
             Divider()
             Box(
@@ -628,7 +635,7 @@ fun DisplayLegend(color: Color, legend: String) {
                 .background(color = color, shape = CircleShape)
         )
         Spacer(modifier = Modifier.width(4.dp))
-        Text(text = legend, color = Color.Blue, fontSize = 16.sp)
+        Text(text = legend, color = Color.Blue, fontSize = 12.sp)
 
     }
 
@@ -681,7 +688,8 @@ fun DoughnutChartForBasketball(
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Matchup Predictor", fontWeight = FontWeight.Bold)
+                Text("Matchup Predictor", fontSize = 26.sp,
+                    fontWeight = FontWeight.SemiBold)
             }
             Divider()
             Box(
@@ -822,8 +830,11 @@ fun GameInformation(
                 .padding(8.dp)
         ) {
 
-            Text(text = "GameInformation", style = MaterialTheme.typography.headlineSmall)
-
+            Text(
+                text = "GameInformation",
+                fontSize = 26.sp,
+                fontWeight = FontWeight.SemiBold
+            )
         }
         Divider()
 
@@ -841,14 +852,16 @@ fun GameInformation(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(horizontal = 8.dp)
+
+
         ) {
             Text(text = gameDetailModel.gameInfo?.weather?.link?.text ?: "")
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(horizontal = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             AddressComp(gameDetailModel = gameDetailModel)
@@ -904,6 +917,7 @@ fun FindTickets(ticketsInfo: GameDetailsTicketsInfo) {
     val venueName = ticketsInfo.seatSituation?.venueName
     val shortDate = ticketsInfo.seatSituation?.dateShort
     val dateDay = ticketsInfo.seatSituation?.dateDay
+    val dropDownOptions = ticketsInfo.tickets
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -916,8 +930,8 @@ fun FindTickets(ticketsInfo: GameDetailsTicketsInfo) {
             Text(
                 text = "Find Tickets",
                 textAlign = TextAlign.Start,
-                fontWeight = FontWeight.Black,
-                fontSize = 16.sp
+                fontSize = 26.sp,
+                fontWeight = FontWeight.SemiBold
             )
         }
         Divider()
@@ -962,7 +976,60 @@ fun FindTickets(ticketsInfo: GameDetailsTicketsInfo) {
             )
         }
         Divider()
+
+        // dropdowm
+        DropDownFun(dropDownOptions)
+
     }
+}
+
+@Composable
+fun DropDownFun(tickets: List<GameDetailsTickets>) {
+    val listItems = tickets
+    val disabledItem = 1
+    val toastConext = LocalContext.current.applicationContext
+    var expanded by remember { mutableStateOf(false)}
+    
+    Box(contentAlignment = Alignment.Center){
+        IconButton(onClick = { 
+            expanded = true
+        }) {
+            Icon(
+                imageVector = Icons.Default.Menu, 
+                contentDescription = ""
+            )
+        }
+        DropdownMenu(
+            expanded = expanded, 
+            onDismissRequest = {
+            expanded = false 
+            }
+        ) {
+            listItems.forEachIndexed {itemIndex, itemValue -> 
+                DropDownMenuItem(
+                    onClick = { 
+               expanded = false
+                },
+                    enabled = (itemIndex != disabledItem)
+                ) {
+                    Text(text = itemValue.ticketName.toString())
+                }
+            }
+            
+        }
+    }
+}
+
+@Composable
+fun DropDownMenuItem(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    contentPadding: PaddingValues = MenuDefaults.DropdownMenuItemContentPadding,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource()},
+    content: @Composable RowScope.() -> Unit
+) {
+    
 }
 
 @Composable
@@ -1132,7 +1199,9 @@ fun LastFiveGames2(lastFiveGames: List<LastFiveGames>, teamInt: Int) {
             .fillMaxWidth()
             .padding(8.dp),
     ) {
-        Text(text = "Last Five Games")
+        Text(text = "Last Five Games",
+            fontSize = 26.sp,
+            fontWeight = FontWeight.SemiBold)
         for (i in team1Info?.lastEvents ?: listOf()) {
             LastFiveGameRow(lastEvents = i)
         }

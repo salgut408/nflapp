@@ -4,7 +4,6 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -40,14 +39,13 @@ fun ScoreboardScreen(
     navController: NavController
 ) {
 
-    //TODO avoid hardcoding int vals = create constants for each index
     scoreboardViewModel.loadGenericScoreboard(sport, league)
 
     val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
     val events = scoreboardUiState.scoreboardUiStateEvents.events
     val leagues = scoreboardUiState.scoreboardUiStateEvents.leagues
     val articles = scoreboardUiState.currentArticles
-    val week = scoreboardUiState.scoreboardUiStateEvents.week.week.toInt()
+    var week = scoreboardUiState.scoreboardUiStateEvents.week.week.toInt()
     val sport = scoreboardUiState.currentSport
     val league = scoreboardUiState.currentLeague
 
@@ -192,6 +190,11 @@ fun TeamComponent(team: CompetitorsScoreboard, modifier: Modifier) {
     }
 }
 
+@Composable
+fun WeekHeader() {
+
+}
+
 
 @Composable
 fun TeamComponent2(
@@ -296,10 +299,20 @@ fun TeamComponent2(
                 }
 
 //                Game id for info or date
-            Text(text = compScoreboard.status?.type?.description ?: "",
-                style = TextStyle(fontSize = 12.sp),
-                color = Color.White,
-                textAlign = TextAlign.Center)
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = compScoreboard.status?.type?.description ?: "",
+                        style = TextStyle(fontSize = 12.sp),
+                        color = Color.White,
+                        textAlign = TextAlign.Center)
+//
+//                    Text(text = compScoreboard.status?.type?.shortDetail ?: "",
+//                        style = TextStyle(fontSize = 9.sp),
+//                        color = Color.White,
+//                        textAlign = TextAlign.Center)
+                }
+
 
             }
         }
