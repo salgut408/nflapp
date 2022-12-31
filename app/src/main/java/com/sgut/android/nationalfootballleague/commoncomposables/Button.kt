@@ -9,12 +9,27 @@ import androidx.compose.ui.unit.sp
 
 
 @Composable
-fun BasicTextButton(@StringRes text: Int, modifier: Modifier, action: () -> Unit) {
-    TextButton(onClick = action, modifier = modifier) { Text(text = stringResource(text)) }
+fun BasicTextButton(
+    @StringRes text: Int,
+    modifier: Modifier,
+    action: () -> Unit
+) {
+    TextButton(
+        onClick = action,
+        modifier = modifier
+    ) {
+        Text(
+            text = stringResource(text)
+        )
+    }
 }
 
 @Composable
-fun BasicButton(@StringRes text: Int, modifier: Modifier, action: () -> Unit) {
+fun BasicButton(
+    @StringRes text: Int,
+    modifier: Modifier,
+    action: () -> Unit
+) {
     Button(
         onClick = action,
         modifier = modifier,
@@ -29,7 +44,10 @@ fun BasicButton(@StringRes text: Int, modifier: Modifier, action: () -> Unit) {
 }
 
 @Composable
-fun DialogConfirmButton(@StringRes text: Int, action: () -> Unit) {
+fun DialogConfirmButton(
+    @StringRes text: Int,
+    action: () -> Unit
+) {
     Button(
         onClick = action,
         colors =
@@ -43,7 +61,10 @@ fun DialogConfirmButton(@StringRes text: Int, action: () -> Unit) {
 }
 
 @Composable
-fun DialogCancelButton(@StringRes text: Int, action: () -> Unit) {
+fun DialogCancelButton(
+    @StringRes text: Int,
+    action: () -> Unit
+) {
     Button(
         onClick = action,
         colors =
@@ -52,6 +73,8 @@ fun DialogCancelButton(@StringRes text: Int, action: () -> Unit) {
             contentColor = MaterialTheme.colors.primary
         )
     ) {
-        Text(text = stringResource(text))
+        Text(
+            text = stringResource(text)
+        )
     }
 }
