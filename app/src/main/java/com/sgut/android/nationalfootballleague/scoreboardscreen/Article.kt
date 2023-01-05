@@ -23,17 +23,21 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sgut.android.nationalfootballleague.commoncomposables.ArticleCardImageLoader
+import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
 
 
 @Composable
 fun ArticleCard(articleModel: ArticleModel, modifier: Modifier) {
-    Card(shape = RoundedCornerShape(10.dp), modifier = Modifier.width(200.dp).padding(4.dp)) {
+    Card(shape = RoundedCornerShape(10.dp), modifier = modifier
+        .height(200.dp)
+        .padding(4.dp)
+        .width(200.dp)) {
         Box() {
             Column(modifier = Modifier.fillMaxWidth()) {
 
-                ArticleCardImageLoader(articleModel)
 
+                GenericImageLoader(obj = articleModel.images.getOrNull(0)?.url.toString(), modifier = Modifier.width(200.dp))
 
                     Text(
                         text = articleModel.headline,
@@ -41,7 +45,7 @@ fun ArticleCard(articleModel: ArticleModel, modifier: Modifier) {
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(8.dp),
                         textAlign = TextAlign.Left,
-                        maxLines = 2,
+                        maxLines = 3,
                         overflow = TextOverflow.Ellipsis
                     )
 
