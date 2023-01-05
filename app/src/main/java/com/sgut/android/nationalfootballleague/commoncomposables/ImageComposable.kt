@@ -88,6 +88,7 @@ fun ArticleCardImageLoader(articleModel: ArticleModel) {
 }
 
 
+
 @Composable
 fun GenericImageLoader(obj: String, modifier: Modifier) {
     SubcomposeAsyncImage(

@@ -65,13 +65,26 @@ private fun CardEditor(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Column(modifier = Modifier.weight(1f)) { Text(stringResource(title), color = highlightColor) }
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    stringResource(title),
+                    color = highlightColor
+                ) }
 
             if (content.isNotBlank()) {
-                Text(text = content, modifier = Modifier.padding(16.dp, 0.dp))
+                Text(
+                    text = content,
+                    modifier = Modifier.padding(16.dp, 0.dp)
+                )
             }
 
-            Icon( painter = painterResource(id = icon), contentDescription = "Icon", tint = highlightColor)
+            Icon(
+                painter = painterResource(id = icon),
+                contentDescription = "Icon",
+                tint = highlightColor
+            )
         }
     }
 }
@@ -85,7 +98,16 @@ fun CardSelector(
     modifier: Modifier,
     onNewValue: (String) -> Unit
 ) {
-    Card(backgroundColor = MaterialTheme.colors.onPrimary, modifier = modifier) {
-        DropdownSelector(label, options, selection, Modifier.dropdownSelector(), onNewValue)
+    Card(
+        backgroundColor = MaterialTheme.colors.onPrimary,
+        modifier = modifier
+    ) {
+        DropdownSelector(
+            label,
+            options,
+            selection,
+            Modifier.dropdownSelector(),
+            onNewValue
+        )
     }
 }

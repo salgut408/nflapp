@@ -18,6 +18,10 @@ fun DataLoadingComponent() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        CircularProgressIndicator(modifier = Modifier.wrapContentWidth(Alignment.CenterHorizontally))
+        CircularProgressIndicator(
+            modifier = Modifier
+                .wrapContentWidth(
+                    Alignment.CenterHorizontally)
+        )
     }
 }
