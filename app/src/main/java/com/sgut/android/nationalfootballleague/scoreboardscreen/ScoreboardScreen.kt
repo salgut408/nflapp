@@ -132,7 +132,6 @@ fun EventsHeadLines(events: List<EventsScoreboard>) {
             Text(text = j.description.toString())
         }
     }
-
 }
 
 @Composable

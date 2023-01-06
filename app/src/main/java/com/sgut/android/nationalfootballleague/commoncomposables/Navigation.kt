@@ -14,7 +14,7 @@ import androidx.navigation.navArgument
 import com.sgut.android.nationalfootballleague.EspnAppState
 import com.sgut.android.nationalfootballleague.atheletedetail.AthleteDetailScreen
 import com.sgut.android.nationalfootballleague.gamedetailscreen.GameDetailsScreen
-import com.sgut.android.nationalfootballleague.homelistscreen.TeamCardsList
+import com.sgut.android.nationalfootballleague.homelistscreen.HomeTeamCardsListScreen
 import com.sgut.android.nationalfootballleague.log_in.LoginScreen
 import com.sgut.android.nationalfootballleague.scoreboardscreen.ScoreboardScreen
 import com.sgut.android.nationalfootballleague.settings.SettingsScreen
@@ -37,7 +37,7 @@ fun Navigation(
         composable(
             route = NavigationScreens.MainScreenTeamsList.route
         ) {
-            TeamCardsList(
+            HomeTeamCardsListScreen(
                 navController = appState.navController
             )
         }

@@ -20,7 +20,7 @@ import com.sgut.android.nationalfootballleague.utils.basicButton
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 // Team Cards List Screen
-fun TeamCardsList(
+fun HomeTeamCardsListScreen(
     navController: NavController,
     homeListViewModel: HomeListViewModel = hiltViewModel(),
 //    onScoreboardClicked: () -> Unit,
@@ -36,7 +36,6 @@ fun TeamCardsList(
     val scrollState = rememberScrollState()
 
 
-    // if current sport is soccer -> radio group/buttons for different leagues
 
     Scaffold(
         topBar = {},

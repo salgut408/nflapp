@@ -528,10 +528,16 @@ fun DoughnutChart2(
     val legends = mutableListOf<String>()
     val teams = gameDetailModel.boxscore?.teams
 
-    for (i in teams!!) {
-        colors.add(HexToJetpackColor2.getColor(i.team?.color ?: "EmptyColorString"))
-        legends.add(i.team?.name ?: "")
+//    for (i in teams!!) {
+//        colors.add(HexToJetpackColor2.getColor(i.team?.color ?: "EmptyColorString"))
+//        legends.add(i.team?.name ?: "")
+//    }
+
+    teams?.map {
+        colors.add(HexToJetpackColor2.getColor(it.team?.color ?: ""))
+        legends.add(it.team?.name ?: "")
     }
+
     colors.reverse()
     legends.reverse()
 
@@ -597,7 +603,7 @@ fun DoughnutChart2(
                     ) {
 
                         Text(
-                            text = teams[0].team?.abbreviation ?: "",
+                            text = teams?.get(0)?.team?.abbreviation ?: "",
                             fontSize = 16.sp,
                             color = Color.Gray,
                             fontWeight = FontWeight.Bold,
@@ -612,7 +618,7 @@ fun DoughnutChart2(
                         Spacer(modifier = Modifier.width(8.dp))
 
                         Text(
-                            text = teams[1].team?.abbreviation ?: "",
+                            text = teams?.get(1)?.team?.abbreviation ?: "",
                             fontSize = 16.sp,
                             color = Color.Gray,
                             fontWeight = FontWeight.Bold
@@ -690,10 +696,17 @@ fun DoughnutChartForBasketball(
     val legends = mutableListOf<String>()
     val teams = gameDetailModel.boxscore?.teams
 
-    for (i in teams!!) {
-        colors.add(HexToJetpackColor2.getColor(i.team?.color ?: "EmptyString"))
-        legends.add(i.team?.name ?: "")
+    teams?.map {
+        colors.add(HexToJetpackColor2.getColor(it.team?.color ?: ""))
+        legends.add(it.team?.name ?: "")
     }
+
+//    for (i in teams!!) {
+//        colors.add(HexToJetpackColor2.getColor(i.team?.color ?: "EmptyString"))
+//        legends.add(i.team?.name ?: "")
+//
+//
+//    }
 
 
 //    colors.reverse()
@@ -759,7 +772,7 @@ fun DoughnutChartForBasketball(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = teams[1].team?.abbreviation ?: "",
+                            text = teams?.get(1)?.team?.abbreviation ?: "",
                             fontSize = 16.sp,
                             color = Color.Gray,
                             fontWeight = FontWeight.Bold,
@@ -773,7 +786,7 @@ fun DoughnutChartForBasketball(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = teams[0].team?.abbreviation ?: "",
+                            text = teams?.get(0)?.team?.abbreviation ?: "",
                             fontSize = 16.sp,
                             color = Color.Gray,
                             fontWeight = FontWeight.Bold
