@@ -145,12 +145,11 @@ fun EventsHeadLines(events: List<EventsScoreboard>) {
 fun TeamComponent(team: CompetitorsScoreboard, modifier: Modifier) {
     val color = HexToJetpackColor2.getColor(team.team?.color!!)
 
-
     Box(modifier = modifier
         .padding(8.dp)
         .background(Brush.horizontalGradient(
             listOf(color, Color.White)
-        ))
+             ))
         .fillMaxWidth(3f)) {
 
 

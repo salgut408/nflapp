@@ -88,7 +88,9 @@ fun AltheleteCard2(
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth().padding(16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
 
             Box() {
@@ -137,15 +139,14 @@ fun AltheleteCard2(
                 var injuries = athelete.injuries
 
 
+                injuries?.map {
+                    Text(text = it.injuryStatus ?: "")
+                    Text(text = it.detail?.side ?: "")
 
-                for (i in injuries!!) {
-                    Text(i.injuryStatus.toString())
-
-                    //type is foot
-                    Text(i.detail?.side.toString() + " " + i.detail?.type.toString())
-
-//                    Text(i.detail?.detail.toString())
                 }
+
+
+
 
 
             }

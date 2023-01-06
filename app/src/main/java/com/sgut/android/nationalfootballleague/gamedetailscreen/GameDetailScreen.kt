@@ -124,7 +124,7 @@ fun ScoringPlay(scoringPlays: ScoringPlays) {
         Text(text = scoringPlays.team?.name ?: "Nul")
 
         Text(text = scoringPlays.type?.text ?: "Nul")
-        Text(text = "Period: " + scoringPlays.period?.number.toString() ?: "Nul")
+        Text(text = "Period: " + scoringPlays.period?.number.toString())
 
     }
 }
@@ -132,9 +132,10 @@ fun ScoringPlay(scoringPlays: ScoringPlays) {
 
 @Composable
 fun ScoringPlaysList(gameDetailModel: GameDetailModel) {
-    for (i in gameDetailModel.scoringPlays) {
-        ScoringPlay(scoringPlays = i)
+    gameDetailModel.scoringPlays.map { play ->
+        ScoringPlay(scoringPlays = play)
     }
+
 }
 
 @Composable
@@ -238,25 +239,27 @@ fun SeasonLeaders(gameDetailModel: GameDetailModel) {
         Row(horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()) {
 
-            for (i in gameDetailModel.leaders) {
 
+            gameDetailModel.leaders.map {
                 Column() {
-                    for (j in i.leaders) {
-                        Text(text = j.displayName.uppercase())
+                    it.leaders.map {
                         Column() {
-                            for (k in j.leadersAthlete) {
-
-                                SeasonLeadersPlayer(athlete = k)
-
-
+                            Text(text = it.displayName.uppercase())
+                        }
+                        Column() {
+                            it.leadersAthlete.map {
+                                SeasonLeadersPlayer(athlete = it)
                             }
                         }
                     }
                 }
-            }
-        }
 
+            }
+
+
+        }
     }
+
 }
 
 
@@ -290,8 +293,8 @@ fun NewVidList(vidList: List<Videos>) {
     Column() {
         Spacer(modifier = Modifier.width(16.dp))
         Text(text = "Videos")
-        LazyRow(contentPadding = PaddingValues(8.dp)){
-            items(items =  vidList) { vid ->
+        LazyRow(contentPadding = PaddingValues(8.dp)) {
+            items(items = vidList) { vid ->
                 VideoPreview(video = vid, modifier = Modifier.padding(8.dp))
 
             }
@@ -300,11 +303,10 @@ fun NewVidList(vidList: List<Videos>) {
 }
 
 
-
 @Composable
 fun VideoPreview(
     video: Videos,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Card(
         shape = RoundedCornerShape(10.dp),
@@ -344,11 +346,11 @@ fun VideoPreview(
 @Composable
 fun DisplayLabels(list: List<GameDetailsStatistics>) {
     Column() {
-        for (i in list) {
-            Text(text = i.label ?: "", fontWeight = FontWeight.SemiBold)
-            Text(text = i.displayValue ?: "")
-
+        list.map {
+            Text(text = it.label ?: "", fontWeight = FontWeight.SemiBold)
+            Text(text = it.displayValue ?: "")
         }
+
     }
 
 }
@@ -357,12 +359,14 @@ fun DisplayLabels(list: List<GameDetailsStatistics>) {
 fun TeamStat(boxscore: GameDetailsBoxscore) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(verticalArrangement = Arrangement.Center) {
-            for (i in boxscore.teams) {
-                Text(text = i.team?.displayName ?: "")
+
+            boxscore.teams.map {
+                Text(text = it.team?.displayName ?: "")
                 Column() {
-                    DisplayLabels(list = i.statistics)
+                    DisplayLabels(list = it.statistics)
                 }
             }
+
         }
     }
 }
@@ -414,9 +418,10 @@ fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
 
             Row() {
 
-                for (i in gameDetailModel.header?.competitions!!) {
-                    for (j in i.competitors) {
-                        HeaderTeamSlot(competitors = j)
+
+                gameDetailModel.header?.competitions!!.map{
+                    it.competitors.map {
+                        HeaderTeamSlot(competitors = it)
                     }
                 }
             }
@@ -491,17 +496,17 @@ fun InjuryColumn(injuries: GameDetailsInjuries) {
     Column() {
         Row() {
         }
-        for (i in injuries.injuries) {
+        injuries.injuries.map {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 8.dp, end = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                AthleteNameAndPosition(athlete = i.athlete)
+                AthleteNameAndPosition(athlete = it.athlete)
 
 
-                Text(text = i.status, textAlign = TextAlign.Right)
+                Text(text = it.status, textAlign = TextAlign.Right)
 
             }
         }
@@ -528,10 +533,6 @@ fun DoughnutChart2(
     val legends = mutableListOf<String>()
     val teams = gameDetailModel.boxscore?.teams
 
-//    for (i in teams!!) {
-//        colors.add(HexToJetpackColor2.getColor(i.team?.color ?: "EmptyColorString"))
-//        legends.add(i.team?.name ?: "")
-//    }
 
     teams?.map {
         colors.add(HexToJetpackColor2.getColor(it.team?.color ?: ""))
@@ -701,16 +702,6 @@ fun DoughnutChartForBasketball(
         legends.add(it.team?.name ?: "")
     }
 
-//    for (i in teams!!) {
-//        colors.add(HexToJetpackColor2.getColor(i.team?.color ?: "EmptyString"))
-//        legends.add(i.team?.name ?: "")
-//
-//
-//    }
-
-
-//    colors.reverse()
-//    legends.reverse()
 
     colors.add(Color.Yellow)
     legends.add("Tie")
@@ -1040,34 +1031,34 @@ fun DropDownFun(tickets: List<GameDetailsTickets>) {
     val listItems = tickets
     val disabledItem = 1
     val toastConext = LocalContext.current.applicationContext
-    var expanded by remember { mutableStateOf(false)}
-    
-    Box(contentAlignment = Alignment.Center){
-        IconButton(onClick = { 
+    var expanded by remember { mutableStateOf(false) }
+
+    Box(contentAlignment = Alignment.Center) {
+        IconButton(onClick = {
             expanded = true
         }) {
             Icon(
-                imageVector = Icons.Default.Menu, 
+                imageVector = Icons.Default.Menu,
                 contentDescription = ""
             )
         }
         DropdownMenu(
-            expanded = expanded, 
+            expanded = expanded,
             onDismissRequest = {
-            expanded = false 
+                expanded = false
             }
         ) {
-            listItems.forEachIndexed {itemIndex, itemValue -> 
+            listItems.forEachIndexed { itemIndex, itemValue ->
                 DropDownMenuItem(
-                    onClick = { 
-               expanded = false
-                },
+                    onClick = {
+                        expanded = false
+                    },
                     enabled = (itemIndex != disabledItem)
                 ) {
                     Text(text = itemValue.ticketName.toString())
                 }
             }
-            
+
         }
     }
 }
@@ -1078,18 +1069,18 @@ fun DropDownMenuItem(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     contentPadding: PaddingValues = MenuDefaults.DropdownMenuItemContentPadding,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource()},
-    content: @Composable RowScope.() -> Unit
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    content: @Composable RowScope.() -> Unit,
 ) {
-    
+
 }
 
 @Composable
 fun Leadrs(gameDetailsLeaders: List<GameDetailsLeaders>) {
 
-    for (i in gameDetailsLeaders) {
+    gameDetailsLeaders.map {
         Row() {
-            SznLeaders(leaders = i.leaders)
+            SznLeaders(leaders = it.leaders)
         }
     }
 }
@@ -1098,10 +1089,9 @@ fun Leadrs(gameDetailsLeaders: List<GameDetailsLeaders>) {
 fun SznLeaders(leaders: List<GameDetailsLeaders2>) {
     Card() {
 
+        leaders.map { SeasonLeaders2(seasonLeader = it) }
 
-        for (i in leaders) {
-            SeasonLeaders2(seasonLeader = i)
-        }
+
 
     }
 }
@@ -1197,48 +1187,6 @@ fun LastFiveGames(lastFiveGames: List<LastFiveGames>) {
         for (i in team1Info?.lastEvents ?: listOf()) {
             LastFiveGameRow(lastEvents = i)
         }
-//        Box(modifier = Modifier.fillMaxSize()) {
-//          Column(modifier = Modifier.align(Alignment.TopStart)) {
-//              Text(text = "DATE")
-//
-//              for (i in team1Info?.lastEvents ?: listOf()){
-//                  Text(text = i.gameDate)
-//              }
-//          }
-//            
-//
-//            Column(modifier = Modifier.align(Alignment.TopCenter)) {
-//                Text(text = "OPP")
-//                for (i in team1Info?.lastEvents ?: listOf()){
-//                    Row() {
-//                        Text(text = i.atVs)
-//                        GenericImageLoader(obj = i.opponentLogo, modifier = Modifier.size(20.dp))
-//                        Text(text = i.opponent.abbreviation)
-//
-//                    }
-//
-//                }
-//            }
-//
-//            Column(modifier = Modifier.align(Alignment.TopEnd)) {
-//                Text(text = "RESULT")
-//                for (i in team1Info?.lastEvents ?: listOf()) {
-//                    Row() {
-//                        Text(text = i.score)
-//                        Text(text = i.gameResult)
-//
-//
-//                    }
-//                }
-//                
-//            }
-//
-//
-//
-//
-//
-//        }
-
     }
 }
 
