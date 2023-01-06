@@ -109,27 +109,34 @@ fun TeamsMatchUpListFromEvents(
     league: String,
     navController: NavController
 ) {
-    for (i in events) {
+
+
+
+    events.map { events ->
         Card(modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-        ) {
-            TeamComponent2(
-                compScoreboard = i.competitions[0],
+        ){
+            events.competitions.map {
+            TeamComponent2(compScoreboard = it,
                 modifier = Modifier,
+                navController = navController,
                 sport = sport,
-                league = league,
-                navController = navController
-            )
+                league = league)
+            }
         }
     }
+
+
 }
 
 @Composable
 fun EventsHeadLines(events: List<EventsScoreboard>) {
-    for (i in events) {
-        for (j in i.competitions[0].headlines) {
-            Text(text = j.description.toString())
+    events.map {
+        it.competitions.map {
+            it.headlines.map {
+                Text(text = it.description ?: "")
+            }
         }
     }
 }
