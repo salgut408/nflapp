@@ -105,7 +105,10 @@ fun GameDetailsScreen(
             gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
         )
 
-        TeamStat(boxscore = gameDetailUiState.currentGameDetails?.boxscore ?: GameDetailsBoxscore())
+        TeamStatCard2(boxscore = gameDetailUiState.currentGameDetails?.boxscore ?: GameDetailsBoxscore())
+
+
+//        TeamStat(boxscore = gameDetailUiState.currentGameDetails?.boxscore ?: GameDetailsBoxscore())
 
 
     }
@@ -347,8 +350,8 @@ fun VideoPreview(
 fun DisplayLabels(list: List<GameDetailsStatistics>) {
     Column() {
         list.map {
-            Text(text = it.label ?: "", fontWeight = FontWeight.SemiBold)
-            Text(text = it.displayValue ?: "")
+            Text(text = it.label ?: "", fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
+            Text(text = it.displayValue ?: "", fontSize = 10.sp)
         }
 
     }
@@ -356,16 +359,65 @@ fun DisplayLabels(list: List<GameDetailsStatistics>) {
 }
 
 @Composable
-fun TeamStat(boxscore: GameDetailsBoxscore) {
+fun TeamStatCard2(boxscore: GameDetailsBoxscore) {
     Card(modifier = Modifier.fillMaxWidth()) {
-        Column(verticalArrangement = Arrangement.Center) {
 
-            boxscore.teams.map {
-                Text(text = it.team?.displayName ?: "")
-                Column() {
-                    DisplayLabels(list = it.statistics)
+        Text(text = "Team Stats", fontSize = 26.sp,
+            fontWeight = FontWeight.SemiBold)
+        Column(verticalArrangement = Arrangement.Center) {
+            Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                boxscore.teams.map {
+                    Column(
+                        modifier = Modifier
+                    ) {
+                        Text(text = it.team?.abbreviation ?: "", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Column() {
+                                DisplayLabels(list = it.statistics)
+                            }
+                        }
+                    }
+
                 }
             }
+
+
+        }
+    }
+}
+
+@Composable
+fun TeamStat(boxscore: GameDetailsBoxscore) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        
+        boxscore.teams.map {
+            Row(){
+                Column() {
+                    Text(text =  it.team?.name ?: "")
+                    DisplayLabels(list = it.statistics)
+                }
+
+            }
+
+        }
+        
+        Column(verticalArrangement = Arrangement.Center) {
+            Row() {
+                boxscore.teams.map {
+                    Row() {
+                        Text(text = it.team?.displayName ?: "")
+                        Column() {
+                            DisplayLabels(list = it.statistics)
+                        }
+                    }
+                }
+            }
+
 
         }
     }
@@ -419,7 +471,7 @@ fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
             Row() {
 
 
-                gameDetailModel.header?.competitions!!.map{
+                gameDetailModel.header?.competitions!!.map {
                     it.competitors.map {
                         HeaderTeamSlot(competitors = it)
                     }
@@ -1090,7 +1142,6 @@ fun SznLeaders(leaders: List<GameDetailsLeaders2>) {
     Card() {
 
         leaders.map { SeasonLeaders2(seasonLeader = it) }
-
 
 
     }
