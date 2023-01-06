@@ -26,6 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -286,30 +287,54 @@ fun SeasonLeaderPlayerItem(athlete: AthleteLeaders) {
 
 @Composable
 fun NewVidList(vidList: List<Videos>) {
-    LazyRow(contentPadding = PaddingValues(8.dp)){
-        items(items =  vidList) { vid ->
-            VideoPreview(video = vid)
+    Column() {
+        Spacer(modifier = Modifier.width(16.dp))
+        Text(text = "Videos")
+        LazyRow(contentPadding = PaddingValues(8.dp)){
+            items(items =  vidList) { vid ->
+                VideoPreview(video = vid, modifier = Modifier.padding(8.dp))
 
+            }
         }
-    }
-
-}
-
-@Composable
-fun VidList(vidList: List<Videos>) {
-    for (i in vidList) {
-        VideoPreview(video = i)
     }
 }
 
+
+
 @Composable
-fun VideoPreview(video: Videos) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            GenericImageLoader(obj = video.thumbnail ?: "", modifier = Modifier.fillMaxWidth())
+fun VideoPreview(
+    video: Videos,
+    modifier: Modifier
+) {
+    Card(
+        shape = RoundedCornerShape(10.dp),
+        modifier = modifier
+            .width(200.dp)
+            .height(200.dp)
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                GenericImageLoader(
+                    obj = video.thumbnail ?: "",
+                    modifier = Modifier.width(200.dp)
+                )
+
+                Text(
+                    text = video.headline.toString(),
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(8.dp),
+                    textAlign = TextAlign.Left,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+
 
         }
-        Text(text = video.headline.toString())
+
 
     }
 

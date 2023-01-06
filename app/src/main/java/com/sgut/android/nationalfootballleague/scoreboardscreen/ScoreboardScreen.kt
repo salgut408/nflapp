@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScreens
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoScoreboardImageLoader
 import com.sgut.android.nationalfootballleague.gamedetailscreen.*
@@ -231,7 +232,6 @@ fun TeamComponent2(
 
             Surface(color = Color.LightGray.copy(alpha = 0.3f), modifier = modifier.fillMaxSize()) {
 
-
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Row(
                         horizontalArrangement = Arrangement.Start,
@@ -242,6 +242,7 @@ fun TeamComponent2(
                     ) {
 
                         Spacer(modifier = modifier.padding(8.dp))
+
                         TeamLogoScoreboardImageLoader(team = team1 ?: TeamScoreboard())
                         Spacer(modifier = modifier.padding(8.dp))
 
@@ -293,7 +294,6 @@ fun TeamComponent2(
 
 
                         TeamLogoScoreboardImageLoader(team = team2 ?: TeamScoreboard())
-
                         Spacer(modifier = modifier.padding(8.dp))
                     }
                 }
@@ -306,11 +306,12 @@ fun TeamComponent2(
                         style = TextStyle(fontSize = 12.sp),
                         color = Color.White,
                         textAlign = TextAlign.Center)
-//
-//                    Text(text = compScoreboard.status?.type?.shortDetail ?: "",
-//                        style = TextStyle(fontSize = 9.sp),
-//                        color = Color.White,
-//                        textAlign = TextAlign.Center)
+
+                    Text(text = compScoreboard.id ?: "",
+                        style = TextStyle(fontSize = 9.sp),
+                        color = Color.White,
+                        textAlign = TextAlign.Center)
+
                 }
 
 

@@ -28,8 +28,13 @@ import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
 
 
 @Composable
-fun ArticleCard(articleModel: ArticleModel, modifier: Modifier) {
-    Card(shape = RoundedCornerShape(10.dp), modifier = modifier
+fun ArticleCard(
+    articleModel: ArticleModel,
+    modifier: Modifier
+) {
+    Card(
+        shape = RoundedCornerShape(10.dp),
+        modifier = modifier
         .height(200.dp)
         .padding(4.dp)
         .width(200.dp)) {
