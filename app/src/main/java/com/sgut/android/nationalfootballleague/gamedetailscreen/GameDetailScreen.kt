@@ -239,12 +239,11 @@ fun SeasonLeaders(gameDetailModel: GameDetailModel) {
         Divider()
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-//            modifier = Modifier.fillMaxWidth()
         ) {
 
 
         }
-        Row(horizontalArrangement = Arrangement.SpaceBetween,
+        Row(horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth()) {
 
 
@@ -257,6 +256,7 @@ fun SeasonLeaders(gameDetailModel: GameDetailModel) {
                         Column() {
                             it.leadersAthlete.map {
                                 SeasonLeadersPlayer(athlete = it)
+                                Spacer(modifier = Modifier.width(8.dp))
                             }
                         }
                     }
@@ -448,7 +448,7 @@ fun SeasonLeadersPlayer(athlete: AthleteLeaders) {
 
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .padding(start = 8.dp)
+            .padding(start = 8.dp, end = 8.dp)
 
     ) {
         Column() {
@@ -459,18 +459,20 @@ fun SeasonLeadersPlayer(athlete: AthleteLeaders) {
             )
             Text(
                 text = athlete.displayValue ?: "",
-                fontSize = 11.sp,
+                fontSize = 9.sp,
                 color = Color.Gray,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis, modifier = Modifier.width(90.dp)
+                lineHeight = 10.sp,
+                maxLines = 2,
+                overflow = TextOverflow.Visible,
+                modifier = Modifier.width(90.dp)
             )
         }
         Column() {
             GenericImageLoader(
                 obj = athlete.athlete?.headshot?.href ?: "",
                 modifier = Modifier
-                    .size(60.dp)
-                    .clip(CircleShape)
+                    .size(80.dp)
+                    .clip(RoundedCornerShape(10.dp))
                     .background(Color.White)
                     .align(Alignment.End)
 
@@ -1190,7 +1192,7 @@ fun SeasonLeaders2(seasonLeader: GameDetailsLeaders2) {
         }
         Column() {
             GenericImageLoader(obj = seasonLeader.leadersAthlete.getOrNull(0)?.athlete?.headshot?.href
-                ?: "", modifier = Modifier.size(60.dp))
+                ?: "", modifier = Modifier.size(70.dp))
         }
     }
 }
