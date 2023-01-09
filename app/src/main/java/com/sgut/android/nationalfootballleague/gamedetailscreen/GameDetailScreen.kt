@@ -11,6 +11,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,6 +33,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.SimpleExoPlayer
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.GameDetailLogoImageLoader
@@ -305,6 +309,8 @@ fun NewVidList(vidList: List<Videos>) {
         }
     }
 }
+
+
 
 
 @Composable
@@ -1337,6 +1343,18 @@ fun GameInfoCardVenueImage(
 
 
 @Composable
+fun VideoScreenComp(
+    gameDetailModel: GameDetailModel,
+    ) {
+    val context = LocalContext.current
+    val exoPlayer = remember(context) {
+        ExoPlayer.Builder(context).build()
+    }
+    val videos = gameDetailModel.videos
+
+}
+
+@Composable
 fun EventNews(
     gameDetailModel: GameDetailModel,
     modifier: Modifier,
@@ -1348,4 +1366,12 @@ fun EventNews(
 @Composable
 fun EventDetailArticle() {
     
+}
+
+@Composable
+fun VideoPlayer(modifier: Modifier) {
+    val context = LocalContext.current
+    val expoPlayer = remember {
+        ExoPlayer.Builder(context).build().apply { this.prepare() }
+    }
 }
