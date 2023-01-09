@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -1135,6 +1136,10 @@ fun DropDownFun(tickets: List<GameDetailsTickets>) {
     }
 }
 
+
+
+
+
 @Composable
 fun DropDownMenuItem(
     onClick: () -> Unit,
@@ -1200,8 +1205,7 @@ fun SeasonLeaders2(seasonLeader: GameDetailsLeaders2) {
 
 @Composable
 fun TabsLastFiveGames(lastFiveGames: List<LastFiveGames>) {
-    var teamImages = listOf(lastFiveGames.getOrNull(0)?.team?.logo.toString(),
-        lastFiveGames.getOrNull(0)?.team?.logo.toString())
+
     var tabIndex by remember { mutableStateOf(0) }
     val tabTitles = listOf(lastFiveGames.getOrNull(0)?.team,
         lastFiveGames.getOrNull(1)?.team)
