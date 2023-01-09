@@ -42,11 +42,12 @@ import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 
 @Composable
 fun GameDetailsScreen(
+    modifier: Modifier = Modifier,
     sport: String,
     league: String,
     event: String,
     gameDetailViewModel: GameDetailViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier,
+
 ) {
 
     gameDetailViewModel.loadGameDetails(sport, league, event)
@@ -335,6 +336,15 @@ fun VideoPreview(
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
+                Text(
+                    text = video.duration?.div(60)?.toFloat().toString() ,
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(8.dp),
+                    textAlign = TextAlign.Left,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
 
 
@@ -365,7 +375,9 @@ fun TeamStatCard2(boxscore: GameDetailsBoxscore) {
         Text(text = "Team Stats", fontSize = 26.sp,
             fontWeight = FontWeight.SemiBold)
         Column(verticalArrangement = Arrangement.Center) {
-            Row(modifier = Modifier.fillMaxWidth().padding(8.dp),
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 boxscore.teams.map {
@@ -1180,16 +1192,35 @@ fun SeasonLeaders2(seasonLeader: GameDetailsLeaders2) {
 
 @Composable
 fun TabsLastFiveGames(lastFiveGames: List<LastFiveGames>) {
+    var teamImages = listOf(lastFiveGames.getOrNull(0)?.team?.logo.toString(),
+        lastFiveGames.getOrNull(0)?.team?.logo.toString())
     var tabIndex by remember { mutableStateOf(0) }
-    val tabTitles = listOf(lastFiveGames.getOrNull(0)?.team?.abbreviation.toString(),
-        lastFiveGames.getOrNull(1)?.team?.abbreviation.toString())
+    val tabTitles = listOf(lastFiveGames.getOrNull(0)?.team,
+        lastFiveGames.getOrNull(1)?.team)
+
     Card() {
-        Column() {
+        Column(modifier = Modifier.fillMaxWidth()) {
             TabRow(selectedTabIndex = tabIndex) {
-                tabTitles.forEachIndexed { index, title ->
-                    Tab(selected = tabIndex == index,
+                tabTitles.forEachIndexed { index, team ->
+                    Tab(
+                        selected = tabIndex == index,
                         onClick = { tabIndex = index },
-                        text = { Text(text = title) })
+                        text = {
+                            Box(){
+                                Row(horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                                ) {
+
+                                    GenericImageLoader(obj = team?.logo.toString(), modifier = Modifier.size(30.dp))
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(text = team?.abbreviation ?: "")
+
+                                }
+                            }
+
+                        },
+
+                        )
                 }
             }
             when (tabIndex) {
@@ -1205,41 +1236,39 @@ fun TabsLastFiveGames(lastFiveGames: List<LastFiveGames>) {
 @Composable
 fun LastFiveGameRow(lastEvents: GameDetailsEvents) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier.fillMaxWidth(1f),
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
 
 
         Text(text = lastEvents.gameDate, fontSize = 10.sp)
-        Text(text = lastEvents.atVs, fontSize = 16.sp)
-        GenericImageLoader(obj = lastEvents.opponentLogo, modifier = Modifier.size(30.dp))
-        Text(text = lastEvents.opponent.abbreviation, fontSize = 12.sp, textAlign = TextAlign.Start)
-        Text(text = lastEvents.gameResult, fontSize = 12.sp)
-        Text(text = lastEvents.score, fontSize = 12.sp)
+        Spacer(modifier = Modifier.width(8.dp))
 
-    }
-}
-
-@Composable
-fun LastFiveGames(lastFiveGames: List<LastFiveGames>) {
-    val team1Info = lastFiveGames.getOrNull(0)
-    val team2Info = lastFiveGames.getOrNull(1)
-    Card(
-
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-
-
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-        Text(text = "Last Five Games")
-        Text(text = team1Info?.team?.abbreviation ?: "")
-        for (i in team1Info?.lastEvents ?: listOf()) {
-            LastFiveGameRow(lastEvents = i)
+            Text(text = lastEvents.atVs, fontSize = 16.sp)
+            GenericImageLoader(obj = lastEvents.opponentLogo, modifier = Modifier.size(30.dp))
+            Text(text = lastEvents.opponent.abbreviation, fontSize = 12.sp, textAlign = TextAlign.Start)
         }
+        Spacer(modifier = Modifier.width(8.dp))
+
+
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = lastEvents.gameResult, fontSize = 12.sp, textAlign = TextAlign.Start)
+            Text(text = lastEvents.score, fontSize = 12.sp, textAlign = TextAlign.Start)
+        }
+
+
     }
 }
+
+
 
 @Composable
 fun LastFiveGames2(lastFiveGames: List<LastFiveGames>, teamInt: Int) {
@@ -1253,9 +1282,22 @@ fun LastFiveGames2(lastFiveGames: List<LastFiveGames>, teamInt: Int) {
         Text(text = "Last Five Games",
             fontSize = 26.sp,
             fontWeight = FontWeight.SemiBold)
-        for (i in team1Info?.lastEvents ?: listOf()) {
-            LastFiveGameRow(lastEvents = i)
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            Text(text = "DATE")
+            Text(text = "OPP")
+            Text(text = "RESULT")
+
         }
+
+        team1Info?.lastEvents?.map{ LastFiveGameRow(lastEvents = it) }
+
+
     }
 }
 
@@ -1294,4 +1336,16 @@ fun GameInfoCardVenueImage(
 }
 
 
+@Composable
+fun EventNews(
+    gameDetailModel: GameDetailModel,
+    modifier: Modifier,
+) {
+    
 
+}
+
+@Composable
+fun EventDetailArticle() {
+    
+}

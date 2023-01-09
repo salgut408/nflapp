@@ -63,24 +63,37 @@ fun ScoreboardScreen(
 
         Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?: scoreboardUiState.scoreboardUiStateEvents.week.week.toString(),
             style = MaterialTheme.typography.headlineMedium)
-        Text(leagues.getOrNull(0)?.name ?: "",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold)
 
-        val leagueLogoPainter = rememberAsyncImagePainter(
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
 
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(leagues.getOrNull(0)?.logos?.getOrNull(0)?.href)
-                .crossfade(true)
-                .crossfade(1000)
-                .build()
-        )
-        Image(
-            painter = leagueLogoPainter,
-            contentDescription = leagues.getOrNull(0)?.name ?: "",
-            modifier = Modifier
-                .size(250.dp)
-        )
+            Text(leagues.getOrNull(0)?.name ?: "",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold)
+
+            val leagueLogoPainter = rememberAsyncImagePainter(
+
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(leagues.getOrNull(0)?.logos?.getOrNull(0)?.href)
+                    .crossfade(true)
+                    .crossfade(1000)
+                    .build()
+            )
+            Image(
+                painter = leagueLogoPainter,
+                contentDescription = leagues.getOrNull(0)?.name ?: "",
+                modifier = Modifier
+                    .size(250.dp)
+            )
+
+        }
+
+
+
+
+
 
         Row() { ArticleRow(articleList = articles) }
 
@@ -149,7 +162,7 @@ fun TeamComponent(team: CompetitorsScoreboard, modifier: Modifier) {
         .padding(8.dp)
         .background(Brush.horizontalGradient(
             listOf(color, Color.White)
-             ))
+        ))
         .fillMaxWidth(3f)) {
 
 
