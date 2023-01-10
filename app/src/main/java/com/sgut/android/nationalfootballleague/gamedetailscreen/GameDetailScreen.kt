@@ -108,8 +108,9 @@ fun GameDetailsScreen(
         TeamStatCard2(boxscore = gameDetailUiState.currentGameDetails?.boxscore ?: GameDetailsBoxscore())
 
 
-//        TeamStat(boxscore = gameDetailUiState.currentGameDetails?.boxscore ?: GameDetailsBoxscore())
 
+
+        WinProbabilityGraph(winProbability = gameDetailUiState.currentGameDetails?.winprobability ?: listOf())
 
     }
 }
@@ -142,8 +143,11 @@ fun ScoringPlaysList(gameDetailModel: GameDetailModel) {
 }
 
 @Composable
-fun WinProbabilityGraph() {
+fun WinProbabilityGraph( winProbability:List<Winprobability> ) {
 
+    winProbability.sortedBy { it.homeWinPercentage }.map {
+        Text(text = it.homeWinPercentage.toString())
+    }
 }
 
 @Composable
