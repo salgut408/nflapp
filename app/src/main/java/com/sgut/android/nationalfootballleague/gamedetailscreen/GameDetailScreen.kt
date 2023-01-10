@@ -957,7 +957,7 @@ fun GameInformation(
             Text(text = "Coverage: ", fontSize = 12.sp)
             Text(text = gameDetailModel.broadcasts.getOrNull(0)?.station
                 ?: gameDetailModel.header?.competitions?.getOrNull(0)?.broadcasts?.getOrNull(1)?.media?.shortName ?: ""
-                , fontSize = 12.sp)
+                , fontSize = 12.sp, fontWeight = FontWeight.Bold)
 
         }
         LongGameTimeDetail(gameDetailModel = gameDetailModel)
