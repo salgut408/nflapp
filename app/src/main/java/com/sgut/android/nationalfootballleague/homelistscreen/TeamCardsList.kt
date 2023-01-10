@@ -88,7 +88,7 @@ fun HomeTeamCardsListScreen(
                     }}
 
                     item { OutlinedButton(onClick = { homeListViewModel.setEnglishTeams() }) {
-                        Text("English Premier League", style = MaterialTheme.typography.labelSmall )
+                        Text("Premier League", style = MaterialTheme.typography.labelSmall )
                     }}
                     item { OutlinedButton(onClick = { homeListViewModel.setEuroTeams() }) {
                         Text("Euro Soccer", style = MaterialTheme.typography.labelSmall )

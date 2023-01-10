@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -37,7 +38,7 @@ fun ScoreboardScreen(
     league: String,
     scoreboardViewModel: ScoreboardViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
 ) {
 
     scoreboardViewModel.loadGenericScoreboard(sport, league)
@@ -53,41 +54,32 @@ fun ScoreboardScreen(
     Column(
         modifier
             .verticalScroll(rememberScrollState())
-//            .background()
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
 
-
-
-        Text(text = scoreboardUiState.scoreboardUiStateEvents.day?.date ?: scoreboardUiState.scoreboardUiStateEvents.week.week.toString(),
-            style = MaterialTheme.typography.headlineMedium)
-
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Text(leagues.getOrNull(0)?.name ?: "",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold)
-
-            val leagueLogoPainter = rememberAsyncImagePainter(
-
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(leagues.getOrNull(0)?.logos?.getOrNull(0)?.href)
-                    .crossfade(true)
-                    .crossfade(1000)
-                    .build()
-            )
-            Image(
-                painter = leagueLogoPainter,
-                contentDescription = leagues.getOrNull(0)?.name ?: "",
+            Text(
+                text = leagues.getOrNull(0)?.name ?: "",
+                fontSize = 36.sp,
+                fontWeight = FontWeight.Bold,
+                maxLines = 4,
+                overflow = TextOverflow.Visible,
+                lineHeight = 40.sp,
                 modifier = Modifier
-                    .size(250.dp)
+                    .width(200.dp)
+                    .padding(8.dp)
             )
 
+            GenericImageLoader(
+                obj = leagues.getOrNull(0)?.logos?.getOrNull(0)?.href ?: "",
+                modifier = Modifier.fillMaxSize()
+            )
         }
 
 
@@ -120,22 +112,21 @@ fun TeamsMatchUpListFromEvents(
     modifier: Modifier,
     sport: String,
     league: String,
-    navController: NavController
+    navController: NavController,
 ) {
-
 
 
     events.map { events ->
         Card(modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-        ){
+        ) {
             events.competitions.map {
-            TeamComponent2(compScoreboard = it,
-                modifier = Modifier,
-                navController = navController,
-                sport = sport,
-                league = league)
+                TeamComponent2(compScoreboard = it,
+                    modifier = Modifier,
+                    navController = navController,
+                    sport = sport,
+                    league = league)
             }
         }
     }
@@ -223,7 +214,7 @@ fun TeamComponent2(
     sport: String,
     league: String,
 
-) {
+    ) {
     val team1 = compScoreboard.competitors[FIRST_TEAM].team
     val team2 = compScoreboard.competitors[SECOND_TEAM].team
     val color1 = HexToJetpackColor2.getColor(team1!!.color)
