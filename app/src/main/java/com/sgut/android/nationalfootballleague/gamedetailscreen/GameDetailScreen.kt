@@ -953,8 +953,8 @@ fun GameInformation(
         Row() {
             Text(text = "Coverage: ", fontSize = 12.sp)
             Text(text = gameDetailModel.broadcasts.getOrNull(0)?.station
-                ?: gameDetailModel.header?.competitions?.getOrNull(0)?.broadcasts?.getOrNull(1)?.station.toString()
-                ?: "", fontSize = 12.sp)
+                ?: gameDetailModel.header?.competitions?.getOrNull(0)?.broadcasts?.getOrNull(1)?.station ?: ""
+                , fontSize = 12.sp)
 
         }
         LongGameTimeDetail(gameDetailModel = gameDetailModel)
@@ -975,7 +975,7 @@ fun GameInformation(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             AddressComp(gameDetailModel = gameDetailModel)
-            Text(text = gameDetailModel.gameInfo?.weather?.temperature.toString(),
+            Text(text = gameDetailModel.gameInfo?.weather?.temperature ?: "",
                 fontWeight = FontWeight.Bold)
         }
         Divider()

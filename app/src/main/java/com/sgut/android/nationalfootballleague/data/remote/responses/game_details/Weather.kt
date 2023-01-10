@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Weather (
 
-  @SerializedName("temperature"     ) var temperature     : Int?    = null,
+  @SerializedName("temperature"     ) var temperature     : String?    = null,
   @SerializedName("highTemperature" ) var highTemperature : Int?    = null,
   @SerializedName("lowTemperature"  ) var lowTemperature  : Int?    = null,
   @SerializedName("conditionId"     ) var conditionId     : String? = null,
