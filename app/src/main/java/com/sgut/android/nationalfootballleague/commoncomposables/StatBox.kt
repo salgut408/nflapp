@@ -34,7 +34,8 @@ fun StatBox(stats: String, team: TeamDetailWithRosterModel) {
     )
     Box(
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
-            .background(Color.LightGray).fillMaxWidth()
+            .background(Color.LightGray).fillMaxWidth(),
+
     ) {
         Row(modifier = Modifier.padding(24.dp)) {
             Column(modifier = Modifier

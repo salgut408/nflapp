@@ -94,7 +94,7 @@ fun TeamDetailCard(
         }
 
 
-
+        //injusries box
         StatBox(
             stats = team.record?.items?.getOrNull(0)?.summary.toString(), team
         )
