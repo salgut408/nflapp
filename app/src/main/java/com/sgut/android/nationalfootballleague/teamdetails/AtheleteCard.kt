@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -75,10 +76,8 @@ fun AltheleteCard2(
     modifier: Modifier,
 ) {
     var inj = athelete.injuries
-    OutlinedCard(
+    Card(
         shape = RoundedCornerShape(10.dp),
-        elevation = CardDefaults.cardElevation(),
-        colors = CardDefaults.cardColors(),
         modifier = Modifier
             .fillMaxWidth()
             .clickable { } // navigate.to.athletedetailsScreen
@@ -88,15 +87,17 @@ fun AltheleteCard2(
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
+
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(8.dp),
+
         ) {
 
             Box() {
                 val painter = rememberAsyncImagePainter(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(athelete.headshot?.href ?: athelete.flag?.href)
+                        .data(athelete.headshot.href ?: athelete.flag?.href)
                         .crossfade(true)
                         .scale(Scale.FILL)
                         .crossfade(100)
@@ -107,36 +108,26 @@ fun AltheleteCard2(
                     contentDescription = athelete.displayName,
                     modifier = Modifier
                         .size(150.dp)
-                        .padding(8.dp)
-                        .border(BorderStroke(4.dp, Color.Yellow), CircleShape)
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.background)
 
                 )
-                FloatingActionButton(
-                    onClick = { /* viewmodel save player ;) */ },
-                    shape = FloatingActionButtonDefaults.smallShape,
-                    modifier = Modifier
-                        .size(30.dp)
-                        .align(Alignment.CenterStart)
-                        .padding(start = 6.dp)
-                ) {
-                    Icon(
-                        Icons.Filled.Favorite,
-                        ""
-                    )
-                }
+
 
             }
 
-            Divider()
+
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(text = athelete.displayName)
+                Text(
+                    text = athelete.displayName,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
                 Text(text = athelete.position.displayName)
                 Text("# ${athelete.jersey}")
 
 
-                var injuries = athelete.injuries
+                val injuries = athelete.injuries
 
 
                 injuries?.map {

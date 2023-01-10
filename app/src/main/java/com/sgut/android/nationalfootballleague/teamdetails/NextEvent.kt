@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.teamdetails
 
+import android.text.format.DateUtils
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.sgut.android.nationalfootballleague.NextEvent3
 
 @Composable
@@ -42,9 +44,19 @@ fun NextEvent(
                 fontWeight = FontWeight.Bold,
             )
 
-            Text(text = nextEvent3.name)
-            Text(text = nextEvent3.competitions[0].venue.fullName)
+            Text(
+                text = nextEvent3.name,
+                fontSize = 15.sp,
+                letterSpacing = 0.9.sp,
+            )
+            Text(
+                text = nextEvent3.competitions[0].venue.fullName,
+                fontSize = 15.sp,
+                letterSpacing = 5.sp,
+                fontWeight = FontWeight.Bold
+            )
             Text(text = nextEvent3.date)
+            
         }
 
 

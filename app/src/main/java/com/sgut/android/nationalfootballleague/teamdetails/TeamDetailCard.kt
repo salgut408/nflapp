@@ -89,9 +89,15 @@ fun TeamDetailCard(
         VenueCard(venue3 = team.franchise?.venue ?: Venue3(), modifier = Modifier.fillMaxWidth())
         AtheleteRow(team)
 
-        team.nextEvent.getOrNull(0)?.let { NextEvent(nextEvent3 = it, modifier = modifier) }
+        team.nextEvent.map { nextEvent ->
+            NextEvent(nextEvent3 = nextEvent, modifier = modifier)
+        }
 
-        StatBox(stats = team.record?.items?.getOrNull(0)?.summary.toString(), team)
+
+
+        StatBox(
+            stats = team.record?.items?.getOrNull(0)?.summary.toString(), team
+        )
 //        InjuredAtheleteRow(team)
 
     }
