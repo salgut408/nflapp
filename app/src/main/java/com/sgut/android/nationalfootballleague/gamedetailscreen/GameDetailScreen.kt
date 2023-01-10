@@ -514,8 +514,11 @@ fun InjuriesReportCard(
             .fillMaxWidth()
             .padding(8.dp)
     ) {
-        Text(text = "Injury Report", fontSize = 26.sp,
-            fontWeight = FontWeight.SemiBold)
+        Text(
+            text = "Injury Report",
+            fontSize = 26.sp,
+            fontWeight = FontWeight.SemiBold
+        )
 
         Divider()
 
@@ -941,7 +944,7 @@ fun GameInformation(
         ) {
 
             Text(
-                text = "GameInformation",
+                text = "Game Information",
                 fontSize = 26.sp,
                 fontWeight = FontWeight.SemiBold
             )
@@ -953,7 +956,7 @@ fun GameInformation(
         Row() {
             Text(text = "Coverage: ", fontSize = 12.sp)
             Text(text = gameDetailModel.broadcasts.getOrNull(0)?.station
-                ?: gameDetailModel.header?.competitions?.getOrNull(0)?.broadcasts?.getOrNull(1)?.station ?: ""
+                ?: gameDetailModel.header?.competitions?.getOrNull(0)?.broadcasts?.getOrNull(1)?.media?.shortName ?: ""
                 , fontSize = 12.sp)
 
         }
