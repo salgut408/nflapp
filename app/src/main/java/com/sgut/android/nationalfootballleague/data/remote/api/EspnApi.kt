@@ -27,7 +27,7 @@ interface EspnApi {
         teamAbbreviation: String? = null
     ): Response<TeamDetailResponse2>
 
-//    @GET("sports/football/college-football/teams/ucla?enable=roster,headshot")
+
 
 
     @GET("sports/football/college-football/teams")

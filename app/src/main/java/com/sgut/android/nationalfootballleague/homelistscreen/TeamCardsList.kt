@@ -83,6 +83,17 @@ fun HomeTeamCardsListScreen(
                         Text("World Cup", style = MaterialTheme.typography.labelSmall )
                     }}
 
+                    item { OutlinedButton(onClick = { homeListViewModel.setLaLigaTeams() }) {
+                        Text("La Liga", style = MaterialTheme.typography.labelSmall )
+                    }}
+
+                    item { OutlinedButton(onClick = { homeListViewModel.setEnglishTeams() }) {
+                        Text("English Premier League", style = MaterialTheme.typography.labelSmall )
+                    }}
+                    item { OutlinedButton(onClick = { homeListViewModel.setEuroTeams() }) {
+                        Text("Euro Soccer", style = MaterialTheme.typography.labelSmall )
+                    }}
+
                 }
 
                 BasicButton(

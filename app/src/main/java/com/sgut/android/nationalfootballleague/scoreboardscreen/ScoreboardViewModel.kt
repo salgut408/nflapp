@@ -39,7 +39,6 @@ class ScoreboardViewModel @Inject constructor(
             val result = espnRepository.getGeneralScoreboardResponse(sport, league)
             val articlesListResult = espnRepository.getArticles(sport, league)
             setScoreboardUiState(result, sport, league, articlesListResult)
-//            Log.i("DEBUG-Articles vm", articlesListResult.toString())
 
         } catch (e: Exception) {
             Log.i("DEBUG-rc vm",e.message.toString())

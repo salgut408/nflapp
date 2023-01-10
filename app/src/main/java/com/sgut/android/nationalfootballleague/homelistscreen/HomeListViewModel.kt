@@ -35,6 +35,11 @@ class HomeListViewModel @Inject constructor(
      var womensBasketballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
     var worldCupTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
     var collegeBasketballTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
+    var laLigaTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
+    var englishTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
+    var euroTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
+
+
 
 
 
@@ -50,8 +55,42 @@ class HomeListViewModel @Inject constructor(
         loadWorldCupTeams()
         loadCollegeBasketballTeams()
         setAccount()
+        loadEnglishTeams()
+        loadLaLigaTeams()
+        loadEuroTeams()
 
     }
+
+    fun loadEuroTeams() = viewModelScope.launch {
+        try {
+            val result = espnRepository.getLaLigaSoccerTeams()
+            euroTeams.value = result
+            Log.i("Euro", result.toString())
+        } catch (e: Exception) {
+            Log.e("Euro",e.message.toString())
+        }
+    }
+
+    fun loadLaLigaTeams() = viewModelScope.launch {
+        try {
+            val result = espnRepository.getLaLigaSoccerTeams()
+            englishTeams.value = result
+            Log.i("Liga", result.toString())
+        } catch (e: Exception) {
+            Log.e("Liga",e.message.toString())
+        }
+    }
+
+    fun loadEnglishTeams() = viewModelScope.launch {
+        try {
+            val result = espnRepository.getAllEnglishSoccerTeams()
+            laLigaTeams.value = result
+            Log.i("Eng", result.toString())
+        } catch (e: Exception) {
+            Log.e("Eng",e.message.toString())
+        }
+    }
+
 
     fun loadAllBaseballTeams() = viewModelScope.launch {
         try {
@@ -159,6 +198,26 @@ class HomeListViewModel @Inject constructor(
 
         }
     }
+
+
+    fun setLaLigaTeams() {
+        _ListUiState.update {
+            it.copy(currentTeam = laLigaTeams.value, currentSport = "soccer", currentLeague = "esp.1")
+        }
+    }
+
+    fun setEnglishTeams() {
+        _ListUiState.update {
+            it.copy(currentTeam = englishTeams.value, currentSport = "soccer", currentLeague = "eng.1")
+        }
+    }
+
+    fun setEuroTeams() {
+        _ListUiState.update {
+            it.copy(currentTeam = euroTeams.value, currentSport = "soccer", currentLeague = "uefa.europa")
+        }
+    }
+
 
     fun setBaseballTeam() {
        _ListUiState.update {

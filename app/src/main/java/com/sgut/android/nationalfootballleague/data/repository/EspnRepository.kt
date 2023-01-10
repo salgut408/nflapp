@@ -156,6 +156,48 @@ class EspnRepository @Inject constructor(
         return teamDomainModelMapper.toDomainList(result!!)
     }
 
+    suspend fun getAllEnglishSoccerTeams(): List<TeamDomainModel>{
+        val response = espnApi.getAllEnglishSoccerTeams()
+        if (response.isSuccessful){
+            val teamsResponse = espnApi.getAllEnglishSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+            Log.e("EnglishTeams", teamsResponse.toString())
+
+            return teamDomainModelMapper.toDomainList(teamsResponse!!)
+        } else {
+            Log.e(javaClass.name, response.errorBody().toString())
+        }
+        val result = espnApi.getAllEnglishSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+        return teamDomainModelMapper.toDomainList(result!!)
+    }
+
+    suspend fun getLaLigaSoccerTeams(): List<TeamDomainModel> {
+        val response = espnApi.getAllSpanishSoccerTeams()
+        if (response.isSuccessful){
+            val teamResponse = espnApi.getAllSpanishSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+            Log.i("SpanishTeams", teamResponse.toString())
+            return teamDomainModelMapper.toDomainList(teamResponse!!)
+
+        } else {
+            Log.e(javaClass.name, response.errorBody().toString())
+        }
+        val result = espnApi.getAllSpanishSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+        return teamDomainModelMapper.toDomainList(result!!)
+    }
+
+    suspend fun getAllEuroSoccerTeams(): List<TeamDomainModel>{
+        val response = espnApi.getAllUefaSoccerTeams()
+        if (response.isSuccessful){
+            val teamResponse = espnApi.getAllUefaSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+            Log.i("EUFATeams", teamResponse.toString())
+            return teamDomainModelMapper.toDomainList(teamResponse!!)
+
+        } else {
+            Log.e(javaClass.name, response.errorBody().toString())
+        }
+        val result = espnApi.getAllUefaSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+        return teamDomainModelMapper.toDomainList(result!!)
+    }
+
     suspend fun getAllWorldCupTeams(): List<TeamDomainModel> {
         val response = espnApi.getAllFifaSoccerTeams()
         if (response.isSuccessful) {
