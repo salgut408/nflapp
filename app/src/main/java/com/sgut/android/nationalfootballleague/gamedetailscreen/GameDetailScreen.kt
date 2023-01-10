@@ -612,7 +612,7 @@ fun DoughnutChart2(
     colors.reverse()
     legends.reverse()
 
-    colors.add(Color.Yellow)
+    colors.add(Color.LightGray)
     legends.add("Tie")
 
 //for nba only response is "AWAYTEAM"
@@ -773,7 +773,7 @@ fun DoughnutChartForBasketball(
     }
 
 
-    colors.add(Color.Yellow)
+    colors.add(Color.LightGray)
     legends.add("Tie")
 
 //for nba only response is "AWAYTEAM"

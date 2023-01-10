@@ -1,9 +1,14 @@
 package com.sgut.android.nationalfootballleague.scoreboardscreen
 
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.TweenSpec
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -66,7 +71,7 @@ fun ScoreboardScreen(
 
             Text(
                 text = leagues.getOrNull(0)?.name ?: "",
-                fontSize = 36.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 maxLines = 4,
                 overflow = TextOverflow.Visible,
@@ -223,6 +228,7 @@ fun TeamComponent2(
     val team2Score = compScoreboard.competitors[SECOND_TEAM].score
     val whiteColor = Color.White
 
+
     Card(modifier = modifier
         .fillMaxSize()
         .clickable {
@@ -329,4 +335,5 @@ fun TeamComponent2(
 
     }
 }
+
 
