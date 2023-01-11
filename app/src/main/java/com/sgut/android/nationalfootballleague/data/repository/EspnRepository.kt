@@ -21,10 +21,9 @@ class EspnRepository @Inject constructor(
         if
                 (response.isSuccessful) {
             val scoreBoardresponse = espnApi.getWorldCupScoreboard().body()
-//            Log.e("Scoreboard resp repo", "response succ $scoreBoardresponse")
             return scoreboardDomainMapper.mapToDomainModel(scoreBoardresponse!!)
         } else {
-            Log.e(javaClass.name, response.errorBody().toString())
+            Log.i(javaClass.name, response.errorBody().toString())
 
         }
         val result = espnApi.getWorldCupScoreboard().body()
@@ -39,10 +38,10 @@ class EspnRepository @Inject constructor(
         if (response.isSuccessful) {
             val teamsResponse =
                 espnApi.getAllNflTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.e("tag", "Response successful")
+            Log.i("tag", "Response successful")
             return teamDomainModelMapper.toDomainList(teamsResponse!!)
         } else {
-            Log.e(javaClass.name, response.errorBody().toString())
+            Log.i(javaClass.name, response.errorBody().toString())
         }
         val result =
             espnApi.getAllNflTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
@@ -54,10 +53,10 @@ class EspnRepository @Inject constructor(
         if (response.isSuccessful) {
             val teamsResponse =
                 espnApi.getAllCollegeTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.e("tag", "Response successful")
+            Log.i("tag", "Response successful")
             return teamDomainModelMapper.toDomainList(teamsResponse!!)
         } else {
-            Log.e(javaClass.name, response.errorBody().toString())
+            Log.i(javaClass.name, response.errorBody().toString())
         }
         val result =
             espnApi.getAllCollegeTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
@@ -69,10 +68,10 @@ class EspnRepository @Inject constructor(
         if (response.isSuccessful) {
             val teamsResponse =
                 espnApi.getAllBaseballTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.e("tag", "Response successful")
+            Log.i("tag", "Response successful")
             return teamDomainModelMapper.toDomainList(teamsResponse!!)
         } else {
-            Log.e(javaClass.name, response.errorBody().toString())
+            Log.i(javaClass.name, response.errorBody().toString())
         }
         val result =
             espnApi.getAllBaseballTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
@@ -85,10 +84,10 @@ class EspnRepository @Inject constructor(
         if (response.isSuccessful) {
             val teamsResponse =
                 espnApi.getAllHockeyTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.e("tag", "Response successful")
+            Log.i("tag", "Response successful")
             return teamDomainModelMapper.toDomainList(teamsResponse!!)
         } else {
-            Log.e(javaClass.name, response.errorBody().toString())
+            Log.i(javaClass.name, response.errorBody().toString())
         }
         val result =
             espnApi.getAllHockeyTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
@@ -100,10 +99,10 @@ class EspnRepository @Inject constructor(
         if (response.isSuccessful) {
             val teamsResponse =
                 espnApi.getAllBasketballTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.e("tag", "Response successful")
+            Log.i("tag", "Response successful")
             return teamDomainModelMapper.toDomainList(teamsResponse!!)
         } else {
-            Log.e(javaClass.name, response.errorBody().toString())
+            Log.i(javaClass.name, response.errorBody().toString())
         }
         val result = espnApi.getAllBasketballTeams()
             .body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
@@ -115,7 +114,7 @@ class EspnRepository @Inject constructor(
         if (response.isSuccessful) {
             val teamsResponse =
                 espnApi.getAllCollegeBasketballTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.e("fuck", teamsResponse.toString())
+            Log.i("CollegeBskt", teamsResponse.toString())
             return teamDomainModelMapper.toDomainList(teamsResponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
@@ -131,7 +130,7 @@ class EspnRepository @Inject constructor(
         if (response.isSuccessful) {
             val teamsResponse =
                 espnApi.getAllWomensBasketballTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.e("tag", "Response successful")
+            Log.i("tag", "Response successful")
             return teamDomainModelMapper.toDomainList(teamsResponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
@@ -146,7 +145,7 @@ class EspnRepository @Inject constructor(
         if (response.isSuccessful) {
             val teamsResponse =
                 espnApi.getAllSoccerTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.e("tag", "Response successful")
+            Log.i("tag", "Response successful")
             return teamDomainModelMapper.toDomainList(teamsResponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
@@ -160,7 +159,7 @@ class EspnRepository @Inject constructor(
         val response = espnApi.getAllEnglishSoccerTeams()
         if (response.isSuccessful){
             val teamsResponse = espnApi.getAllEnglishSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-            Log.e("EnglishTeams", teamsResponse.toString())
+            Log.i("EnglishTeams", teamsResponse.toString())
 
             return teamDomainModelMapper.toDomainList(teamsResponse!!)
         } else {
@@ -174,7 +173,7 @@ class EspnRepository @Inject constructor(
         val response = espnApi.getAllSpanishSoccerTeams()
         if (response.isSuccessful){
             val teamResponse = espnApi.getAllSpanishSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-            Log.i("SpanishTeams", teamResponse.toString())
+            Log.d("SpanishTeams", teamResponse.toString())
             return teamDomainModelMapper.toDomainList(teamResponse!!)
 
         } else {
@@ -188,7 +187,7 @@ class EspnRepository @Inject constructor(
         val response = espnApi.getAllUefaSoccerTeams()
         if (response.isSuccessful){
             val teamResponse = espnApi.getAllUefaSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-            Log.i("EUFATeams", teamResponse.toString())
+            Log.d("EUFATeams", teamResponse.toString())
             return teamDomainModelMapper.toDomainList(teamResponse!!)
 
         } else {
@@ -203,7 +202,7 @@ class EspnRepository @Inject constructor(
         if (response.isSuccessful) {
             val teamsResponse =
                 espnApi.getAllFifaSoccerTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.e("tag", "Response successful")
+            Log.d("tag", "Response successful")
             return teamDomainModelMapper.toDomainList(teamsResponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())

@@ -37,6 +37,7 @@ import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoa
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Videos
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
+import kotlin.math.nextUp
 
 
 @Composable
@@ -115,6 +116,10 @@ fun GameDetailsScreen(
     }
 }
 
+
+
+
+
 @Composable
 fun LongGameTimeDetail(gameDetailModel: GameDetailModel) {
     Text(text = gameDetailModel.header?.competitions?.getOrNull(0)?.status?.type?.gameTimeDetail
@@ -145,9 +150,9 @@ fun ScoringPlaysList(gameDetailModel: GameDetailModel) {
 @Composable
 fun WinProbabilityGraph( winProbability:List<Winprobability> ) {
 
-    winProbability.sortedBy { it.homeWinPercentage }.map {
-        Text(text = it.homeWinPercentage.toString())
-    }
+    winProbability
+//        .sortedBy { it.homeWinPercentage }
+        .map { Text(text = it.homeWinPercentage?.nextUp().toString()) }
 }
 
 @Composable
