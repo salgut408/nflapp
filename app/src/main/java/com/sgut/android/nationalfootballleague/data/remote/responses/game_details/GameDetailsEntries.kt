@@ -9,7 +9,7 @@ data class GameDetailsEntries (
   @SerializedName("link"  ) var link  : String?          = null,
   @SerializedName("id"    ) var id    : String?          = null,
   @SerializedName("uid"   ) var uid   : String?          = null,
-  @SerializedName("stats" ) var stats : ArrayList<GameDetailsStats> = arrayListOf(),
-  @SerializedName("logo"  ) var logo  : ArrayList<GameDetailsLogo>  = arrayListOf()
+  @SerializedName("stats" ) var stats : List<GameDetailsStats> = listOf(),
+  @SerializedName("logo"  ) var logo  : List<GameDetailsLogo>  = listOf()
 
 )
