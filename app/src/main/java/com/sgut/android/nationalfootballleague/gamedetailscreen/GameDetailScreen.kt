@@ -1,6 +1,9 @@
 package com.sgut.android.nationalfootballleague.gamedetailscreen
 
 import android.util.Log
+import android.widget.TextView
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -25,9 +28,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.exoplayer2.ExoPlayer
 import com.sgut.android.nationalfootballleague.*
@@ -37,6 +43,7 @@ import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoa
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Videos
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
+import retrofit2.http.HEAD
 import kotlin.math.nextUp
 
 
@@ -68,6 +75,11 @@ fun GameDetailsScreen(
         HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
             ?: GameDetailModel())
 
+
+        Spacer(modifier = modifier.height(8.dp))
+
+        WeightedRows(header = gameDetailUiState.currentGameDetails ?: GameDetailModel())
+
         when (gameDetailUiState.currentSport) {
             "basketball" -> DoughnutChartForBasketball(
                 gameDetailModel = gameDetailUiState.currentGameDetails
@@ -96,7 +108,9 @@ fun GameDetailsScreen(
         TabsLastFiveGames(lastFiveGames = gameDetailUiState.currentGameDetails?.lastFiveGames
             ?: listOf())
 
-        GameArticle(gameDetailModel = gameDetailUiState.currentGameDetails
+
+
+        ExpandableGameArticle(gameDetailModel = gameDetailUiState.currentGameDetails
             ?: GameDetailModel())
 
         FindTickets(gameDetailUiState.currentGameDetails?.ticketsInfo ?: GameDetailsTicketsInfo())
@@ -121,6 +135,97 @@ fun GameDetailsScreen(
     }
 }
 
+@Composable
+fun ExpandableGameArticle(gameDetailModel: GameDetailModel){
+    var showMore by remember { mutableStateOf(false)}
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Column(modifier = Modifier
+            .animateContentSize(animationSpec = tween(100))
+            .fillMaxWidth()
+            .padding(4.dp)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ) { showMore = !showMore }) {
+            if (showMore) {
+                HtmlText(html = gameDetailModel.singleArticle?.story ?: "")
+            } else {
+                Text(
+                    text = gameDetailModel.singleArticle?.headline ?: "",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                HtmlText(html = gameDetailModel.singleArticle?.description ?: "")
+                Row() {
+                    Text(text = gameDetailModel.singleArticle?.published ?: "")
+                    Text(text = " - ")
+                    Text(text = gameDetailModel.singleArticle?.source ?: "")
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun HtmlText(html: String, modifier: Modifier = Modifier) {
+    AndroidView(
+        modifier = modifier,
+        factory = { context -> TextView(context) },
+        update = { it.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_COMPACT) }
+    )
+}
+
+@Composable
+fun WeightedRows(header: GameDetailModel) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Row(modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                header.header?.competitions?.map { competitions ->
+                    Text(text = competitions.status?.type?.description ?: "")
+
+                    competitions.competitors.map { competitors ->
+                       competitors.team?.record?.map { teamRecord ->
+                           Column() {
+                               Text(text = teamRecord.type.toString())
+                               Text(text = teamRecord.displayValue.toString())
+                               Text(text = teamRecord.summary ?: "")
+                           }
+                       }
+                        Box() {
+                            Row (
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Start
+                            ) {
+                                Text(
+                                    text = competitors.team?.abbreviation ?: "",
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Spacer(modifier = Modifier.width(16.dp))
+                                GenericImageLoader(
+                                    obj = competitors.team?.logos?.getOrNull(0)?.href ?: "",
+                                    modifier = Modifier.width(20.dp)
+                                )
+                            }
+                            
+                            
+                        }
+
+                    }
+                }
+            }
+            
+
+        }
+    }
+}
 
 @Composable
 fun LongGameTimeDetail(gameDetailModel: GameDetailModel) {
@@ -175,6 +280,7 @@ fun HeaderTeamItem(competitors: GameDetailsCompetitors) {
     }
 }
 
+
 @Composable
 fun HeaderTeamSlot(competitors: GameDetailsCompetitors) {
     Row(
@@ -192,6 +298,9 @@ fun HeaderTeamSlot(competitors: GameDetailsCompetitors) {
     }
 }
 
+
+
+
 @Composable
 fun GameArticle(gameDetailModel: GameDetailModel) {
     Card(
@@ -200,12 +309,9 @@ fun GameArticle(gameDetailModel: GameDetailModel) {
             .padding(8.dp)
     ) {
 
-
         Column(modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)) {
-
-
             Text(
                 text = gameDetailModel.singleArticle?.headline ?: "",
                 fontSize = 16.sp,
@@ -219,6 +325,7 @@ fun GameArticle(gameDetailModel: GameDetailModel) {
 
             Row() {
 
+//                Text(text = gameDetailModel.singleArticle?.story ?: "") for expand anim
 
                 Text(text = gameDetailModel.singleArticle?.published ?: "")
                 Text(text = " - ")
@@ -240,26 +347,36 @@ fun SeasonLeaders(gameDetailModel: GameDetailModel) {
             fontSize = 26.sp,
             fontWeight = FontWeight.SemiBold
         )
+
+        Divider()
         Row(
 //            horizontalAlignment = Alignment.CenterHorizontally,
 //            verticalArrangement = Arrangement.Center,
         ) {
             gameDetailModel.leaders.map { gameDetailsLeaders ->
                 Row( ){
+
                     Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.Start
                     ) {
-                        GenericImageLoader(
-                            obj = gameDetailsLeaders.team?.logo ?: "",
-                            modifier = Modifier.size(50.dp)
-                        )
-                        Text(text = gameDetailsLeaders.team?.abbreviation ?: "", fontWeight = FontWeight.Bold)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+
+                        ) {
+                            GenericImageLoader(
+                                obj = gameDetailsLeaders.team?.logo ?: "",
+                                modifier = Modifier.size(50.dp)
+                            )
+                            Text(text = gameDetailsLeaders.team?.abbreviation ?: "", fontWeight = FontWeight.Bold)
+                        }
+
                         gameDetailsLeaders.leaders.map { gameDetailsLeaders2 ->
-                            Text(text = gameDetailsLeaders2.displayName)
+                            Text(text = gameDetailsLeaders2.displayName, fontWeight = FontWeight.Bold)
                             Column( ) {
                                 Row() {
                                     gameDetailsLeaders2.leadersAthlete.map { leaderAthlete ->
                                         SeasonLeadersPlayer(athlete = leaderAthlete)
+
                                     }
                                 }
                             }
@@ -536,12 +653,16 @@ fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
             .fillMaxWidth()
             .padding(8.dp)) {
 
-            Row() {
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
 
 
-                gameDetailModel.header?.competitions!!.map {
-                    it.competitors.map {
-                        HeaderTeamSlot(competitors = it)
+                gameDetailModel.header?.competitions!!.map { competition ->
+                    competition.competitors.map { competitor ->
+                        HeaderTeamSlot(competitors = competitor, )
                     }
                 }
             }
@@ -576,11 +697,11 @@ fun InjuriesReportCard(
         Divider()
 
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (team1Logo != null) {
-                GameDetailLogoImageLoader(team = team1Logo, modifier = Modifier.size(35.dp))
+                GenericImageLoader(obj = team1Logo.logo , modifier =Modifier.size(35.dp))
             }
             Text(text = team1Display ?: "", fontWeight = FontWeight.Bold)
 
@@ -599,18 +720,13 @@ fun InjuriesReportCard(
         ) {
 
             if (team2Logo != null) {
-                GameDetailLogoImageLoader(team = team2Logo, modifier = Modifier.size(35.dp))
+                GenericImageLoader(obj = team2Logo.logo , modifier =Modifier.size(35.dp))
             }
-
             Text(text = team2Display ?: "", fontWeight = FontWeight.Bold)
-
-
         }
-
         if (injuries2 != null) {
             InjuryColumn(injuries = injuries2)
         }
-
     }
 }
 
