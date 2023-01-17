@@ -128,12 +128,32 @@ fun GameDetailsScreen(
 
 
 
-
         WinProbabilityGraph(winProbability = gameDetailUiState.currentGameDetails?.winprobability
             ?: listOf())
 
     }
 }
+
+
+@Composable
+fun BoxScore(boxscore: GameDetailsBoxscore) {
+    boxscore.teams.map { team ->
+        Text(text = team.team?.name ?: "")
+        team.statistics.map { stats ->
+            Column() {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(text = stats.label ?: "")
+                    Text(text = stats.displayValue ?: "")
+
+                }
+            }
+        }
+    }
+}
+
 
 @Composable
 fun ExpandableGameArticle(gameDetailModel: GameDetailModel){
@@ -175,7 +195,7 @@ fun HtmlText(html: String, modifier: Modifier = Modifier) {
     AndroidView(
         modifier = modifier,
         factory = { context -> TextView(context) },
-        update = { it.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_COMPACT) }
+        update = { it.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_OPTION_USE_CSS_COLORS) }
     )
 }
 
@@ -654,7 +674,7 @@ fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
             .padding(8.dp)) {
 
             Row(
-                horizontalArrangement = Arrangement.Center,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
