@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScreens
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoImageLoader
@@ -23,12 +24,10 @@ fun TeamCard(
     team: TeamDomainModel,
     modifier: Modifier,
     navController: NavController,
-    sport:String,
-    league:String
+    sport: String,
+    league: String,
 ) {
-
     val color = HexToJetpackColor2.getColor(team.color)
-
 
     Card(
         shape = RoundedCornerShape(10.dp),
@@ -37,39 +36,35 @@ fun TeamCard(
         modifier = modifier
             .fillMaxWidth()
             .clickable {
-                navController.navigate(NavigationScreens.DetailScreenTeam.withArgs(team.abbreviation, sport, league))
+                navController.navigate(NavigationScreens.DetailScreenTeam.withArgs(team.abbreviation,
+                    sport,
+                    league))
             }
     ) {
 
-        Box(modifier = Modifier.background(
-            Brush.verticalGradient(
-                listOf(color, Color.White)
+        Box(
+            modifier = Modifier.background(
+                Brush.verticalGradient(
+                    listOf(color, Color.White
+                    )
+                )
             )
-        )) {
-
-
+        ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.fillMaxWidth()) {
-//             image
 
                 TeamLogoImageLoader(team = team)
 
-
-
-                    Text(
-                        text = team.shortDisplayName,
-                        style = MaterialTheme.typography.headlineMedium
-                            .copy(fontWeight = FontWeight.ExtraBold),
-                        color = Color(color.value),
-                    )
-
+                Text(
+                    text = team.shortDisplayName,
+                    color = Color(color.value),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
             }
-
         }
-
-
     }
 }
 

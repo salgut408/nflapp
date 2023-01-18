@@ -19,30 +19,21 @@ import com.sgut.android.nationalfootballleague.utils.basicButton
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-// Team Cards List Screen
 fun HomeTeamCardsListScreen(
     navController: NavController,
     homeListViewModel: HomeListViewModel = hiltViewModel(),
-//    onScoreboardClicked: () -> Unit,
-//    onHockeyButtonClicked: () -> Unit
+
 ) {
-//    val teamsList by remember { homeListViewModel.nflTeamsList }
-//    val hockeyTeamsList by remember { homeListViewModel.hockeyTeamsList }
-    // ^ Teams moved to listUiState current team list
     val uiState by homeListViewModel.listUiState.collectAsState()
-    var sport = uiState.currentSport
-    var league = uiState.currentLeague
+    val sport = uiState.currentSport
+    val league = uiState.currentLeague
 
     val scrollState = rememberScrollState()
-
-
 
     Scaffold(
         topBar = {},
         content = { padding ->
-
             Column() {
-
                 LazyRow(
                     contentPadding = PaddingValues(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -104,20 +95,20 @@ fun HomeTeamCardsListScreen(
                     ) })
 
 
-
-
                 LazyColumn(contentPadding = PaddingValues(8.dp)) {
 
                     items(items = uiState.currentTeam) { team ->
                         Row(Modifier.animateItemPlacement()) {
-                            TeamCard(team = team, modifier = Modifier.padding(8.dp), navController , sport =sport, league = league)
-
+                            TeamCard(
+                                team = team,
+                                modifier = Modifier.padding(8.dp),
+                                navController,
+                                sport =sport,
+                                league = league
+                            )
                         }
                     }
-
                 }
-
-
             }
         },
 
