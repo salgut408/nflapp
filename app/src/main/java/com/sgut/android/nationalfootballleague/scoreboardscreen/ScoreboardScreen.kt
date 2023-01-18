@@ -228,6 +228,10 @@ fun TeamComponent2(
                 league,
                 compScoreboard.id ?: ""))
         }) {
+        
+        Button(onClick = { /*TODO*/ }) {
+            Text(text = "Notify me")
+        }
 
         Box(modifier = modifier
             .fillMaxSize()
