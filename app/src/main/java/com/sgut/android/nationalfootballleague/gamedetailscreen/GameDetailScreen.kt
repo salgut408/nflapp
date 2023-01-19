@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.android.exoplayer2.ExoPlayer
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.GameDetailLogoImageLoader
@@ -234,15 +233,10 @@ fun WeightedRows(header: GameDetailModel) {
                                     modifier = Modifier.width(20.dp)
                                 )
                             }
-                            
-                            
                         }
-
                     }
                 }
             }
-            
-
         }
     }
 }
@@ -257,9 +251,8 @@ fun LongGameTimeDetail(gameDetailModel: GameDetailModel) {
 @Composable
 fun ScoringPlay(scoringPlays: ScoringPlays) {
     Column() {
-        Text(text = scoringPlays.team?.name ?: "Nul")
-
-        Text(text = scoringPlays.type?.text ?: "Nul")
+        Text(text = scoringPlays.team?.name ?: "")
+        Text(text = scoringPlays.type?.text ?: "")
         Text(text = "Period: " + scoringPlays.period?.number.toString())
 
     }
@@ -294,9 +287,7 @@ fun HeaderTeamItem(competitors: GameDetailsCompetitors) {
     Row() {
         competitors.team?.name
         competitors.team?.abbreviation
-
         HeaderTeamLogo(competitors.team ?: GameDetailsTeam())
-
     }
 }
 
@@ -307,7 +298,6 @@ fun HeaderTeamSlot(competitors: GameDetailsCompetitors) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -370,8 +360,7 @@ fun SeasonLeaders(gameDetailModel: GameDetailModel) {
 
         Divider()
         Row(
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.Center,
+
         ) {
             gameDetailModel.leaders.map { gameDetailsLeaders ->
                 Row( ){
@@ -1436,7 +1425,6 @@ fun LastFiveGameRow(lastEvents: GameDetailsEvents) {
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-
         Text(text = lastEvents.gameDate, fontSize = 10.sp)
         Spacer(modifier = Modifier.width(8.dp))
 
@@ -1451,8 +1439,6 @@ fun LastFiveGameRow(lastEvents: GameDetailsEvents) {
                 textAlign = TextAlign.Start)
         }
         Spacer(modifier = Modifier.width(8.dp))
-
-
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
@@ -1460,8 +1446,6 @@ fun LastFiveGameRow(lastEvents: GameDetailsEvents) {
             Text(text = lastEvents.gameResult, fontSize = 12.sp, textAlign = TextAlign.Start)
             Text(text = lastEvents.score, fontSize = 12.sp, textAlign = TextAlign.Start)
         }
-
-
     }
 }
 
@@ -1478,7 +1462,6 @@ fun LastFiveGames2(lastFiveGames: List<LastFiveGames>, teamInt: Int) {
         Text(text = "Last Five Games",
             fontSize = 26.sp,
             fontWeight = FontWeight.SemiBold)
-
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -1488,12 +1471,8 @@ fun LastFiveGames2(lastFiveGames: List<LastFiveGames>, teamInt: Int) {
             Text(text = "DATE")
             Text(text = "OPP")
             Text(text = "RESULT")
-
         }
-
         team1Info?.lastEvents?.map { LastFiveGameRow(lastEvents = it) }
-
-
     }
 }
 
@@ -1532,17 +1511,7 @@ fun GameInfoCardVenueImage(
 }
 
 
-@Composable
-fun VideoScreenComp(
-    gameDetailModel: GameDetailModel,
-) {
-    val context = LocalContext.current
-    val exoPlayer = remember(context) {
-        ExoPlayer.Builder(context).build()
-    }
-    val videos = gameDetailModel.videos
 
-}
 
 @Composable
 fun EventNews(
@@ -1553,15 +1522,20 @@ fun EventNews(
 
 }
 
+//@Composable
+//fun EventDetailArticle() {
+//    val context = LocalContext.current
+//    val exoPlayer = remember (context) {
+//        ExoPlayer.Builder(context).build().apply{
+//            val dataSourceFactory: DataSource.Factory = DefaultDataSource.Factory(context, Util.getUserAgent(context, context.packageName))
+//        }
+//    }
+//
+//}
+
 @Composable
-fun EventDetailArticle() {
+fun SecondVideoPlayer(video: Videos) {
 
 }
 
-@Composable
-fun VideoPlayer(modifier: Modifier) {
-    val context = LocalContext.current
-    val expoPlayer = remember {
-        ExoPlayer.Builder(context).build().apply { this.prepare() }
-    }
-}
+

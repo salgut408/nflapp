@@ -86,7 +86,7 @@ dependencies {
     def nav_version = "2.5.1"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
-    //hilt?
+    //hilt
     implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
@@ -104,8 +104,14 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
 
-//exo player
-    implementation 'com.google.android.exoplayer:exoplayer:2.18.1'
+//Media 3
+    def media3_version = "1.0.0-beta03"
+
+    // For media playback using ExoPlayer
+    implementation("androidx.media3:media3-exoplayer:$media3_version")
+    // For building media playback UIs
+    implementation("androidx.media3:media3-ui:$media3_version")
+
 
 
     implementation("com.google.dagger:hilt-android:2.38.1")

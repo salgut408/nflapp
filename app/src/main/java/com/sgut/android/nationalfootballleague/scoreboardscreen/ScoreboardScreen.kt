@@ -44,7 +44,7 @@ fun ScoreboardScreen(
     val events = scoreboardUiState.scoreboardUiStateEvents.events
     val leagues = scoreboardUiState.scoreboardUiStateEvents.leagues
     val articles = scoreboardUiState.currentArticles
-    var week = scoreboardUiState.scoreboardUiStateEvents.week.week.toInt()
+    val week = scoreboardUiState.scoreboardUiStateEvents.week.week
     val sport = scoreboardUiState.currentSport
     val league = scoreboardUiState.currentLeague
 
@@ -96,7 +96,6 @@ fun ScoreboardScreen(
                     modifier = Modifier.basicButton()) {
                     Text(text = "Last Week")
                 }
-
         }
         TeamsMatchUpListFromEvents(events, modifier, sport, league, navController)
     }

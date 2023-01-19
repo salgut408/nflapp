@@ -1,7 +1,9 @@
 package com.sgut.android.nationalfootballleague.gamedetailscreen
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.GameDetailsTeams
@@ -17,15 +19,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class GameDetailViewModel @Inject constructor(
-    private val espnRepository: EspnRepository
+    private val espnRepository: EspnRepository,
+
 ): ViewModel(){
+
+
     private val _gameDetailUiState = MutableStateFlow(GameDetailsScreenUiState())
+
     val gameDetailUiState: StateFlow<GameDetailsScreenUiState> = _gameDetailUiState.asStateFlow()
 
     private val _sealedGameDetailUiState = MutableStateFlow(GameDetailModel())
+
     val sealedGameDetailUiState: StateFlow<GameDetailModel> = _sealedGameDetailUiState.asStateFlow()
 
      var _colorsTeamList: MutableList<Color> = mutableListOf()
+
 
     init {
 
