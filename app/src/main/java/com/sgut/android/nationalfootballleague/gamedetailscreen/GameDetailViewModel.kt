@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class GameDetailViewModel @Inject constructor(
+
     private val espnRepository: EspnRepository,
 
 ): ViewModel(){
