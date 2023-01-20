@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.commoncomposables
 
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
