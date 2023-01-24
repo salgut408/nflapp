@@ -9,7 +9,7 @@ data class ArticleModel(
     var images: List<ArticleImages> = listOf(),
     var description: String = "",
     var published: String = "",
-    var type: String? = null,
+    var type: String = "",
     var headline: String = "",
     var byline: String = "",
 

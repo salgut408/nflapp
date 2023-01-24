@@ -118,9 +118,9 @@ fun Navigation(
                 },
             )
         ) {
-            var sportName = it.arguments?.getString("sport")!!
-            var leagueName = it.arguments?.getString("league")!!
-            var event = it.arguments?.getString("event")!!
+            val sportName = it.arguments?.getString("sport")!!
+            val leagueName = it.arguments?.getString("league")!!
+            val event = it.arguments?.getString("event")!!
 
             GameDetailsScreen(
                 sport = sportName ,

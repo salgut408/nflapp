@@ -26,18 +26,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             NationalFootballLeagueTheme {
 
-//                connMgr.allNetworks.forEach { network ->
-//                    connMgr.getNetworkInfo(network)?.apply {
-//                        if (type == ConnectivityManager.TYPE_WIFI) {
-//                            isWifiConn = isWifiConn or isConnected
-//                        }
-//                        if (type == ConnectivityManager.TYPE_MOBILE) {
-//                            isMobileConn = isMobileConn or isConnected
-//                        }
-//                    }
-//                }
-//                Log.d(DEBUG_TAG, "Wifi connected: $isWifiConn")
-//                Log.d(DEBUG_TAG, "Mobile connected: $isMobileConn")
+
 
                 EspnApp()
 

@@ -18,13 +18,11 @@ class EspnRepository @Inject constructor(
 
     suspend fun getScoreboardResponse(): ScoreboardResponseEventModel {
         val response = espnApi.getWorldCupScoreboard()
-        if
-                (response.isSuccessful) {
+        if (response.isSuccessful) {
             val scoreBoardresponse = espnApi.getWorldCupScoreboard().body()
             return scoreboardDomainMapper.mapToDomainModel(scoreBoardresponse!!)
         } else {
             Log.i(javaClass.name, response.errorBody().toString())
-
         }
         val result = espnApi.getWorldCupScoreboard().body()
         return scoreboardDomainMapper.mapToDomainModel(result!!)

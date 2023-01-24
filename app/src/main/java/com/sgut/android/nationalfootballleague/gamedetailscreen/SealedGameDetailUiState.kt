@@ -4,6 +4,7 @@ import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 
 sealed class SealedGameDetailUiState
 
+object Success: SealedGameDetailUiState()
 object Loading: SealedGameDetailUiState()
 object Error: SealedGameDetailUiState()
 

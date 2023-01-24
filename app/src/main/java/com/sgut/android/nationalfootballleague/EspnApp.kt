@@ -35,8 +35,7 @@ fun EspnApp(
     val appState = rememberAppState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     val backStackEntry by appState.navController.currentBackStackEntryAsState()
-    val currentScreen =
-        backStackEntry?.destination?.route ?: NavigationScreens.MainScreenTeamsList.route
+    val currentScreen = backStackEntry?.destination?.route ?: NavigationScreens.MainScreenTeamsList.route
     val snackbarHostState = remember { SnackbarHostState() }
 
 
@@ -45,8 +44,7 @@ fun EspnApp(
 
         topBar = {
             MyNewToolBar2(
-                currentScreen = backStackEntry?.destination?.route
-                    ?: NavigationScreens.MainScreenTeamsList.route,
+                currentScreen = backStackEntry?.destination?.route ?: NavigationScreens.MainScreenTeamsList.route,
                 canNavigateBack = appState.navController.previousBackStackEntry != null,
                 navigateUp = { appState.navController.navigateUp() },
                 scrollBehavior = scrollBehavior
