@@ -59,7 +59,7 @@ fun GameDetailsScreen(
     gameDetailViewModel.loadGameDetails(sport, league, event)
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
-    Log.e("GAMEDETAILUISTATE", gameDetailUiState.toString())
+    Log.d("GAMEDETAIL-UISTATE", gameDetailUiState.toString())
 
 
     Column(

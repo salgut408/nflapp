@@ -19,10 +19,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class GameDetailViewModel @Inject constructor(
-
     private val espnRepository: EspnRepository,
-
-): ViewModel(){
+): ViewModel() {
 
 
     private val _gameDetailUiState = MutableStateFlow(GameDetailsScreenUiState())
