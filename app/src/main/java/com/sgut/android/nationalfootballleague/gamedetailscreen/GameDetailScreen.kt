@@ -42,6 +42,8 @@ import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoa
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Videos
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
+import com.sgut.android.nationalfootballleague.utils.formatTo
+import com.sgut.android.nationalfootballleague.utils.toDate
 import retrofit2.http.HEAD
 import kotlin.math.nextUp
 
@@ -1425,7 +1427,7 @@ fun LastFiveGameRow(lastEvents: GameDetailsEvents) {
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        Text(text = lastEvents.gameDate, fontSize = 10.sp)
+        Text(text = lastEvents.gameDate.toDate()?.formatTo("MM-dd-yyyy") ?: "", fontSize = 10.sp)
         Spacer(modifier = Modifier.width(8.dp))
 
         Row(

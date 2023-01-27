@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.scoreboardscreen
 
+import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -16,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.google.type.DateTime
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScreens
@@ -23,10 +25,12 @@ import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoScorebo
 import com.sgut.android.nationalfootballleague.gamedetailscreen.*
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
+import com.sgut.android.nationalfootballleague.utils.*
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FIRST_TEAM
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.SECOND_TEAM
-import com.sgut.android.nationalfootballleague.utils.basicButton
+
 import java.util.*
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -219,8 +223,13 @@ fun TeamComponent2(
     val team2Score = compScoreboard.competitors[SECOND_TEAM].score
     val whiteColor = Color.White
 
+    val dateString = compScoreboard.date?.toDate()?.formatTo("MM-dd-yyyy")
+
+
+
 
     Card(modifier = modifier
+
         .fillMaxSize()
         .clickable {
             navController.navigate(NavigationScreens.GameDetailScreen.withArgs(sport,
@@ -317,7 +326,16 @@ fun TeamComponent2(
                         color = Color.White,
                         textAlign = TextAlign.Center)
 
-                    Text(text = compScoreboard.id ?: "",
+                    Text(
+                        text = dateString ?: "",
+                        style = TextStyle(fontSize = 9.sp),
+                        color = Color.White,
+                        textAlign = TextAlign.Center)
+
+
+
+                    Text(
+                        text = compScoreboard.id ?: "",
                         style = TextStyle(fontSize = 9.sp),
                         color = Color.White,
                         textAlign = TextAlign.Center)
