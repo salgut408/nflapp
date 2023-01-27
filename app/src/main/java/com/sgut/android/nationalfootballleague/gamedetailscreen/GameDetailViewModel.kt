@@ -25,7 +25,7 @@ class GameDetailViewModel @Inject constructor(
 
     private val _gameDetailUiState = MutableStateFlow(GameDetailsScreenUiState())
 
-    val gameDetailUiState: StateFlow<GameDetailsScreenUiState> = _gameDetailUiState.asStateFlow()
+    var gameDetailUiState: StateFlow<GameDetailsScreenUiState> = _gameDetailUiState.asStateFlow()
 
     private val _sealedGameDetailUiState = MutableStateFlow(GameDetailModel())
 

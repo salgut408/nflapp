@@ -106,6 +106,7 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getTeams()
             nflTeamsList.value = result
+//            Default list Ui State set here
             _ListUiState.update { currentState ->
             currentState.copy(currentTeam = result, currentSport = "football", currentLeague = "nfl")
         }

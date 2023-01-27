@@ -22,7 +22,7 @@ class ScoreboardViewModel @Inject constructor(
 ): ViewModel() {
 
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())
-    val scoreboardUiState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
+    var scoreboardUiState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
 
      var currentDate: Int
      var week: Int = 0
