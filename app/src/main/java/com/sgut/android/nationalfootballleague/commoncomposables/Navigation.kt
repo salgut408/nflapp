@@ -25,7 +25,7 @@ import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
 @Composable
 fun Navigation(
     appState: EspnAppState,
-    padding: PaddingValues
+    padding: PaddingValues,
 ) {
 
     NavHost(
@@ -107,13 +107,13 @@ fun Navigation(
         composable(
             route = NavigationScreens.GameDetailScreen.route + "/{sport}/{league}/{event}",
             arguments = listOf(
-                navArgument("sport"){
+                navArgument("sport") {
                     type = NavType.StringType
                 },
-                navArgument("league"){
+                navArgument("league") {
                     type = NavType.StringType
                 },
-                navArgument("event"){
+                navArgument("event") {
                     type = NavType.StringType
                 },
             )
@@ -123,7 +123,9 @@ fun Navigation(
             val event = it.arguments?.getString("event")!!
 
             GameDetailsScreen(
-                sport = sportName ,
+                navController = appState.navController,
+
+                sport = sportName,
                 league = leagueName,
                 event = event,
             )
@@ -145,8 +147,8 @@ fun Navigation(
             var leagueName = it.arguments?.getString("league")!!
 
             ScoreboardScreen(
-               sport =  sportName,
-              league =   leagueName,
+                sport = sportName,
+                league = leagueName,
                 navController = appState.navController
             )
         }

@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.GameDetailLogoImageLoader
@@ -53,6 +54,7 @@ fun GameDetailsScreen(
     modifier: Modifier = Modifier,
     sport: String,
     league: String,
+    navController: NavController,
     event: String,
     gameDetailViewModel: GameDetailViewModel = hiltViewModel(),
 
@@ -99,22 +101,29 @@ fun GameDetailsScreen(
 //            ?: GameDetailModel())
 
 
-        SeasonLeaders(gameDetailModel = gameDetailUiState.currentGameDetails
-            ?: GameDetailModel())
+        SeasonLeaders(
+            gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel()
+        )
 
 
 
-        NewVidList(vidList = gameDetailUiState.currentGameDetails?.videos ?: listOf())
+        NewVidList(
+            vidList = gameDetailUiState.currentGameDetails?.videos ?: listOf()
+        )
 
-        TabsLastFiveGames(lastFiveGames = gameDetailUiState.currentGameDetails?.lastFiveGames
-            ?: listOf())
+        TabsLastFiveGames(
+            lastFiveGames = gameDetailUiState.currentGameDetails?.lastFiveGames ?: listOf()
+        )
 
 
 
-        ExpandableGameArticle(gameDetailModel = gameDetailUiState.currentGameDetails
-            ?: GameDetailModel())
+        ExpandableGameArticle(
+            gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel()
+        )
 
-        FindTickets(gameDetailUiState.currentGameDetails?.ticketsInfo ?: GameDetailsTicketsInfo())
+        FindTickets(
+            ticketsInfo = gameDetailUiState.currentGameDetails?.ticketsInfo ?: GameDetailsTicketsInfo()
+        )
 
         InjuriesReportCard(gameDetailModel = gameDetailUiState.currentGameDetails
             ?: GameDetailModel())
@@ -675,6 +684,9 @@ fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
                     competition.competitors.map { competitor ->
                         HeaderTeamSlot(competitors = competitor, )
                     }
+                }
+                gameDetailModel.header!!.competitions.map { 
+                    Text(text = it.date?.toDate()?.formatTo("MMM/dd/yyyy") ?: "", style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }
@@ -1423,7 +1435,7 @@ fun TabsLastFiveGames(lastFiveGames: List<LastFiveGames>) {
 fun LastFiveGameRow(lastEvents: GameDetailsEvents) {
     Row(
         modifier = Modifier.fillMaxWidth(1f),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
 
@@ -1431,7 +1443,7 @@ fun LastFiveGameRow(lastEvents: GameDetailsEvents) {
         Spacer(modifier = Modifier.width(8.dp))
 
         Row(
-            horizontalArrangement = Arrangement.Start,
+            horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = lastEvents.atVs, fontSize = 16.sp)

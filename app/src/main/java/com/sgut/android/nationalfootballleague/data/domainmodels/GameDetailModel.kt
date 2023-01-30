@@ -27,5 +27,4 @@ data class GameDetailModel(
     var winprobability: List<Winprobability> = listOf(),
     var scoringPlays: List<ScoringPlays> = listOf(),
     var videos: List<Videos> = listOf(),
-
     )
