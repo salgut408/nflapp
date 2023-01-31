@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague.data.repository
 
 import android.util.Log
+import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.domainmodels.*
 import com.sgut.android.nationalfootballleague.data.dtomappers.*
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
@@ -9,6 +10,7 @@ import javax.inject.Inject
 class EspnRepository @Inject constructor(
     val teamDomainModelMapper: NetworkToTeamDomainModelMapper,
     val espnApi: EspnApi,
+    val sportsDataBase: SportsDataBase,
     val articleMapper: NetworkToDomainArticleMapper,
     val teamDetailNetworkToModelMapper: TeamDetailNetworkToModelMapper,
     val rosterMapper: TeamDetailWithRosterMapper,
@@ -26,6 +28,15 @@ class EspnRepository @Inject constructor(
         }
         val result = espnApi.getWorldCupScoreboard().body()
         return scoreboardDomainMapper.mapToDomainModel(result!!)
+    }
+
+    suspend fun saveArticle(article: GameDetailModel){
+        sportsDataBase.getArticleDao().insertArticle(article.getArticleForDb())
+        Log.d("ARTICLE_SAVED", "")
+    }
+
+    suspend fun getSavedArticles(){
+        sportsDataBase.getArticleDao().getAllSavedArticles()
     }
 
 

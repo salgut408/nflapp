@@ -119,7 +119,7 @@ fun GameDetailsScreen(
 
 
         ExpandableGameArticle(
-            gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel()
+            gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(), gameDetailViewModel
         )
 
         FindTickets(
@@ -168,7 +168,7 @@ fun BoxScore(boxscore: GameDetailsBoxscore) {
 
 
 @Composable
-fun ExpandableGameArticle(gameDetailModel: GameDetailModel) {
+fun ExpandableGameArticle(gameDetailModel: GameDetailModel, gameDetailViewModel: GameDetailViewModel) {
     var showMore by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
@@ -183,6 +183,7 @@ fun ExpandableGameArticle(gameDetailModel: GameDetailModel) {
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null
             ) { showMore = !showMore }) {
+
             if (showMore) {
                 HtmlText(html = gameDetailModel.singleArticle?.story ?: "")
             } else {
@@ -197,6 +198,9 @@ fun ExpandableGameArticle(gameDetailModel: GameDetailModel) {
                     Text(text = " - ")
                     Text(text = gameDetailModel.singleArticle?.source ?: "")
                 }
+            }
+            Button(onClick = { gameDetailViewModel.onSaveArticleClick(gameDetailModel)}) {
+                Text(text = "Read later")
             }
         }
     }

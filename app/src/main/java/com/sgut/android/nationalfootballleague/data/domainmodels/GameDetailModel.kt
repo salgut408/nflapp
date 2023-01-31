@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.domainmodels
 
 import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.data.db.ArticleDbObject
 import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Drives
 import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Videos
 
@@ -28,3 +29,15 @@ data class GameDetailModel(
     var scoringPlays: List<ScoringPlays> = listOf(),
     var videos: List<Videos> = listOf(),
     )
+
+fun GameDetailModel.getArticleForDb(): ArticleDbObject {
+    return ArticleDbObject(
+        story = singleArticle?.story ?: "",
+        headline = singleArticle?.headline ?: "",
+        source = singleArticle?.source ?: "",
+        description = singleArticle?.description ?: "",
+        lastModified = singleArticle?.lastModified ?: "",
+        published = singleArticle?.published ?: "",
+        id = 0
+    )
+}

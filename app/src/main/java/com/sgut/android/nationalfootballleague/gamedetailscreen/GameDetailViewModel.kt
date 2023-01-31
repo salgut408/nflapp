@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.GameDetailsTeams
+import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.data.repository.EspnRepository
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
@@ -61,6 +62,10 @@ class GameDetailViewModel @Inject constructor(
         } catch (e: Exception){
             Log.e("DEBUG DETAILS", e.message.toString())
         }
+    }
+
+    fun onSaveArticleClick(article: GameDetailModel)= viewModelScope.launch {
+        espnRepository.saveArticle(article)
     }
 
 

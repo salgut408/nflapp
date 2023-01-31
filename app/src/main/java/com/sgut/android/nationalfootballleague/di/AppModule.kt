@@ -1,10 +1,14 @@
 package com.sgut.android.nationalfootballleague.di
 
+import android.content.Context
+import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.sgut.android.nationalfootballleague.data.db.ArticleDao
+import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.dtomappers.*
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import com.sgut.android.nationalfootballleague.data.service.AccountService
@@ -20,6 +24,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -31,6 +36,18 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
+    fun provideArticleDao(sportsDataBase: SportsDataBase): ArticleDao = sportsDataBase.getArticleDao()
+
+    @Provides
+    @Singleton
+    fun provideSportsDatabase(@ApplicationContext context: Context): SportsDataBase =
+        Room.databaseBuilder(
+            context,
+            SportsDataBase::class.java,
+            "sports_db"
+        ).build()
+
+    @Provides
     fun provideEspnRepository(
         espnApi: EspnApi,
         articleMapper: NetworkToDomainArticleMapper,
@@ -38,8 +55,9 @@ object AppModule {
         teamDetailNetworkToModelMapper: TeamDetailNetworkToModelMapper,
         rosterMapper: TeamDetailWithRosterMapper,
         scoreboardMapper: NetworkScoreboardToDomainModelMapper,
-        gameDetailsToDomainModelMapper: NetworkGameDetailsToDomainModelMapper
-    ): EspnRepository = EspnRepository(nflMapper, espnApi, articleMapper, teamDetailNetworkToModelMapper, rosterMapper, scoreboardMapper, gameDetailsToDomainModelMapper)
+        gameDetailsToDomainModelMapper: NetworkGameDetailsToDomainModelMapper,
+        sportsDataBase: SportsDataBase
+    ): EspnRepository = EspnRepository(nflMapper, espnApi, sportsDataBase, articleMapper, teamDetailNetworkToModelMapper, rosterMapper, scoreboardMapper, gameDetailsToDomainModelMapper)
 
 
     @Provides

@@ -15,14 +15,3 @@ data class ArticleModel(
     var byline: String = "",
     )
 
-fun ArticleModel.asDatabaseEntity(): ArticleDbObject {
-    return ArticleDbObject(
-        images = images,
-        description = description,
-        published = published,
-        type = type,
-        headline = headline,
-        byline = byline,
-
-    )
-}
