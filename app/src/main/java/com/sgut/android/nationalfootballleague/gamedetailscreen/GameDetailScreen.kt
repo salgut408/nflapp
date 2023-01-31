@@ -105,6 +105,8 @@ fun GameDetailsScreen(
         SeasonLeaders(
             gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel()
         )
+        
+//        BoxScore(boxscore = gameDetailUiState.currentGameDetails?.boxscore ?: GameDetailsBoxscore())
 
 
 
@@ -157,7 +159,37 @@ fun BoxScore(boxscore: GameDetailsBoxscore) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text(text = stats.label ?: "")
+                    Text(text = stats.displayValue ?: "")
+
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun BoxScore2(boxscore: GameDetailsBoxscore) {
+    Column() {
+        Row() {
+            boxscore.teams.map { team ->
+                Text(text = team.team?.name ?: "")
+            }
+        }
+        boxscore.teams.map { team ->
+            team.statistics.map { stats ->
+                Text(text = stats?.displayValue ?: "")
+            }
+        }
+
+    }
+    boxscore.teams.map { team ->
+        Text(text = team.team?.name ?: "")
+        team.statistics.map { stats ->
+            Column() {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
                     Text(text = stats.displayValue ?: "")
 
                 }
