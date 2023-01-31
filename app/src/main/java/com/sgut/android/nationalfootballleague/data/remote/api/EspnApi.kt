@@ -97,7 +97,7 @@ interface EspnApi {
 
 
     @GET("sports/{sport}/{league}/teams/{teamAbbreviation}?enable=roster,headshot")
-    suspend fun getSpecifhicTeam(
+    suspend fun getSpecifcTeam(
         @Path("sport")
         sport: String? = null,
         @Path("league")
