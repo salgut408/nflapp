@@ -30,6 +30,7 @@ interface EspnApi {
 
 
 
+
     @GET("sports/football/college-football/teams")
     suspend fun getAllCollegeTeams(): Response<NFLTeamsResponse>
 
@@ -113,5 +114,11 @@ interface EspnApi {
         league: String? = null,
         @Query("event") event: String
     ): Response<GameDetailResponse>
+
+    @GET("{articleApi}")
+    suspend fun getArticleDetail(
+        @Path("articleApi")
+        articleApi: String? = null
+    ): Response<ArticleDetailNetworkResponse>
 
 }

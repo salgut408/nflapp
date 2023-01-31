@@ -1,22 +1,18 @@
 package com.sgut.android.nationalfootballleague.settings
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.animation.Animatable
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.commoncomposables.DangerousCardEditor
@@ -43,10 +39,20 @@ fun SettingsScreen(
     val uiState by viewModel.uiState.collectAsState(initial = SettingsUiState(false))
 
 
+
+
+    val color = remember { Animatable(Color.Gray) }
+    LaunchedEffect(Unit) {
+        color.animateTo(Color.Red, animationSpec = tween(1000))
+        color.animateTo(Color.Gray, animationSpec = tween(1000))
+    }
+
+
     Column(
         modifier = modifier
             .fillMaxWidth()
             .fillMaxHeight()
+            .background(color.value)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -136,4 +142,16 @@ private fun DeleteMyAccountCard(deleteMyAccount: () -> Unit) {
             onDismissRequest = { showWarningDialog = false }
         )
     }
+}
+
+
+@Composable
+fun CrazyBox() {
+    val color = remember { Animatable(Color.Gray) }
+    LaunchedEffect(Unit) {
+        color.animateTo(Color.Red, animationSpec = tween(1000))
+        color.animateTo(Color.Gray, animationSpec = tween(1000))
+    }
+    Box(Modifier.fillMaxSize().background(color.value))
+
 }
