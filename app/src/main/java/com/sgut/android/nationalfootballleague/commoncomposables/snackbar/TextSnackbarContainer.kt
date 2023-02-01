@@ -36,7 +36,6 @@ fun TextSnackbarContainer(
             }
         }
 
-        // Override shapes to not use the ones coming from the MdcTheme
         MaterialTheme(shapes = Shapes()) {
             SnackbarHost(
                 hostState = snackbarHostState,

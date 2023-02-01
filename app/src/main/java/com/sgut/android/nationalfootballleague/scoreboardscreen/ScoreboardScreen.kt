@@ -36,10 +36,10 @@ import java.util.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScoreboardScreen(
+    modifier: Modifier = Modifier,
     sport: String,
     league: String,
     scoreboardViewModel: ScoreboardViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier,
     navController: NavController,
 ) {
 
@@ -227,10 +227,12 @@ fun TeamComponent2(
     val team2Score = compScoreboard.competitors[SECOND_TEAM].score
     val whiteColor = Color.White
 
-    val dateString = compScoreboard.date?.toDate()?.formatTo("MM-dd-yyyy")
-    val date = compScoreboard.date.toString()
+    val dateString = compScoreboard.date?.toDate()?.formatTo("MMM-dd")
+    val date = compScoreboard.date?.toDate()?.formatTo("K:mm aa")
 
-    Log.d("DATE", date)
+    Log.d("DATE-Time", date.toString())
+    Log.d("DATE-String", dateString.toString())
+
 
 
     Card(modifier = modifier
@@ -255,7 +257,6 @@ fun TeamComponent2(
             .fillMaxWidth(3f)) {
 
             Surface(color = Color.LightGray.copy(alpha = 0.3f), modifier = modifier.fillMaxSize()) {
-
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Row(
                         horizontalArrangement = Arrangement.Start,
@@ -324,18 +325,29 @@ fun TeamComponent2(
 
 //                Game id for info or date
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
                     Text(text = compScoreboard.status?.type?.description ?: "",
                         style = TextStyle(fontSize = 12.sp),
                         color = Color.White,
                         textAlign = TextAlign.Center)
 
-                    Text(
-                        text = date ?: "",
-                        style = TextStyle(fontSize = 9.sp),
-                        color = Color.White,
-                        textAlign = TextAlign.Center)
+
+                        Text(
+                            text = dateString ?: "",
+                            style = TextStyle(fontSize = 9.sp),
+                            color = Color.White,
+                            textAlign = TextAlign.Center)
+                        Text(
+                            text = date ?: "",
+                            style = TextStyle(fontSize = 9.sp),
+                            color = Color.White,
+                            textAlign = TextAlign.Center)
+
+
+
+
 
 
 

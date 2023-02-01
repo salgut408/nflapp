@@ -362,7 +362,7 @@ fun HeaderTeamSlot(competitors: GameDetailsCompetitors) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = competitors.team?.abbreviation ?: "", fontSize = 12.sp)
-            Text(text = competitors.record.getOrNull(0)?.displayValue ?: "", fontSize = 10.sp)
+            Text(text = competitors.record.getOrNull(0)?.summary ?: "", fontSize = 9.sp)
         }
 
         HeaderTeamItem(competitors)
@@ -744,14 +744,24 @@ fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        gameDetailModel.header!!.competitions.map {
-                            Text(text = it.date?.toDate()?.formatTo("MMM/dd/yyyy") ?: "",
-                                style = MaterialTheme.typography.bodyMedium)
+                        gameDetailModel.header.competitions.map {
+                            Text(
+                                text = it.date?.toDate()?.formatTo("MMM/dd") ?: "",
+                                style = MaterialTheme.typography.bodyMedium
+                            )
                         }
 
 
-                        gameDetailModel.header?.competitions?.map { competition ->
-                            Text(text = competition.status?.type?.description ?: "")
+                        gameDetailModel.header.competitions.map { competition ->
+                            Text(
+                                text = competition.status?.type?.description ?: "",
+                                fontSize = 12.sp
+                            )
+                            Text(
+                                text = competition.date?.toDate()?.formatTo("K:mm aa") ?: "",
+                                fontSize = 9.sp
+
+                            )
                         }
 
                     }
