@@ -18,7 +18,6 @@ class EspnAppState(
     private val resources: Resources,
     coroutineScope: CoroutineScope,
     snackbarHostState: SnackbarHostState
-
 ) {
     init {
         coroutineScope.launch{

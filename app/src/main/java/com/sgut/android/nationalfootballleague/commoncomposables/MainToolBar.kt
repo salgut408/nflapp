@@ -14,24 +14,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 
 
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyNewToolBar2(
-currentScreen: String,
-canNavigateBack: Boolean,
-navigateUp: ()->Unit,
-modifier: Modifier = Modifier,
-        scrollBehavior: TopAppBarScrollBehavior
+    currentScreen: String,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit,
+    modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior,
 ) {
 
     TopAppBar(
 
-        title = {Text(text = currentScreen,)  },
+        title = { Text(text = currentScreen) },
 
         navigationIcon = {
-            if(canNavigateBack) {
+            if (canNavigateBack) {
                 IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
@@ -40,19 +38,19 @@ modifier: Modifier = Modifier,
                 }
             }
         },
-       scrollBehavior = scrollBehavior,
+        scrollBehavior = scrollBehavior,
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BasicToolBar(
-    @StringRes title: Int
+    @StringRes title: Int,
 ) {
     TopAppBar(
         title = { Text(stringResource(title)) },
 
-    )
+        )
 }
 
 
@@ -61,7 +59,7 @@ fun ActionToolbar(
     @StringRes title: Int,
     @DrawableRes endActionIcon: Int,
     modifier: Modifier,
-    endAction: () -> Unit
+    endAction: () -> Unit,
 ) {
     androidx.compose.material.TopAppBar(
         title = { androidx.compose.material.Text(stringResource(title)) },

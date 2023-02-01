@@ -1,48 +1,29 @@
 package com.sgut.android.nationalfootballleague.teamdetails
 
-import android.util.Log
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.ui.graphics.Brush
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 
 
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import coil.size.Scale
-import coil.size.ScaleResolver
-import com.sgut.android.nationalfootballleague.Franchise3
 import com.sgut.android.nationalfootballleague.Venue3
-import com.sgut.android.nationalfootballleague.commoncomposables.StatBox
+import com.sgut.android.nationalfootballleague.commoncomposables.InjuriesBox
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoDetailImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.VenueCardImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
-import com.sgut.android.nationalfootballleague.utils.card
 
 @Composable
 fun TeamDetailCard(
@@ -95,7 +76,7 @@ fun TeamDetailCard(
 
 
         //injusries box
-        StatBox(
+        InjuriesBox(
             stats = team.record?.items?.getOrNull(0)?.summary.toString(), team
         )
 //        InjuredAtheleteRow(team)
