@@ -39,12 +39,12 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
-import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
-import com.sgut.android.nationalfootballleague.commoncomposables.GameDetailLogoImageLoader
-import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoader
+import com.sgut.android.nationalfootballleague.R
+import com.sgut.android.nationalfootballleague.commoncomposables.*
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Videos
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
+import com.sgut.android.nationalfootballleague.utils.basicButton
 import com.sgut.android.nationalfootballleague.utils.formatTo
 import com.sgut.android.nationalfootballleague.utils.toDate
 import retrofit2.http.HEAD
@@ -76,6 +76,13 @@ fun GameDetailsScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
+
+        BasicButton(
+            text = R.string.notify_me,
+            modifier = Modifier.basicButton(),
+            action ={ navController.navigate(
+                NavigationScreens.ScoreboardScreen.withArgs(sport,league)
+            ) })
 
         HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
             ?: GameDetailModel())

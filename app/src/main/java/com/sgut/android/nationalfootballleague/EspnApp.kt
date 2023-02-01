@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.Resources
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.material3.Scaffold
@@ -65,6 +66,9 @@ fun EspnApp(
             BottomAppBar(modifier = Modifier) {
                 IconButton(onClick = { appState.navController.navigate(NavigationScreens.SettingsScreen.route) }) {
                     Icon(Icons.Default.Settings, contentDescription = null)
+                }
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(Icons.Default.Menu, contentDescription = null)
                 }
             }
         },

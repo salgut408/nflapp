@@ -157,9 +157,6 @@ fun Navigation(
 }
 
 
-
-
-
 private fun shareTeamAndNextEvent(
     context: Context,
     subject: String,
@@ -179,7 +176,7 @@ private fun shareTeamAndNextEvent(
 }
 
 
-private fun createCalenderNote (
+private fun createCalenderNote(
     context: Context,
 ) {
     val startTime = "2022-02-1T09:00:00"
@@ -191,12 +188,12 @@ private fun createCalenderNote (
     val mEndTime = mSimpleDateFormat.parse(endTime)
 
     val intent = Intent(Intent.ACTION_EDIT).apply {
-     type = "vnd.android.cursor.item/event"
-       putExtra("beginTime", mStartTime.time )
+        type = "vnd.android.cursor.item/event"
+        putExtra("beginTime", mStartTime.time)
         putExtra("time", true)
-       putExtra("rule", "FREQ=YEARLY")
+        putExtra("rule", "FREQ=YEARLY")
         putExtra("endTime", mEndTime.time)
-       putExtra("title", "EVENT")
+        putExtra("title", "EVENT")
     }
     context.startActivity(intent)
 

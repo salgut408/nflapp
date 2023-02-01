@@ -16,9 +16,6 @@ class MainActivity : ComponentActivity() {
 
           val DEBUG_TAG = "NetworkStatusExample"
 
-        val connMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        var isWifiConn: Boolean = false
-        var isMobileConn: Boolean = false
 
 
 
