@@ -108,7 +108,14 @@ fun TeamDetailCard(
 
 object HexToJetpackColor2 {
     fun getColor(colorString: String): Color {
+        if (colorString.equals("")) {
+            return Color.Red
+        } else {
+            return Color(android.graphics.Color.parseColor("#" + colorString))
+
+        }
         return Color(android.graphics.Color.parseColor("#" + colorString))
+
     }
 }
 

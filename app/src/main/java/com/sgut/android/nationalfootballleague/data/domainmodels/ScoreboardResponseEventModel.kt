@@ -6,11 +6,11 @@ import com.sgut.android.nationalfootballleague.*
 data class ScoreboardResponseEventModel(
 
 
-    var leagues: List<LeaguesScoreboard> = listOf(),
-    var season: SeasonScoreboard? = SeasonScoreboard(),
-    var day: DayScoreboard? = DayScoreboard(),
-    var events: List<EventsScoreboard> = listOf(),
-    var week: WeekScoreboard = WeekScoreboard(),
+    val leagues: List<LeaguesScoreboard> = listOf(),
+    val season: SeasonScoreboard? = SeasonScoreboard(),
+    val day: DayScoreboard? = DayScoreboard(),
+    val events: List<EventsScoreboard> = listOf(),
+    val week: WeekScoreboard = WeekScoreboard(),
 
 
     )

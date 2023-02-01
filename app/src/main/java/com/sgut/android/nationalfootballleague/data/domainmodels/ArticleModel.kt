@@ -7,11 +7,11 @@ import com.sgut.android.nationalfootballleague.Links
 import com.sgut.android.nationalfootballleague.data.db.ArticleDbObject
 
 data class ArticleModel(
-    var images: List<ArticleImages> = listOf(),
-    var description: String = "",
-    var published: String = "",
-    var type: String = "",
-    var headline: String = "",
-    var byline: String = "",
+    val images: List<ArticleImages> = listOf(),
+    val description: String = "",
+    val published: String = "",
+    val type: String = "",
+    val headline: String = "",
+    val byline: String = "",
     )
 
