@@ -44,7 +44,7 @@ fun TeamDetailScreen(
 
             TeamRecord(team = team, modifier = Modifier.padding(8.dp))
 
-            Button(onClick = { sendButtonOnclick(team?.name!!, team!!.nextEvent[0].shortName!!) },
+            Button(onClick = { sendButtonOnclick(team.name, team.nextEvent[0].shortName) },
                 modifier.fillMaxWidth()) {
                 Text("Share Next Event")
             }

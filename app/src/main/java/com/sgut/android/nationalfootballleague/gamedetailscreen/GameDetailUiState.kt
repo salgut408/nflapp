@@ -8,13 +8,8 @@ import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 
 data class GameDetailsScreenUiState(
-    var currentSport: String = "",
-    var currentLeague: String = "",
+    val currentSport: String = "",
+    val currentLeague: String = "",
     val currentGameDetails: GameDetailModel? = null,
-
-
-
-
-
 
 )

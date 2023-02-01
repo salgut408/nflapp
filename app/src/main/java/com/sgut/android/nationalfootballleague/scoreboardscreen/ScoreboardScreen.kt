@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.scoreboardscreen
 
+import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -227,8 +228,9 @@ fun TeamComponent2(
     val whiteColor = Color.White
 
     val dateString = compScoreboard.date?.toDate()?.formatTo("MM-dd-yyyy")
+    val date = compScoreboard.date.toString()
 
-
+    Log.d("DATE", date)
 
 
     Card(modifier = modifier
@@ -330,7 +332,7 @@ fun TeamComponent2(
                         textAlign = TextAlign.Center)
 
                     Text(
-                        text = dateString ?: "",
+                        text = date ?: "",
                         style = TextStyle(fontSize = 9.sp),
                         color = Color.White,
                         textAlign = TextAlign.Center)

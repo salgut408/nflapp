@@ -18,17 +18,7 @@ class EspnRepository @Inject constructor(
     val gameDetailsToDomainModelMapper: NetworkGameDetailsToDomainModelMapper
 ) {
 
-    suspend fun getScoreboardResponse(): ScoreboardResponseEventModel {
-        val response = espnApi.getWorldCupScoreboard()
-        if (response.isSuccessful) {
-            val scoreBoardresponse = espnApi.getWorldCupScoreboard().body()
-            return scoreboardDomainMapper.mapToDomainModel(scoreBoardresponse!!)
-        } else {
-            Log.i(javaClass.name, response.errorBody().toString())
-        }
-        val result = espnApi.getWorldCupScoreboard().body()
-        return scoreboardDomainMapper.mapToDomainModel(result!!)
-    }
+
 
     suspend fun saveArticle(article: GameDetailModel){
         sportsDataBase.getArticleDao().insertArticle(article.getArticleForDb())
@@ -192,19 +182,7 @@ class EspnRepository @Inject constructor(
         return teamDomainModelMapper.toDomainList(result!!)
     }
 
-    suspend fun getAllEuroSoccerTeams(): List<TeamDomainModel>{
-        val response = espnApi.getAllUefaSoccerTeams()
-        if (response.isSuccessful){
-            val teamResponse = espnApi.getAllUefaSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-            Log.d("EUFATeams", teamResponse.toString())
-            return teamDomainModelMapper.toDomainList(teamResponse!!)
 
-        } else {
-            Log.e(javaClass.name, response.errorBody().toString())
-        }
-        val result = espnApi.getAllUefaSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-        return teamDomainModelMapper.toDomainList(result!!)
-    }
 
     suspend fun getAllWorldCupTeams(): List<TeamDomainModel> {
         val response = espnApi.getAllFifaSoccerTeams()
@@ -221,18 +199,7 @@ class EspnRepository @Inject constructor(
         return teamDomainModelMapper.toDomainList(result!!)
     }
 
-    suspend fun getSpecificNflTeam(team: String): TeamDetailWithRosterModel {
-        val response = espnApi.getSpecificNflTeam(team)
-        if (response.isSuccessful) {
-            val teamDetailResponse = espnApi.getSpecificNflTeam(team).body()?.team
-            Log.e("repository spefici team", "Response successful $teamDetailResponse")
-            return rosterMapper.mapToDomainModel(teamDetailResponse!!)
-        } else {
-            Log.e(javaClass.name, response.errorBody().toString())
-        }
-        val result = espnApi.getSpecificNflTeam(team).body()?.team
-        return rosterMapper.mapToDomainModel(result!!)
-    }
+
 
     suspend fun getSpecificTeam(
         sport: String,

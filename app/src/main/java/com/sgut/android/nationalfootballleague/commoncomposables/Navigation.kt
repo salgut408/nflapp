@@ -20,6 +20,7 @@ import com.sgut.android.nationalfootballleague.scoreboardscreen.ScoreboardScreen
 import com.sgut.android.nationalfootballleague.settings.SettingsScreen
 import com.sgut.android.nationalfootballleague.sign_up.SignUpScreen
 import com.sgut.android.nationalfootballleague.teamdetails.TeamDetailScreen
+import java.text.SimpleDateFormat
 
 
 @Composable
@@ -56,9 +57,9 @@ fun Navigation(
             )
 
         ) { entry ->
-            var teamName = entry.arguments?.getString("teamName")!!
-            var sportName = entry.arguments?.getString("sport")!!
-            var leagueName = entry.arguments?.getString("league")!!
+            val teamName = entry.arguments?.getString("teamName")!!
+            val sportName = entry.arguments?.getString("sport")!!
+            val leagueName = entry.arguments?.getString("league")!!
 
 
             val context = LocalContext.current
@@ -143,8 +144,8 @@ fun Navigation(
                 },
             )
         ) {
-            var sportName = it.arguments?.getString("sport")!!
-            var leagueName = it.arguments?.getString("league")!!
+            val sportName = it.arguments?.getString("sport")!!
+            val leagueName = it.arguments?.getString("league")!!
 
             ScoreboardScreen(
                 sport = sportName,
@@ -154,6 +155,9 @@ fun Navigation(
         }
     }
 }
+
+
+
 
 
 private fun shareTeamAndNextEvent(
@@ -172,4 +176,28 @@ private fun shareTeamAndNextEvent(
             "Check this out"
         )
     )
+}
+
+
+private fun createCalenderNote (
+    context: Context,
+) {
+    val startTime = "2022-02-1T09:00:00"
+    val endTime = "2022-02-1T12:00:00"
+
+    // Parsing the date and time
+    val mSimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+    val mStartTime = mSimpleDateFormat.parse(startTime)
+    val mEndTime = mSimpleDateFormat.parse(endTime)
+
+    val intent = Intent(Intent.ACTION_EDIT).apply {
+     type = "vnd.android.cursor.item/event"
+       putExtra("beginTime", mStartTime.time )
+        putExtra("time", true)
+       putExtra("rule", "FREQ=YEARLY")
+        putExtra("endTime", mEndTime.time)
+       putExtra("title", "EVENT")
+    }
+    context.startActivity(intent)
+
 }
