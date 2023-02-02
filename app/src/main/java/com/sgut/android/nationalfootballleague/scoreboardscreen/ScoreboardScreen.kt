@@ -98,7 +98,6 @@ fun ScoreboardScreen(
             "football" ->
 
                 OutlinedButton(onClick = {
-
                     scoreboardViewModel.onYesterdayClick(sport, league, week)
                 },
                     modifier = Modifier.basicButton()) {
@@ -130,7 +129,8 @@ fun TeamsMatchUpListFromEvents(
                     modifier = Modifier,
                     navController = navController,
                     sport = sport,
-                    league = league)
+                    league = league,
+                )
             }
         }
     }
@@ -244,7 +244,7 @@ fun TeamComponent2(
                 compScoreboard.id ?: ""))
         }) {
         
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = { }) {
             Text(text = "Notify me")
         }
 

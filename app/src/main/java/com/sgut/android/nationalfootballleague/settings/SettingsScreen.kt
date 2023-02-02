@@ -150,7 +150,9 @@ fun CrazyBox() {
     val color = remember { Animatable(Color.Gray) }
     LaunchedEffect(Unit) {
         color.animateTo(Color.Red, animationSpec = tween(1000))
-        color.animateTo(Color.Gray, animationSpec = tween(1000))
+        color.animateTo(Color.Yellow, animationSpec = tween(1000))
+        color.animateTo(Color.Magenta, animationSpec = tween(1000))
+        color.animateTo(Color.Cyan, animationSpec = tween(1000))
     }
     Box(Modifier.fillMaxSize().background(color.value))
 

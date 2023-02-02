@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -44,6 +45,8 @@ import com.sgut.android.nationalfootballleague.commoncomposables.*
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Videos
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FIRST_TEAM
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.SECOND_TEAM
 import com.sgut.android.nationalfootballleague.utils.basicButton
 import com.sgut.android.nationalfootballleague.utils.formatTo
 import com.sgut.android.nationalfootballleague.utils.toDate
@@ -77,12 +80,7 @@ fun GameDetailsScreen(
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
 
-        BasicButton(
-            text = R.string.notify_me,
-            modifier = Modifier.basicButton(),
-            action ={ navController.navigate(
-                NavigationScreens.ScoreboardScreen.withArgs(sport,league)
-            ) })
+
 
         HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
             ?: GameDetailModel())
@@ -238,7 +236,24 @@ fun ExpandableGameArticle(gameDetailModel: GameDetailModel, gameDetailViewModel:
                     Text(text = gameDetailModel.singleArticle?.source ?: "")
                 }
             }
-            Button(onClick = { gameDetailViewModel.onSaveArticleClick(gameDetailModel)}) {
+            var isPressed by remember { mutableStateOf(false)}
+
+            PressIconButton(onClick = {
+                gameDetailViewModel.onSaveArticleClick(gameDetailModel)
+                Log.d("SAVE BUTTON", gameDetailModel.singleArticle?.headline.toString())
+                when(isPressed){
+                    true -> isPressed = false
+                    false -> isPressed = true
+                }
+                                      },
+                icon = { Icon(Icons.Default.Favorite, contentDescription = null) },
+                text = { Text(if(isPressed) "Saved" else "Save for later") },
+                isPressed = isPressed )
+
+
+            Button(
+                onClick = {
+                    gameDetailViewModel.onSaveArticleClick(gameDetailModel)}) {
                 Text(text = "Read later")
             }
         }
@@ -729,6 +744,13 @@ fun RightToLeftLayout(
 @Composable
 fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
     Card() {
+
+//        BasicButton(
+//            text = R.string.notify_me,
+//            modifier = Modifier.basicButton(),
+//            action ={ }
+//        )
+
         Box(modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)) {
@@ -738,8 +760,11 @@ fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
+
+
+
                 gameDetailModel.header?.competitions!!.map { competition ->
-                    HeaderTeamSlot(competitors = competition.competitors.get(0))
+                    HeaderTeamSlot(competitors = competition.competitors.get(FIRST_TEAM))
 
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -767,7 +792,7 @@ fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
                     }
 
                     RightToLeftLayout {
-                        HeaderTeamSlot(competitors = competition.competitors.get(1))
+                        HeaderTeamSlot(competitors = competition.competitors.get(SECOND_TEAM))
 
                     }
                 }

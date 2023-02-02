@@ -1,12 +1,16 @@
 package com.sgut.android.nationalfootballleague.commoncomposables
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.provider.AlarmClock
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -65,10 +69,14 @@ fun Navigation(
             val context = LocalContext.current
 
             TeamDetailScreen(
-                team = teamName, sport = sportName, league = leagueName,
+                team = teamName,
+                sport = sportName,
+                league = leagueName,
                 sendButtonOnclick = { subject: String, summary: String ->
-                    shareTeamAndNextEvent(context,
-                        subject, summary)
+                    shareTeamAndNextEvent(
+                        context,
+                        subject, summary
+                    )
                 }
             )
         }
@@ -125,7 +133,6 @@ fun Navigation(
 
             GameDetailsScreen(
                 navController = appState.navController,
-
                 sport = sportName,
                 league = leagueName,
                 event = event,
@@ -147,10 +154,13 @@ fun Navigation(
             val sportName = it.arguments?.getString("sport")!!
             val leagueName = it.arguments?.getString("league")!!
 
+
+
             ScoreboardScreen(
                 sport = sportName,
                 league = leagueName,
-                navController = appState.navController
+                navController = appState.navController,
+
             )
         }
     }
@@ -175,6 +185,24 @@ private fun shareTeamAndNextEvent(
     )
 }
 
+ fun alarmIntent(
+    context: Context,
+    title: String,
+    hour: Int,
+    minutes: Int
+
+) {
+
+
+    val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+        putExtra(AlarmClock.EXTRA_MESSAGE, title)
+        putExtra(AlarmClock.EXTRA_HOUR, hour)
+        putExtra(AlarmClock.EXTRA_MINUTES, minutes)
+    }
+        context.startActivity(intent)
+
+
+}
 
 private fun createCalenderNote(
     context: Context,
