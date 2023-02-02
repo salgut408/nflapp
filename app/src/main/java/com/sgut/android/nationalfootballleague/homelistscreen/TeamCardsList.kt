@@ -40,22 +40,6 @@ fun HomeTeamCardsListScreen(
         content = { padding ->
             Column() {
 
-                val context = LocalContext.current
-                var isPressed by remember { mutableStateOf(false)}
-
-
-                PressIconButton(
-                    onClick = {
-                        when(isPressed){
-                            true -> isPressed = false
-                            false -> isPressed = true
-                        }
-                    },
-                    icon = { Icon(Icons.Filled.ShoppingCart, contentDescription = null) },
-                    text = { Text("Add to cart") },
-                    isPressed = isPressed
-
-                )
 
 
                 LazyRow(

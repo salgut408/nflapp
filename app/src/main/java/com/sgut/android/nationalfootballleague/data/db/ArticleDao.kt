@@ -1,7 +1,6 @@
 package com.sgut.android.nationalfootballleague.data.db
 
 import androidx.room.*
-import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
 
 @Dao
 interface ArticleDao {

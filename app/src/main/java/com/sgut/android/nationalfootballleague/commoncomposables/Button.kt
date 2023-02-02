@@ -3,17 +3,32 @@ package com.sgut.android.nationalfootballleague.commoncomposables
 import android.graphics.drawable.Icon
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.ripple.RippleAlpha
+import androidx.compose.material.ripple.RippleTheme
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+
+
+@Composable
+fun ButtonWithState() {
+
+}
 
 
 @Composable
@@ -121,3 +136,38 @@ fun PressIconButton(
         text()
     }
 }
+
+
+@Composable
+fun NewButton(text: @Composable () -> Unit) {
+    val interactionSource = remember { MutableInteractionSource()}
+    val rippleColor = Color.Red
+    val shape = RoundedCornerShape(size = 16.dp)
+
+    OutlinedButton(
+        onClick = { /*TODO*/ },
+        modifier = Modifier
+            .clip(shape = shape)
+            .indication(
+                interactionSource = interactionSource,
+                indication = rememberRipple(
+                    color = rippleColor,
+                    radius = 90.dp
+                )
+            )
+            .height(height = 50.dp),
+        shape = shape,
+        interactionSource = interactionSource
+    ) {
+        text()
+    }
+}
+
+
+//private object RippleCustomTheme: RippleTheme {
+//    override fun defaultColor() = RippleTheme.defaultRippleColor(Color.Cyan, lightTheme = true)
+//
+//    override fun rippleAlpha(): RippleAlpha =
+//        RippleTheme.defaultRippleAlpha(Color.Blue, lightTheme = true)
+//
+//}

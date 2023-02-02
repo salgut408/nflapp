@@ -23,6 +23,7 @@ import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScreens
+import com.sgut.android.nationalfootballleague.commoncomposables.NewButton
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoScoreboardImageLoader
 import com.sgut.android.nationalfootballleague.gamedetailscreen.*
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
@@ -63,6 +64,9 @@ fun ScoreboardScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        NewButton(
+            text = {Text(text = "NewButton")}
+        )
 
         Row(
             horizontalArrangement = Arrangement.Center,

@@ -251,11 +251,7 @@ fun ExpandableGameArticle(gameDetailModel: GameDetailModel, gameDetailViewModel:
                 isPressed = isPressed )
 
 
-            Button(
-                onClick = {
-                    gameDetailViewModel.onSaveArticleClick(gameDetailModel)}) {
-                Text(text = "Read later")
-            }
+
         }
     }
 }
