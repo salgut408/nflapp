@@ -40,8 +40,6 @@ fun HomeTeamCardsListScreen(
         content = { padding ->
             Column() {
 
-
-
                 LazyRow(
                     contentPadding = PaddingValues(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(4.dp),

@@ -156,7 +156,6 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getAllSoccerTeams()
             soccerTeamsList.value = result
-            Log.i("tag", result.toString())
 
         } catch (e: Exception) {
             Log.i("tag",e.message.toString())
@@ -168,11 +167,9 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getAllWorldCupTeams()
             worldCupTeams.value = result
-            Log.i("tag", result.toString())
 
         } catch (e: Exception) {
-            Log.i("tag",e.message.toString())
-
+            Log.e("tag",e.message.toString())
         }
     }
 
@@ -180,7 +177,6 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getAllWomensBasketballTeams()
             womensBasketballTeamsList.value = result
-            Log.i("tag", result.toString())
 
         } catch (e: Exception) {
             Log.i("tag",e.message.toString())
@@ -192,7 +188,6 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getAllCollegeBasketballTeams()
             collegeBasketballTeams.value = result
-            Log.i("tag", result.toString())
 
         } catch (e: Exception) {
             Log.i("tag",e.message.toString())

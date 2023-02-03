@@ -2,7 +2,9 @@ package com.sgut.android.nationalfootballleague.gamedetailscreen
 
 import android.util.Log
 import android.widget.TextView
+import androidx.compose.animation.Animatable
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -20,9 +22,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -51,6 +56,7 @@ import com.sgut.android.nationalfootballleague.utils.basicButton
 import com.sgut.android.nationalfootballleague.utils.formatTo
 import com.sgut.android.nationalfootballleague.utils.toDate
 import retrofit2.http.HEAD
+import kotlin.math.min
 import kotlin.math.nextUp
 
 
@@ -79,7 +85,6 @@ fun GameDetailsScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-
 
 
         HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
@@ -1636,23 +1641,10 @@ fun EventNews(
     modifier: Modifier,
 ) {
 
-
 }
 
-//@Composable
-//fun EventDetailArticle() {
-//    val context = LocalContext.current
-//    val exoPlayer = remember (context) {
-//        ExoPlayer.Builder(context).build().apply{
-//            val dataSourceFactory: DataSource.Factory = DefaultDataSource.Factory(context, Util.getUserAgent(context, context.packageName))
-//        }
-//    }
-//
-//}
 
 @Composable
 fun SecondVideoPlayer(video: Videos) {
 
 }
-
-

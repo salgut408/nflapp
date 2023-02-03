@@ -3,6 +3,7 @@ package com.sgut.android.nationalfootballleague.scoreboardscreen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sgut.android.nationalfootballleague.CompetitionsScoreboard
 import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.ScoreboardResponseEventModel
 import com.sgut.android.nationalfootballleague.data.repository.EspnRepository
@@ -24,14 +25,20 @@ class ScoreboardViewModel @Inject constructor(
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())
     var scoreboardUiState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
 
+    private var competitionMap: HashMap<String, CompetitionsScoreboard> = HashMap()
+
+
+
      var currentDate: Int
      var week: Int = 0
 
     init {
-//        loadScoreboard()
+
         currentDate = getYesterdaysDate()
         week = _scoreboardUiState.value.scoreboardUiStateEvents.week.week
+        Log.d("HASHMAP", competitionMap.toString())
     }
+
 
 
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
@@ -63,16 +70,6 @@ class ScoreboardViewModel @Inject constructor(
         _scoreboardUiState.update {
             it.copy(scoreboardUiStateEvents = scoreboardUiStateEvents, currentSport = currentSport, currentLeague = currentLeague, currentArticles = currentArticles,  )
         }
-    }
-
-
-    fun getDate(): Int {
-        val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
-        val formatted = current.format(formatter).toInt()
-        return formatted
-
-
     }
 
 
