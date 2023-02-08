@@ -1,8 +1,14 @@
 package com.sgut.android.nationalfootballleague.utils
 
+import android.graphics.RenderEffect
+import android.graphics.Shader
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asComposeRenderEffect
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 
 
@@ -41,3 +47,16 @@ fun Modifier.spacer(): Modifier {
 fun Modifier.smallSpacer(): Modifier {
     return this.fillMaxWidth().height(8.dp)
 }
+
+@RequiresApi(Build.VERSION_CODES.S)
+fun Modifier.customBlur(blur: Float) = this.then(
+    graphicsLayer {
+        if (blur > 0f) {
+            renderEffect = RenderEffect.createBlurEffect(
+                blur,
+                blur,
+                Shader.TileMode.DECAL,
+            ).asComposeRenderEffect()
+        }
+    }
+)

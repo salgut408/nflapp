@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Brush
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sgut.android.nationalfootballleague.Venue3
+import com.sgut.android.nationalfootballleague.commoncomposables.HeadingSection
 import com.sgut.android.nationalfootballleague.commoncomposables.InjuriesBox
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoDetailImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.VenueCardImageLoader
@@ -34,6 +36,8 @@ fun TeamDetailCard(
     val altcolor = HexToJetpackColor2.getColor(team.alternateColor)
     val scrollState = rememberScrollState()
 
+
+
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -42,6 +46,7 @@ fun TeamDetailCard(
             .background(Brush.verticalGradient(listOf(color, altcolor))
             )
     ) {
+
 
         Row(verticalAlignment = Alignment.CenterVertically){
 
@@ -68,7 +73,12 @@ fun TeamDetailCard(
 
 
         VenueCard(venue3 = team.franchise?.venue ?: Venue3(), modifier = Modifier.fillMaxWidth())
-        AtheleteRow(team)
+
+        HeadingSection(modifier = Modifier, "Atheletes", team.name,
+            { AtheleteRow(team) })
+
+
+//        AtheleteRow(team)
 
         team.nextEvent.map { nextEvent ->
             NextEvent(nextEvent3 = nextEvent, modifier = modifier)
@@ -145,3 +155,5 @@ fun VenueCard(
             }
         }
 }
+
+

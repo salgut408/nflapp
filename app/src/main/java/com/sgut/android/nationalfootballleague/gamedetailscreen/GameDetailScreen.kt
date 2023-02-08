@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.gamedetailscreen
 
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
@@ -56,6 +57,8 @@ import com.sgut.android.nationalfootballleague.utils.basicButton
 import com.sgut.android.nationalfootballleague.utils.formatTo
 import com.sgut.android.nationalfootballleague.utils.toDate
 import retrofit2.http.HEAD
+import java.time.Duration
+import java.time.LocalDateTime
 import kotlin.math.min
 import kotlin.math.nextUp
 
@@ -71,6 +74,7 @@ fun GameDetailsScreen(
 
     ) {
 
+
     gameDetailViewModel.loadGameDetails(sport, league, event)
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
@@ -85,7 +89,6 @@ fun GameDetailsScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-
 
         HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
             ?: GameDetailModel())
@@ -221,6 +224,7 @@ fun ExpandableGameArticle(gameDetailModel: GameDetailModel, gameDetailViewModel:
             .animateContentSize(animationSpec = tween(100))
             .fillMaxWidth()
             .padding(4.dp)
+
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null
@@ -242,10 +246,12 @@ fun ExpandableGameArticle(gameDetailModel: GameDetailModel, gameDetailViewModel:
                 }
             }
             var isPressed by remember { mutableStateOf(false)}
-
+            val context = LocalContext.current
             PressIconButton(onClick = {
                 gameDetailViewModel.onSaveArticleClick(gameDetailModel)
+
                 Log.d("SAVE BUTTON", gameDetailModel.singleArticle?.headline.toString())
+                Toast.makeText(context, "Added to articles for later", Toast.LENGTH_SHORT).show()
                 when(isPressed){
                     true -> isPressed = false
                     false -> isPressed = true
@@ -272,7 +278,9 @@ fun HtmlText(html: String, modifier: Modifier = Modifier) {
 
 @Composable
 fun WeightedRows(header: GameDetailModel) {
-    Card(modifier = Modifier.fillMaxWidth()) {
+    Card(modifier = Modifier.fillMaxWidth()
+
+    ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Row(modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -744,7 +752,9 @@ fun RightToLeftLayout(
 
 @Composable
 fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
-    Card() {
+    Card(
+        
+    ) {
 
 //        BasicButton(
 //            text = R.string.notify_me,
@@ -788,6 +798,7 @@ fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
                                 fontSize = 9.sp
 
                             )
+
                         }
 
                     }

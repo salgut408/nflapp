@@ -14,21 +14,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
-          val DEBUG_TAG = "NetworkStatusExample"
-
-
-
+        val DEBUG_TAG = "NetworkStatusExample"
 
         super.onCreate(savedInstanceState)
         setContent {
             NationalFootballLeagueTheme {
-
-
-
                 EspnApp()
-
-
-
             }
         }
     }

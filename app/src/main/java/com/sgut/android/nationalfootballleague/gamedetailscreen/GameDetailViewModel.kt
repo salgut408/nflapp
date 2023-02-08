@@ -66,6 +66,7 @@ class GameDetailViewModel @Inject constructor(
 
     fun onSaveArticleClick(article: GameDetailModel)= viewModelScope.launch {
         espnRepository.saveArticle(article)
+
     }
 
 

@@ -5,8 +5,10 @@ import android.content.Intent
 import android.content.res.Resources
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -38,10 +40,14 @@ fun EspnApp(
     val backStackEntry by appState.navController.currentBackStackEntryAsState()
     val currentScreen = backStackEntry?.destination?.route ?: NavigationScreens.MainScreenTeamsList.route
     val snackbarHostState = remember { SnackbarHostState() }
+    val scaffoldState = rememberScaffoldState()
+
 
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+
+
 
         topBar = {
             MyNewToolBar2(
@@ -69,6 +75,9 @@ fun EspnApp(
                 }
                 IconButton(onClick = { /*TODO*/ }) {
                     Icon(Icons.Default.Menu, contentDescription = null)
+                }
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(Icons.Default.Favorite, contentDescription = null)
                 }
             }
         },

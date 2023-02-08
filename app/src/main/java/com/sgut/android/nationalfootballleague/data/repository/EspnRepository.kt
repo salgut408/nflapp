@@ -5,6 +5,7 @@ import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.domainmodels.*
 import com.sgut.android.nationalfootballleague.data.dtomappers.*
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class EspnRepository @Inject constructor(
@@ -25,9 +26,9 @@ class EspnRepository @Inject constructor(
         Log.d("ARTICLE_SAVED", "")
     }
 
-    suspend fun getSavedArticles(){
-        sportsDataBase.getArticleDao().getAllSavedArticles()
-    }
+//    suspend fun getSavedArticles(): Flow<List<ArticleModel>> = {
+//        sportsDataBase.getArticleDao().getAllSavedArticles().map }
+//    }
 
 
 

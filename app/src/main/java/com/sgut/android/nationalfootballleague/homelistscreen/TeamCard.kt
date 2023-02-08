@@ -3,7 +3,11 @@ package com.sgut.android.nationalfootballleague.homelistscreen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScreens
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoImageLoader
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
@@ -45,8 +50,7 @@ fun TeamCard(
         Box(
             modifier = Modifier.background(
                 Brush.verticalGradient(
-                    listOf(color, Color.White
-                    )
+                    listOf(color, Color.White)
                 )
             )
         ) {
@@ -55,14 +59,29 @@ fun TeamCard(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.fillMaxWidth()) {
 
-                TeamLogoImageLoader(team = team)
+                GenericImageLoader(
+                    obj = team.logos?.getOrNull(0)?.href ?: "",
+                    modifier = Modifier
+                        .size(150.dp)
+                        .padding(8.dp)
+                )
 
                 Text(
                     text = team.shortDisplayName,
                     color = Color(color.value),
                     fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
+                    fontSize = 25.sp
                 )
+
+                FloatingActionButton(
+                    onClick = { /*TODO*/ },
+                    shape = CircleShape,
+                    contentColor = Color.Black,
+                    containerColor = Color.White
+                ) {
+                   Icon(Icons.Default.Add, null)
+                }
+                
             }
         }
     }

@@ -34,6 +34,18 @@
     <string name="watc">Watch</string>
     <string name="scores_games">"Scores and Games"</string>
     <string name="notify_me">Notify Me</string>
+    <string name="NFL_League">NFL</string>
+    <string name="NHL_league">NHL</string>
+    <string name="MLB_league">MLB</string>
+    <string name="NBA_league">NBA</string>
+    <string name="WNBA_league">WNBA</string>
+    <string name="NCAA_football">NCAA Football</string>
+    <string name="NCAA_mens_basketball">NCAA Basketball</string>
+    <string name="MLS_league">MLS</string>
+    <string name="world_cup">World Cup</string>
+    <string name="la_liga">La Liga</string>
+    <string name="premier_league">Premier League</string>
+    <string name="euro_soccer">Euro Soccer</string>
 
 
 </resources>
