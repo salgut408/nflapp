@@ -3,9 +3,7 @@ package com.sgut.android.nationalfootballleague.gamedetailscreen
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
-import androidx.compose.animation.Animatable
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -23,12 +21,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -36,7 +31,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -46,23 +40,21 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
-import com.sgut.android.nationalfootballleague.R
-import com.sgut.android.nationalfootballleague.commoncomposables.*
+import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
+import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoader
+import com.sgut.android.nationalfootballleague.commoncomposables.PressIconButton
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Videos
+import com.sgut.android.nationalfootballleague.di.DrawerTopAppBar
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FIRST_TEAM
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.SECOND_TEAM
-import com.sgut.android.nationalfootballleague.utils.basicButton
 import com.sgut.android.nationalfootballleague.utils.formatTo
 import com.sgut.android.nationalfootballleague.utils.toDate
-import retrofit2.http.HEAD
-import java.time.Duration
-import java.time.LocalDateTime
-import kotlin.math.min
 import kotlin.math.nextUp
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameDetailsScreen(
     modifier: Modifier = Modifier,
@@ -72,93 +64,105 @@ fun GameDetailsScreen(
     event: String,
     gameDetailViewModel: GameDetailViewModel = hiltViewModel(),
 
+
     ) {
-
-
     gameDetailViewModel.loadGameDetails(sport, league, event)
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
     Log.d("GAMEDETAIL-UISTATE", gameDetailUiState.toString())
 
 
-    Column(
-        modifier
-            .verticalScroll(rememberScrollState())
-            .padding(8.dp),
-
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceEvenly
-    ) {
-
-        HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
-            ?: GameDetailModel())
-
-
-        Spacer(modifier = modifier.height(8.dp))
-
-        WeightedRows(header = gameDetailUiState.currentGameDetails ?: GameDetailModel())
-
-        when (gameDetailUiState.currentSport) {
-            "basketball" -> DoughnutChartForBasketball(
-                gameDetailModel = gameDetailUiState.currentGameDetails
-                    ?: GameDetailModel(),
-            )
-            "football" -> DoughnutChart2(
-                gameDetailModel = gameDetailUiState.currentGameDetails
-                    ?: GameDetailModel(),
-            )
-        }
-
-
-//
-//        SeasonLeaders(gameDetailModel = gameDetailUiState.currentGameDetails
-//            ?: GameDetailModel())
-
-
-        SeasonLeaders(
-            gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel()
-        )
+    Scaffold(
         
-//        BoxScore(boxscore = gameDetailUiState.currentGameDetails?.boxscore ?: GameDetailsBoxscore())
+        floatingActionButton = { FloatingActionButton(onClick = { /*TODO*/ }) {
+            
+        }},
+
+        content = { padding ->
+            Column(
+                modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(8.dp),
+
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceEvenly
+            ) {
 
 
 
-        NewVidList(
-            vidList = gameDetailUiState.currentGameDetails?.videos ?: listOf()
-        )
-
-        TabsLastFiveGames(
-            lastFiveGames = gameDetailUiState.currentGameDetails?.lastFiveGames ?: listOf()
-        )
+                HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
+                    ?: GameDetailModel())
 
 
+                Spacer(modifier = modifier.height(8.dp))
 
-        ExpandableGameArticle(
-            gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(), gameDetailViewModel
-        )
+                WeightedRows(header = gameDetailUiState.currentGameDetails ?: GameDetailModel())
 
-        FindTickets(
-            ticketsInfo = gameDetailUiState.currentGameDetails?.ticketsInfo
-                ?: GameDetailsTicketsInfo()
-        )
+                when (gameDetailUiState.currentSport) {
+                    "basketball" -> DoughnutChartForBasketball(
+                        gameDetailModel = gameDetailUiState.currentGameDetails
+                            ?: GameDetailModel(),
+                    )
+                    "football" -> DoughnutChart2(
+                        gameDetailModel = gameDetailUiState.currentGameDetails
+                            ?: GameDetailModel(),
+                    )
+                }
 
-        InjuriesReportCard(gameDetailModel = gameDetailUiState.currentGameDetails
-            ?: GameDetailModel())
+                
 
 
-        GameInformation(
-            gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
-        )
-
-        TeamStatCard3(boxscore = gameDetailUiState.currentGameDetails?.boxscore
-            ?: GameDetailsBoxscore())
+                SeasonLeaders(
+                    gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel()
+                )
 
 
 
-        WinProbabilityGraph(winProbability = gameDetailUiState.currentGameDetails?.winprobability
-            ?: listOf())
+                NewVidList(
+                    vidList = gameDetailUiState.currentGameDetails?.videos ?: listOf()
+                )
 
-    }
+                TabsLastFiveGames(
+                    lastFiveGames = gameDetailUiState.currentGameDetails?.lastFiveGames ?: listOf()
+                )
+
+
+
+                ExpandableGameArticle(
+                    gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
+                    gameDetailViewModel
+                )
+
+                FindTickets(
+                    ticketsInfo = gameDetailUiState.currentGameDetails?.ticketsInfo
+                        ?: GameDetailsTicketsInfo()
+                )
+
+                InjuriesReportCard(gameDetailModel = gameDetailUiState.currentGameDetails
+                    ?: GameDetailModel())
+
+
+                GameInformation(
+                    gameDetailModel = gameDetailUiState.currentGameDetails ?: GameDetailModel(),
+                )
+
+                TeamStatCard3(boxscore = gameDetailUiState.currentGameDetails?.boxscore
+                    ?: GameDetailsBoxscore())
+
+
+
+                WinProbabilityGraph(winProbability = gameDetailUiState.currentGameDetails?.winprobability
+                    ?: listOf())
+
+            }
+
+        }
+    )
+
+
+
+
+
 }
 
 
@@ -213,7 +217,10 @@ fun BoxScore2(boxscore: GameDetailsBoxscore) {
 
 
 @Composable
-fun ExpandableGameArticle(gameDetailModel: GameDetailModel, gameDetailViewModel: GameDetailViewModel) {
+fun ExpandableGameArticle(
+    gameDetailModel: GameDetailModel,
+    gameDetailViewModel: GameDetailViewModel,
+) {
     var showMore by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
@@ -245,22 +252,23 @@ fun ExpandableGameArticle(gameDetailModel: GameDetailModel, gameDetailViewModel:
                     Text(text = gameDetailModel.singleArticle?.source ?: "")
                 }
             }
-            var isPressed by remember { mutableStateOf(false)}
+            var isPressed by remember { mutableStateOf(false) }
             val context = LocalContext.current
-            PressIconButton(onClick = {
+            PressIconButton(
+                onClick = {
                 gameDetailViewModel.onSaveArticleClick(gameDetailModel)
 
                 Log.d("SAVE BUTTON", gameDetailModel.singleArticle?.headline.toString())
                 Toast.makeText(context, "Added to articles for later", Toast.LENGTH_SHORT).show()
-                when(isPressed){
+                when (isPressed) {
                     true -> isPressed = false
                     false -> isPressed = true
                 }
-                                      },
+            },
                 icon = { Icon(Icons.Default.Favorite, contentDescription = null) },
-                text = { Text(if(isPressed) "Saved" else "Save for later") },
-                isPressed = isPressed )
-
+                text = { Text(if (isPressed) "Saved" else "Save for later") },
+                isPressed = isPressed
+            )
 
 
         }
@@ -744,8 +752,9 @@ fun SeasonLeadersPlayer(athlete: AthleteLeaders) {
 
 @Composable
 fun RightToLeftLayout(
-    content: @Composable () -> Unit
-) { CompositionLocalProvider( LocalLayoutDirection provides LayoutDirection.Rtl) {
+    content: @Composable () -> Unit,
+) {
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         content()
     }
 }
@@ -753,7 +762,7 @@ fun RightToLeftLayout(
 @Composable
 fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
     Card(
-        
+
     ) {
 
 //        BasicButton(
@@ -771,7 +780,6 @@ fun HeaderStatusSlot(gameDetailModel: GameDetailModel) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-
 
 
                 gameDetailModel.header?.competitions!!.map { competition ->

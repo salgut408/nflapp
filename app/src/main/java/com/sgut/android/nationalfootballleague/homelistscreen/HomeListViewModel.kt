@@ -174,6 +174,8 @@ class HomeListViewModel @Inject constructor(
     }
 
 
+
+
     fun setLaLigaTeams() {
         _ListUiState.update {
             it.copy(currentTeams = laLigaTeams.value,
@@ -271,6 +273,8 @@ class HomeListViewModel @Inject constructor(
                 currentLeague = "fifa.world")
         }
     }
+
+
 
     fun setAccount() = viewModelScope.launch {
         if (!accountService.hasUser) {
