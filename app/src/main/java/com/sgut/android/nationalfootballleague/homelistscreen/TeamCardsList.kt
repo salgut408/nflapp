@@ -151,20 +151,22 @@ fun HomeTeamCardsListScreen(
                     })
 
 
-                LazyColumn(contentPadding = PaddingValues(8.dp)) {
+                ListOfTeams2(uiState = uiState, navController = navController)
 
-                    items(items = uiState.currentTeams) { team ->
-                        Row(Modifier.animateItemPlacement()) {
-                            TeamCard(
-                                team = team,
-                                modifier = Modifier.padding(8.dp),
-                                navController,
-                                sport = sport,
-                                league = league
-                            )
-                        }
-                    }
-                }
+//                LazyColumn(contentPadding = PaddingValues(8.dp)) {
+//
+//                    items(items = uiState.currentTeams) { team ->
+//                        Row(Modifier.animateItemPlacement()) {
+//                            TeamCard(
+//                                team = team,
+//                                modifier = Modifier.padding(8.dp),
+//                                navController,
+//                                sport = sport,
+//                                league = league
+//                            )
+//                        }
+//                    }
+//                }
             }
         },
 
