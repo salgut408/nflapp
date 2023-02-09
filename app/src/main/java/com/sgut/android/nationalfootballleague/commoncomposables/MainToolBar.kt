@@ -69,6 +69,8 @@ fun DrawerTopAppBar(
     onMlbClick: () -> Unit,
     onNbaClick: () -> Unit,
     onWnbaClick: () -> Unit,
+    onNcaaFootballClick: () -> Unit,
+
 
 
 
@@ -80,7 +82,7 @@ fun DrawerTopAppBar(
 //            MoreSportsMenu(onSportClick)
                          },
         actions = {
-            MoreSportsMenu(onNhlClick, onNflClick, onMlbClick, onNbaClick, onWnbaClick)
+            MoreSportsMenu(onNhlClick, onNflClick, onMlbClick, onNbaClick, onWnbaClick, onNcaaFootballClick)
                   },
         modifier = Modifier.fillMaxWidth()
     )
@@ -93,6 +95,10 @@ fun MoreSportsMenu(
     onMlbClick: () -> Unit,
     onNbaClick: () -> Unit,
     onWnbaClick: () -> Unit,
+    onNcaaFootballClick: () -> Unit,
+
+
+
 
 
 
@@ -106,6 +112,8 @@ fun MoreSportsMenu(
         DropdownMenuItem(text = { Text(text = "MLB") }, onClick = { onMlbClick(); closeMenu()})
         DropdownMenuItem(text = { Text(text = "NBA") }, onClick = { onNbaClick(); closeMenu()})
         DropdownMenuItem(text = { Text(text = "WNBA") }, onClick = { onWnbaClick(); closeMenu()})
+        DropdownMenuItem(text = { Text(text = "NCAA Football") }, onClick = { onNcaaFootballClick(); closeMenu()})
+
 
 
 

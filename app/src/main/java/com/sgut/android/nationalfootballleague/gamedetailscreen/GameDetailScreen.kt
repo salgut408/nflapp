@@ -73,10 +73,7 @@ fun GameDetailsScreen(
 
 
     Scaffold(
-        
-        floatingActionButton = { FloatingActionButton(onClick = { /*TODO*/ }) {
-            
-        }},
+
 
         content = { padding ->
             Column(

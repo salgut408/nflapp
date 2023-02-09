@@ -38,13 +38,6 @@ fun HomeTeamCardsListScreen(
     val scrollState = rememberScrollState()
 
     Scaffold(
-        topBar = {
-//            DrawerTopAppBar(
-//                openDrawer = openDrawer,
-//                onHockeyClick = { homeListViewModel.setHockeyTeam() },
-//                onNflClick = { homeListViewModel.setFootballTeam() },
-//            )
-        },
         content = { padding ->
 
             Column() {
@@ -55,7 +48,8 @@ fun HomeTeamCardsListScreen(
                     onNflClick = { homeListViewModel.setFootballTeam() },
                     onMlbClick = { homeListViewModel.setBaseballTeam() },
                     onNbaClick = { homeListViewModel.setBasketballTeam() },
-                    onWnbaClick = { homeListViewModel.setWnbaTeam() }
+                    onWnbaClick = { homeListViewModel.setWnbaTeam() },
+                    onNcaaFootballClick = { homeListViewModel.setCollegeTeam() }
                 )
 
                 LazyRow(

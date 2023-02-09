@@ -18,6 +18,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sgut.android.nationalfootballleague.NextEvent3
+import com.sgut.android.nationalfootballleague.utils.formatTo
+import com.sgut.android.nationalfootballleague.utils.toDate
 
 @Composable
 fun NextEvent(
@@ -55,8 +57,9 @@ fun NextEvent(
                 letterSpacing = 5.sp,
                 fontWeight = FontWeight.Bold
             )
-            Text(text = nextEvent3.date)
-            
+
+            Text(text = nextEvent3.date.toDate()?.formatTo("MMM/dd") ?: "")
+
         }
 
 
