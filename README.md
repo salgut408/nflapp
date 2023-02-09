@@ -1,4 +1,14 @@
 # Sports App
+
+A work-in-progress Sports App 
+This project is a personal sandbox of sorts, experimenting with the latest libraries and tools. These include:
+-100% Kotlin
+-UI wwritten in Jetpack Compose
+-Dependacy Injections with Hilt
+-AGSL rendering
+
+
+
 100% Jetpack compose && MVVM Architecture for sports.
 UDF & reactice programing with Kotlin Flow API
 App State & ScreeUIStates
@@ -11,6 +21,6 @@ The ViewModel is implemented as ScreenViewModel, which exposes a StateFlow<Scree
 ScreenViewState contains the complete view state for the screen as an @Immutable data class.
 The UI uses ScreenViewModel, and observes it's ScreenViewState as Compose State, using collectAsStateWithLifecycle():
   
-  The Repository class is responsible for handling the data fetching of all information:
+The Repository class is responsible for handling the data fetching of all information:
 
 
