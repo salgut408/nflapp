@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague.homelistscreen
 
 import android.graphics.drawable.Icon
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -10,10 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,29 +28,41 @@ import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
 @Composable
 fun ArticleCard(
     articleModel: ArticleModel,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Card(
         shape = RoundedCornerShape(10.dp),
+        colors = CardDefaults.cardColors(),
         modifier = modifier
-        .height(200.dp)
-        .padding(4.dp)
-        .width(200.dp)) {
-        Box() {
-            Column(modifier = Modifier.fillMaxWidth()) {
+
+            .height(200.dp)
+            .padding(8.dp)
+            .width(200.dp)
+    ) {
+        Box(modifier = modifier
+            .background(MaterialTheme.colorScheme.secondary)
+            .fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.secondary)
+
+            ) {
 
 
-                GenericImageLoader(obj = articleModel.images.getOrNull(0)?.url.toString(), modifier = Modifier.width(200.dp))
+                GenericImageLoader(obj = articleModel.images.getOrNull(0)?.url.toString(),
+                    modifier = Modifier.width(200.dp))
 
-                    Text(
-                        text = articleModel.headline,
-                        style = MaterialTheme.typography.bodySmall,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(8.dp),
-                        textAlign = TextAlign.Left,
-                        maxLines = 3,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                Text(
+                    text = articleModel.headline,
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(8.dp),
+                    textAlign = TextAlign.Left,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onSecondary,
+                )
 
             }
         }
@@ -61,19 +71,19 @@ fun ArticleCard(
 }
 
 @Composable
-fun ArticleList(articleList: List<ArticleModel>, ) {
+fun ArticleList(articleList: List<ArticleModel>) {
     LazyColumn(contentPadding = PaddingValues(8.dp)) {
         items(items = articleList) { article ->
-                ArticleCard(articleModel = article, modifier = Modifier.padding(8.dp))
+            ArticleCard(articleModel = article, modifier = Modifier.padding(8.dp))
         }
     }
 }
 
 @Composable
-fun ArticleRow(articleList: List<ArticleModel>, ) {
+fun ArticleRow(articleList: List<ArticleModel>) {
     LazyRow(contentPadding = PaddingValues(8.dp)) {
         items(items = articleList) { article ->
-            ArticleCard(articleModel = article, modifier = Modifier.padding(8.dp))
+            ArticleCard(articleModel = article, modifier = Modifier)
         }
     }
 }

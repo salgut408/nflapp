@@ -60,13 +60,12 @@ fun ScoreboardScreen(
     Column(
         modifier
             .verticalScroll(rememberScrollState())
-            .padding(8.dp),
+            .padding(8.dp)
+            .background(MaterialTheme.colorScheme.background)
+        ,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        NewButton(
-            text = {Text(text = "NewButton")}
-        )
 
         Row(
             horizontalArrangement = Arrangement.Center,
@@ -80,6 +79,7 @@ fun ScoreboardScreen(
                 maxLines = 4,
                 overflow = TextOverflow.Visible,
                 lineHeight = 40.sp,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .width(200.dp)
                     .padding(8.dp)
@@ -152,6 +152,8 @@ fun EventsHeadLines(events: List<EventsScoreboard>) {
         }
     }
 }
+
+
 
 @Composable
 fun TeamComponent(team: CompetitorsScoreboard, modifier: Modifier) {
