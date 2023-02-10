@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import kotlin.math.max
 
 import androidx.compose.foundation.shape.CircleShape
@@ -13,31 +12,27 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.sgut.android.nationalfootballleague.Leagues
-import com.sgut.android.nationalfootballleague.Teams
-import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoader
+import com.sgut.android.nationalfootballleague.Athletes
 import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScreens
 import com.sgut.android.nationalfootballleague.commoncomposables.SportSurface
 import com.sgut.android.nationalfootballleague.commoncomposables.VerticalGrid
-import com.sgut.android.nationalfootballleague.data.domainmodels.League
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
-import kotlin.math.ln
 
 
 @Composable
@@ -47,10 +42,11 @@ fun ListOfTeams2(
 
 ) {
     LazyColumn {
-        items (items = uiState.currentTeams) {
+        items (items = uiState.currentTeams) { team ->
+
             TeamsCollection(
                 teams = uiState.currentTeams,
-                index = 0,
+                index = uiState.currentTeams.indexOf(team),
                 navController = navController,
                 sport = uiState.currentSport,
                 league = uiState.currentLeague
@@ -62,7 +58,6 @@ fun ListOfTeams2(
 
 @Composable
 fun TeamsCollection(
-//    leagueMod: Leagues,
     teams: List<TeamDomainModel>,
     index: Int,
     modifier: Modifier = Modifier,
@@ -129,14 +124,15 @@ fun TeamDisplayTile(
             },
         content = {
             Text(
-                text = team.displayName,
+                text = team.shortDisplayName,
+                color = color2,
                 modifier = Modifier
                     .padding(4.dp)
                     .padding(start = 8.dp)
             )
             TeamLogoImage(
                 team = team,
-                contentDescription = null,
+                contentDescription = "",
                 modifier = Modifier.fillMaxSize()
             )
         }
@@ -150,11 +146,11 @@ fun TeamDisplayTile(
             height = constraints.minHeight
         ) {
             textPlaceable.placeRelative(
-                x = 0,
+                x = textWidth,
                 y = (constraints.maxHeight - textPlaceable.height) / 2
             )
             imagePlaceable.placeRelative(
-                x = textWidth,
+                x = 0,
                 y = (constraints.maxHeight - imagePlaceable.height) / 2 // centered
             )
         }
@@ -175,20 +171,24 @@ fun TeamLogoImage(
     val color = HexToJetpackColor2.getColor(team.color)
 
     SportSurface(
-        color = Color.LightGray,
+        color = color,
         elevation = elevation,
         shape = CircleShape,
         modifier = modifier
     ) {
 
-        GenericImageLoader(
-            obj = team.logos?.getOrNull(0)?.href ?: "",
-            modifier = Modifier.fillMaxSize()
+        
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(team.logos?.getOrNull(0)?.href ?: "")
+                .crossfade(true)
+                .build(),
+
+            contentDescription = contentDescription,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
         )
 
     }
 
 }
-
-
-

@@ -23,17 +23,20 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Scale
 import coil.util.CoilUtils
 import com.sgut.android.nationalfootballleague.Athletes
 import com.sgut.android.nationalfootballleague.R
+import com.sgut.android.nationalfootballleague.commoncomposables.SportSurface
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 
 @Composable
@@ -187,3 +190,88 @@ fun AltheleteCard3(
         }
     }
 }
+
+
+@Composable
+fun AthleteImage2(
+    athletes: Athletes,
+    contentDescription: String?,
+    modifier: Modifier = Modifier,
+    elevation: Dp = 0.dp,
+) {
+    SportSurface(
+        color = Color.LightGray,
+        elevation = elevation,
+        shape = CircleShape,
+        modifier = modifier
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(athletes.headshot.href)
+                .crossfade(true)
+                .build(),
+            contentDescription = contentDescription,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+    }
+}
+
+@Composable
+fun VerticalAthleteCard(
+    athelete: Athletes,
+    modifier: Modifier = Modifier,
+) {
+    SportSurface(
+        shape = MaterialTheme.shapes.medium,
+        modifier = Modifier.padding(
+            start = 4.dp,
+            end= 4.dp,
+            bottom = 8.dp
+        )
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .clickable { }
+                .padding(8.dp)
+        ) {
+            AthleteImage2(
+                athletes = athelete,
+                contentDescription = "" ,
+                elevation = 4.dp,
+                modifier = Modifier.size(120.dp)
+            )
+            Row(){
+                Text(
+                    text = athelete.displayName,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+                Text(
+                    text = " ${ athelete.jersey }",
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
+            Text(
+                text = athelete.position.displayName,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+            Row{
+                Text(
+                    text = athelete.displayHeight,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+                Text(
+                    text = "/",
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+                Text(
+                    text = athelete.displayWeight,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
+
+        }
+    }
+}
+
