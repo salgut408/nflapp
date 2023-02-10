@@ -1,13 +1,19 @@
 package com.sgut.android.nationalfootballleague.commoncomposables
 
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
@@ -73,6 +79,35 @@ fun TeamLogoImageloadiner2(team: TeamScoreboard) {
         modifier = Modifier.size(140.dp)
     )
 }
+
+
+
+
+@Composable
+fun GeneralImageLoader(
+    href: String,
+    contentDescription: String?,
+    modifier: Modifier = Modifier,
+    elevation: Dp = 0.dp,
+) {
+    SportSurface(
+        color = Color.Transparent,
+        elevation = elevation,
+        shape = RoundedCornerShape(10.dp),
+        modifier = modifier
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(href)
+                .crossfade(true)
+                .build(),
+            contentDescription = contentDescription,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+    }
+}
+
 
 @Composable
 fun ArticleCardImageLoader(articleModel: ArticleModel) {

@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -37,7 +38,9 @@ import coil.util.CoilUtils
 import com.sgut.android.nationalfootballleague.Athletes
 import com.sgut.android.nationalfootballleague.R
 import com.sgut.android.nationalfootballleague.commoncomposables.SportSurface
+import com.sgut.android.nationalfootballleague.commoncomposables.TeamSurface
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 
 @Composable
 fun AtheleteCard(
@@ -192,6 +195,9 @@ fun AltheleteCard3(
 }
 
 
+
+
+
 @Composable
 fun AthleteImage2(
     athletes: Athletes,
@@ -221,14 +227,19 @@ fun AthleteImage2(
 fun VerticalAthleteCard(
     athelete: Athletes,
     modifier: Modifier = Modifier,
+    team: TeamDetailWithRosterModel
 ) {
+
+    val color = HexToJetpackColor2.getColor(team.color)
+
     SportSurface(
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier.padding(
             start = 4.dp,
             end= 4.dp,
             bottom = 8.dp
-        )
+        ),
+
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -236,12 +247,22 @@ fun VerticalAthleteCard(
                 .clickable { }
                 .padding(8.dp)
         ) {
-            AthleteImage2(
-                athletes = athelete,
-                contentDescription = "" ,
-                elevation = 4.dp,
-                modifier = Modifier.size(120.dp)
-            )
+
+            Box(
+                modifier = Modifier.wrapContentSize()
+                    .background(color = color)
+
+            ){
+                AthleteImage2(
+                    athletes = athelete,
+                    contentDescription = "" ,
+                    elevation = 4.dp,
+                    modifier = Modifier.size(120.dp)
+
+                )
+            }
+
+
             Row(){
                 Text(
                     text = athelete.displayName,

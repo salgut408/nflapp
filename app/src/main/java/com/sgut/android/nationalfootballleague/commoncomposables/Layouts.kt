@@ -9,9 +9,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
 
 
 @Composable
@@ -50,6 +55,23 @@ fun VerticalGrid(
     }
 
 }
+
+@Composable
+fun SportDivider(
+    modifier: Modifier = Modifier,
+    color: Color = Color.Yellow,
+    thickness: Dp = 1.dp,
+    startIndent: Dp = 0.dp
+) {
+    Divider(
+        modifier = modifier,
+        color = color,
+        thickness = thickness,
+    )
+    
+}
+
+
 
 @Composable
 fun HeadingSection(modifier: Modifier = Modifier, title: String, subtitle: String, content: @Composable ()-> Unit) {

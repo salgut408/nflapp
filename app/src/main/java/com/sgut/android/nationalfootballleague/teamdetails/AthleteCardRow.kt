@@ -27,7 +27,7 @@ fun AtheleteRow(
         items(athletesList){ athlete ->
             if (athlete != null) {
 //                AltheleteCard3(athelete = athlete, modifier = Modifier.padding(5.dp))
-                VerticalAthleteCard(athelete = athlete, )
+                VerticalAthleteCard(athelete = athlete, team = team)
             }
         }
     }

@@ -34,26 +34,29 @@ fun TeamDetailScreen(
 
     if (team != null) {
 
-        Column(
-            modifier
-                .verticalScroll(rememberScrollState())
-                .padding(vertical = 8.dp)
-        ) {
+        NewTeamDetailCard(team = team, modifier = Modifier)
 
-            TeamDetailCard(team = team, modifier = Modifier.padding(8.dp))
 
-            TeamRecord(team = team, modifier = Modifier.padding(8.dp))
-
-            Button(onClick = { sendButtonOnclick(team.name, team.nextEvent[0].shortName) },
-                modifier.fillMaxWidth()) {
-                Text("Share Next Event")
-            }
-
-            Text(teamDetailUiState.currentSport)
-            Text(teamDetailUiState.currentLeague)
-            Text(teamDetailUiState.currentTeamDetails?.abbreviation ?: "")
-
-        }
+//        Column(
+//            modifier
+//                .verticalScroll(rememberScrollState())
+//                .padding(vertical = 8.dp)
+//        ) {
+//
+////            TeamDetailCard(team = team, modifier = Modifier.padding(8.dp))
+//
+//
+//
+////            Button(onClick = { sendButtonOnclick(team.name, team.nextEvent[0].shortName) },
+////                modifier.fillMaxWidth()) {
+////                Text("Share Next Event")
+////            }
+////
+////            Text(teamDetailUiState.currentSport)
+////            Text(teamDetailUiState.currentLeague)
+////            Text(teamDetailUiState.currentTeamDetails?.abbreviation ?: "")
+//
+//        }
 
     } else {
         DataLoadingComponent()

@@ -11,14 +11,43 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.material.LocalContentColor
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.graphics.*
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
+import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 import kotlin.math.ln
+
+@Composable
+fun TeamSurface(
+    modifier: Modifier = Modifier,
+    shape: Shape = RectangleShape,
+    contentColor: Color = MaterialTheme.colorScheme.onBackground,
+    border: BorderStroke? = null,
+    elevation: Dp = 0.dp,
+    team: TeamDetailWithRosterModel,
+    content: @Composable () -> Unit
+) {
+    val color = HexToJetpackColor2.getColor(team.color)
+    val color2 = HexToJetpackColor2.getColor(team.alternateColor)
+    Box(
+        modifier = modifier
+            .shadow(elevation = elevation, shape = shape, clip = false)
+            .zIndex(elevation.value)
+            .then(if (border != null) Modifier.border(border, shape) else Modifier)
+            .background(
+                Brush.verticalGradient(listOf(color, color2)),
+                shape = shape
+            )
+            .clip(shape)
+    ) {
+        CompositionLocalProvider(LocalContentColor provides contentColor, content = content)
+
+    }
+}
+
 
 
 @Composable
