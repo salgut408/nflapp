@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.teamdetails
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -75,24 +76,28 @@ fun TeamRecord(
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier.fillMaxWidth()
+
+
+            modifier = modifier.fillMaxWidth().background(MaterialTheme.colorScheme.secondary),
+
 
         ) {
-            Text(text = team.record?.items?.getOrNull(0)?.summary ?: "" , fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
-            Text(text = team.record?.items?.getOrNull(0)?.type ?: "")
+            Text(text = team.record?.items?.getOrNull(0)?.summary ?: "" , fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSecondary)
+            Text(text = team.record?.items?.getOrNull(0)?.type ?: "", color =  MaterialTheme.colorScheme.onSecondary)
         }
 
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.background(MaterialTheme.colorScheme.secondary)
         ) {
             Column() {
                 recordItems?.map { recordItems ->
-                    Text(text = recordItems?.name ?: "", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Text(text = recordItems?.name ?: "", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSecondary)
                 }
             }
             Column() {
                 recordItems?.map { recordItems ->
-                    Text(text = recordItems?.value.toString(), fontSize = 12.sp)
+                    Text(text = recordItems?.value.toString(), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSecondary)
                 }
             }
         }
