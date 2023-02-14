@@ -24,7 +24,6 @@ import com.sgut.android.nationalfootballleague.utils.textButton
 import com.sgut.android.nationalfootballleague.R.string as AppText
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     openAndPopUp: (String, String) -> Unit,

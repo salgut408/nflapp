@@ -34,7 +34,6 @@ fun ArticleCard(
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(),
         modifier = modifier
-
             .height(200.dp)
             .padding(8.dp)
             .width(200.dp)
@@ -46,13 +45,9 @@ fun ArticleCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.secondary)
-
             ) {
-
-
                 GenericImageLoader(obj = articleModel.images.getOrNull(0)?.url.toString(),
                     modifier = Modifier.width(200.dp))
-
                 Text(
                     text = articleModel.headline,
                     style = MaterialTheme.typography.bodySmall,
@@ -63,11 +58,9 @@ fun ArticleCard(
                     overflow = TextOverflow.Ellipsis,
                     color = MaterialTheme.colorScheme.onSecondary,
                 )
-
             }
         }
     }
-
 }
 
 @Composable
@@ -113,7 +106,6 @@ fun HeadLine() {
             }
         }
     }
-
 }
 
 
