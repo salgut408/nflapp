@@ -43,9 +43,9 @@ import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.PressIconButton
+import com.sgut.android.nationalfootballleague.commoncomposables.VideoPlayer
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Videos
-import com.sgut.android.nationalfootballleague.di.DrawerTopAppBar
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FIRST_TEAM
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.SECOND_TEAM
@@ -545,6 +545,10 @@ fun VideoPreview(
             modifier = Modifier.fillMaxSize()
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
+
+                VideoPlayer(video)
+                Log.d("Video", video.links?.source?.mezzanine?.href ?: "")
+
                 GenericImageLoader(
                     obj = video.thumbnail ?: "",
                     modifier = Modifier.width(200.dp)
@@ -559,15 +563,7 @@ fun VideoPreview(
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
-                Text(
-                    text = video.duration?.div(60)?.toFloat().toString(),
-                    style = MaterialTheme.typography.bodySmall,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(8.dp),
-                    textAlign = TextAlign.Left,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
-                )
+
             }
 
 

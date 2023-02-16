@@ -5,9 +5,6 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -23,7 +20,6 @@ import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.NavigationScreens
-import com.sgut.android.nationalfootballleague.commoncomposables.NewButton
 import com.sgut.android.nationalfootballleague.commoncomposables.TeamLogoScoreboardImageLoader
 import com.sgut.android.nationalfootballleague.gamedetailscreen.*
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
@@ -90,10 +86,6 @@ fun ScoreboardScreen(
                 modifier = Modifier.fillMaxSize()
             )
         }
-
-
-
-
 
 
         Row() { ArticleRow(articleList = articles) }
