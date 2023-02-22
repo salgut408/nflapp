@@ -254,6 +254,7 @@ fun ExpandableGameArticle(
             PressIconButton(
                 onClick = {
                 gameDetailViewModel.onSaveArticleClick(gameDetailModel)
+                    Toast.makeText(context, "Saved to list", Toast.LENGTH_SHORT).show()
 
                 Log.d("SAVE BUTTON", gameDetailModel.singleArticle?.headline.toString())
                 Toast.makeText(context, "Added to articles for later", Toast.LENGTH_SHORT).show()
