@@ -39,6 +39,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.R
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.commoncomposables.DetailVenueCardImageLoader
 import com.sgut.android.nationalfootballleague.commoncomposables.GenericImageLoader
@@ -86,10 +87,11 @@ fun GameDetailsScreen(
             ) {
 
 
-
                 HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
                     ?: GameDetailModel())
 
+
+                PickCenter(pickCenterInfo = ((gameDetailUiState.currentGameDetails?.pickcenter ?: Pickcenter()) as Pickcenter))
 
                 Spacer(modifier = modifier.height(8.dp))
 
@@ -106,7 +108,7 @@ fun GameDetailsScreen(
                     )
                 }
 
-                
+
 
 
                 SeasonLeaders(
@@ -155,9 +157,6 @@ fun GameDetailsScreen(
 
         }
     )
-
-
-
 
 
 }
@@ -234,35 +233,46 @@ fun ExpandableGameArticle(
                 indication = null
             ) { showMore = !showMore }) {
 
-            if (showMore) {
-                HtmlText(html = gameDetailModel.singleArticle?.story ?: "")
+
+            if (gameDetailModel.singleArticle?.story?.isEmpty() == true) {
+                Text(text = "")
             } else {
-                Text(
-                    text = gameDetailModel.singleArticle?.headline ?: "",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-                HtmlText(html = gameDetailModel.singleArticle?.description ?: "")
-                Row() {
-                    Text(text = gameDetailModel.singleArticle?.published ?: "")
-                    Text(text = " - ")
-                    Text(text = gameDetailModel.singleArticle?.source ?: "")
+                if (showMore) {
+                    HtmlText(html = gameDetailModel.singleArticle?.story ?: "")
+                } else {
+                    Text(
+                        text = gameDetailModel.singleArticle?.headline ?: "",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+
+
+                    HtmlText(html = gameDetailModel.singleArticle?.description ?: "")
+                    Row() {
+                        Text(text = gameDetailModel.singleArticle?.published ?: "")
+
+                        Text(text = " - ")
+                        Text(text = gameDetailModel.singleArticle?.source ?: "")
+                    }
                 }
             }
+
+
             var isPressed by remember { mutableStateOf(false) }
             val context = LocalContext.current
             PressIconButton(
                 onClick = {
-                gameDetailViewModel.onSaveArticleClick(gameDetailModel)
+                    gameDetailViewModel.onSaveArticleClick(gameDetailModel)
                     Toast.makeText(context, "Saved to list", Toast.LENGTH_SHORT).show()
 
-                Log.d("SAVE BUTTON", gameDetailModel.singleArticle?.headline.toString())
-                Toast.makeText(context, "Added to articles for later", Toast.LENGTH_SHORT).show()
-                when (isPressed) {
-                    true -> isPressed = false
-                    false -> isPressed = true
-                }
-            },
+                    Log.d("SAVE BUTTON", gameDetailModel.singleArticle?.headline.toString())
+                    Toast.makeText(context, "Added to articles for later", Toast.LENGTH_SHORT)
+                        .show()
+                    when (isPressed) {
+                        true -> isPressed = false
+                        false -> isPressed = true
+                    }
+                },
                 icon = { Icon(Icons.Default.Favorite, contentDescription = null) },
                 text = { Text(if (isPressed) "Saved" else "Save for later") },
                 isPressed = isPressed
@@ -829,51 +839,55 @@ fun InjuriesReportCard(
     val team1Logo = gameDetailModel.injuries.getOrNull(0)?.team
     val team2Logo = gameDetailModel.injuries.getOrNull(1)?.team
 
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ) {
-        Text(
-            text = "Injury Report",
-            fontSize = 26.sp,
-            fontWeight = FontWeight.SemiBold
-        )
-
-        Divider()
-
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+    if (injuries1?.injuries?.isEmpty() == true) {
+        Text(text = "")
+    } else {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
         ) {
-            if (team1Logo != null) {
-                GenericImageLoader(obj = team1Logo.logo, modifier = Modifier.size(35.dp))
+            Text(
+                text = "Injury Report",
+                fontSize = 26.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Divider()
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (team1Logo != null) {
+                    GenericImageLoader(obj = team1Logo.logo, modifier = Modifier.size(35.dp))
+                }
+                Text(text = team1Display ?: "", fontWeight = FontWeight.Bold)
+
+
             }
-            Text(text = team1Display ?: "", fontWeight = FontWeight.Bold)
 
-
-        }
-
-        if (injuries1 != null) {
-            InjuryColumn(injuries = injuries1)
-        }
-
-
-
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            if (team2Logo != null) {
-                GenericImageLoader(obj = team2Logo.logo, modifier = Modifier.size(35.dp))
+            if (injuries1 != null) {
+                InjuryColumn(injuries = injuries1)
             }
-            Text(text = team2Display ?: "", fontWeight = FontWeight.Bold)
-        }
-        if (injuries2 != null) {
-            InjuryColumn(injuries = injuries2)
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                if (team2Logo != null) {
+                    GenericImageLoader(obj = team2Logo.logo, modifier = Modifier.size(35.dp))
+                }
+                Text(text = team2Display ?: "", fontWeight = FontWeight.Bold)
+            }
+            if (injuries2 != null) {
+                InjuryColumn(injuries = injuries2)
+            }
         }
     }
+
+
 }
 
 @Composable
@@ -1234,8 +1248,10 @@ fun SeasonLeaders() {
 }
 
 @Composable
-fun PickCenter() {
-
+fun PickCenter(pickCenterInfo: Pickcenter) {
+    Card() {
+        Text(text = pickCenterInfo.provider?.name ?: "")
+    }
 }
 
 @Composable
@@ -1346,69 +1362,78 @@ fun FindTickets(ticketsInfo: GameDetailsTicketsInfo) {
     val shortDate = ticketsInfo.seatSituation?.dateShort
     val dateDay = ticketsInfo.seatSituation?.dateDay
     val dropDownOptions = ticketsInfo.tickets
-    Card(
-        modifier = Modifier
-            .fillMaxWidth(),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            Text(
-                text = "Find Tickets",
-                textAlign = TextAlign.Start,
-                fontSize = 26.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
-        Divider()
-        Row(
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        ) {
-            Text(
-                text = "$team1 vs $team2",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
-        Row(
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        ) {
-            Text(
-                text = "$venueName - $dateDay $shortDate",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal,
-                color = Color.Gray
-            )
-        }
-        Row(
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        ) {
-            Text(
-                text = ticketsInfo.seatSituation?.summary ?: "",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal,
-                color = Color.Blue
-            )
-        }
-        Divider()
-        Row(
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        ) {
-            Text(
-                text = "Buy $team2 tickets with VividSeats",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal,
-                color = Color.Blue
-            )
-        }
-        Divider()
 
-        // dropdowm
-        DropDownFun(dropDownOptions)
+    if (ticketsInfo.tickets.isEmpty()) {
+        Text(text = "")
+    } else {
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "Find Tickets",
+                    textAlign = TextAlign.Start,
+                    fontSize = 26.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+            Divider()
+            Row(
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(
+                    text = "$team1 vs $team2",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+            Row(
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(
+                    text = "$venueName - $dateDay $shortDate",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Gray
+                )
+            }
+            Row(
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(
+                    text = ticketsInfo.seatSituation?.summary ?: "",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Blue
+                )
+            }
+            Divider()
+            Row(
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(
+                    text = "Buy $team2 tickets with VividSeats",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Blue
+                )
+            }
+            Divider()
+
+            // dropdowm
+            DropDownFun(dropDownOptions)
+
+        }
 
     }
+
+
 }
 
 @Composable
@@ -1485,16 +1510,13 @@ fun SznLeaders(leaders: List<GameDetailsLeaders2>) {
 fun SeasonLeaders2(seasonLeader: GameDetailsLeaders2) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-
-
         horizontalArrangement = Arrangement.Start
     ) {
-
 
         Column() {
             Text(text = seasonLeader.displayName.uppercase(), fontSize = 16.sp)
             Text(text = seasonLeader.leadersAthlete.getOrNull(0)?.athlete?.shortName ?: "",
-                fontSize = 13.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.SemiBold)
             Text(text = seasonLeader.leadersAthlete.getOrNull(0)?.displayValue ?: "",
                 fontSize = 10.sp,
@@ -1588,29 +1610,39 @@ fun LastFiveGameRow(lastEvents: GameDetailsEvents) {
 
 
 @Composable
-fun LastFiveGames2(lastFiveGames: List<LastFiveGames>, teamInt: Int) {
+fun LastFiveGames2(
+    lastFiveGames: List<LastFiveGames>,
+    teamInt: Int
+) {
     val team1Info = lastFiveGames.getOrNull(teamInt)
     val team2Info = lastFiveGames.getOrNull(1)
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-    ) {
-        Text(text = "Last Five Games",
-            fontSize = 26.sp,
-            fontWeight = FontWeight.SemiBold)
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly,
+
+    if (lastFiveGames.isEmpty()) {
+        Text(text = "")
+    } else {
+        Card(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(8.dp),
         ) {
-            Text(text = "DATE")
-            Text(text = "OPP")
-            Text(text = "RESULT")
+            Text(text = "Last Five Games",
+                fontSize = 26.sp,
+                fontWeight = FontWeight.SemiBold)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Text(text = "DATE")
+                Text(text = "OPP")
+                Text(text = "RESULT")
+            }
+            team1Info?.lastEvents?.map { LastFiveGameRow(lastEvents = it) }
         }
-        team1Info?.lastEvents?.map { LastFiveGameRow(lastEvents = it) }
     }
+
+
 }
 
 @Composable

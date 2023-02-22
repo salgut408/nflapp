@@ -48,7 +48,7 @@ fun TeamDetailCard(
     ) {
 
 
-        Row(verticalAlignment = Alignment.CenterVertically){
+        Row(verticalAlignment = Alignment.CenterVertically) {
 
             TeamLogoDetailImageLoader(team)
 
@@ -58,7 +58,6 @@ fun TeamDetailCard(
                     style = MaterialTheme.typography.displayMedium,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Justify,
-
                     color = Color.White
                 )
             }
@@ -66,10 +65,11 @@ fun TeamDetailCard(
         }
         Text(
             text = team.standingSummary,
-            style = MaterialTheme.typography.displaySmall,
+            fontSize = 12.sp,
             color = Color.White,
-            textAlign = TextAlign.Center,
-            )
+            textAlign = TextAlign.Left,
+        )
+
 
 
         VenueCard(venue3 = team.franchise?.venue ?: Venue3(), modifier = Modifier.fillMaxWidth())
@@ -117,43 +117,43 @@ fun VenueCard(
     modifier: Modifier,
 ) {
 
+    Box(
+        modifier = Modifier.height(200.dp)
+    ) {
+        // image ()
+        VenueCardImageLoader(venue3)
         Box(
-            modifier = Modifier.height(200.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            contentAlignment = Alignment.TopEnd
         ) {
-            // image ()
-            VenueCardImageLoader(venue3)
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                contentAlignment = Alignment.TopEnd
-            ) {
-                Row() {
-                    val offset = Offset(5.0f, 5.0f)
-                    Text(
-                        text =venue3.fullName,
-                        style = TextStyle(
-                            fontSize = 54.sp,
-                            shadow = Shadow(
-                                color = Color.Black,
-                                offset = offset,
-                                blurRadius = 3f
-                            )
-                        ),
-                        textAlign = TextAlign.Right,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = Color.White
-                    )
-                }
-                Row(){
-                    Text(
-                        text =venue3.address?.city.toString() + " ," + venue3.address?.state.toString() ,
-                        style = TextStyle(color = Color.White, fontSize = 16.sp),
-                        textAlign = TextAlign.Left,
+            Row() {
+                val offset = Offset(5.0f, 5.0f)
+                Text(
+                    text = venue3.fullName,
+                    style = TextStyle(
+                        fontSize = 54.sp,
+                        shadow = Shadow(
+                            color = Color.Black,
+                            offset = offset,
+                            blurRadius = 3f
                         )
-                }
+                    ),
+                    textAlign = TextAlign.Right,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = Color.White
+                )
+            }
+            Row() {
+                Text(
+                    text = venue3.address?.city.toString() + " ," + venue3.address?.state.toString(),
+                    style = TextStyle(color = Color.White, fontSize = 16.sp),
+                    textAlign = TextAlign.Left,
+                )
             }
         }
+    }
 }
 
 
