@@ -33,7 +33,7 @@ fun ButtonWithState() {
 fun BasicTextButton(
     @StringRes text: Int,
     modifier: Modifier,
-    action: () -> Unit
+    action: () -> Unit,
 ) {
     TextButton(
         onClick = action,
@@ -49,14 +49,14 @@ fun BasicTextButton(
 fun BasicButton(
     @StringRes text: Int,
     modifier: Modifier,
-    action: () -> Unit
+    action: () -> Unit,
 ) {
     Button(
         onClick = action,
         modifier = modifier,
         colors =
         ButtonDefaults.buttonColors(
-            backgroundColor =MaterialTheme.colors.primary,
+            backgroundColor = MaterialTheme.colors.primary,
             contentColor = MaterialTheme.colors.onPrimary
         )
     ) {
@@ -67,7 +67,7 @@ fun BasicButton(
 @Composable
 fun DialogConfirmButton(
     @StringRes text: Int,
-    action: () -> Unit
+    action: () -> Unit,
 ) {
     Button(
         onClick = action,
@@ -84,7 +84,7 @@ fun DialogConfirmButton(
 @Composable
 fun DialogCancelButton(
     @StringRes text: Int,
-    action: () -> Unit
+    action: () -> Unit,
 ) {
     Button(
         onClick = action,
@@ -106,11 +106,12 @@ fun PressIconButton(
     icon: @Composable () -> Unit,
     text: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    isPressed: Boolean
+    isPressed: Boolean,
 ) {
 
 
-    Button(onClick = onClick,
+    Button(
+        onClick = onClick,
         modifier = modifier,
         colors =
         ButtonDefaults.buttonColors(
@@ -120,14 +121,10 @@ fun PressIconButton(
         interactionSource = remember { MutableInteractionSource() }
     ) {
         AnimatedVisibility(visible = isPressed) {
-
-
             if (isPressed) {
-
                 Row {
                     icon()
                     Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-
                 }
             }
         }
@@ -138,7 +135,7 @@ fun PressIconButton(
 
 @Composable
 fun NewButton(text: @Composable () -> Unit) {
-    val interactionSource = remember { MutableInteractionSource()}
+    val interactionSource = remember { MutableInteractionSource() }
     val rippleColor = Color.Red
     val shape = RoundedCornerShape(size = 16.dp)
 

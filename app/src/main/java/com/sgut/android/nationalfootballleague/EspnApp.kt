@@ -70,7 +70,9 @@ fun EspnApp(
 
         bottomBar = {
             BottomAppBar(modifier = Modifier) {
-                IconButton(onClick = { appState.navController.navigate(NavigationScreens.SettingsScreen.route) }) {
+                IconButton(onClick = { appState.navController.navigate(NavigationScreens.SettingsScreen.route){
+                    this.launchSingleTop = true
+                } }) {
                     Icon(Icons.Default.Settings, contentDescription = null)
                 }
                 IconButton(onClick = { /*TODO*/ }) {
