@@ -1,10 +1,6 @@
 package com.sgut.android.nationalfootballleague.data.domainmodels
 
-import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.ArticleCategories
 import com.sgut.android.nationalfootballleague.ArticleImages
-import com.sgut.android.nationalfootballleague.Links
-import com.sgut.android.nationalfootballleague.data.db.ArticleDbObject
 
 data class ArticleModel(
     val images: List<ArticleImages> = listOf(),

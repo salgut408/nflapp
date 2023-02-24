@@ -25,7 +25,6 @@ class EspnAppState(
                 val text = snackbarMessage.toMessage(resources)
                 snackbarHostState.showSnackbar(text)
             }
-
         }
     }
 

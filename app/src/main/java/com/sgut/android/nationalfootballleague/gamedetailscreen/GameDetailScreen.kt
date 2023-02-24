@@ -90,8 +90,8 @@ fun GameDetailsScreen(
                 HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
                     ?: GameDetailModel())
 
-
-                PickCenter(pickCenterInfo = ((gameDetailUiState.currentGameDetails?.pickcenter ?: Pickcenter()) as Pickcenter))
+//                issues w pickcenter
+//                PickCenter(pickCenterInfo = ((gameDetailUiState.currentGameDetails?.pickcenter ?: Pickcenter()) as Pickcenter))
 
                 Spacer(modifier = modifier.height(8.dp))
 

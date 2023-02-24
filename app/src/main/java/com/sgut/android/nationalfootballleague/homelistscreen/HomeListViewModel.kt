@@ -98,9 +98,11 @@ class HomeListViewModel @Inject constructor(
             nflTeamsList.value = result
 //            Default list Ui State set here
             _ListUiState.update { currentState ->
-                currentState.copy(currentTeams = result,
+                currentState.copy(
+                    currentTeams = result,
                     currentSport = "football",
-                    currentLeague = "nfl")
+                    currentLeague = "nfl"
+                )
             }
         } catch (e: Exception) {
             Log.i("tag", e.message.toString())

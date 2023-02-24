@@ -168,7 +168,6 @@ fun Navigation(
             val leagueName = it.arguments?.getString("league")!!
 
 
-
             ScoreboardScreen(
                 sport = sportName,
                 league = leagueName,
@@ -198,24 +197,7 @@ private fun shareTeamAndNextEvent(
     )
 }
 
- fun alarmIntent(
-    context: Context,
-    title: String,
-    hour: Int,
-    minutes: Int
 
-) {
-
-
-    val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
-        putExtra(AlarmClock.EXTRA_MESSAGE, title)
-        putExtra(AlarmClock.EXTRA_HOUR, hour)
-        putExtra(AlarmClock.EXTRA_MINUTES, minutes)
-    }
-        context.startActivity(intent)
-
-
-}
 
 private fun createCalenderNote(
     context: Context,
