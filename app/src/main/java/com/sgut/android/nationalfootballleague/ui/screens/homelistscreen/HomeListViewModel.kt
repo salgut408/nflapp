@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuthException
 import com.sgut.android.nationalfootballleague.data.repository.EspnRepositoryImpl
 import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -38,9 +39,10 @@ class HomeListViewModel @Inject constructor(
     val englishTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
     val euroTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
 
+    lateinit var completeInfo : FullTeamsModel
 
     init {
-
+        loadCompleteNflInfo()
         loadAllNflTeams()
         loadAllCollegeTeams()
         loadAllBaseballTeams()
@@ -59,6 +61,16 @@ class HomeListViewModel @Inject constructor(
 
     fun addTeamsToDb(team: List<TeamDomainModel>) = viewModelScope.launch {
         espnRepository.storeTeamsInSportsDatabase(team)
+    }
+
+    fun loadCompleteNflInfo() = viewModelScope.launch {
+        try {
+           val result = espnRepository.getFullSportLeagueNflTeams()
+            Log.d("COMPLETE INFO", result.sports.toString())
+            completeInfo = result
+        }  catch (e: Exception){
+            Log.e("complete Info ", e.toString())
+        }
     }
 
     fun loadEuroTeams() = viewModelScope.launch {

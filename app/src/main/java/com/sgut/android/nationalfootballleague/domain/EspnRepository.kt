@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague.domain
 
 import com.sgut.android.nationalfootballleague.domain.domainmodels.*
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
 
 
 // TODO move / break out to different repositories based on model
@@ -53,4 +54,6 @@ interface EspnRepository {
         league: String,
         teamId: Int
     ): TeamScheduleModel
+
+    suspend fun getFullSportLeagueNflTeams(): FullTeamsModel
 }

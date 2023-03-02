@@ -5,7 +5,9 @@ import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import com.sgut.android.nationalfootballleague.domain.EspnRepository
 import com.sgut.android.nationalfootballleague.domain.domainmodels.*
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
 import com.sgut.android.nationalfootballleague.domain.dtomappers.*
+import com.sgut.android.nationalfootballleague.toDomain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -26,6 +28,11 @@ class EspnRepositoryImpl @Inject constructor(
         Log.d("ARTICLE_SAVED", "")
     }
 
+
+    override suspend fun getFullSportLeagueNflTeams(): FullTeamsModel {
+return espnApi.getAllNflTeams().body()?.toDomain()!!
+    }
+
 //    override suspend fun getSavedArticles(): Flow<List<ArticleModel>>  {
 //        val lists = sportsDataBase.getArticleDao().getAllSavedArticles()
 //        return articleMapper.toDomainList(lists)
@@ -39,6 +46,7 @@ class EspnRepositoryImpl @Inject constructor(
             }
         }
     }
+
 
 
     override suspend fun getTeams(): List<TeamDomainModel> {
