@@ -5,6 +5,7 @@ import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.domainmodels.*
 import com.sgut.android.nationalfootballleague.data.dtomappers.*
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class EspnRepositoryImpl @Inject constructor(
@@ -17,8 +18,6 @@ class EspnRepositoryImpl @Inject constructor(
     val scoreboardDomainMapper: NetworkScoreboardToDomainModelMapper,
     val gameDetailsToDomainModelMapper: NetworkGameDetailsToDomainModelMapper
 ) {
-
-
 
     suspend fun saveArticle(article: GameDetailModel){
         sportsDataBase.getArticleDao().insertArticle(article.getArticleForDb())
@@ -33,7 +32,6 @@ class EspnRepositoryImpl @Inject constructor(
 
     suspend fun getTeams(): List<TeamDomainModel> {
         val response = espnApi.getAllNflTeams()
-
         if (response.isSuccessful) {
             val teamsResponse =
                 espnApi.getAllNflTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
