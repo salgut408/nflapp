@@ -1,7 +1,7 @@
 package com.sgut.android.nationalfootballleague.data.remote.api
 
 import com.sgut.android.nationalfootballleague.*
-import com.sgut.android.nationalfootballleague.data.domainmodels.ScoreboardResponseEventModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.ScoreboardResponseEventModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

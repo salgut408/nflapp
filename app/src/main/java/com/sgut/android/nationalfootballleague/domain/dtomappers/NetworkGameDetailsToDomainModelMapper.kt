@@ -1,7 +1,7 @@
-package com.sgut.android.nationalfootballleague.data.dtomappers
+package com.sgut.android.nationalfootballleague.domain.dtomappers
 
 import com.sgut.android.nationalfootballleague.GameDetailResponse
-import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
 
 class NetworkGameDetailsToDomainModelMapper: DomainMapper<GameDetailResponse, GameDetailModel> {
     override fun mapToDomainModel(model: GameDetailResponse): GameDetailModel {

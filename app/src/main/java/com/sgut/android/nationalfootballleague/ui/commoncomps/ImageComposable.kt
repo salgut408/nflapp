@@ -17,9 +17,9 @@ import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
 import com.sgut.android.nationalfootballleague.*
-import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
-import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
-import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
 
 
 @Composable

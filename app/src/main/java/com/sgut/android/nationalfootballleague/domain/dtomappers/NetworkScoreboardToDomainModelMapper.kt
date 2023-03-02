@@ -1,11 +1,12 @@
-package com.sgut.android.nationalfootballleague.data.dtomappers
+package com.sgut.android.nationalfootballleague.domain.dtomappers
 
 import com.sgut.android.nationalfootballleague.CompetitionsScoreboard
 import com.sgut.android.nationalfootballleague.EventsScoreboard
 import com.sgut.android.nationalfootballleague.NetworkScoreboardResponse
-import com.sgut.android.nationalfootballleague.data.domainmodels.ScoreboardResponseEventModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.ScoreboardResponseEventModel
 
-class NetworkScoreboardToDomainModelMapper: DomainMapper <NetworkScoreboardResponse, ScoreboardResponseEventModel> {
+class NetworkScoreboardToDomainModelMapper:
+    DomainMapper<NetworkScoreboardResponse, ScoreboardResponseEventModel> {
     override fun mapToDomainModel(model: NetworkScoreboardResponse): ScoreboardResponseEventModel {
         return ScoreboardResponseEventModel(
         events = model.events,

@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DataLoadingComponent
-import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

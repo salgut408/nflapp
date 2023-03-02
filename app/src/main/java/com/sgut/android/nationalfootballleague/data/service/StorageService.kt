@@ -1,6 +1,6 @@
 package com.sgut.android.nationalfootballleague.data.service
 
-import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
 import kotlinx.coroutines.flow.Flow
 
 interface StorageService {

@@ -1,6 +1,5 @@
-package com.sgut.android.nationalfootballleague.data.domainmodels
+package com.sgut.android.nationalfootballleague.domain.domainmodels
 
-import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.data.db.ArticleDbObject
 import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Drives
@@ -30,7 +29,7 @@ data class GameDetailModel(
     val videos: List<Videos> = listOf(),
     )
 
-fun GameDetailModel.getArticleForDb(): ArticleDbObject {
+fun GameDetailModel.asDbArticle(): ArticleDbObject {
     return ArticleDbObject(
         story = singleArticle?.story ?: "",
         headline = singleArticle?.headline ?: "",
@@ -38,6 +37,5 @@ fun GameDetailModel.getArticleForDb(): ArticleDbObject {
         description = singleArticle?.description ?: "",
         lastModified = singleArticle?.lastModified ?: "",
         published = singleArticle?.published ?: "",
-        id = 0
     )
 }

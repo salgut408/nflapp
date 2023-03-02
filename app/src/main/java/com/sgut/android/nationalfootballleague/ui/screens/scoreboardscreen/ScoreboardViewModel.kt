@@ -3,8 +3,8 @@ package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
-import com.sgut.android.nationalfootballleague.data.domainmodels.ScoreboardResponseEventModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.ScoreboardResponseEventModel
 import com.sgut.android.nationalfootballleague.data.repository.EspnRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

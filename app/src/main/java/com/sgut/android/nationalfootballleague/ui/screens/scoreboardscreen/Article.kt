@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.ArticleCardImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
-import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
 
 
 @Composable

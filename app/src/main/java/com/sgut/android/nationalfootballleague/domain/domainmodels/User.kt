@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.data.domainmodels
+package com.sgut.android.nationalfootballleague.domain.domainmodels
 
 data class User(
     val id: String ="",

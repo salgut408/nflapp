@@ -1,33 +1,29 @@
-package com.sgut.android.nationalfootballleague.data.dtomappers
+package com.sgut.android.nationalfootballleague.domain.dtomappers
 
 import com.sgut.android.nationalfootballleague.Team3
-import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailModel
 
-class TeamDetailWithRosterMapper: DomainMapper<Team3, TeamDetailWithRosterModel> {
-    override fun mapToDomainModel(model: Team3): TeamDetailWithRosterModel {
-        return TeamDetailWithRosterModel(
+class TeamDetailNetworkToModelMapper: DomainMapper<Team3, TeamDetailModel> {
+    override fun mapToDomainModel(model: Team3): TeamDetailModel {
+        return TeamDetailModel(
             abbreviation = model.abbreviation,
             alternateColor = model.alternateColor,
-            athletes = model.athletes,
             color = model.color,
             displayName = model.displayName,
             franchise = model.franchise,
             groups = model.groups,
             id = model.id,
             isActive = model.isActive,
-            links = model.links,
+            links2 = model.links,
             location = model.location,
-            logos = model.logos,
+            logos2 = model.logos,
             name = model.name,
             nextEvent = model.nextEvent,
-            nickname = model.nickname,
             record = model.record,
             shortDisplayName = model.shortDisplayName,
             slug = model.slug,
             standingSummary = model.standingSummary,
-            uid = model.uid,
-
-
+            uid = model.uid
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.data.domainmodels
+package com.sgut.android.nationalfootballleague.domain.domainmodels
 
 import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.*

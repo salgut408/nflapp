@@ -1,7 +1,7 @@
 package com.sgut.android.nationalfootballleague.ui.screens.homelistscreen
 
-import com.sgut.android.nationalfootballleague.data.domainmodels.SportState
-import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.SportState
+import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
 
 data class ListUiState(
 

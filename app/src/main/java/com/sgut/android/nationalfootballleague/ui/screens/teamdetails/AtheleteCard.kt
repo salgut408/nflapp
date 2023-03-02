@@ -39,8 +39,8 @@ import com.sgut.android.nationalfootballleague.Athletes
 import com.sgut.android.nationalfootballleague.R
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportSurface
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamSurface
-import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDetailWithRosterModel
-import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
 
 @Composable
 fun AtheleteCard(

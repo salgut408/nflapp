@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.data.domainmodels
+package com.sgut.android.nationalfootballleague.domain.domainmodels
 
 import com.sgut.android.nationalfootballleague.ArticleImages
 

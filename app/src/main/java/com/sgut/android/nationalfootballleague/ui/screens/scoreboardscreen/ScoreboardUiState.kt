@@ -1,7 +1,7 @@
 package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 
-import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
-import com.sgut.android.nationalfootballleague.data.domainmodels.ScoreboardResponseEventModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.ScoreboardResponseEventModel
 
 data class ScoreboardUiState (
     var scoreboardUiStateEvents  : ScoreboardResponseEventModel = ScoreboardResponseEventModel(),
@@ -9,4 +9,4 @@ data class ScoreboardUiState (
     var currentLeague: String = "",
     var currentArticles: List<ArticleModel> = listOf(),
 
-)
+    )

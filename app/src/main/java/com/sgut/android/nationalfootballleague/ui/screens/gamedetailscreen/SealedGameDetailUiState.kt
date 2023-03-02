@@ -1,6 +1,6 @@
 package com.sgut.android.nationalfootballleague.ui.screens.gamedetailscreen
 
-import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
 
 sealed class SealedGameDetailUiState
 

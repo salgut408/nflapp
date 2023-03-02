@@ -1,7 +1,7 @@
-package com.sgut.android.nationalfootballleague.data.dtomappers
+package com.sgut.android.nationalfootballleague.domain.dtomappers
 
 import com.sgut.android.nationalfootballleague.Articles
-import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
 
 class NetworkToDomainArticleMapper: DomainMapper<Articles, ArticleModel> {
     override fun mapToDomainModel(model: Articles): ArticleModel {

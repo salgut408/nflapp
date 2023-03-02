@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.data.dtomappers
+package com.sgut.android.nationalfootballleague.domain.dtomappers
 
 
 interface DomainMapper<T, DomainModel> {

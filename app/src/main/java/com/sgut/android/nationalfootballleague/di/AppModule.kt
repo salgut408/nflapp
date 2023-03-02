@@ -9,7 +9,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.sgut.android.nationalfootballleague.data.db.ArticleDao
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
-import com.sgut.android.nationalfootballleague.data.dtomappers.*
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.data.service.LogService
@@ -18,6 +17,7 @@ import com.sgut.android.nationalfootballleague.data.service.impl.AccountServiceI
 import com.sgut.android.nationalfootballleague.data.service.impl.LogServiceImpl
 import com.sgut.android.nationalfootballleague.data.service.impl.StorageServiceImpl
 import com.sgut.android.nationalfootballleague.data.repository.EspnRepositoryImpl
+import com.sgut.android.nationalfootballleague.domain.dtomappers.*
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASE_URL
 import dagger.Binds
 import dagger.Module
@@ -61,11 +61,11 @@ object AppModule {
 
 
     @Provides
-    fun provideNetworkGameDetailsToDomainModelMapper():  NetworkGameDetailsToDomainModelMapper = NetworkGameDetailsToDomainModelMapper()
+    fun provideNetworkGameDetailsToDomainModelMapper(): NetworkGameDetailsToDomainModelMapper = NetworkGameDetailsToDomainModelMapper()
 
 
     @Provides
-    fun provideNetworkToTeamDomMapper():  NetworkToTeamDomainModelMapper = NetworkToTeamDomainModelMapper()
+    fun provideNetworkToTeamDomMapper(): NetworkToTeamDomainModelMapper = NetworkToTeamDomainModelMapper()
 
     @Provides
     fun provideNetworkToDomainArticleMapper(): NetworkToDomainArticleMapper = NetworkToDomainArticleMapper()
@@ -77,7 +77,7 @@ object AppModule {
     fun provideScoreboardMapper(): NetworkScoreboardToDomainModelMapper = NetworkScoreboardToDomainModelMapper()
 
     @Provides
-    fun provideNetworkToTeamDetailMapper():  TeamDetailNetworkToModelMapper = TeamDetailNetworkToModelMapper()
+    fun provideNetworkToTeamDetailMapper(): TeamDetailNetworkToModelMapper = TeamDetailNetworkToModelMapper()
 
     @Singleton
     @Provides
