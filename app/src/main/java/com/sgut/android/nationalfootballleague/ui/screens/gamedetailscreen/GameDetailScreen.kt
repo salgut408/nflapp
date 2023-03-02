@@ -45,7 +45,7 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.PressIconButton
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.VideoPlayer
 import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
-import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Videos
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FIRST_TEAM
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.SECOND_TEAM

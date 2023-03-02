@@ -12,9 +12,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.*
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.exoplayer.SimpleExoPlayer
 import androidx.media3.ui.PlayerView
-import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Videos
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
 
 @Composable
 fun VideoPlayer(

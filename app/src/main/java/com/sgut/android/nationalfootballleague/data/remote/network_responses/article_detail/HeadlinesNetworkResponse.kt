@@ -3,7 +3,7 @@ package com.sgut.android.nationalfootballleague
 import com.google.gson.annotations.SerializedName
 
 
-data class Headlines(
+data class HeadlinesNetworkResponse(
 
     @SerializedName("dataSourceIdentifier") var dataSourceIdentifier: String? = null,
     @SerializedName("keywords") var keywords: ArrayList<String> = arrayListOf(),

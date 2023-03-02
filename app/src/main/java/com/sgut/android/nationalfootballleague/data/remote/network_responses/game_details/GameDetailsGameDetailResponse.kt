@@ -1,8 +1,8 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Drives
-import com.sgut.android.nationalfootballleague.data.remote.responses.game_details.Videos
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Drives
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
 
 
 data class GameDetailResponse(

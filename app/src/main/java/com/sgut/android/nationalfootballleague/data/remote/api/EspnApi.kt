@@ -1,7 +1,6 @@
 package com.sgut.android.nationalfootballleague.data.remote.api
 
 import com.sgut.android.nationalfootballleague.*
-import com.sgut.android.nationalfootballleague.domain.domainmodels.ScoreboardResponseEventModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -26,10 +25,6 @@ interface EspnApi {
         @Path("teamAbbreviation")
         teamAbbreviation: String? = null
     ): Response<TeamDetailResponse2>
-
-
-
-
 
     @GET("sports/football/college-football/teams")
     suspend fun getAllCollegeTeams(): Response<NFLTeamsResponse>
@@ -68,7 +63,6 @@ interface EspnApi {
     @GET("sports/football/nfl/scoreboard")
     suspend fun getWorldCupScoreboard(): Response<NetworkScoreboardResponse>
 
-
     @GET("sports/{sport}/{league}/news")
     suspend fun getArticles(
         @Path("sport")
@@ -76,7 +70,6 @@ interface EspnApi {
         @Path("league")
         league: String? = null,
     ): Response<NetworkArticleResponse>
-
 
     @GET("sports/{sport}/{league}/scoreboard")
     suspend fun getGeneralScoreboard(
@@ -94,7 +87,6 @@ interface EspnApi {
         league: String? = null,
         @Query("week") week: Int
     ): Response<NetworkScoreboardResponse>
-
 
     @GET("sports/{sport}/{league}/teams/{teamAbbreviation}?enable=roster,headshot")
     suspend fun getSpecifcTeam(
