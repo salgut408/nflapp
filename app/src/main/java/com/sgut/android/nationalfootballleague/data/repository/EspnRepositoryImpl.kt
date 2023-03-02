@@ -6,6 +6,8 @@ import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import com.sgut.android.nationalfootballleague.domain.EspnRepository
 import com.sgut.android.nationalfootballleague.domain.domainmodels.*
 import com.sgut.android.nationalfootballleague.domain.dtomappers.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class EspnRepositoryImpl @Inject constructor(
@@ -16,10 +18,10 @@ class EspnRepositoryImpl @Inject constructor(
     val teamDetailNetworkToModelMapper: TeamDetailNetworkToModelMapper,
     val rosterMapper: TeamDetailWithRosterMapper,
     val scoreboardDomainMapper: NetworkScoreboardToDomainModelMapper,
-    val gameDetailsToDomainModelMapper: NetworkGameDetailsToDomainModelMapper
-): EspnRepository {
+    val gameDetailsToDomainModelMapper: NetworkGameDetailsToDomainModelMapper,
+) : EspnRepository {
 
-    override suspend fun saveArticle(article: GameDetailModel){
+    override suspend fun saveArticle(article: GameDetailModel) {
         sportsDataBase.getArticleDao().insertArticle(article.asDbArticle())
         Log.d("ARTICLE_SAVED", "")
     }
@@ -29,6 +31,14 @@ class EspnRepositoryImpl @Inject constructor(
 //        return articleMapper.toDomainList(lists)
 //    }
 
+
+    override suspend fun storeTeamsInSportsDatabase(team: List<TeamDomainModel>) {
+        withContext(Dispatchers.IO) {
+            team.map { team ->
+                sportsDataBase.getTeamDao().update(team.asDbModel())
+            }
+        }
+    }
 
 
     override suspend fun getTeams(): List<TeamDomainModel> {
@@ -110,7 +120,8 @@ class EspnRepositoryImpl @Inject constructor(
         val response = espnApi.getAllCollegeBasketballTeams()
         if (response.isSuccessful) {
             val teamsResponse =
-                espnApi.getAllCollegeBasketballTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
+                espnApi.getAllCollegeBasketballTeams()
+                    .body()?.sports?.get(0)?.leagues?.get(0)?.teams
             Log.i("CollegeBskt", teamsResponse.toString())
             return teamDomainModelMapper.toDomainList(teamsResponse!!)
         } else {
@@ -151,31 +162,37 @@ class EspnRepositoryImpl @Inject constructor(
         return teamDomainModelMapper.toDomainList(result!!)
     }
 
-    override suspend fun getAllEnglishSoccerTeams(): List<TeamDomainModel>{
+    override suspend fun getAllEnglishSoccerTeams(): List<TeamDomainModel> {
         val response = espnApi.getAllEnglishSoccerTeams()
-        if (response.isSuccessful){
-            val teamsResponse = espnApi.getAllEnglishSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+        if (response.isSuccessful) {
+            val teamsResponse =
+                espnApi.getAllEnglishSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(
+                    0)?.teams
             Log.i("EnglishTeams", teamsResponse.toString())
 
             return teamDomainModelMapper.toDomainList(teamsResponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
         }
-        val result = espnApi.getAllEnglishSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+        val result = espnApi.getAllEnglishSoccerTeams()
+            .body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
         return teamDomainModelMapper.toDomainList(result!!)
     }
 
     override suspend fun getLaLigaSoccerTeams(): List<TeamDomainModel> {
         val response = espnApi.getAllSpanishSoccerTeams()
-        if (response.isSuccessful){
-            val teamResponse = espnApi.getAllSpanishSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+        if (response.isSuccessful) {
+            val teamResponse =
+                espnApi.getAllSpanishSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(
+                    0)?.teams
             Log.d("SpanishTeams", teamResponse.toString())
             return teamDomainModelMapper.toDomainList(teamResponse!!)
 
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
         }
-        val result = espnApi.getAllSpanishSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
+        val result = espnApi.getAllSpanishSoccerTeams()
+            .body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
         return teamDomainModelMapper.toDomainList(result!!)
     }
 
@@ -210,7 +227,10 @@ class EspnRepositoryImpl @Inject constructor(
         return rosterMapper.mapToDomainModel(result!!)
     }
 
-    override suspend fun getGeneralScoreboardResponse(sport: String, league: String): ScoreboardResponseEventModel {
+    override suspend fun getGeneralScoreboardResponse(
+        sport: String,
+        league: String,
+    ): ScoreboardResponseEventModel {
         val response = espnApi.getGeneralScoreboard(sport, league)
         if
                 (response.isSuccessful) {
@@ -225,11 +245,16 @@ class EspnRepositoryImpl @Inject constructor(
         return scoreboardDomainMapper.mapToDomainModel(result!!)
     }
 
-    override suspend fun getYesterdayGeneralScoreboardResponse(sport: String, league: String, week: Int): ScoreboardResponseEventModel {
+    override suspend fun getYesterdayGeneralScoreboardResponse(
+        sport: String,
+        league: String,
+        week: Int,
+    ): ScoreboardResponseEventModel {
         val response = espnApi.getYesterdayGeneralScoreboard(sport, league, week)
         if
                 (response.isSuccessful) {
-            val scoreBoardresponse = espnApi.getYesterdayGeneralScoreboard(sport, league, week).body()
+            val scoreBoardresponse =
+                espnApi.getYesterdayGeneralScoreboard(sport, league, week).body()
             Log.e("Scoreboard_Respo_yestrdy", "yesterday response  $scoreBoardresponse")
             return scoreboardDomainMapper.mapToDomainModel(scoreBoardresponse!!)
         } else {
@@ -255,7 +280,11 @@ class EspnRepositoryImpl @Inject constructor(
         return articleMapper.toDomainList(result!!)
     }
 
-    override suspend fun getGameDetails(sport: String, league: String, event: String): GameDetailModel {
+    override suspend fun getGameDetails(
+        sport: String,
+        league: String,
+        event: String,
+    ): GameDetailModel {
         val response = espnApi.getGameDetails(sport, league, event)
         if
                 (response.isSuccessful) {
@@ -270,10 +299,11 @@ class EspnRepositoryImpl @Inject constructor(
         return gameDetailsToDomainModelMapper.mapToDomainModel(result!!)
     }
 
+
     override suspend fun getGeneralScoreboardResponseByDate(
         sport: String,
         league: String,
-        date: String
+        date: String,
     ): ScoreboardResponseEventModel {
         TODO("Not yet implemented")
     }
@@ -281,7 +311,7 @@ class EspnRepositoryImpl @Inject constructor(
     override suspend fun getTeamSchedule(
         sport: String,
         league: String,
-        teamId: Int
+        teamId: Int,
     ): TeamScheduleModel {
         TODO("Not yet implemented")
     }

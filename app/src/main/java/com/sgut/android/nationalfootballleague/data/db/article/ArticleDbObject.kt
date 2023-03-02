@@ -1,10 +1,7 @@
-package com.sgut.android.nationalfootballleague.data.db
+package com.sgut.android.nationalfootballleague.data.db.article
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.ArticleImages
-import org.checkerframework.checker.signature.qual.IdentifierOrPrimitiveType
 
 @Entity(tableName = "article_table")
 data class ArticleDbObject(
@@ -15,5 +12,4 @@ data class ArticleDbObject(
     var description  : String               = "",
     var lastModified : String               = "",
     var published    : String              = "",
-
 )

@@ -7,16 +7,17 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.sgut.android.nationalfootballleague.data.db.ArticleDao
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
+import com.sgut.android.nationalfootballleague.data.db.article.ArticleDao
+import com.sgut.android.nationalfootballleague.data.db.team.TeamDao
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
+import com.sgut.android.nationalfootballleague.data.repository.EspnRepositoryImpl
 import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.data.service.LogService
 import com.sgut.android.nationalfootballleague.data.service.StorageService
 import com.sgut.android.nationalfootballleague.data.service.impl.AccountServiceImpl
 import com.sgut.android.nationalfootballleague.data.service.impl.LogServiceImpl
 import com.sgut.android.nationalfootballleague.data.service.impl.StorageServiceImpl
-import com.sgut.android.nationalfootballleague.data.repository.EspnRepositoryImpl
 import com.sgut.android.nationalfootballleague.domain.dtomappers.*
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASE_URL
 import dagger.Binds
@@ -39,13 +40,18 @@ object AppModule {
     fun provideArticleDao(sportsDataBase: SportsDataBase): ArticleDao = sportsDataBase.getArticleDao()
 
     @Provides
+    fun provideTeamDao(sportsDataBase: SportsDataBase): TeamDao = sportsDataBase.getTeamDao()
+
+
+    @Provides
     @Singleton
     fun provideSportsDatabase(@ApplicationContext context: Context): SportsDataBase =
         Room.databaseBuilder(
             context,
             SportsDataBase::class.java,
             "sports_db"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
 
     @Provides
     fun provideEspnRepository(

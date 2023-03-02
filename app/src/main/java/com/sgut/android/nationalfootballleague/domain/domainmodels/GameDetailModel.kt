@@ -1,7 +1,7 @@
 package com.sgut.android.nationalfootballleague.domain.domainmodels
 
 import com.sgut.android.nationalfootballleague.*
-import com.sgut.android.nationalfootballleague.data.db.ArticleDbObject
+import com.sgut.android.nationalfootballleague.data.db.article.ArticleDbObject
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Drives
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
 

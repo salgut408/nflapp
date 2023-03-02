@@ -8,3 +8,4 @@ data class NFLTeamsResponse (
   @SerializedName("sports" ) var sports : List<Sports>?
 
 )
+

@@ -5,9 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuthException
-import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
-import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.data.repository.EspnRepositoryImpl
+import com.sgut.android.nationalfootballleague.data.service.AccountService
+import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,21 +25,22 @@ class HomeListViewModel @Inject constructor(
     private val _ListUiState = MutableStateFlow(ListUiState())
     val listUiState: StateFlow<ListUiState> = _ListUiState.asStateFlow()
 
-    var nflTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var collegeTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var baseballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var hockeyTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var basketballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var soccerTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var womensBasketballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var worldCupTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var collegeBasketballTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var laLigaTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var englishTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
-    var euroTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
+    val nflTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+    val collegeTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+    val baseballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+    val hockeyTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+    val basketballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+    val soccerTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+    val womensBasketballTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
+    val worldCupTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
+    val collegeBasketballTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
+    val laLigaTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
+    val englishTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
+    val euroTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
 
 
     init {
+
         loadAllNflTeams()
         loadAllCollegeTeams()
         loadAllBaseballTeams()
@@ -56,10 +57,15 @@ class HomeListViewModel @Inject constructor(
 
     }
 
+    fun addTeamsToDb(team: List<TeamDomainModel>) = viewModelScope.launch {
+        espnRepository.storeTeamsInSportsDatabase(team)
+    }
+
     fun loadEuroTeams() = viewModelScope.launch {
         try {
             val result = espnRepository.getLaLigaSoccerTeams()
             euroTeams.value = result
+            addTeamsToDb(result)
         } catch (e: Exception) {
             Log.e("Euro", e.message.toString())
         }
@@ -69,6 +75,7 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getLaLigaSoccerTeams()
             laLigaTeams.value = result
+            addTeamsToDb(result)
         } catch (e: Exception) {
             Log.e("Liga", e.message.toString())
         }
@@ -78,6 +85,8 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getAllEnglishSoccerTeams()
             englishTeams.value = result
+            addTeamsToDb(result)
+
         } catch (e: Exception) {
             Log.e("Eng", e.message.toString())
         }
@@ -87,10 +96,12 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getAllBaseballTeams()
             baseballTeamsList.value = result
+            addTeamsToDb(result)
         } catch (e: Exception) {
             Log.i("tag", e.message.toString())
         }
     }
+
 
     fun loadAllNflTeams() = viewModelScope.launch {
         try {
@@ -113,6 +124,8 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getAllCollegeTeams()
             collegeTeamsList.value = result
+            addTeamsToDb(result)
+
         } catch (e: Exception) {
             Log.i("tag", e.message.toString())
 
@@ -123,6 +136,8 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getAllHockeyTeams()
             hockeyTeamsList.value = result
+            addTeamsToDb(result)
+
 
         } catch (e: Exception) {
             Log.i("tag", e.message.toString())
@@ -134,6 +149,8 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getAllBasketballTeams()
             basketballTeamsList.value = result
+            addTeamsToDb(result)
+
         } catch (e: Exception) {
             Log.i("tag", e.message.toString())
         }
@@ -143,6 +160,8 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getAllSoccerTeams()
             soccerTeamsList.value = result
+            addTeamsToDb(result)
+
         } catch (e: Exception) {
             Log.i("tag", e.message.toString())
         }
@@ -161,6 +180,8 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getAllWomensBasketballTeams()
             womensBasketballTeamsList.value = result
+            addTeamsToDb(result)
+
         } catch (e: Exception) {
             Log.i("tag", e.message.toString())
         }
@@ -170,6 +191,8 @@ class HomeListViewModel @Inject constructor(
         try {
             val result = espnRepository.getAllCollegeBasketballTeams()
             collegeBasketballTeams.value = result
+            addTeamsToDb(result)
+
         } catch (e: Exception) {
             Log.i("tag", e.message.toString())
         }

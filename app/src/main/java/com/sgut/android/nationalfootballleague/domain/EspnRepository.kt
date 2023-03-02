@@ -36,6 +36,8 @@ interface EspnRepository {
         week: Int,
     ): ScoreboardResponseEventModel
 
+    suspend fun storeTeamsInSportsDatabase(team: List<TeamDomainModel>)
+
     suspend fun getArticles(sport: String, league: String): List<ArticleModel>
 
     suspend fun getGameDetails(sport: String, league: String, event: String): GameDetailModel

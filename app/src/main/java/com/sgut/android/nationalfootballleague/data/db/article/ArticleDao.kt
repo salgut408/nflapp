@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.data.db
+package com.sgut.android.nationalfootballleague.data.db.article
 
 import androidx.room.Dao
 import androidx.room.Delete
