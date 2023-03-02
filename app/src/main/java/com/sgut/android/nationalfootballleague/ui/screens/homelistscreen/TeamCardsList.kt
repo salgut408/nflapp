@@ -1,20 +1,24 @@
 package com.sgut.android.nationalfootballleague.ui.screens.homelistscreen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.R
+import com.sgut.android.nationalfootballleague.di.DrawerTopAppBar
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicButton
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
-import com.sgut.android.nationalfootballleague.di.DrawerTopAppBar
 import com.sgut.android.nationalfootballleague.utils.basicButton
 import com.sgut.android.nationalfootballleague.R.string as AppText
 
@@ -29,6 +33,9 @@ fun HomeTeamCardsListScreen(
 
 
     ) {
+
+//    homeListViewModel.g
+
     val uiState by homeListViewModel.listUiState.collectAsState()
     val sport = uiState.currentSport
     val league = uiState.currentLeague
@@ -40,15 +47,6 @@ fun HomeTeamCardsListScreen(
 
             Column() {
 
-                DrawerTopAppBar(
-                    openDrawer = openDrawer,
-                    onNhlClick = { homeListViewModel.setHockeyTeam() },
-                    onNflClick = { homeListViewModel.setFootballTeam() },
-                    onMlbClick = { homeListViewModel.setBaseballTeam() },
-                    onNbaClick = { homeListViewModel.setBasketballTeam() },
-                    onWnbaClick = { homeListViewModel.setWnbaTeam() },
-                    onNcaaFootballClick = { homeListViewModel.setCollegeTeam() }
-                )
 
                 LazyRow(
                     contentPadding = PaddingValues(16.dp),
@@ -150,6 +148,8 @@ fun HomeTeamCardsListScreen(
 
 
                 ListOfTeams2(uiState = uiState, navController = navController)
+
+
 
 //                LazyColumn(contentPadding = PaddingValues(8.dp)) {
 //

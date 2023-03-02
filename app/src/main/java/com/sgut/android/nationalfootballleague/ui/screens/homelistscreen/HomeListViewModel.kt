@@ -39,7 +39,9 @@ class HomeListViewModel @Inject constructor(
     val englishTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
     val euroTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
 
-    lateinit var completeInfo : FullTeamsModel
+    lateinit var completeNflInfo : FullTeamsModel
+
+    lateinit var _completeInfo : FullTeamsModel
 
     init {
         loadCompleteNflInfo()
@@ -67,10 +69,16 @@ class HomeListViewModel @Inject constructor(
         try {
            val result = espnRepository.getFullSportLeagueNflTeams()
             Log.d("COMPLETE INFO", result.sports.toString())
-            completeInfo = result
+            completeNflInfo = result
         }  catch (e: Exception){
             Log.e("complete Info ", e.toString())
         }
+    }
+
+    fun loadCompleteInfo(sport: String, league: String) = viewModelScope.launch {
+       val fullInfo = espnRepository.getFullTeamInfo(sport, league)
+
+        _completeInfo = fullInfo
     }
 
     fun loadEuroTeams() = viewModelScope.launch {
@@ -121,10 +129,11 @@ class HomeListViewModel @Inject constructor(
             nflTeamsList.value = result
 //            Default list Ui State set here
             _ListUiState.update { currentState ->
+                loadCompleteInfo("football", "nfl")
                 currentState.copy(
                     currentTeams = result,
                     currentSport = "football",
-                    currentLeague = "nfl"
+                    currentLeague = "nfl",
                 )
             }
         } catch (e: Exception) {
@@ -244,6 +253,7 @@ class HomeListViewModel @Inject constructor(
                 currentSport = "baseball",
                 currentLeague = "mlb")
         }
+
     }
 
     fun setCollegeBasketballTeam() {

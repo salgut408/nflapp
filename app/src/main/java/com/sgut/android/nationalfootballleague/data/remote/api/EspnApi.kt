@@ -88,6 +88,14 @@ interface EspnApi {
         @Query("week") week: Int
     ): Response<NetworkScoreboardResponse>
 
+    @GET("sports/{sport}/{league}/teams")
+    suspend fun getTeams(
+        @Path("sport")
+        sport: String? = null,
+        @Path("league")
+        league: String? = null,
+    ): Response<NFLTeamsResponse>
+
     @GET("sports/{sport}/{league}/teams/{teamAbbreviation}?enable=roster,headshot")
     suspend fun getSpecifcTeam(
         @Path("sport")

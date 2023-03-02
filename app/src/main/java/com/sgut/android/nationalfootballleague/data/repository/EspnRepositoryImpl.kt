@@ -29,8 +29,12 @@ class EspnRepositoryImpl @Inject constructor(
     }
 
 
+    override suspend fun getFullTeamInfo(sport: String, league: String): FullTeamsModel {
+       return espnApi.getTeams(sport, league).body()?.toDomain()!!
+    }
+
     override suspend fun getFullSportLeagueNflTeams(): FullTeamsModel {
-return espnApi.getAllNflTeams().body()?.toDomain()!!
+        return espnApi.getAllNflTeams().body()?.toDomain()!!
     }
 
 //    override suspend fun getSavedArticles(): Flow<List<ArticleModel>>  {
@@ -46,7 +50,6 @@ return espnApi.getAllNflTeams().body()?.toDomain()!!
             }
         }
     }
-
 
 
     override suspend fun getTeams(): List<TeamDomainModel> {

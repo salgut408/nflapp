@@ -12,6 +12,7 @@ interface EspnRepository {
     suspend fun getTeams(): List<TeamDomainModel>
     suspend fun getAllCollegeTeams(): List<TeamDomainModel>
     suspend fun getAllBaseballTeams(): List<TeamDomainModel>
+    suspend fun getFullTeamInfo(sport: String, league: String): FullTeamsModel
     suspend fun getAllHockeyTeams(): List<TeamDomainModel>
     suspend fun getAllBasketballTeams(): List<TeamDomainModel>
     suspend fun getAllCollegeBasketballTeams(): List<TeamDomainModel>
