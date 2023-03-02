@@ -17,7 +17,7 @@ import com.sgut.android.nationalfootballleague.data.service.StorageService
 import com.sgut.android.nationalfootballleague.data.service.impl.AccountServiceImpl
 import com.sgut.android.nationalfootballleague.data.service.impl.LogServiceImpl
 import com.sgut.android.nationalfootballleague.data.service.impl.StorageServiceImpl
-import com.sgut.android.nationalfootballleague.data.repository.EspnRepository
+import com.sgut.android.nationalfootballleague.data.repository.EspnRepositoryImpl
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASE_URL
 import dagger.Binds
 import dagger.Module
@@ -57,7 +57,7 @@ object AppModule {
         scoreboardMapper: NetworkScoreboardToDomainModelMapper,
         gameDetailsToDomainModelMapper: NetworkGameDetailsToDomainModelMapper,
         sportsDataBase: SportsDataBase
-    ): EspnRepository = EspnRepository(nflMapper, espnApi, sportsDataBase, articleMapper, teamDetailNetworkToModelMapper, rosterMapper, scoreboardMapper, gameDetailsToDomainModelMapper)
+    ): EspnRepositoryImpl = EspnRepositoryImpl(nflMapper, espnApi, sportsDataBase, articleMapper, teamDetailNetworkToModelMapper, rosterMapper, scoreboardMapper, gameDetailsToDomainModelMapper)
 
 
     @Provides

@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuthException
 import com.sgut.android.nationalfootballleague.data.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.data.service.AccountService
-import com.sgut.android.nationalfootballleague.data.repository.EspnRepository
+import com.sgut.android.nationalfootballleague.data.repository.EspnRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeListViewModel @Inject constructor(
     private val accountService: AccountService,
-    private val espnRepository: EspnRepository,
+    private val espnRepository: EspnRepositoryImpl,
 ) : ViewModel() {
 
     private val _ListUiState = MutableStateFlow(ListUiState())

@@ -1,15 +1,11 @@
 package com.sgut.android.nationalfootballleague.gamedetailscreen
 
-import android.net.Uri
 import android.util.Log
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sgut.android.nationalfootballleague.GameDetailsTeams
-import com.sgut.android.nationalfootballleague.data.domainmodels.ArticleModel
 import com.sgut.android.nationalfootballleague.data.domainmodels.GameDetailModel
-import com.sgut.android.nationalfootballleague.data.repository.EspnRepository
+import com.sgut.android.nationalfootballleague.data.repository.EspnRepositoryImpl
 import com.sgut.android.nationalfootballleague.teamdetails.HexToJetpackColor2
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class GameDetailViewModel @Inject constructor(
-    private val espnRepository: EspnRepository,
+    private val espnRepository: EspnRepositoryImpl,
 ): ViewModel() {
 
 
