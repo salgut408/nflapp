@@ -45,4 +45,10 @@ interface EspnRepository {
         league: String,
         date: String
     ): ScoreboardResponseEventModel
+
+    suspend fun getTeamSchedule(
+        sport: String,
+        league: String,
+        teamId: Int
+    ): TeamScheduleModel
 }

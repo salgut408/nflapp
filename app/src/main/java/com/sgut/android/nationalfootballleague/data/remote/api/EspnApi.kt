@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague.data.remote.api
 
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.team_schedule.TeamScheduleNetworkResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -58,7 +59,6 @@ interface EspnApi {
 
     @GET("sports/soccer/esp.1/teams")
     suspend fun getAllSpanishSoccerTeams(): Response<NFLTeamsResponse>
-
 
     @GET("sports/football/nfl/scoreboard")
     suspend fun getWorldCupScoreboard(): Response<NetworkScoreboardResponse>
@@ -122,5 +122,17 @@ interface EspnApi {
         league: String? = null,
         @Query("dates") date: String
     ): Response<NetworkScoreboardResponse>
+
+// TODO implement team Schedule
+
+    @GET("sports/{sport}/{league}/teams/{teamId}schedule")
+    suspend fun getTeamSchedule(
+        @Path("sport")
+        sport: String? = null,
+        @Path("league")
+        league: String? = null,
+        @Path("teamId")
+        teamId: Int? = null,
+    ): Response<TeamScheduleNetworkResponse>
 
 }

@@ -278,4 +278,12 @@ class EspnRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun getTeamSchedule(
+        sport: String,
+        league: String,
+        teamId: Int
+    ): TeamScheduleModel {
+        TODO("Not yet implemented")
+    }
+
 }
