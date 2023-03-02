@@ -6,17 +6,17 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainMod
 class NetworkToTeamDomainModelMapper : DomainMapper<Teams, TeamDomainModel> {
     override fun mapToDomainModel(model: Teams): TeamDomainModel {
         return TeamDomainModel(
-            abbreviation = model.teamsz.abbreviation,
-            alternateColor = model.teamsz.alternateColor,
-            color = model.teamsz.color,
-            displayName =model.teamsz.displayName,
-            id = model.teamsz.id,
-            logos = model.teamsz.logos,
-            name = model.teamsz.name,
-            nickname = model.teamsz.nickname,
-            shortDisplayName = model.teamsz.shortDisplayName,
-            slug = model.teamsz.slug,
-            uid = model.teamsz.uid
+            abbreviation = model.teamSingle.abbreviation,
+            alternateColor = model.teamSingle.alternateColor,
+            color = model.teamSingle.color,
+            displayName =model.teamSingle.displayName,
+            id = model.teamSingle.id,
+            logos = model.teamSingle.logos,
+            name = model.teamSingle.name,
+            nickname = model.teamSingle.nickname,
+            shortDisplayName = model.teamSingle.shortDisplayName,
+            slug = model.teamSingle.slug,
+            uid = model.teamSingle.uid
 
         )
     }

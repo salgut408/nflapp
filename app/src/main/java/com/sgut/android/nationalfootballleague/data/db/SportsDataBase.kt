@@ -7,7 +7,7 @@ import com.sgut.android.nationalfootballleague.data.db.article.ArticleDbObject
 import com.sgut.android.nationalfootballleague.data.db.team.TeamDao
 import com.sgut.android.nationalfootballleague.data.db.team.TeamDbObj
 
-@Database(entities = [ArticleDbObject::class, TeamDbObj::class], version = 2, exportSchema = false)
+@Database(entities = [ArticleDbObject::class, TeamDbObj::class], version = 4, exportSchema = false)
 abstract class SportsDataBase: RoomDatabase() {
 
     abstract fun  getArticleDao(): ArticleDao

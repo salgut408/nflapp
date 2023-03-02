@@ -30,9 +30,9 @@ fun TeamDomainModel.asDbModel(): TeamDbObj {
         shortDisplayName = shortDisplayName,
         name = name,
         nickname = nickname,
-        location = location,
         color = color,
         alternateColor = alternateColor,
-        isFavorite = false
+        isFavorite = false,
+        logo = logos?.get(0)?.href.toString()
     )
 }

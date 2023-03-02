@@ -14,9 +14,8 @@ data class TeamDbObj(
     val shortDisplayName: String = "",
     val name: String = "",
     val nickname: String = "",
-    val location: String = "",
     val color: String = "",
     val alternateColor: String = "",
-    val isFavorite: Boolean = false
-
+    var isFavorite: Boolean = false,
+val logo: String = "",
     )
