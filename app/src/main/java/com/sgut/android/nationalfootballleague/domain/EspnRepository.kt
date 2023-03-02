@@ -6,6 +6,7 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.*
 // TODO move / break out to different repositories based on model
 
 interface EspnRepository {
+//    suspend fun getSavedArticles(): Flow<List<ArticleModel>>
     suspend fun saveArticle(article: GameDetailModel)
     suspend fun getTeams(): List<TeamDomainModel>
     suspend fun getAllCollegeTeams(): List<TeamDomainModel>
@@ -21,17 +22,18 @@ interface EspnRepository {
     suspend fun getSpecificTeam(
         sport: String,
         league: String,
-        team: String, ): TeamDetailWithRosterModel
+        team: String,
+    ): TeamDetailWithRosterModel
 
     suspend fun getGeneralScoreboardResponse(
         sport: String,
-        league: String
+        league: String,
     ): ScoreboardResponseEventModel
 
     suspend fun getYesterdayGeneralScoreboardResponse(
         sport: String,
         league: String,
-        week: Int
+        week: Int,
     ): ScoreboardResponseEventModel
 
     suspend fun getArticles(sport: String, league: String): List<ArticleModel>

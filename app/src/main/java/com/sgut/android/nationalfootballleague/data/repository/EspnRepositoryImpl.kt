@@ -24,8 +24,9 @@ class EspnRepositoryImpl @Inject constructor(
         Log.d("ARTICLE_SAVED", "")
     }
 
-//    suspend fun getSavedArticles(): Flow<List<ArticleModel>> = {
-//        sportsDataBase.getArticleDao().getAllSavedArticles().map }
+//    override suspend fun getSavedArticles(): Flow<List<ArticleModel>>  {
+//        val lists = sportsDataBase.getArticleDao().getAllSavedArticles()
+//        return articleMapper.toDomainList(lists)
 //    }
 
 
