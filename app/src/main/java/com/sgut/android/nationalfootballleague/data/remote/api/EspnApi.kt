@@ -113,7 +113,7 @@ interface EspnApi {
         articleApi: String? = null
     ): Response<ArticleDetailNetworkResponse>
 
-
+// TODO implement getting scoreboard with dates
     @GET("sports/{sport}/{league}/scoreboard")
     suspend fun getGeneralScoreboardWithDate(
         @Path("sport")
