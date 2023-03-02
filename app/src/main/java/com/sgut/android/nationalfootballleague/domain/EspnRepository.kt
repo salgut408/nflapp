@@ -37,5 +37,12 @@ interface EspnRepository {
     ): ScoreboardResponseEventModel
 
     suspend fun getArticles(sport: String, league: String): List<ArticleModel>
+
     suspend fun getGameDetails(sport: String, league: String, event: String): GameDetailModel
+
+    suspend fun getGeneralScoreboardResponseByDate(
+        sport: String,
+        league: String,
+        date: String
+    ): ScoreboardResponseEventModel
 }

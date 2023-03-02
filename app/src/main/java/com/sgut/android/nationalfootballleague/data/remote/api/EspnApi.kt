@@ -113,4 +113,14 @@ interface EspnApi {
         articleApi: String? = null
     ): Response<ArticleDetailNetworkResponse>
 
+
+    @GET("sports/{sport}/{league}/scoreboard")
+    suspend fun getGeneralScoreboardWithDate(
+        @Path("sport")
+        sport: String? = null,
+        @Path("league")
+        league: String? = null,
+        @Query("dates") date: String
+    ): Response<NetworkScoreboardResponse>
+
 }

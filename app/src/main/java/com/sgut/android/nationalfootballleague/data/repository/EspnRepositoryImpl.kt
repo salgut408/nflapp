@@ -270,6 +270,12 @@ class EspnRepositoryImpl @Inject constructor(
         return gameDetailsToDomainModelMapper.mapToDomainModel(result!!)
     }
 
-
+    override suspend fun getGeneralScoreboardResponseByDate(
+        sport: String,
+        league: String,
+        date: String
+    ): ScoreboardResponseEventModel {
+        TODO("Not yet implemented")
+    }
 
 }
