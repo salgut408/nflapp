@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.domain
+package com.sgut.android.nationalfootballleague.domain.repositories
 
 import com.sgut.android.nationalfootballleague.domain.domainmodels.*
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
@@ -9,7 +9,10 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.Fu
 interface EspnRepository {
 //    suspend fun getSavedArticles(): Flow<List<ArticleModel>>
     suspend fun saveArticle(article: GameDetailModel)
+
+    // move to teams repo
     suspend fun getTeams(): List<TeamDomainModel>
+
     suspend fun getAllCollegeTeams(): List<TeamDomainModel>
     suspend fun getAllBaseballTeams(): List<TeamDomainModel>
     suspend fun getFullTeamInfo(sport: String, league: String): FullTeamsModel
@@ -38,6 +41,7 @@ interface EspnRepository {
         week: Int,
     ): ScoreboardResponseEventModel
 
+    // move to teams repo
     suspend fun storeTeamsInSportsDatabase(team: List<TeamDomainModel>)
 
     suspend fun getArticles(sport: String, league: String): List<ArticleModel>

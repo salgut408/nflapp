@@ -89,7 +89,7 @@ interface EspnApi {
     ): Response<NetworkScoreboardResponse>
 
     @GET("sports/{sport}/{league}/teams")
-    suspend fun getTeams(
+    suspend fun getTeamsListForLeague(
         @Path("sport")
         sport: String? = null,
         @Path("league")

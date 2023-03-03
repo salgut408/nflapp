@@ -6,11 +6,17 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.Sp
 
 data class Sports(
 
-  @SerializedName("id") val id: String = "",
-  @SerializedName("uid") val uid: String = "",
-  @SerializedName("name") val name: String = "",
-  @SerializedName("slug") val slug: String = "",
-  @SerializedName("leagues") val leagues: List<Leagues>?,
+  @SerializedName("id")
+  val id: String = "",
+
+  @SerializedName("uid")
+  val uid: String = "",
+  @SerializedName("name")
+  val name: String = "",
+  @SerializedName("slug")
+  val slug: String = "",
+  @SerializedName("leagues")
+  val leagues: List<Leagues>?,
 
   )
 
