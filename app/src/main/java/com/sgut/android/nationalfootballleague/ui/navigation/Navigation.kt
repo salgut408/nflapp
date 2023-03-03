@@ -21,10 +21,10 @@ import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.atheletedetail.AthleteDetailScreen
 import com.sgut.android.nationalfootballleague.ui.screens.gamedetailscreen.GameDetailsScreen
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeTeamCardsListScreen
-import com.sgut.android.nationalfootballleague.ui.screens.log_in.LoginScreen
+import com.sgut.android.nationalfootballleague.ui.screens.basics.log_in.LoginScreen
 import com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen.ScoreboardScreen
-import com.sgut.android.nationalfootballleague.ui.screens.settings.SettingsScreen
-import com.sgut.android.nationalfootballleague.ui.screens.sign_up.SignUpScreen
+import com.sgut.android.nationalfootballleague.ui.screens.basics.settings.SettingsScreen
+import com.sgut.android.nationalfootballleague.ui.screens.basics.sign_up.SignUpScreen
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.TeamDetailScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

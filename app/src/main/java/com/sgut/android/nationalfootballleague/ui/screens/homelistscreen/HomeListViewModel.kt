@@ -10,7 +10,9 @@ import com.sgut.android.nationalfootballleague.data.repository.TeamsListReposito
 import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASEBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.MLB
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NFL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,6 +52,8 @@ class HomeListViewModel @Inject constructor(
     init {
         loadCompleteNflInfo()
         loadAllNflTeams()
+        Log.d("GUTIERREZ ", listUiState.value.fullTeamInfo.toString())
+
         loadAllCollegeTeams()
         loadAllBaseballTeams()
         loadAllBasketballTeams()
@@ -77,18 +81,18 @@ class HomeListViewModel @Inject constructor(
         try {
            val result = espnRepository.getFullSportLeagueNflTeams()
             val tagHomeVm = "Complete full  teams response in homelist Vm"
-            Log.d(tagHomeVm, result.sports.toString())
+//            Log.d(tagHomeVm, result.sports.toString())
             completeNflInfo = result
         }  catch (e: Exception){
             val tagHomeVm = "Complete full  teams response in homelist Vm"
-            Log.e(tagHomeVm, e.toString())
+//            Log.e(tagHomeVm, e.toString())
         }
     }
 
     fun loadCompleteInfo(sport: String, league: String) = viewModelScope.launch {
-       val fullInfo = espnRepository.getFullTeamInfo(sport, league)
-
-        _completeInfoForState = fullInfo
+//       val fullInfo = espnRepository.getFullTeamInfo(sport, league)
+//
+//        _completeInfoForState = fullInfo
     }
 
     fun loadEuroTeams() = viewModelScope.launch {
@@ -138,13 +142,14 @@ class HomeListViewModel @Inject constructor(
             val result = espnRepository.getTeams()
             nflTeamsList.value = result
             val fullTeam = fullTeamsListRepository.getFullSportLeagueAndTeamsList(FOOTBALL, NFL)
+            _completeInfoForState = fullTeam
 //            Default list Ui State set here
             _ListUiState.update { currentState ->
                 currentState.copy(
                     currentTeams = result,
                     currentSport = "football",
                     currentLeague = "nfl",
-                    fullTeamInfo =  fullTeam
+                    fullTeamInfo =  _completeInfoForState
                 )
             }
             Log.d("_completeInfo", _completeInfoForState.toString())
@@ -259,11 +264,16 @@ class HomeListViewModel @Inject constructor(
     }
 
 
-    fun setBaseballTeam() {
+    fun setBaseballTeam() = viewModelScope.launch {
+        val fullTeam = fullTeamsListRepository.getFullSportLeagueAndTeamsList(BASEBALL, MLB)
+
         _ListUiState.update {
-            it.copy(currentTeams = baseballTeamsList.value,
+            it.copy(
+                currentTeams = baseballTeamsList.value,
                 currentSport = "baseball",
-                currentLeague = "mlb")
+                currentLeague = "mlb",
+                fullTeamInfo = fullTeam
+            )
         }
 
     }

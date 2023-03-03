@@ -1,9 +1,9 @@
 package com.sgut.android.nationalfootballleague.ui.screens.homelistscreen
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.R
-import com.sgut.android.nationalfootballleague.di.DrawerTopAppBar
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicButton
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.utils.basicButton
@@ -40,6 +40,11 @@ fun HomeTeamCardsListScreen(
     val sport = uiState.currentSport
     val league = uiState.currentLeague
 
+    val sportStateSportName = uiState.fullTeamInfo?.sports?.get(0)?.name
+    val sportStateLeagueName = uiState.fullTeamInfo?.sports?.get(0)?.leagues?.get(0)?.name
+    val sportStateTeamsFullInfo = uiState.fullTeamInfo
+
+    Log.d("SPORT FULL INFO", sportStateSportName.toString())
     val scrollState = rememberScrollState()
 
     Scaffold(
@@ -47,15 +52,21 @@ fun HomeTeamCardsListScreen(
 
             Column() {
 
+                Text(text =  sportStateSportName ?: "SPOrT?")
+                Text(text =  sportStateLeagueName ?: "SPOrT?")
+
 
                 LazyRow(
-                    contentPadding = PaddingValues(16.dp),
+                    contentPadding = padding,
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
 
-
                     item {
-                        FilledTonalButton(onClick = { homeListViewModel.setFootballTeam() }) {
+                        FilledTonalButton(
+                            onClick = {
+                                homeListViewModel.setFootballTeam()
+                            }
+                        ) {
                             Text(text = stringResource(R.string.NFL_League),
                                 style = MaterialTheme.typography.labelSmall)
                         }
@@ -146,29 +157,30 @@ fun HomeTeamCardsListScreen(
                         )
                     })
 
-
-                ListOfTeams2(uiState = uiState, navController = navController)
-
+                sportStateTeamsFullInfo?.let { TEAMSLISTWITHLEAGUE(fullTeamsModel = it) }
 
 
-//                LazyColumn(contentPadding = PaddingValues(8.dp)) {
-//
-//                    items(items = uiState.currentTeams) { team ->
-//                        Row(Modifier.animateItemPlacement()) {
-//                            TeamCard(
-//                                team = team,
-//                                modifier = Modifier.padding(8.dp),
-//                                navController,
-//                                sport = sport,
-//                                league = league
-//                            )
-//                        }
-//                    }
-//                }
+                ListOfTeams2(
+                    currentTeams = uiState.currentTeams,
+                    navController = navController,
+                    uiLeague = sportStateLeagueName ?: "League",
+                    uiSport = sportStateSportName ?: "Sport",
+                )
+
             }
         },
 
         )
 }
 
+
+@Composable
+fun TEAMSLISTWITHLEAGUE(fullTeamsModel: FullTeamsModel) {
+  fullTeamsModel.sports.map { sport ->
+      Text(
+          text = sport.name,
+          style = MaterialTheme.typography.bodyLarge
+      )
+  }
+}
 

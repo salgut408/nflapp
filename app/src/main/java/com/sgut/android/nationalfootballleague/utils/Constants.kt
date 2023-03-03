@@ -9,5 +9,8 @@ class Constants {
         const val FOOTBALL = "football"
         const val NFL = "nfl"
 
+        const val BASEBALL = "baseball"
+        const val MLB = "mlb"
+
     }
 }

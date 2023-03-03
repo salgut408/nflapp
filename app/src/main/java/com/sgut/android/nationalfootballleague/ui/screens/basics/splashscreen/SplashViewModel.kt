@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.ui.screens.splashscreen
+package com.sgut.android.nationalfootballleague.ui.screens.basics.splashscreen
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

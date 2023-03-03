@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.ui.screens.sign_up
+package com.sgut.android.nationalfootballleague.ui.screens.basics.sign_up
 
 data class SignUpUiState (
     val email: String = "",

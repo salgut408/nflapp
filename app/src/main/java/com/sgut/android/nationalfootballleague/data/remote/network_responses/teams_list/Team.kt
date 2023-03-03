@@ -39,4 +39,10 @@ fun Team.asDomainModel(): TeamModel{
     alternateColor = alternateColor,
     logos =  logos.get(0).href.toString()
   )
+
+
+}
+
+fun Team.toDomainModelList(initial: List<Team>): List<TeamModel> {
+  return initial.map { it.asDomainModel() }
 }

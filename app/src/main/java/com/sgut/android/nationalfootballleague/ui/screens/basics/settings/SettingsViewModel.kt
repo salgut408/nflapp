@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.ui.screens.settings
+package com.sgut.android.nationalfootballleague.ui.screens.basics.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

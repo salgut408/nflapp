@@ -1,5 +1,7 @@
 package com.sgut.android.nationalfootballleague.domain.domainmodels.new_models
 
+import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamsDomInterface
+
 data class TeamModel(
     val id: String = "",
     val uid: String = "",
@@ -14,4 +16,5 @@ data class TeamModel(
     val alternateColor: String = "",
     val isFavorite: Boolean = false,
     val logos: String = ""
-    )
+    ) : TeamsDomInterface
+

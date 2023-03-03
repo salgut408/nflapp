@@ -34,19 +34,21 @@ import kotlin.math.max
 
 @Composable
 fun ListOfTeams2(
-    uiState: ListUiState,
+    currentTeams: List<TeamDomainModel>,
+    uiSport: String,
+    uiLeague: String,
     navController: NavController,
 
     ) {
     LazyColumn {
-        items (items = uiState.currentTeams) { team ->
+        items (items = currentTeams) { team ->
 
             TeamsCollection(
-                teams = uiState.currentTeams,
-                index = uiState.currentTeams.indexOf(team),
+                teams = currentTeams,
+                index = currentTeams.indexOf(team),
                 navController = navController,
-                sport = uiState.currentSport,
-                league = uiState.currentLeague
+                sport = uiSport,
+                league = uiLeague
             )
         }
     }

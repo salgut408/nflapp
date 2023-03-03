@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.ui.screens.log_in
+package com.sgut.android.nationalfootballleague.ui.screens.basics.sign_up
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,61 +7,41 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicButton
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicTextButton
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.EmailField
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.PasswordField
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.RepeatPasswordField
 import com.sgut.android.nationalfootballleague.utils.basicButton
 import com.sgut.android.nationalfootballleague.utils.fieldModifier
-import com.sgut.android.nationalfootballleague.utils.textButton
 import com.sgut.android.nationalfootballleague.R.string as AppText
 
-
 @Composable
-fun LoginScreen(
+fun SignUpScreen(
     openAndPopUp: (String, String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: LogInViewModel = hiltViewModel()
+    viewModel: SignUpViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState
-
-    val showSnackbar by viewModel.showSnackbar
-
+    val fieldModifier = Modifier.fieldModifier()
 
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .verticalScroll(rememberScrollState()),
+        modifier = modifier.fillMaxWidth().fillMaxHeight().verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        EmailField(
-            uiState.email,
-            viewModel::onEmailChange,
-            Modifier.fieldModifier()
-        )
-        PasswordField(
-            uiState.password,
-            viewModel::onPasswordChange,
-            Modifier.fieldModifier()
-        )
+        EmailField(uiState.email, viewModel::onEmailChange, fieldModifier)
 
-        BasicButton(
-            AppText.sign_in, Modifier.basicButton()
-        ) {
-            viewModel.onSignInClick(openAndPopUp)
-        }
+        PasswordField(uiState.password, viewModel::onPasswordChange, fieldModifier)
 
-        BasicTextButton(
-            AppText.forgot_password,
-            Modifier.textButton()
-        ) {
-            viewModel.onForgotPasswordClick()
+        RepeatPasswordField(uiState.repeatPassword, viewModel::onRepeatPasswordChange, fieldModifier)
+
+        BasicButton(AppText.create_account, Modifier.basicButton()) {
+            viewModel.onSignUpClick(openAndPopUp)
         }
     }
 }

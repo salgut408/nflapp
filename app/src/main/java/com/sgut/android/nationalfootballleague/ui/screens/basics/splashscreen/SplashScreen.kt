@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.ui.screens.splashscreen
+package com.sgut.android.nationalfootballleague.ui.screens.basics.splashscreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

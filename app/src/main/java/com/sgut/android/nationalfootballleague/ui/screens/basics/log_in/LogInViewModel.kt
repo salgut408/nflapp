@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.ui.screens.log_in
+package com.sgut.android.nationalfootballleague.ui.screens.basics.log_in
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
