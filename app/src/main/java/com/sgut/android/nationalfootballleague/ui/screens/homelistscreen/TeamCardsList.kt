@@ -160,12 +160,15 @@ fun HomeTeamCardsListScreen(
                 sportStateTeamsFullInfo?.let { TEAMSLISTWITHLEAGUE(fullTeamsModel = it) }
 
 
-                ListOfTeams2(
-                    currentTeams = uiState.currentTeams,
-                    navController = navController,
-                    uiLeague = sportStateLeagueName ?: "League",
-                    uiSport = sportStateSportName ?: "Sport",
-                )
+                if (sportStateTeamsFullInfo != null) {
+                    ListOfTeams2(
+                        currentTeams = uiState.currentTeams,
+                        navController = navController,
+                        uiLeague = uiState.currentLeague,
+                        uiSport = uiState.currentSport,
+                        sportStateTeamsFullInfo = sportStateTeamsFullInfo
+                    )
+                }
 
             }
         },
