@@ -12,6 +12,7 @@ import com.sgut.android.nationalfootballleague.data.db.article.ArticleDao
 import com.sgut.android.nationalfootballleague.data.db.team.TeamDao
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import com.sgut.android.nationalfootballleague.data.repository.EspnRepositoryImpl
+import com.sgut.android.nationalfootballleague.data.repository.TeamsListRepositoryImpl
 import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.data.service.LogService
 import com.sgut.android.nationalfootballleague.data.service.StorageService
@@ -67,6 +68,12 @@ object AppModule {
 
 
     @Provides
+     fun provideTeamsListRepository(
+        espnApi: EspnApi,
+        sportsDataBase: SportsDataBase,
+    ): TeamsListRepositoryImpl = TeamsListRepositoryImpl(espnApi, sportsDataBase)
+
+    @Provides
     fun provideNetworkGameDetailsToDomainModelMapper(): NetworkGameDetailsToDomainModelMapper = NetworkGameDetailsToDomainModelMapper()
 
 
@@ -107,8 +114,6 @@ object AppModule {
 
     @Provides
     fun firestore(): FirebaseFirestore = Firebase.firestore
-
-    // services things
 
     @Module
     @InstallIn(ViewModelComponent::class)

@@ -3,10 +3,10 @@ package com.sgut.android.nationalfootballleague.data.repository
 import android.util.Log
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
-import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
 import com.sgut.android.nationalfootballleague.domain.domainmodels.*
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
 import com.sgut.android.nationalfootballleague.domain.dtomappers.*
+import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
 import com.sgut.android.nationalfootballleague.toDomain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -25,7 +25,6 @@ class EspnRepositoryImpl @Inject constructor(
 
     override suspend fun saveArticle(article: GameDetailModel) {
         sportsDataBase.getArticleDao().insertArticle(article.asDbArticle())
-        Log.d("ARTICLE_SAVED", "")
     }
 
 
