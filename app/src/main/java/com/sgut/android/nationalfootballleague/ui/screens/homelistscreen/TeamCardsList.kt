@@ -51,10 +51,7 @@ fun HomeTeamCardsListScreen(
         content = { padding ->
 
             Column() {
-
-                Text(text =  sportStateSportName ?: "SPOrT?")
-                Text(text =  sportStateLeagueName ?: "SPOrT?")
-
+                
 
                 LazyRow(
                     contentPadding = padding,
@@ -184,6 +181,9 @@ fun TEAMSLISTWITHLEAGUE(fullTeamsModel: FullTeamsModel) {
           text = sport.name,
           style = MaterialTheme.typography.bodyLarge
       )
+      sport.leagues.map { league ->
+          Text(text = league.name)
+      }
   }
 }
 
