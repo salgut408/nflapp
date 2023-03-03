@@ -142,4 +142,8 @@ interface EspnApi {
         teamId: Int? = null,
     ): Response<TeamScheduleNetworkResponse>
 
+
+    // TODO implement racing API Endpoint F1
+//    https://site.api.espn.com/apis/site/v2/sports/racing/f1/scoreboard
+
 }
