@@ -49,6 +49,8 @@ class HomeListViewModel @Inject constructor(
 //    val holderForFullTeamInfo = mutableStateOf(FullTeamsModel())
     lateinit var _completeInfoForState : FullTeamsModel
 
+    // TODO FIX UI STATE UPDATE
+
     init {
         loadCompleteNflInfo()
         loadAllNflTeams()
@@ -241,32 +243,37 @@ class HomeListViewModel @Inject constructor(
 
     fun setLaLigaTeams() {
         _ListUiState.update {
-            it.copy(currentTeams = laLigaTeams.value,
+            it.copy(
+                currentTeams = laLigaTeams.value,
                 currentSport = "soccer",
-                currentLeague = "esp.1")
+                currentLeague = "esp.1"
+            )
         }
     }
 
     fun setEnglishTeams() {
         _ListUiState.update {
-            it.copy(currentTeams = englishTeams.value,
+            it.copy(
+                currentTeams = englishTeams.value,
                 currentSport = "soccer",
-                currentLeague = "eng.1")
+                currentLeague = "eng.1"
+            )
         }
     }
 
     fun setEuroTeams() {
         _ListUiState.update {
-            it.copy(currentTeams = euroTeams.value,
+            it.copy(
+                currentTeams = euroTeams.value,
                 currentSport = "soccer",
-                currentLeague = "uefa.europa")
+                currentLeague = "uefa.europa"
+            )
         }
     }
 
 
     fun setBaseballTeam() = viewModelScope.launch {
         val fullTeam = fullTeamsListRepository.getFullSportLeagueAndTeamsList(BASEBALL, MLB)
-
         _ListUiState.update {
             it.copy(
                 currentTeams = baseballTeamsList.value,
@@ -280,66 +287,82 @@ class HomeListViewModel @Inject constructor(
 
     fun setCollegeBasketballTeam() {
         _ListUiState.update {
-            it.copy(currentTeams = collegeBasketballTeams.value,
+            it.copy(
+                currentTeams = collegeBasketballTeams.value,
                 currentSport = "basketball",
-                currentLeague = "mens-college-basketball")
+                currentLeague = "mens-college-basketball"
+            )
         }
     }
 
     fun setBasketballTeam() {
         _ListUiState.update {
-            it.copy(currentTeams = basketballTeamsList.value,
+            it.copy(
+                currentTeams = basketballTeamsList.value,
                 currentSport = "basketball",
-                currentLeague = "nba")
+                currentLeague = "nba"
+            )
         }
     }
 
     fun setFootballTeam() {
         _ListUiState.update {
-            it.copy(currentTeams = nflTeamsList.value,
+            it.copy(
+                currentTeams = nflTeamsList.value,
                 currentSport = "football",
-                currentLeague = "nfl")
+                currentLeague = "nfl"
+            )
         }
     }
 
 
     fun setHockeyTeam() {
         _ListUiState.update {
-            it.copy(currentTeams = hockeyTeamsList.value,
+            it.copy(
+                currentTeams = hockeyTeamsList.value,
                 currentSport = "hockey",
-                currentLeague = "nhl")
+                currentLeague = "nhl"
+            )
         }
     }
 
     fun setWnbaTeam() {
         _ListUiState.update {
-            it.copy(currentTeams = womensBasketballTeamsList.value,
+            it.copy(
+                currentTeams = womensBasketballTeamsList.value,
                 currentSport = "basketball",
-                currentLeague = "wnba")
+                currentLeague = "wnba"
+            )
         }
     }
 
     fun setMlsTeam() {
         _ListUiState.update {
-            it.copy(currentTeams = soccerTeamsList.value,
+            it.copy(
+                currentTeams = soccerTeamsList.value,
                 currentSport = "soccer",
-                currentLeague = "usa.1")
+                currentLeague = "usa.1"
+            )
         }
     }
 
     fun setCollegeTeam() {
         _ListUiState.update {
-            it.copy(currentTeams = collegeTeamsList.value,
+            it.copy(
+                currentTeams = collegeTeamsList.value,
                 currentSport = "football",
-                currentLeague = "college-football")
+                currentLeague = "college-football"
+            )
         }
     }
 
     fun setWorldCupTeam() {
         _ListUiState.update {
-            it.copy(currentTeams = worldCupTeams.value,
+            it.copy(
+                currentTeams = worldCupTeams.value,
                 currentSport = "soccer",
-                currentLeague = "fifa.world")
+                currentLeague = "fifa.world"
+            )
         }
     }
 
