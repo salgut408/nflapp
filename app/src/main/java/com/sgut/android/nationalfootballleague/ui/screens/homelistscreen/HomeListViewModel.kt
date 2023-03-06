@@ -11,9 +11,22 @@ import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASEBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASKETBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.EPL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FIFA
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.HOCKEY
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.LA_LIGA
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.MLB
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.MLS
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NBA
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASKETBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_FOOTBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NFL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NHL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.SOCCER
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.UEFA
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.WNBA
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -241,32 +254,41 @@ class HomeListViewModel @Inject constructor(
 
 
 
-    fun setLaLigaTeams() {
+    fun setLaLigaTeams() = viewModelScope.launch{
         _ListUiState.update {
+            val fullTeam = fullTeamsListRepository.getFullSportLeagueAndTeamsList(SOCCER, LA_LIGA)
+
             it.copy(
                 currentTeams = laLigaTeams.value,
                 currentSport = "soccer",
-                currentLeague = "esp.1"
+                currentLeague = "esp.1",
+                fullTeamInfo = fullTeam,
             )
         }
     }
 
-    fun setEnglishTeams() {
+    fun setEnglishTeams() = viewModelScope.launch {
         _ListUiState.update {
+            val fullTeam = fullTeamsListRepository.getFullSportLeagueAndTeamsList(SOCCER, EPL)
+
             it.copy(
                 currentTeams = englishTeams.value,
                 currentSport = "soccer",
-                currentLeague = "eng.1"
+                currentLeague = "eng.1",
+                fullTeamInfo = fullTeam
             )
         }
     }
 
-    fun setEuroTeams() {
+    fun setEuroTeams() = viewModelScope.launch() {
+        val fullTeam = fullTeamsListRepository.getFullSportLeagueAndTeamsList(SOCCER, UEFA)
+
         _ListUiState.update {
             it.copy(
                 currentTeams = euroTeams.value,
                 currentSport = "soccer",
-                currentLeague = "uefa.europa"
+                currentLeague = "uefa.europa",
+                fullTeamInfo = fullTeam
             )
         }
     }
@@ -285,83 +307,108 @@ class HomeListViewModel @Inject constructor(
 
     }
 
-    fun setCollegeBasketballTeam() {
+    fun setCollegeBasketballTeam() = viewModelScope.launch{
+        val fullTeam = fullTeamsListRepository.getFullSportLeagueAndTeamsList(BASKETBALL, NCAA_BASKETBALL)
+
         _ListUiState.update {
+
             it.copy(
                 currentTeams = collegeBasketballTeams.value,
                 currentSport = "basketball",
-                currentLeague = "mens-college-basketball"
+                currentLeague = "mens-college-basketball",
+                fullTeamInfo = fullTeam
             )
         }
     }
 
-    fun setBasketballTeam() {
+    fun setBasketballTeam() = viewModelScope.launch {
+        val fullTeam = fullTeamsListRepository.getFullSportLeagueAndTeamsList(BASKETBALL, NBA)
+
         _ListUiState.update {
             it.copy(
                 currentTeams = basketballTeamsList.value,
                 currentSport = "basketball",
-                currentLeague = "nba"
+                currentLeague = "nba",
+                fullTeamInfo = fullTeam,
             )
         }
     }
 
-    fun setFootballTeam() {
+    fun setFootballTeam() = viewModelScope.launch{
+        val fullTeam = fullTeamsListRepository.getFullSportLeagueAndTeamsList(FOOTBALL, NFL)
+
         _ListUiState.update {
             it.copy(
                 currentTeams = nflTeamsList.value,
                 currentSport = "football",
-                currentLeague = "nfl"
+                currentLeague = "nfl",
+                fullTeamInfo = fullTeam
             )
         }
     }
 
 
-    fun setHockeyTeam() {
+    fun setHockeyTeam() = viewModelScope.launch {
+        val fullTeam = fullTeamsListRepository.getFullSportLeagueAndTeamsList(HOCKEY, NHL)
+
         _ListUiState.update {
             it.copy(
                 currentTeams = hockeyTeamsList.value,
                 currentSport = "hockey",
-                currentLeague = "nhl"
+                currentLeague = "nhl",
+                fullTeamInfo = fullTeam
             )
         }
     }
 
-    fun setWnbaTeam() {
+    fun setWnbaTeam() = viewModelScope.launch{
         _ListUiState.update {
+            val fullTeam = fullTeamsListRepository.getFullSportLeagueAndTeamsList(BASKETBALL, WNBA)
+
             it.copy(
                 currentTeams = womensBasketballTeamsList.value,
                 currentSport = "basketball",
-                currentLeague = "wnba"
+                currentLeague = "wnba",
+                fullTeamInfo = fullTeam
             )
         }
     }
 
-    fun setMlsTeam() {
+    fun setMlsTeam() = viewModelScope.launch {
+        val fullTeam = fullTeamsListRepository.getFullSportLeagueAndTeamsList(SOCCER, MLS)
+
         _ListUiState.update {
             it.copy(
                 currentTeams = soccerTeamsList.value,
                 currentSport = "soccer",
-                currentLeague = "usa.1"
+                currentLeague = "usa.1",
+                fullTeamInfo = fullTeam,
             )
         }
     }
 
-    fun setCollegeTeam() {
+    fun setCollegeTeam() = viewModelScope.launch {
+        val fullTeam = fullTeamsListRepository.getFullSportLeagueAndTeamsList(FOOTBALL, NCAA_FOOTBALL)
+
         _ListUiState.update {
             it.copy(
                 currentTeams = collegeTeamsList.value,
                 currentSport = "football",
-                currentLeague = "college-football"
+                currentLeague = "college-football",
+                fullTeamInfo = fullTeam
             )
         }
     }
 
-    fun setWorldCupTeam() {
+    fun setWorldCupTeam() = viewModelScope.launch{
+        val fullTeam = fullTeamsListRepository.getFullSportLeagueAndTeamsList(SOCCER, FIFA)
+
         _ListUiState.update {
             it.copy(
                 currentTeams = worldCupTeams.value,
                 currentSport = "soccer",
-                currentLeague = "fifa.world"
+                currentLeague = "fifa.world",
+                fullTeamInfo = fullTeam
             )
         }
     }
