@@ -10,6 +10,7 @@ import com.sgut.android.nationalfootballleague.data.repository.TeamsListReposito
 import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
+import com.sgut.android.nationalfootballleague.utils.Constants
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASEBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASKETBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.EPL
@@ -57,6 +58,8 @@ class HomeListViewModel @Inject constructor(
     val laLigaTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
     val englishTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
     val euroTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
+    val xflTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
+
 
     lateinit var completeNflInfo : FullTeamsModel
 //    val holderForFullTeamInfo = mutableStateOf(FullTeamsModel())
@@ -122,6 +125,8 @@ class HomeListViewModel @Inject constructor(
             Log.e("Euro", e.message.toString())
         }
     }
+
+
 
     fun loadLaLigaTeams() = viewModelScope.launch {
         try {
@@ -278,6 +283,17 @@ class HomeListViewModel @Inject constructor(
                 currentSport = fullTeamList.sports.get(0).name,
                 currentLeague = fullTeamList.sports.get(0).leagues.get(0).name,
                 fullTeamInfo = fullTeamList
+            )
+        }
+    }
+
+    fun setXflTeams() = viewModelScope.launch {
+        val fullTeamsList = espnRepository.getFullTeamInfo(FOOTBALL, Constants.XFL)
+        _ListUiState.update {
+            it.copy(
+                currentTeams = fullTeamsList.sports.get(0).leagues.get(0).teams,
+                currentSport = fullTeamsList.sports.get(0).name,
+                fullTeamInfo = fullTeamsList
             )
         }
     }

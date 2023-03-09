@@ -20,7 +20,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -67,17 +66,17 @@ fun TeamsCollection(
     league: String,
 ) {
 
-    Column(modifier) {
-        Text(
-            text = league.uppercase(),
-            fontSize = 20.sp,
-            modifier = Modifier
-                .heightIn(min = 56.dp)
-                .padding(horizontal = 24.dp, vertical = 4.dp)
-                .wrapContentHeight()
-        )
-
-    }
+//    Column(modifier) {
+//        Text(
+//            text = league.uppercase(),
+//            fontSize = 20.sp,
+//            modifier = Modifier
+//                .heightIn(min = 56.dp)
+//                .padding(horizontal = 24.dp, vertical = 4.dp)
+//                .wrapContentHeight()
+//        )
+//
+//    }
 
     VerticalGrid(Modifier.padding(horizontal = 16.dp)) {
         val gradient = when (index % 2) {

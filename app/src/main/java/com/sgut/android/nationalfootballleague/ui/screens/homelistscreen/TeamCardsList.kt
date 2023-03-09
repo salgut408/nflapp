@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.R
+import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicButton
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
@@ -142,6 +143,12 @@ fun HomeTeamCardsListScreen(
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
+                    item {
+                        OutlinedButton(onClick = { homeListViewModel.setXflTeams() }) {
+                            Text(stringResource(R.string.XFL_League),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
 
                 }
 
@@ -159,7 +166,7 @@ fun HomeTeamCardsListScreen(
 
                 if (sportStateTeamsFullInfo != null) {
                     ListOfTeams2(
-                        currentTeams = uiState.currentTeams,
+                        currentTeams = uiState.currentTeams as List<TeamDomainModel>,
                         navController = navController,
                         uiLeague = uiState.currentLeague,
                         uiSport = uiState.currentSport,
@@ -183,6 +190,8 @@ fun TEAMSLISTWITHLEAGUE(fullTeamsModel: FullTeamsModel) {
       )
       sport.leagues.map { league ->
           Text(text = league.name)
+          Text(text = league.abbreviation)
+
       }
   }
 }
