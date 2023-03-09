@@ -12,6 +12,7 @@ import com.sgut.android.nationalfootballleague.domain.repositories.TeamsListsRep
 import com.sgut.android.nationalfootballleague.toDomain
 import javax.inject.Inject
 
+// interatcs and gets sports id, league id
 class TeamsListRepositoryImpl @Inject constructor(
    val espnApi: EspnApi,
    val sportsDataBase: SportsDataBase

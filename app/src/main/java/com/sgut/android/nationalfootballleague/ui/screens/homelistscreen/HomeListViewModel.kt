@@ -99,7 +99,7 @@ class HomeListViewModel @Inject constructor(
         try {
            val result = espnRepository.getFullSportLeagueNflTeams()
             val tagHomeVm = "Complete full  teams response in homelist Vm"
-//            Log.d(tagHomeVm, result.sports.toString())
+            Log.d(tagHomeVm, result.sports.toString())
             completeNflInfo = result
         }  catch (e: Exception){
             val tagHomeVm = "Complete full  teams response in homelist Vm"
