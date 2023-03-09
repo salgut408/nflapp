@@ -61,7 +61,7 @@ fun HomeTeamCardsListScreen(
                     item {
                         FilledTonalButton(
                             onClick = {
-                                homeListViewModel.setFootballTeam()
+                                homeListViewModel.setFootballTeams()
                             }
                         ) {
                             Text(text = stringResource(R.string.NFL_League),
@@ -69,55 +69,55 @@ fun HomeTeamCardsListScreen(
                         }
                     }
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setHockeyTeam() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setHockeyTeams() }) {
                             Text(stringResource(R.string.NHL_league),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setBaseballTeam() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setBaseballTeams() }) {
                             Text(stringResource(R.string.MLB_league),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setBasketballTeam() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setBasketballTeams() }) {
                             Text(stringResource(R.string.NBA_league),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setWnbaTeam() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setWnbaTeams() }) {
                             Text(stringResource(R.string.WNBA_league),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setCollegeTeam() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setCollegeTeams() }) {
                             Text(stringResource(R.string.NCAA_football),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setCollegeBasketballTeam() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setCollegeBasketballTeams() }) {
                             Text(stringResource(R.string.NCAA_mens_basketball),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setMlsTeam() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setMlsTeams() }) {
                             Text(stringResource(R.string.MLS_league),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setWorldCupTeam() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setWorldCupTeams() }) {
                             Text(stringResource(R.string.world_cup),
                                 style = MaterialTheme.typography.labelSmall)
                         }

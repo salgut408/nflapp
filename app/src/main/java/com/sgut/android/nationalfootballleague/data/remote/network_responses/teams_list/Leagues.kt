@@ -16,7 +16,7 @@ data class Leagues(
 
   )
 
-fun Leagues.asDomainModel(): LeagueModel {
+fun Leagues.toDomain(): LeagueModel {
   return LeagueModel(
     id = id ?: "",
     uid = uid ?: "",
