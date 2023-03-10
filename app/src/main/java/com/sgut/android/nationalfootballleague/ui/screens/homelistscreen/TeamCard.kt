@@ -17,14 +17,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.TeamModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
-import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 
 @Composable
 fun TeamCard(
-    team: TeamDomainModel,
+    team: TeamModel,
     modifier: Modifier,
     navController: NavController,
     sport: String,
@@ -58,7 +58,7 @@ fun TeamCard(
                 modifier = Modifier.fillMaxWidth()) {
 
                 GenericImageLoader(
-                    obj = team.logos?.getOrNull(0)?.href ?: "",
+                    obj = team.logos,
                     modifier = Modifier
                         .size(150.dp)
                         .padding(8.dp)

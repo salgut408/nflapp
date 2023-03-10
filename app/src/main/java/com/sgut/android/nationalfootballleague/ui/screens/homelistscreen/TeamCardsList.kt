@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.R
-import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsListsModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicButton
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
@@ -166,7 +165,7 @@ fun HomeTeamCardsListScreen(
 
                 if (sportStateTeamsFullInfo != null) {
                     ListOfTeams2(
-                        currentTeams = uiState.currentTeams as List<TeamDomainModel>,
+                        currentTeams = uiState.fullTeamInfo?.sport?.league?.teams ?: listOf(),
                         navController = navController,
                         uiLeague = uiState.currentLeague,
                         uiSport = uiState.currentSport,

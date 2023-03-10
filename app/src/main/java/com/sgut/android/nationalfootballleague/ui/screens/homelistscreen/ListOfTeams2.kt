@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsListsModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.TeamModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportSurface
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.VerticalGrid
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
@@ -34,7 +34,7 @@ import kotlin.math.max
 
 @Composable
 fun ListOfTeams2(
-    currentTeams: List<TeamDomainModel>,
+    currentTeams: List<TeamModel>,
     uiSport: String,
     uiLeague: String,
     sportStateTeamsFullInfo: FullTeamsListsModel,
@@ -58,7 +58,7 @@ fun ListOfTeams2(
 
 @Composable
 fun TeamsCollection(
-    teams: List<TeamDomainModel>,
+    teams: List<TeamModel>,
     index: Int,
     modifier: Modifier = Modifier,
     navController: NavController,
@@ -102,7 +102,7 @@ private const val TeamTextProportion = 0.55f
 
 @Composable
 fun TeamDisplayTile(
-    team: TeamDomainModel,
+    team: TeamModel,
     modifier: Modifier,
     navController: NavController,
     sport: String,
@@ -169,7 +169,7 @@ fun TeamDisplayTile(
 
 @Composable
 fun TeamLogoImage(
-    team: TeamDomainModel,
+    team: TeamModel,
     contentDescription: String?,
     modifier: Modifier = Modifier,
     elevation: Dp = 0.dp,
@@ -186,7 +186,7 @@ fun TeamLogoImage(
         
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(team.logos?.getOrNull(0)?.href ?: "")
+                .data(team.logos ?: "")
                 .crossfade(true)
                 .build(),
 
