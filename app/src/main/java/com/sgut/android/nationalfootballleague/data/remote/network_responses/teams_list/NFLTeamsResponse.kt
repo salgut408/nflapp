@@ -1,7 +1,7 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsListsModel
 
 
 data class NFLTeamsResponse (
@@ -12,8 +12,8 @@ data class NFLTeamsResponse (
 )
 
 
-fun NFLTeamsResponse.toDomain(): FullTeamsModel {
-  return FullTeamsModel(
-    sports = sports?.map { it.toDomain() } ?: listOf()
+fun NFLTeamsResponse.toDomain(): FullTeamsListsModel {
+  return FullTeamsListsModel(
+    sport = sports?.get(0)?.toDomain()!!
   )
 }

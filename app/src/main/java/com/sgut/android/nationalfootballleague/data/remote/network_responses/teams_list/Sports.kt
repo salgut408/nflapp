@@ -26,6 +26,6 @@ fun Sports.toDomain(): SportModel {
     uid = uid,
     name = name,
     slug = slug,
-    leagues = leagues?.map { it.toDomain() } ?: listOf(),
+    leagues = leagues?.get(0)?.toDomain(),
   )
 }

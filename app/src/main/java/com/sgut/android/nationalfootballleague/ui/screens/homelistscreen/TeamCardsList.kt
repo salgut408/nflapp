@@ -17,7 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.R
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsListsModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicButton
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.utils.basicButton
@@ -41,8 +41,8 @@ fun HomeTeamCardsListScreen(
     val sport = uiState.currentSport
     val league = uiState.currentLeague
 
-    val sportStateSportName = uiState.fullTeamInfo?.sports?.get(0)?.name
-    val sportStateLeagueName = uiState.fullTeamInfo?.sports?.get(0)?.leagues?.get(0)?.name
+    val sportStateSportName = uiState.fullTeamInfo?.sport?.name
+    val sportStateLeagueName = uiState.fullTeamInfo?.sport?.leagues?.name
     val sportStateTeamsFullInfo = uiState.fullTeamInfo
 
     Log.d("SPORT FULL INFO", sportStateSportName.toString())
@@ -161,7 +161,7 @@ fun HomeTeamCardsListScreen(
                         )
                     })
 
-                sportStateTeamsFullInfo?.let { TEAMSLISTWITHLEAGUE(fullTeamsModel = it) }
+                sportStateTeamsFullInfo?.let { TEAMSLISTWITHLEAGUE(fullTeamsListsModel = it) }
 
 
                 if (sportStateTeamsFullInfo != null) {
@@ -182,17 +182,13 @@ fun HomeTeamCardsListScreen(
 
 
 @Composable
-fun TEAMSLISTWITHLEAGUE(fullTeamsModel: FullTeamsModel) {
-  fullTeamsModel.sports.map { sport ->
+fun TEAMSLISTWITHLEAGUE(fullTeamsListsModel: FullTeamsListsModel) {
+
       Text(
-          text = sport.name,
+          text = fullTeamsListsModel.sport.name,
           style = MaterialTheme.typography.bodyLarge
       )
-      sport.leagues.map { league ->
-          Text(text = league.name)
-          Text(text = league.abbreviation)
-
-      }
-  }
+          Text(text = fullTeamsListsModel.sport.leagues?.name ?: "")
+          Text(text = fullTeamsListsModel.sport.leagues?.abbreviation ?: "")
 }
 

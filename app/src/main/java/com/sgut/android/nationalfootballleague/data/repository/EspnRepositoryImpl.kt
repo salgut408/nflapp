@@ -4,7 +4,7 @@ import android.util.Log
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import com.sgut.android.nationalfootballleague.domain.domainmodels.*
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsListsModel
 import com.sgut.android.nationalfootballleague.domain.dtomappers.*
 import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
 import com.sgut.android.nationalfootballleague.toDomain
@@ -28,11 +28,11 @@ class EspnRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun getFullTeamInfo(sport: String, league: String): FullTeamsModel {
+    override suspend fun getFullTeamInfo(sport: String, league: String): FullTeamsListsModel {
        return espnApi.getTeamsListForLeague(sport, league).body()?.toDomain()!!
     }
 
-    override suspend fun getFullSportLeagueNflTeams(): FullTeamsModel {
+    override suspend fun getFullSportLeagueNflTeams(): FullTeamsListsModel {
         return espnApi.getAllNflTeams().body()?.toDomain()!!
     }
 

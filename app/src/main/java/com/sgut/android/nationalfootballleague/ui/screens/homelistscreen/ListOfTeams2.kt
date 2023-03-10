@@ -24,7 +24,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsListsModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportSurface
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.VerticalGrid
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
@@ -37,7 +37,7 @@ fun ListOfTeams2(
     currentTeams: List<TeamDomainModel>,
     uiSport: String,
     uiLeague: String,
-    sportStateTeamsFullInfo: FullTeamsModel,
+    sportStateTeamsFullInfo: FullTeamsListsModel,
     navController: NavController,
 
     ) {

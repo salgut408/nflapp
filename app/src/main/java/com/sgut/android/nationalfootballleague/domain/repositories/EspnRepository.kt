@@ -1,7 +1,7 @@
 package com.sgut.android.nationalfootballleague.domain.repositories
 
 import com.sgut.android.nationalfootballleague.domain.domainmodels.*
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsListsModel
 
 
 // TODO move / break out to different repositories based on model
@@ -15,7 +15,7 @@ interface EspnRepository {
 
     suspend fun getAllCollegeTeams(): List<TeamDomainModel>
     suspend fun getAllBaseballTeams(): List<TeamDomainModel>
-    suspend fun getFullTeamInfo(sport: String, league: String): FullTeamsModel
+    suspend fun getFullTeamInfo(sport: String, league: String): FullTeamsListsModel
     suspend fun getAllHockeyTeams(): List<TeamDomainModel>
     suspend fun getAllBasketballTeams(): List<TeamDomainModel>
     suspend fun getAllCollegeBasketballTeams(): List<TeamDomainModel>
@@ -60,5 +60,5 @@ interface EspnRepository {
         teamId: Int
     ): TeamScheduleModel
 
-    suspend fun getFullSportLeagueNflTeams(): FullTeamsModel
+    suspend fun getFullSportLeagueNflTeams(): FullTeamsListsModel
 }
