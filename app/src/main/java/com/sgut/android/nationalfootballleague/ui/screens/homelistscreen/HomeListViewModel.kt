@@ -43,8 +43,8 @@ class HomeListViewModel @Inject constructor(
     private val fullTeamsListRepository: TeamsListRepositoryImpl
 ) : ViewModel() {
 
-    private val _ListUiState = MutableStateFlow(ListUiState())
-    val listUiState: StateFlow<ListUiState> = _ListUiState.asStateFlow()
+    private val _listUiState = MutableStateFlow(ListUiState())
+    val listUiState: StateFlow<ListUiState> = _listUiState.asStateFlow()
 
     val nflTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
     val collegeTeamsList = mutableStateOf<List<TeamDomainModel>>(listOf())
@@ -59,6 +59,8 @@ class HomeListViewModel @Inject constructor(
     val englishTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
     val euroTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
     val xflTeams = mutableStateOf<List<TeamDomainModel>>(listOf())
+
+//    val nflState = mutableStateOf(FullTeamsListsModel())
 
 
     lateinit var completeNflInfo : FullTeamsListsModel
@@ -101,12 +103,9 @@ class HomeListViewModel @Inject constructor(
     fun loadCompleteNflInfo() = viewModelScope.launch {
         try {
            val result = espnRepository.getFullSportLeagueNflTeams()
-            val tagHomeVm = "Complete full  teams response in homelist Vm"
-            Log.d(tagHomeVm, result.sport.toString())
             completeNflInfo = result
         }  catch (e: Exception){
-            val tagHomeVm = "Complete full  teams response in homelist Vm"
-//            Log.e(tagHomeVm, e.toString())
+
         }
     }
 
@@ -118,6 +117,7 @@ class HomeListViewModel @Inject constructor(
 
     fun loadEuroTeams() = viewModelScope.launch {
         try {
+            callForCompleteTeamAndLeagueInfo(SOCCER, LA_LIGA)
             val result = espnRepository.getLaLigaSoccerTeams()
             euroTeams.value = result
             addTeamsToDb(result)
@@ -168,7 +168,7 @@ class HomeListViewModel @Inject constructor(
             logSportModel(FOOTBALL, NFL)
             _completeInfoForState = fullTeam
 //            Default list Ui State set here
-            _ListUiState.update { currentState ->
+            _listUiState.update { currentState ->
                 currentState.copy(
                     currentTeams = result,
                     currentSport = "football",
@@ -264,35 +264,36 @@ class HomeListViewModel @Inject constructor(
 
 
     fun setLaLigaTeams() = viewModelScope.launch{
-        _ListUiState.update {
+        _listUiState.update {
             val fullTeamList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(SOCCER, LA_LIGA)
             it.copy(
                 currentTeams = laLigaTeams.value,
-                currentSport = fullTeamList.sport.name,
-                currentLeague = fullTeamList.sport.leagues?.name ?: "",
+                currentSport = fullTeamList.sport.slug,
+                currentLeague = fullTeamList.sport.league?.slug ?: "",
                 fullTeamInfo = fullTeamList,
             )
         }
     }
 
     fun setEnglishTeams() = viewModelScope.launch {
-        _ListUiState.update {
+        _listUiState.update {
             val fullTeamList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(SOCCER, EPL)
             it.copy(
                 currentTeams = englishTeams.value,
-                currentSport = fullTeamList.sport.name,
-                currentLeague = fullTeamList.sport.leagues?.name ?: "",
-                fullTeamInfo = fullTeamList
+                currentSport = fullTeamList.sport.slug,
+                currentLeague = fullTeamList.sport.league?.slug ?: "",
+                fullTeamInfo = fullTeamList,
             )
         }
     }
 
     fun setXflTeams() = viewModelScope.launch {
         val fullTeamsList = espnRepository.getFullTeamInfo(FOOTBALL, Constants.XFL)
-        _ListUiState.update {
+        _listUiState.update {
             it.copy(
-                currentTeams = fullTeamsList.sport.leagues?.teams!!,
-                currentSport = fullTeamsList.sport.name,
+                currentTeams = fullTeamsList.sport.league?.teams!!,
+                currentSport = fullTeamsList.sport.slug,
+                currentLeague =fullTeamsList.sport.league.slug,
                 fullTeamInfo = fullTeamsList
             )
         }
@@ -300,11 +301,11 @@ class HomeListViewModel @Inject constructor(
 
     fun setEuroTeams() = viewModelScope.launch() {
         val fullTeamList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(SOCCER, UEFA)
-        _ListUiState.update {
+        _listUiState.update {
             it.copy(
                 currentTeams = euroTeams.value,
-                currentSport = "soccer",
-                currentLeague = "uefa.europa",
+                currentSport = fullTeamList.sport.slug,
+                currentLeague = fullTeamList.sport.league?.slug ?: "",
                 fullTeamInfo = fullTeamList
             )
         }
@@ -315,11 +316,11 @@ class HomeListViewModel @Inject constructor(
         val fullTeamList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(BASEBALL, MLB)
         logSportModel(BASEBALL, MLB)
 
-        _ListUiState.update {
+        _listUiState.update {
             it.copy(
                 currentTeams = baseballTeamsList.value,
-                currentSport = "baseball",
-                currentLeague = "mlb",
+                currentSport = fullTeamList.sport.slug,
+                currentLeague = fullTeamList.sport.league?.slug ?: "",
                 fullTeamInfo = fullTeamList
             )
         }
@@ -329,12 +330,12 @@ class HomeListViewModel @Inject constructor(
     fun setCollegeBasketballTeams() = viewModelScope.launch{
         val fullTeamList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(BASKETBALL, NCAA_BASKETBALL)
 
-        _ListUiState.update {
+        _listUiState.update {
 
             it.copy(
                 currentTeams = collegeBasketballTeams.value,
-                currentSport = "basketball",
-                currentLeague = "mens-college-basketball",
+                currentSport = fullTeamList.sport.slug,
+                currentLeague = fullTeamList.sport.league?.slug ?: "",
                 fullTeamInfo = fullTeamList
             )
         }
@@ -342,11 +343,11 @@ class HomeListViewModel @Inject constructor(
 
     fun setBasketballTeams() = viewModelScope.launch {
         val fullTeamList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(BASKETBALL, NBA)
-        _ListUiState.update {
+        _listUiState.update {
             it.copy(
                 currentTeams = basketballTeamsList.value,
-                currentSport = "basketball",
-                currentLeague = "nba",
+                currentSport = fullTeamList.sport.slug,
+                currentLeague = fullTeamList.sport.league?.slug ?: "",
                 fullTeamInfo = fullTeamList,
             )
         }
@@ -354,11 +355,11 @@ class HomeListViewModel @Inject constructor(
 
     fun setFootballTeams() = viewModelScope.launch{
         val fullTeamList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(FOOTBALL, NFL)
-        _ListUiState.update {
+        _listUiState.update {
             it.copy(
                 currentTeams = nflTeamsList.value,
-                currentSport = "football",
-                currentLeague = "nfl",
+                currentSport = fullTeamList.sport.slug,
+                currentLeague = fullTeamList.sport.league?.slug ?: "",
                 fullTeamInfo = fullTeamList
             )
         }
@@ -367,11 +368,11 @@ class HomeListViewModel @Inject constructor(
 
     fun setHockeyTeams() = viewModelScope.launch {
         val fullTeamList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(HOCKEY, NHL)
-        _ListUiState.update {
+        _listUiState.update {
             it.copy(
                 currentTeams = hockeyTeamsList.value,
-                currentSport = "hockey",
-                currentLeague = "nhl",
+                currentSport = fullTeamList.sport.slug,
+                currentLeague = fullTeamList.sport.league?.slug ?: "",
                 fullTeamInfo = fullTeamList
             )
         }
@@ -379,11 +380,11 @@ class HomeListViewModel @Inject constructor(
 
     fun setWnbaTeams() = viewModelScope.launch{
         val fullTeamList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(BASKETBALL, WNBA)
-        _ListUiState.update {
+        _listUiState.update {
             it.copy(
                 currentTeams = womensBasketballTeamsList.value,
-                currentSport = "basketball",
-                currentLeague = "wnba",
+                currentSport = fullTeamList.sport.slug,
+                currentLeague = fullTeamList.sport.league?.slug ?: "",
                 fullTeamInfo = fullTeamList
             )
         }
@@ -391,11 +392,11 @@ class HomeListViewModel @Inject constructor(
 
     fun setMlsTeams() = viewModelScope.launch {
         val fullTeamList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(SOCCER, MLS)
-        _ListUiState.update {
+        _listUiState.update {
             it.copy(
                 currentTeams = soccerTeamsList.value,
-                currentSport = "soccer",
-                currentLeague = "usa.1",
+                currentSport = fullTeamList.sport.slug,
+                currentLeague = fullTeamList.sport.league?.slug ?: "",
                 fullTeamInfo = fullTeamList,
             )
         }
@@ -403,11 +404,11 @@ class HomeListViewModel @Inject constructor(
 
     fun setCollegeTeams() = viewModelScope.launch {
         val fullTeamList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(FOOTBALL, NCAA_FOOTBALL)
-        _ListUiState.update {
+        _listUiState.update {
             it.copy(
                 currentTeams = collegeTeamsList.value,
-                currentSport = "football",
-                currentLeague = "college-football",
+                currentSport = fullTeamList.sport.slug,
+                currentLeague = fullTeamList.sport.league?.slug ?: "",
                 fullTeamInfo = fullTeamList
             )
         }
@@ -415,11 +416,11 @@ class HomeListViewModel @Inject constructor(
 
     fun setWorldCupTeams() = viewModelScope.launch{
         val fullTeamList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(SOCCER, FIFA)
-        _ListUiState.update {
+        _listUiState.update {
             it.copy(
                 currentTeams = worldCupTeams.value,
-                currentSport = "soccer",
-                currentLeague = "fifa.world",
+                currentSport = fullTeamList.sport.slug,
+                currentLeague = fullTeamList.sport.league?.slug ?: "",
                 fullTeamInfo = fullTeamList
             )
         }

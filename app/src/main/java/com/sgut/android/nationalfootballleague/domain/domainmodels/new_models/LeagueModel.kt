@@ -8,6 +8,5 @@ data class LeagueModel(
     val shortName: String = "",
     val slug: String = "",
     val teams: List<TeamModel>
-
 )
 

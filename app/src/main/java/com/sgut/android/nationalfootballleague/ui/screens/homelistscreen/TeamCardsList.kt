@@ -42,7 +42,7 @@ fun HomeTeamCardsListScreen(
     val league = uiState.currentLeague
 
     val sportStateSportName = uiState.fullTeamInfo?.sport?.name
-    val sportStateLeagueName = uiState.fullTeamInfo?.sport?.leagues?.name
+    val sportStateLeagueName = uiState.fullTeamInfo?.sport?.league?.name
     val sportStateTeamsFullInfo = uiState.fullTeamInfo
 
     Log.d("SPORT FULL INFO", sportStateSportName.toString())
@@ -188,7 +188,7 @@ fun TEAMSLISTWITHLEAGUE(fullTeamsListsModel: FullTeamsListsModel) {
           text = fullTeamsListsModel.sport.name,
           style = MaterialTheme.typography.bodyLarge
       )
-          Text(text = fullTeamsListsModel.sport.leagues?.name ?: "")
-          Text(text = fullTeamsListsModel.sport.leagues?.abbreviation ?: "")
+          Text(text = fullTeamsListsModel.sport.league?.name ?: "")
+          Text(text = fullTeamsListsModel.sport.league?.abbreviation ?: "")
 }
 

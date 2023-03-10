@@ -4,6 +4,4 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamsDomInter
 
 data class FullTeamsListsModel(
     val sport: SportModel
-
-
 ):TeamsDomInterface

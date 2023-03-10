@@ -5,5 +5,5 @@ data class SportModel(
     val uid: String = "",
     val name: String = "",
     val slug: String = "",
-    val leagues: LeagueModel? = null
+    val league: LeagueModel? = null
 )
