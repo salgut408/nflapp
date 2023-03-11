@@ -11,6 +11,7 @@ interface TeamsListsRepository {
     suspend fun getSport(sport: String, league: String): SportModel
     suspend fun getLeague(sport: String, league: String): LeagueModel
     suspend fun getTeamsList(sport: String, league: String): List<TeamModel>
+    suspend fun storeTeamsInSportsDatabaseFullInfoTable(teams: List<TeamModel>, sport: String, league: String, leagueAbrv: String)
 
 
 

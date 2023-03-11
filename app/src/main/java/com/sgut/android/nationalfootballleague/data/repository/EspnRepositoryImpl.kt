@@ -4,10 +4,8 @@ import android.util.Log
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import com.sgut.android.nationalfootballleague.domain.domainmodels.*
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsListsModel
 import com.sgut.android.nationalfootballleague.domain.dtomappers.*
 import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
-import com.sgut.android.nationalfootballleague.toDomain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -27,199 +25,12 @@ class EspnRepositoryImpl @Inject constructor(
         sportsDataBase.getArticleDao().insertArticle(article.asDbArticle())
     }
 
-
-    override suspend fun getFullTeamInfo(sport: String, league: String): FullTeamsListsModel {
-       return espnApi.getTeamsListForLeague(sport, league).body()?.toDomain()!!
-    }
-
-    override suspend fun getFullSportLeagueNflTeams(): FullTeamsListsModel {
-        return espnApi.getAllNflTeams().body()?.toDomain()!!
-    }
-
 //    override suspend fun getSavedArticles(): Flow<List<ArticleModel>>  {
 //        val lists = sportsDataBase.getArticleDao().getAllSavedArticles()
 //        return articleMapper.toDomainList(lists)
 //    }
 
 
-    override suspend fun storeTeamsInSportsDatabase(team: List<TeamDomainModel>) {
-        withContext(Dispatchers.IO) {
-            team.map { team ->
-                sportsDataBase.getTeamDao().update(team.asDbModel())
-            }
-        }
-    }
-
-
-    override suspend fun getTeams(): List<TeamDomainModel> {
-        val response = espnApi.getAllNflTeams()
-        if (response.isSuccessful) {
-            val teamsResponse =
-                espnApi.getAllNflTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.i("tag", "Response successful")
-            return teamDomainModelMapper.toDomainList(teamsResponse!!)
-        } else {
-            Log.i(javaClass.name, response.errorBody().toString())
-        }
-        val result =
-            espnApi.getAllNflTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-        return teamDomainModelMapper.toDomainList(result!!)
-    }
-
-    override suspend fun getAllCollegeTeams(): List<TeamDomainModel> {
-        val response = espnApi.getAllCollegeTeams()
-        if (response.isSuccessful) {
-            val teamsResponse =
-                espnApi.getAllCollegeTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.i("tag", "Response successful")
-            return teamDomainModelMapper.toDomainList(teamsResponse!!)
-        } else {
-            Log.i(javaClass.name, response.errorBody().toString())
-        }
-        val result =
-            espnApi.getAllCollegeTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-        return teamDomainModelMapper.toDomainList(result!!)
-    }
-
-    override suspend fun getAllBaseballTeams(): List<TeamDomainModel> {
-        val response = espnApi.getAllBaseballTeams()
-        if (response.isSuccessful) {
-            val teamsResponse =
-                espnApi.getAllBaseballTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.i("tag", "Response successful")
-            return teamDomainModelMapper.toDomainList(teamsResponse!!)
-        } else {
-            Log.i(javaClass.name, response.errorBody().toString())
-        }
-        val result =
-            espnApi.getAllBaseballTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-        return teamDomainModelMapper.toDomainList(result!!)
-    }
-
-    override suspend fun getAllHockeyTeams(): List<TeamDomainModel> {
-        val response = espnApi.getAllHockeyTeams()
-        if (response.isSuccessful) {
-            val teamsResponse =
-                espnApi.getAllHockeyTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.i("tag", "Response successful")
-            return teamDomainModelMapper.toDomainList(teamsResponse!!)
-        } else {
-            Log.i(javaClass.name, response.errorBody().toString())
-        }
-        val result =
-            espnApi.getAllHockeyTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-        return teamDomainModelMapper.toDomainList(result!!)
-    }
-
-    override suspend fun getAllBasketballTeams(): List<TeamDomainModel> {
-        val response = espnApi.getAllBasketballTeams()
-        if (response.isSuccessful) {
-            val teamsResponse =
-                espnApi.getAllBasketballTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.i("tag", "Response successful")
-            return teamDomainModelMapper.toDomainList(teamsResponse!!)
-        } else {
-            Log.i(javaClass.name, response.errorBody().toString())
-        }
-        val result = espnApi.getAllBasketballTeams()
-            .body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-        return teamDomainModelMapper.toDomainList(result!!)
-    }
-
-    override suspend fun getAllCollegeBasketballTeams(): List<TeamDomainModel> {
-        val response = espnApi.getAllCollegeBasketballTeams()
-        if (response.isSuccessful) {
-            val teamsResponse =
-                espnApi.getAllCollegeBasketballTeams()
-                    .body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.i("CollegeBskt", teamsResponse.toString())
-            return teamDomainModelMapper.toDomainList(teamsResponse!!)
-        } else {
-            Log.e(javaClass.name, response.errorBody().toString())
-        }
-        val result = espnApi.getAllCollegeBasketballTeams()
-            .body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-        return teamDomainModelMapper.toDomainList(result!!)
-    }
-
-    override suspend fun getAllWomensBasketballTeams(): List<TeamDomainModel> {
-        val response = espnApi.getAllWomensBasketballTeams()
-        if (response.isSuccessful) {
-            val teamsResponse =
-                espnApi.getAllWomensBasketballTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.i("tag", "Response successful")
-            return teamDomainModelMapper.toDomainList(teamsResponse!!)
-        } else {
-            Log.e(javaClass.name, response.errorBody().toString())
-        }
-        val result = espnApi.getAllBasketballTeams()
-            .body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-        return teamDomainModelMapper.toDomainList(result!!)
-    }
-
-    override suspend fun getAllSoccerTeams(): List<TeamDomainModel> {
-        val response = espnApi.getAllSoccerTeams()
-        if (response.isSuccessful) {
-            val teamsResponse =
-                espnApi.getAllSoccerTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.i("tag", "Response successful")
-            return teamDomainModelMapper.toDomainList(teamsResponse!!)
-        } else {
-            Log.e(javaClass.name, response.errorBody().toString())
-        }
-        val result =
-            espnApi.getAllSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-        return teamDomainModelMapper.toDomainList(result!!)
-    }
-
-    override suspend fun getAllEnglishSoccerTeams(): List<TeamDomainModel> {
-        val response = espnApi.getAllEnglishSoccerTeams()
-        if (response.isSuccessful) {
-            val teamsResponse =
-                espnApi.getAllEnglishSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(
-                    0)?.teams
-            Log.i("EnglishTeams", teamsResponse.toString())
-
-            return teamDomainModelMapper.toDomainList(teamsResponse!!)
-        } else {
-            Log.e(javaClass.name, response.errorBody().toString())
-        }
-        val result = espnApi.getAllEnglishSoccerTeams()
-            .body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-        return teamDomainModelMapper.toDomainList(result!!)
-    }
-
-    override suspend fun getLaLigaSoccerTeams(): List<TeamDomainModel> {
-        val response = espnApi.getAllSpanishSoccerTeams()
-        if (response.isSuccessful) {
-            val teamResponse =
-                espnApi.getAllSpanishSoccerTeams().body()?.sports?.getOrNull(0)?.leagues?.getOrNull(
-                    0)?.teams
-            Log.d("SpanishTeams", teamResponse.toString())
-            return teamDomainModelMapper.toDomainList(teamResponse!!)
-
-        } else {
-            Log.e(javaClass.name, response.errorBody().toString())
-        }
-        val result = espnApi.getAllSpanishSoccerTeams()
-            .body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-        return teamDomainModelMapper.toDomainList(result!!)
-    }
-
-    override suspend fun getAllWorldCupTeams(): List<TeamDomainModel> {
-        val response = espnApi.getAllFifaSoccerTeams()
-        if (response.isSuccessful) {
-            val teamsResponse =
-                espnApi.getAllFifaSoccerTeams().body()?.sports?.get(0)?.leagues?.get(0)?.teams
-            Log.d("tag", "Response successful")
-            return teamDomainModelMapper.toDomainList(teamsResponse!!)
-        } else {
-            Log.e(javaClass.name, response.errorBody().toString())
-        }
-        val result = espnApi.getAllFifaSoccerTeams()
-            .body()?.sports?.getOrNull(0)?.leagues?.getOrNull(0)?.teams
-        return teamDomainModelMapper.toDomainList(result!!)
-    }
 
     override suspend fun getSpecificTeam(
         sport: String,

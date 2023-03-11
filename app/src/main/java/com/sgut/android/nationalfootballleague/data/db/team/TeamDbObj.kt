@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class TeamDbObj(
     val id: String = "",
     @PrimaryKey(autoGenerate = false)
-    val uid: String ="",
+    val uid: String = "",
     val abbreviation: String = "",
     val displayName: String = "",
     val shortDisplayName: String = "",
@@ -17,5 +17,5 @@ data class TeamDbObj(
     val color: String = "",
     val alternateColor: String = "",
     var isFavorite: Boolean = false,
-val logo: String = "",
-    )
+    val logo: String = "",
+)

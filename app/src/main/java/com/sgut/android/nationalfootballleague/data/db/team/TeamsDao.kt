@@ -6,12 +6,15 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 
 @Dao
-interface TeamDao {
+interface TeamsDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(team: TeamDbObj): Long
+    suspend fun addAllTeams(teams: List<TeamDbObjFullInfo>): List<Long>
 
     @Delete
-    suspend fun delete(team: TeamDbObj)
+    suspend fun delete(team: TeamDbObjFullInfo)
+
+
 
 //    //this returns unsorted list from db
 //    @Query("SELECT * FROM item_table")

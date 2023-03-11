@@ -33,7 +33,7 @@ import kotlin.math.max
 
 
 @Composable
-fun ListOfTeams2(
+fun ListOfTeams(
     currentTeams: List<TeamModel>,
     uiSport: String,
     uiLeague: String,
@@ -65,18 +65,6 @@ fun TeamsCollection(
     sport: String,
     league: String,
 ) {
-
-//    Column(modifier) {
-//        Text(
-//            text = league.uppercase(),
-//            fontSize = 20.sp,
-//            modifier = Modifier
-//                .heightIn(min = 56.dp)
-//                .padding(horizontal = 24.dp, vertical = 4.dp)
-//                .wrapContentHeight()
-//        )
-//
-//    }
 
     VerticalGrid(Modifier.padding(horizontal = 16.dp)) {
         val gradient = when (index % 2) {
@@ -124,24 +112,17 @@ fun TeamDisplayTile(
                     league))
             },
         content = {
-
-
-                Text(
-                    text = team.shortDisplayName,
-                    color = color2,
+            Text(
+                    text = team.abbreviation,
+                    color = Color.Cyan,
                     modifier = Modifier
-                        .padding(4.dp)
                         .rotate(90f)
-                        .padding(start = 8.dp)
                 )
                 TeamLogoImage(
                     team = team,
                     contentDescription = "",
                     modifier = Modifier.fillMaxSize()
                 )
-
-
-
         }
     ) { measurables, constraints ->
         val textWidth = (constraints.maxWidth * TeamTextProportion).toInt()
@@ -182,8 +163,6 @@ fun TeamLogoImage(
         elevation = elevation,
         modifier = modifier
     ) {
-
-        
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(team.logos ?: "")

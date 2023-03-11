@@ -59,7 +59,7 @@ fun HomeTeamCardsListScreen(
                 ) {
 
                     item {
-                        FilledTonalButton(
+                        OutlinedButton(
                             onClick = {
                                 homeListViewModel.setFootballTeams()
                             }
@@ -160,11 +160,20 @@ fun HomeTeamCardsListScreen(
                         )
                     })
 
+                BasicButton(
+                    text = AppText.standings,
+                    modifier = Modifier.basicButton(),
+                    action = {
+                        navController.navigate(
+                            NavigationScreens.ScoreboardScreen.withArgs(sport, league)
+                        )
+                    })
+
                 sportStateTeamsFullInfo?.let { TEAMSLISTWITHLEAGUE(fullTeamsListsModel = it) }
 
 
                 if (sportStateTeamsFullInfo != null) {
-                    ListOfTeams2(
+                    ListOfTeams(
                         currentTeams = uiState.fullTeamInfo?.sport?.league?.teams ?: listOf(),
                         navController = navController,
                         uiLeague = uiState.currentLeague,

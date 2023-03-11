@@ -33,6 +33,7 @@
     <string name="delete_account_description">You will lose all your tasks and your account will be deleted. This action is irreversible.</string>
     <string name="watc">Watch</string>
     <string name="scores_games">"Scores and Games"</string>
+    <string name="standings">"Standings"</string>
     <string name="notify_me">Notify Me</string>
     <string name="NFL_League">NFL</string>
     <string name="XFL_League">XFL</string>
