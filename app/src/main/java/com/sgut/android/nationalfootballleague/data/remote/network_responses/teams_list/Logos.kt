@@ -1,7 +1,7 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.LogosModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.LogosModel
 
 
 data class Logos (

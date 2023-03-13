@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.domain.domainmodels.new_models
+package com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list
 
 data class LeagueModel(
     val id: String = "",

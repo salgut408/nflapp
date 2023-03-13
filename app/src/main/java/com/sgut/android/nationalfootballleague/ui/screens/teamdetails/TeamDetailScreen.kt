@@ -2,8 +2,6 @@ package com.sgut.android.nationalfootballleague.ui.screens.teamdetails
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -12,8 +10,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DataLoadingComponent
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DataLoadingComponent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,7 +68,7 @@ fun TeamRecord(
     team: TeamDetailWithRosterModel,
     modifier: Modifier,
 ) {
-    val recordItems = team.record?.items?.getOrNull(0)?.stats
+    val recordItems = team.record?.recordItems?.getOrNull(0)?.stats
 
     Card( modifier = modifier.fillMaxWidth()) {
 
@@ -82,8 +80,8 @@ fun TeamRecord(
 
 
         ) {
-            Text(text = team.record?.items?.getOrNull(0)?.summary ?: "" , fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSecondary)
-            Text(text = team.record?.items?.getOrNull(0)?.type ?: "", color =  MaterialTheme.colorScheme.onSecondary)
+            Text(text = team.record?.recordItems?.getOrNull(0)?.summary ?: "" , fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSecondary)
+            Text(text = team.record?.recordItems?.getOrNull(0)?.type ?: "", color =  MaterialTheme.colorScheme.onSecondary)
         }
 
         Row(
@@ -112,17 +110,17 @@ fun TeamRecord2(
     team: TeamDetailWithRosterModel,
     modifier: Modifier,
 ) {
-    val recordItems = team.record?.items
+    val recordItems = team.record?.recordItems
     Column() {
         recordItems?.map { record ->
-            Text(text = record?.type ?: "")
+            Text(text = record.type ?: "")
             Row() {
 
-                Text(text = record?.summary ?: "")
+                Text(text = record.summary ?: "")
                 Spacer(modifier = modifier.width(20.dp))
                 Column() {
                     recordItems.map { items ->
-                        items?.stats?.map { stats ->
+                        items.stats.map { stats ->
                             Text(text = stats?.name ?: "")
                             Text(text = stats?.value.toString())
 

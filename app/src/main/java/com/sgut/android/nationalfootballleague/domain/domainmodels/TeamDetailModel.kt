@@ -1,7 +1,9 @@
 package com.sgut.android.nationalfootballleague.domain.domainmodels
 
-import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.Franchise3
+import com.sgut.android.nationalfootballleague.Logos3
+import com.sgut.android.nationalfootballleague.NextEvent3
+import com.sgut.android.nationalfootballleague.Record3
 
 data class TeamDetailModel(
     val id: String = "",
@@ -15,10 +17,8 @@ data class TeamDetailModel(
     val color: String = "",
     val alternateColor: String = "",
     val isActive: Boolean? = null,
-    val logos2: List<Logos3>? = listOf(),
+    val logos: List<Logos3>? = listOf(),
     val record: Record3? = Record3(),
-    val groups: Groups3? = Groups3(),
-    val links2: List<Links3>? = listOf(),
     val franchise: Franchise3? = Franchise3(),
     val nextEvent: List<NextEvent3>? = listOf(),
     val standingSummary: String = "",

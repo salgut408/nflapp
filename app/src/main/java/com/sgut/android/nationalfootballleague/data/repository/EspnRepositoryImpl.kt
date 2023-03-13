@@ -4,18 +4,17 @@ import android.util.Log
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import com.sgut.android.nationalfootballleague.domain.domainmodels.*
-import com.sgut.android.nationalfootballleague.domain.dtomappers.*
+import com.sgut.android.nationalfootballleague.domain.dtomappers.NetworkGameDetailsToDomainModelMapper
+import com.sgut.android.nationalfootballleague.domain.dtomappers.NetworkScoreboardToDomainModelMapper
+import com.sgut.android.nationalfootballleague.domain.dtomappers.NetworkToDomainArticleMapper
+import com.sgut.android.nationalfootballleague.domain.dtomappers.TeamDetailWithRosterMapper
 import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class EspnRepositoryImpl @Inject constructor(
-    val teamDomainModelMapper: NetworkToTeamDomainModelMapper,
     val espnApi: EspnApi,
     val sportsDataBase: SportsDataBase,
     val articleMapper: NetworkToDomainArticleMapper,
-    val teamDetailNetworkToModelMapper: TeamDetailNetworkToModelMapper,
     val rosterMapper: TeamDetailWithRosterMapper,
     val scoreboardDomainMapper: NetworkScoreboardToDomainModelMapper,
     val gameDetailsToDomainModelMapper: NetworkGameDetailsToDomainModelMapper,
@@ -39,12 +38,12 @@ class EspnRepositoryImpl @Inject constructor(
     ): TeamDetailWithRosterModel {
         val response = espnApi.getSpecificNflTeam(team)
         if (response.isSuccessful) {
-            val teamDetailResponse = espnApi.getSpecificTeam(sport, league, team).body()?.team
+            val teamDetailResponse = espnApi.getSpecificTeam(sport, league, team).body()?.fullTeam
             return rosterMapper.mapToDomainModel(teamDetailResponse!!)
         } else {
             Log.e("TEAM DEBUG-repo", response.errorBody().toString())
         }
-        val result = espnApi.getSpecificTeam(sport, league, team).body()?.team
+        val result = espnApi.getSpecificTeam(sport, league, team).body()?.fullTeam
         return rosterMapper.mapToDomainModel(result!!)
     }
 

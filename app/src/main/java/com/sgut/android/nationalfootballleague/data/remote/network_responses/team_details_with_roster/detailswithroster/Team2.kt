@@ -1,6 +1,8 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailsFranchiseModel
 
 
 data class Team3 (
@@ -27,4 +29,27 @@ data class Team3 (
   @SerializedName("standingSummary"  ) var standingSummary  : String              = ""
 
 )
+
+fun Team3.asDomain(): FullTeamDetailWithRosterModel {
+  return FullTeamDetailWithRosterModel(
+    id = id,
+    uid = uid,
+    slug = slug,
+    location = location,
+    name = name,
+    abbreviation = abbreviation,
+    displayName = displayName,
+    shortDisplayName = shortDisplayName,
+    color = color,
+    alternateColor = alternateColor,
+    logos = logos.map { it.asDomain() },
+    record = record.asDomain(),
+    franchise = franchise?.asDomain() ?: FullTeamDetailsFranchiseModel(),
+    nickname = nickname,
+    athletes = athletes.map { it.asDomain() },
+    nextEvent = nextEvent,
+    standingSummary = standingSummary
+  )
+}
+
 

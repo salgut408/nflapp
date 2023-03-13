@@ -4,7 +4,7 @@ import android.util.Log
 import com.sgut.android.nationalfootballleague.asDomainModel
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.*
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.*
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamsListsRepository
 import com.sgut.android.nationalfootballleague.toDomain
 import kotlinx.coroutines.Dispatchers

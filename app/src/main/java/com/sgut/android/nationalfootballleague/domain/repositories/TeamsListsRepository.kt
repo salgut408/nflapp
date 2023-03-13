@@ -1,9 +1,9 @@
 package com.sgut.android.nationalfootballleague.domain.repositories
 
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsListsModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.LeagueModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.SportModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.TeamModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.FullTeamsListsModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.LeagueModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.SportModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.TeamModel
 
 interface TeamsListsRepository {
 

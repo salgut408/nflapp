@@ -1,18 +1,16 @@
 package com.sgut.android.nationalfootballleague.ui.screens.teamdetails
 
-import androidx.compose.foundation.background
-import androidx.compose.ui.graphics.Brush
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-
-
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
@@ -21,11 +19,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sgut.android.nationalfootballleague.Venue3
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.HeadingSection
 import com.sgut.android.nationalfootballleague.commoncomposables.InjuriesBox
+import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.HeadingSection
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamLogoDetailImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.VenueCardImageLoader
-import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
 
 @Composable
 fun TeamDetailCard(
@@ -77,23 +75,13 @@ fun TeamDetailCard(
         HeadingSection(modifier = Modifier, "Atheletes", team.name,
             { AtheleteRow(team) })
 
-
-//        AtheleteRow(team)
-
         team.nextEvent.map { nextEvent ->
             NextEvent(nextEvent3 = nextEvent, modifier = modifier)
         }
-
-
-        //injusries box
         InjuriesBox(
-            stats = team.record?.items?.getOrNull(0)?.summary.toString(), team
+            stats = team.record?.recordItems?.getOrNull(0)?.summary.toString(), team
         )
-//        InjuredAtheleteRow(team)
-
     }
-
-
 }
 
 

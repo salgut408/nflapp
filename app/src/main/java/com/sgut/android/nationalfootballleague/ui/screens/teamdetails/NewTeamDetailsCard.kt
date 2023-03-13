@@ -307,7 +307,7 @@ fun Body(
 
             //injusries box
             InjuriesBox(
-                stats = team.record?.items?.getOrNull(0)?.summary.toString(), team
+                stats = team.record?.recordItems?.getOrNull(0)?.summary.toString(), team
             )
 
             Spacer(
