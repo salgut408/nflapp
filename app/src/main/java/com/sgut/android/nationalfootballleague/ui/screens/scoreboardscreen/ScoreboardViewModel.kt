@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.ScoreboardResponseEventModel
-import com.sgut.android.nationalfootballleague.data.repository.EspnRepositoryImpl
+import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,13 +18,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ScoreboardViewModel @Inject constructor(
-    private val espnRepository: EspnRepositoryImpl
+    private val espnRepository: EspnRepository
 ): ViewModel() {
 
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())
     var scoreboardUiState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
-
-    private var competitionMap = _scoreboardUiState.value.scoreboardUiStateEvents.events.associateBy ({it.competitions}, {it.status})
 
     var currentDate: Int
     var week: Int = 0
@@ -51,11 +49,8 @@ class ScoreboardViewModel @Inject constructor(
         try{
             val result = espnRepository.getYesterdayGeneralScoreboardResponse(sport, league, lastWeek)
             val articlesListResult = espnRepository.getArticles(sport, league)
+
             setScoreboardUiState(result, sport, league, articlesListResult, )
-            Log.i("Load_YESTERDAY", result.events.toString())
-            Log.d("HASHMAP", competitionMap.toString())
-
-
         } catch (e: Exception) {
             Log.i("DEBUG-rc vm",e.message.toString())
         }
@@ -63,7 +58,12 @@ class ScoreboardViewModel @Inject constructor(
 
     fun setScoreboardUiState(scoreboardUiStateEvents  : ScoreboardResponseEventModel, currentSport: String, currentLeague: String, currentArticles: List<ArticleModel>,  ) {
         _scoreboardUiState.update {
-            it.copy(scoreboardUiStateEvents = scoreboardUiStateEvents, currentSport = currentSport, currentLeague = currentLeague, currentArticles = currentArticles,  )
+            it.copy(
+                scoreboardUiStateEvents = scoreboardUiStateEvents,
+                currentSport = currentSport,
+                currentLeague = currentLeague,
+                currentArticles = currentArticles,
+            )
         }
     }
 
@@ -73,8 +73,5 @@ class ScoreboardViewModel @Inject constructor(
         val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
         val formatted = current.format(formatter).toInt()
         return formatted - 1
-
-
     }
-
 }
