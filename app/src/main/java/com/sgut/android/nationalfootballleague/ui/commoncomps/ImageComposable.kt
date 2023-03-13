@@ -18,8 +18,8 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 
 
 @Composable
@@ -32,12 +32,11 @@ fun TeamLogoImageLoader(team: TeamDomainModel) {
             CircularProgressIndicator()
         },
         contentDescription = team.displayName,
-
     )
 }
 
 @Composable
-fun TeamLogoDetailImageLoader(team: TeamDetailWithRosterModel) {
+fun TeamLogoDetailImageLoader(team: FullTeamDetailWithRosterModel) {
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
             .data(team.logos.getOrNull(0)?.href)
@@ -46,7 +45,6 @@ fun TeamLogoDetailImageLoader(team: TeamDetailWithRosterModel) {
             CircularProgressIndicator()
         },
         contentDescription = team.displayName,
-
         )
 }
 @Composable
@@ -59,7 +57,6 @@ fun TeamLogoScoreboardImageLoader(team: TeamScoreboard) {
             CircularProgressIndicator()
         },
         contentDescription = team.displayName,
-
         )
 }
 

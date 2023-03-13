@@ -5,29 +5,24 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sgut.android.nationalfootballleague.Athletes
-import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 
 @Composable
 fun AtheleteRow(
-    team: TeamDetailWithRosterModel
+    team: FullTeamDetailWithRosterModel
 ) {
     val athletesList =team.athletes
-
-
 
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
-
 
         items(athletesList){ athlete ->
             if (athlete != null) {
@@ -40,7 +35,7 @@ fun AtheleteRow(
 
 @Composable
 fun LazyAtheleteGrid(
-    team: TeamDetailWithRosterModel
+    team: FullTeamDetailWithRosterModel
 ) {
     val athletesList = team.athletes
     LazyVerticalGrid(
@@ -55,7 +50,7 @@ fun LazyAtheleteGrid(
 
 @Composable
 fun InjuredAtheleteRow(
-    team: TeamDetailWithRosterModel
+    team: FullTeamDetailWithRosterModel
 ) {
     val athletesList =team.athletes
 

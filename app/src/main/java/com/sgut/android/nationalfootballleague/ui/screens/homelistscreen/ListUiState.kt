@@ -4,8 +4,8 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_te
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.TeamModel
 
 data class ListUiState(
-    var currentTeams: List<TeamModel> = listOf(),
-    var currentSport: String = "",
-    var currentLeague: String = "",
-    var fullTeamInfo: FullTeamsListsModel? = null
+    val currentTeams: List<TeamModel> = listOf(),
+    val currentSport: String = "",
+    val currentLeague: String = "",
+    val fullTeamInfo: FullTeamsListsModel? = null
     )

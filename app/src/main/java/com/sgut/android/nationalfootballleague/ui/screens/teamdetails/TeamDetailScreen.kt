@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DataLoadingComponent
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,7 +27,7 @@ fun TeamDetailScreen(
     ) {
     //    val team by remember { teamDetailViewModel.team }
     // ^ Moded to detailUiState
-    teamDetailViewModel.loadTeamDetails(team, sport, league)
+    teamDetailViewModel.getFullTeamDetails(team, sport, league)
 
     val teamDetailUiState by teamDetailViewModel.teamDetailUiState.collectAsState()
     val team = teamDetailUiState.currentTeamDetails
@@ -36,27 +37,6 @@ fun TeamDetailScreen(
         NewTeamDetailCard(team = team, modifier = Modifier)
 
 
-//        Column(
-//            modifier
-//                .verticalScroll(rememberScrollState())
-//                .padding(vertical = 8.dp)
-//        ) {
-//
-////            TeamDetailCard(team = team, modifier = Modifier.padding(8.dp))
-//
-//
-//
-////            Button(onClick = { sendButtonOnclick(team.name, team.nextEvent[0].shortName) },
-////                modifier.fillMaxWidth()) {
-////                Text("Share Next Event")
-////            }
-////
-////            Text(teamDetailUiState.currentSport)
-////            Text(teamDetailUiState.currentLeague)
-////            Text(teamDetailUiState.currentTeamDetails?.abbreviation ?: "")
-//
-//        }
-
     } else {
         DataLoadingComponent()
     }
@@ -65,7 +45,7 @@ fun TeamDetailScreen(
 
 @Composable
 fun TeamRecord(
-    team: TeamDetailWithRosterModel,
+    team: FullTeamDetailWithRosterModel,
     modifier: Modifier,
 ) {
     val recordItems = team.record?.recordItems?.getOrNull(0)?.stats
@@ -90,12 +70,12 @@ fun TeamRecord(
         ) {
             Column() {
                 recordItems?.map { recordItems ->
-                    Text(text = recordItems?.name ?: "", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSecondary)
+                    Text(text = recordItems.name ?: "", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSecondary)
                 }
             }
             Column() {
                 recordItems?.map { recordItems ->
-                    Text(text = recordItems?.value.toString(), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSecondary)
+                    Text(text = recordItems.value.toString(), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSecondary)
                 }
             }
         }

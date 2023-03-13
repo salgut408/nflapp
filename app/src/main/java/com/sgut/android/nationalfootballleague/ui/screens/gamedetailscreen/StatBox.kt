@@ -19,11 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.InjuredAtheleteRow
 
 @Composable
 //Actually injuries box
-fun InjuriesBox(stats: String, team: TeamDetailWithRosterModel) {
+fun InjuriesBox(stats: String, team: FullTeamDetailWithRosterModel) {
     var expanded by remember { mutableStateOf(false) }
     val extraPadding by animateDpAsState(
         if (expanded) 48.dp else 0.dp,

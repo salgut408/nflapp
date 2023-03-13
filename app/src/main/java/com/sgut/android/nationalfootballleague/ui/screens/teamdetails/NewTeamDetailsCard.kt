@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import com.sgut.android.nationalfootballleague.Venue3
 import com.sgut.android.nationalfootballleague.commoncomposables.InjuriesBox
-import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.*
 import kotlin.math.max
 import kotlin.math.min
@@ -36,7 +36,7 @@ private val CollapsedImageSize = 100.dp
 
 @Composable
 fun NewTeamDetailCard(
-    team: TeamDetailWithRosterModel,
+    team: FullTeamDetailWithRosterModel,
     modifier: Modifier,
 ) {
     val color = HexToJetpackColor2.getColor(team.color)
@@ -57,17 +57,13 @@ fun NewTeamDetailCard(
 
 
 @Composable
-fun DynamicTeamCard(team: TeamDetailWithRosterModel) {
+fun DynamicTeamCard(team: FullTeamDetailWithRosterModel) {
     val surfaceColor = MaterialTheme.colorScheme.onSurface
     val dominantColorState = rememberDominantColorState ()
     DynamicThemePrimaryColorsFromImage(dominantColorState) {
         val logoUrl = team.logos.get(0).href
         LaunchedEffect(logoUrl) {
-            if(logoUrl != null){
-                dominantColorState.updateColorsFromImageUrl(logoUrl)
-            } else  {
-                dominantColorState.reset()
-            }
+            dominantColorState.updateColorsFromImageUrl(logoUrl)
         }
         Column(
             modifier = Modifier
@@ -137,7 +133,7 @@ fun DynamicTeamCard(team: TeamDetailWithRosterModel) {
 
 @Composable
 fun TeamHeader(
-    team: TeamDetailWithRosterModel,
+    team: FullTeamDetailWithRosterModel,
 ) {
     val color = HexToJetpackColor2.getColor(team.color)
     val altcolor = HexToJetpackColor2.getColor(team.alternateColor)
@@ -152,7 +148,7 @@ fun TeamHeader(
 
 @Composable
 fun Title(
-    team: TeamDetailWithRosterModel,
+    team: FullTeamDetailWithRosterModel,
     scrollProvider: () -> Int,
 ) {
     val maxOffset = with(LocalDensity.current) { MaxTitleOffset.toPx() }
@@ -203,7 +199,7 @@ fun Title(
 
 @Composable
 fun MainImage(
-    team: TeamDetailWithRosterModel,
+    team: FullTeamDetailWithRosterModel,
     scrollProvider: () -> Int,
 ) {
     val collapseRange = with(LocalDensity.current) { (MaxTitleOffset - MinTitleOffset).toPx() }
@@ -214,7 +210,7 @@ fun MainImage(
         collapseFractionProvider = collapseFractionProvider,
     ) {
         GeneralImageLoader(
-            href = team.logos.get(0).href ?: "",
+            href = team.logos.getOrNull(0)?.href ?: "",
             contentDescription = team.name,
             modifier = Modifier.fillMaxSize()
         )
@@ -261,7 +257,7 @@ fun CollapsingTeamLayout(
 
 @Composable
 fun Body(
-    team: TeamDetailWithRosterModel,
+    team: FullTeamDetailWithRosterModel,
     scroll: ScrollState,
 ) {
     val color = HexToJetpackColor2.getColor(team.color)
@@ -288,7 +284,7 @@ fun Body(
             Spacer(Modifier.height(16.dp))
 
             VenueCard(
-                venue3 = team.franchise?.venue ?: Venue3(),
+                venue3 = team.franchise.venue ?: Venue3(),
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(Modifier.height(16.dp))

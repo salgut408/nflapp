@@ -21,13 +21,14 @@ import androidx.compose.ui.unit.sp
 import com.sgut.android.nationalfootballleague.Venue3
 import com.sgut.android.nationalfootballleague.commoncomposables.InjuriesBox
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.HeadingSection
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamLogoDetailImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.VenueCardImageLoader
 
 @Composable
 fun TeamDetailCard(
-    team: TeamDetailWithRosterModel,
+    team: FullTeamDetailWithRosterModel,
     modifier: Modifier,
 ) {
     val color = HexToJetpackColor2.getColor(team.color)
@@ -70,7 +71,7 @@ fun TeamDetailCard(
 
 
 
-        VenueCard(venue3 = team.franchise?.venue ?: Venue3(), modifier = Modifier.fillMaxWidth())
+        VenueCard(venue3 = team.franchise.venue ?: Venue3(), modifier = Modifier.fillMaxWidth())
 
         HeadingSection(modifier = Modifier, "Atheletes", team.name,
             { AtheleteRow(team) })
