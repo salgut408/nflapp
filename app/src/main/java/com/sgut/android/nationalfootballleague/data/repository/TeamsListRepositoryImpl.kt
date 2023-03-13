@@ -1,6 +1,5 @@
 package com.sgut.android.nationalfootballleague.data.repository
 
-import android.util.Log
 import com.sgut.android.nationalfootballleague.asDomainModel
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
@@ -22,7 +21,6 @@ class TeamsListRepositoryImpl @Inject constructor(
         league: String,
     ): FullTeamsListsModel {
         val result = espnApi.getTeamsListForLeague(sport, league).body()?.toDomain()!!
-        Log.e("TEAMREPO", result.toString())
         return result
     }
 

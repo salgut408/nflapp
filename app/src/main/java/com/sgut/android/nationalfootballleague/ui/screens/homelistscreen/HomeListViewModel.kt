@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuthException
 import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.TeamModel
-import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamsListsRepository
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASEBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASKETBALL
@@ -39,7 +38,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeListViewModel @Inject constructor(
     private val accountService: AccountService,
-    private val espnRepository: EspnRepository,
     private val fullTeamsListRepository: TeamsListsRepository,
 ) : ViewModel() {
 

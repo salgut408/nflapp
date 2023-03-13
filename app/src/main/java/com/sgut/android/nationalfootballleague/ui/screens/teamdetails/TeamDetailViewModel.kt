@@ -9,7 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.Athletes
 import com.sgut.android.nationalfootballleague.NextEvent3
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
-import com.sgut.android.nationalfootballleague.data.repository.EspnRepositoryImpl
+import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
+import com.sgut.android.nationalfootballleague.domain.repositories.TeamDetailsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,14 +20,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TeamDetailViewModel @Inject constructor(
-    private val espnRepository: EspnRepositoryImpl
+    private val espnRepository: EspnRepository,
+    private val teamDetailsRepository: TeamDetailsRepository
 ): ViewModel() {
 
     private val _teamDetailUiState = MutableStateFlow(TeamDetailsScreenUiState())
     val  teamDetailUiState: StateFlow<TeamDetailsScreenUiState> = _teamDetailUiState
 
 
-     val team: MutableState<TeamDetailWithRosterModel?> = mutableStateOf(null)
+    val team: MutableState<TeamDetailWithRosterModel?> = mutableStateOf(null)
     val atheletes: MutableState<List<Athletes?>> = mutableStateOf(listOf())
     val nextEvents: MutableState<List<NextEvent3?>> = mutableStateOf(listOf())
 
@@ -37,9 +39,6 @@ class TeamDetailViewModel @Inject constructor(
 //        loadTeamDetails()
 
     }
-
-
-        //team abrv here
 
 
     fun loadTeamDetails(teamAbv: String, sport:String, league: String) = viewModelScope.launch {
