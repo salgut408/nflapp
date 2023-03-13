@@ -8,8 +8,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface EspnApi {
-    @GET("site/v2/sports/football/nfl/teams")
-    suspend fun getAllNflTeams(): Response<NFLTeamsResponse>
 
     @GET("site/v2/sports/football/nfl/teams/{teamAbbreviation}?enable=roster,headshot")
     suspend fun getSpecificNflTeam(
@@ -27,41 +25,6 @@ interface EspnApi {
         teamAbbreviation: String? = null
     ): Response<TeamDetailResponse2>
 
-    @GET("site/v2/sports/football/college-football/teams")
-    suspend fun getAllCollegeTeams(): Response<NFLTeamsResponse>
-
-    @GET("site/v2/sports/baseball/mlb/teams")
-    suspend fun getAllBaseballTeams(): Response<NFLTeamsResponse>
-
-    @GET("site/v2/sports/hockey/nhl/teams")
-    suspend fun getAllHockeyTeams(): Response<NFLTeamsResponse>
-
-    @GET("site/v2/sports/basketball/wnba/teams")
-    suspend fun getAllWomensBasketballTeams(): Response<NFLTeamsResponse>
-
-    @GET("site/v2/sports/basketball/nba/teams")
-    suspend fun getAllBasketballTeams(): Response<NFLTeamsResponse>
-
-    @GET("site/v2/sports/soccer/usa.1/teams")
-    suspend fun getAllSoccerTeams(): Response<NFLTeamsResponse>
-
-    @GET("site/v2/sports/soccer/uefa.europa/teams")
-    suspend fun getAllUefaSoccerTeams(): Response<NFLTeamsResponse>
-
-    @GET("site/v2/sports/soccer/fifa.world/teams")
-    suspend fun getAllFifaSoccerTeams(): Response<NFLTeamsResponse>
-
-    @GET("site/v2/sports/basketball/mens-college-basketball/teams")
-    suspend fun getAllCollegeBasketballTeams(): Response<NFLTeamsResponse>
-
-    @GET("site/v2/sports/soccer/eng.1/teams")
-    suspend fun getAllEnglishSoccerTeams(): Response<NFLTeamsResponse>
-
-    @GET("site/v2/sports/soccer/esp.1/teams")
-    suspend fun getAllSpanishSoccerTeams(): Response<NFLTeamsResponse>
-
-    @GET("site/v2/sports/football/nfl/scoreboard")
-    suspend fun getWorldCupScoreboard(): Response<NetworkScoreboardResponse>
 
     @GET("site/v2/sports/{sport}/{league}/news")
     suspend fun getArticles(

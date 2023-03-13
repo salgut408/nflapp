@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsListsModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.TeamModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportSurface
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.VerticalGrid
@@ -35,21 +34,19 @@ import kotlin.math.max
 @Composable
 fun ListOfTeams(
     currentTeams: List<TeamModel>,
-    uiSport: String,
-    uiLeague: String,
-    sportStateTeamsFullInfo: FullTeamsListsModel,
+    sport: String,
+    league: String,
     navController: NavController,
 
     ) {
     LazyColumn {
         items (items = currentTeams) { team ->
-
             TeamsCollection(
                 teams = currentTeams,
                 index = currentTeams.indexOf(team),
                 navController = navController,
-                sport = uiSport,
-                league = uiLeague
+                sport = sport,
+                league = league
             )
         }
     }
@@ -67,10 +64,7 @@ fun TeamsCollection(
 ) {
 
     VerticalGrid(Modifier.padding(horizontal = 16.dp)) {
-        val gradient = when (index % 2) {
-            0 -> Color.Blue
-            else -> Color.Green
-        }
+
         teams.forEach { team ->
             TeamDisplayTile(
                 team = team,
@@ -142,10 +136,7 @@ fun TeamDisplayTile(
                 y = (constraints.maxHeight - imagePlaceable.height) / 2 // centered
             )
         }
-
     }
-
-
 }
 
 @Composable
@@ -168,12 +159,9 @@ fun TeamLogoImage(
                 .data(team.logos ?: "")
                 .crossfade(true)
                 .build(),
-
             contentDescription = contentDescription,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
-
     }
-
 }

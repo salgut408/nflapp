@@ -37,7 +37,7 @@ fun Team.asDomainModel(): TeamModel{
     location = location,
     color = color,
     alternateColor = alternateColor,
-    logos =  logos.get(0).href.toString()
+    logos =  logos.getOrNull(0)?.href.toString() ?: ""
   )
 
 

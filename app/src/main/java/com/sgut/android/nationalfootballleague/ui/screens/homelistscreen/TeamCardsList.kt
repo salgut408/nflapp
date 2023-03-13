@@ -1,22 +1,20 @@
 package com.sgut.android.nationalfootballleague.ui.screens.homelistscreen
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.R
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models.FullTeamsListsModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicButton
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.utils.basicButton
@@ -30,34 +28,24 @@ fun HomeTeamCardsListScreen(
     navController: NavController,
     homeListViewModel: HomeListViewModel = hiltViewModel(),
     openDrawer: () -> Unit,
-
-
-    ) {
-
-//    homeListViewModel.g
+) {
 
     val uiState by homeListViewModel.listUiState.collectAsState()
-    val sport = uiState.currentSport
-    val league = uiState.currentLeague
+    val sport = uiState.fullTeamInfo?.sport?.slug
+    val league = uiState.fullTeamInfo?.sport?.league?.slug
 
-    val sportStateSportName = uiState.fullTeamInfo?.sport?.name
     val sportStateLeagueName = uiState.fullTeamInfo?.sport?.league?.name
     val sportStateTeamsFullInfo = uiState.fullTeamInfo
 
-    Log.d("SPORT FULL INFO", sportStateSportName.toString())
     val scrollState = rememberScrollState()
 
     Scaffold(
         content = { padding ->
-
             Column() {
-                
-
                 LazyRow(
                     contentPadding = padding,
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
-
                     item {
                         OutlinedButton(
                             onClick = {
@@ -74,6 +62,14 @@ fun HomeTeamCardsListScreen(
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
+
+                    item {
+                        OutlinedButton(onClick = { homeListViewModel.setWbc() }) {
+                            Text(stringResource(R.string.WBC_league),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
                     item {
                         OutlinedButton(onClick = { homeListViewModel.setBaseballTeams() }) {
                             Text(stringResource(R.string.MLB_league),
@@ -91,6 +87,13 @@ fun HomeTeamCardsListScreen(
                     item {
                         OutlinedButton(onClick = { homeListViewModel.setWnbaTeams() }) {
                             Text(stringResource(R.string.WNBA_league),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { homeListViewModel.setChampionsTeam() }) {
+                            Text(stringResource(R.string.champions),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
@@ -148,7 +151,6 @@ fun HomeTeamCardsListScreen(
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
-
                 }
 
                 BasicButton(
@@ -156,7 +158,7 @@ fun HomeTeamCardsListScreen(
                     modifier = Modifier.basicButton(),
                     action = {
                         navController.navigate(
-                            NavigationScreens.ScoreboardScreen.withArgs(sport, league)
+                            NavigationScreens.ScoreboardScreen.withArgs(sport ?: "", league ?: "")
                         )
                     })
 
@@ -165,38 +167,41 @@ fun HomeTeamCardsListScreen(
                     modifier = Modifier.basicButton(),
                     action = {
                         navController.navigate(
-                            NavigationScreens.ScoreboardScreen.withArgs(sport, league)
+                            NavigationScreens.ScoreboardScreen.withArgs(sport ?: "", league ?: "")
                         )
                     })
 
-                sportStateTeamsFullInfo?.let { TEAMSLISTWITHLEAGUE(fullTeamsListsModel = it) }
-
+                LeagueName(
+                    league = sportStateLeagueName ?: ""
+                )
 
                 if (sportStateTeamsFullInfo != null) {
                     ListOfTeams(
                         currentTeams = uiState.fullTeamInfo?.sport?.league?.teams ?: listOf(),
                         navController = navController,
-                        uiLeague = uiState.currentLeague,
-                        uiSport = uiState.currentSport,
-                        sportStateTeamsFullInfo = sportStateTeamsFullInfo
+                        league = uiState.currentLeague,
+                        sport = uiState.currentSport,
                     )
                 }
-
             }
         },
-
-        )
+    )
 }
 
 
 @Composable
-fun TEAMSLISTWITHLEAGUE(fullTeamsListsModel: FullTeamsListsModel) {
-
-      Text(
-          text = fullTeamsListsModel.sport.name,
-          style = MaterialTheme.typography.bodyLarge
-      )
-          Text(text = fullTeamsListsModel.sport.league?.name ?: "")
-          Text(text = fullTeamsListsModel.sport.league?.abbreviation ?: "")
+fun LeagueName(league: String) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Text(
+            text = league,
+            style = MaterialTheme.typography.headlineLarge
+        )
+    }
 }
 

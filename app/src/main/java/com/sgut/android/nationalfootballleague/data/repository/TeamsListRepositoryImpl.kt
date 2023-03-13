@@ -47,7 +47,7 @@ class TeamsListRepositoryImpl @Inject constructor(
 
     override suspend fun storeTeamsInSportsDatabaseFullInfoTable(teams: List<TeamModel>, sport: String, league: String, leagueAbrv: String) {
         withContext(Dispatchers.IO) {
-            sportsDataBase.getTeamDao().addAllTeams(teams.map { it.asDbObj(sport, league, leagueAbrv) })
+            sportsDataBase.getTeamsDao().addAllTeams(teams.map { it.asDbObj(sport, league, leagueAbrv) })
         }
     }
 

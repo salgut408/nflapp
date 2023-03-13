@@ -2,7 +2,6 @@ package com.sgut.android.nationalfootballleague.domain.domainmodels
 
 import com.google.firebase.firestore.DocumentId
 import com.sgut.android.nationalfootballleague.Logos
-import com.sgut.android.nationalfootballleague.data.db.team.TeamDbObj
 
 data class TeamDomainModel(
     @DocumentId
@@ -21,18 +20,3 @@ data class TeamDomainModel(
 ): TeamsDomInterface
 
 
-fun TeamDomainModel.asDbModel(): TeamDbObj {
-    return TeamDbObj(
-        id = id,
-        uid = uid,
-        abbreviation = abbreviation,
-        displayName = displayName,
-        shortDisplayName = shortDisplayName,
-        name = name,
-        nickname = nickname,
-        color = color,
-        alternateColor = alternateColor,
-        isFavorite = false,
-        logo = logos?.get(0)?.href.toString()
-    )
-}
