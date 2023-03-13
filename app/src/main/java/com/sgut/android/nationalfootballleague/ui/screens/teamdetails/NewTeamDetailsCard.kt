@@ -8,18 +8,22 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.*
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.lerp
 import com.sgut.android.nationalfootballleague.Venue3
 import com.sgut.android.nationalfootballleague.commoncomposables.InjuriesBox
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.*
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GeneralImageLoader
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.HeadingSection
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportDivider
 import kotlin.math.max
 import kotlin.math.min
 
@@ -55,81 +59,6 @@ fun NewTeamDetailCard(
 
 }
 
-
-@Composable
-fun DynamicTeamCard(team: FullTeamDetailWithRosterModel) {
-    val surfaceColor = MaterialTheme.colorScheme.onSurface
-    val dominantColorState = rememberDominantColorState ()
-    DynamicThemePrimaryColorsFromImage(dominantColorState) {
-        val logoUrl = team.logos.get(0).href
-        LaunchedEffect(logoUrl) {
-            dominantColorState.updateColorsFromImageUrl(logoUrl)
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = MaterialTheme.colorScheme.primaryContainer)
-        ) {
-            Text(
-                text = team.abbreviation,
-                fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.primary
-            )
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = MaterialTheme.colorScheme.secondary)
-            ) {
-                Text(
-                    text = team.slug,
-                    fontSize = 20.sp,
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = MaterialTheme.colorScheme.errorContainer)
-            ) {
-                Text(
-                    text = team.displayName,
-                    fontSize = 20.sp,
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = MaterialTheme.colorScheme.inversePrimary)
-            ) {
-                Text(
-                    text = team.displayName,
-                    fontSize = 20.sp,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-
-
-            Text(
-                text = team.displayName,
-                fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.background
-            )
-
-            Text(
-                text = team.displayName,
-                fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.inversePrimary
-            )
-
-        }
-    }
-
-
-}
 
 @Composable
 fun TeamHeader(

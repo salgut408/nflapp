@@ -2,8 +2,12 @@ package com.sgut.android.nationalfootballleague.ui.screens.teamdetails
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -12,9 +16,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DataLoadingComponent
 
-@OptIn(ExperimentalMaterial3Api::class)
+//TODO only pass what is needed
+
 @Composable
 fun TeamDetailScreen(
     modifier: Modifier = Modifier,
@@ -25,21 +29,13 @@ fun TeamDetailScreen(
     league: String,
 
     ) {
-    //    val team by remember { teamDetailViewModel.team }
-    // ^ Moded to detailUiState
+
     teamDetailViewModel.getFullTeamDetails(team, sport, league)
 
     val teamDetailUiState by teamDetailViewModel.teamDetailUiState.collectAsState()
-    val team = teamDetailUiState.currentTeamDetails
+    val teamDetail = teamDetailUiState.currentTeamDetails
 
-    if (team != null) {
-
-        NewTeamDetailCard(team = team, modifier = Modifier)
-
-
-    } else {
-        DataLoadingComponent()
-    }
+    NewTeamDetailCard(team = teamDetail, modifier = Modifier)
 }
 
 
