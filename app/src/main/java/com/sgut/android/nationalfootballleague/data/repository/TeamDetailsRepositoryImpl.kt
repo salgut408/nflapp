@@ -17,6 +17,6 @@ class TeamDetailsRepositoryImpl @Inject constructor(
         team: String,
     ): FullTeamDetailWithRosterModel {
         val result = espnApi.getSpecifcTeam(sport, league, team).body()?.fullTeam
-        return result?.asDomain()!!
+        return result?.asDomain() ?: FullTeamDetailWithRosterModel()
     }
 }

@@ -7,6 +7,8 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.*
 
 interface EspnRepository {
 //    suspend fun getSavedArticles(): Flow<List<ArticleModel>>
+
+
     suspend fun saveArticle(article: GameDetailModel)
 
     suspend fun getSpecificTeam(

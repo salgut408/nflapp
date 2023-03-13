@@ -10,7 +10,4 @@ data class TeamDetailsScreenUiState(
     val currentTeamDetails: FullTeamDetailWithRosterModel = FullTeamDetailWithRosterModel(),
     val atheletes: List<AthletesRosterModel> = listOf(),
     val nextEvents: List<NextEvent3> = listOf(),
-
-    val teamDetails: FullTeamDetailWithRosterModel = FullTeamDetailWithRosterModel()
-
     )

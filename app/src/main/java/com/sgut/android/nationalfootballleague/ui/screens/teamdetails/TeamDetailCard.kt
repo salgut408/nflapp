@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sgut.android.nationalfootballleague.Venue3
 import com.sgut.android.nationalfootballleague.commoncomposables.InjuriesBox
-import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.HeadingSection
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamLogoDetailImageLoader
@@ -46,7 +45,6 @@ fun TeamDetailCard(
             )
     ) {
 
-
         Row(verticalAlignment = Alignment.CenterVertically) {
 
             TeamLogoDetailImageLoader(team)
@@ -62,19 +60,27 @@ fun TeamDetailCard(
             }
 
         }
-        Text(
-            text = team.standingSummary,
-            fontSize = 12.sp,
-            color = Color.White,
-            textAlign = TextAlign.Left,
+
+        if(team.standingSummary.isNotEmpty()){
+            Text(
+                text = team.standingSummary,
+                fontSize = 12.sp,
+                color = Color.White,
+                textAlign = TextAlign.Left,
+            )
+        }
+
+        VenueCard(
+            venue3 = team.franchise.venue ?: Venue3(),
+            modifier = Modifier.fillMaxWidth()
         )
 
-
-
-        VenueCard(venue3 = team.franchise.venue ?: Venue3(), modifier = Modifier.fillMaxWidth())
-
-        HeadingSection(modifier = Modifier, "Atheletes", team.name,
-            { AtheleteRow(team) })
+        HeadingSection(
+            modifier = Modifier,
+            title = "Atheletes",
+            subtitle =team.name,
+           content = { AtheleteRow(team) }
+        )
 
         team.nextEvent.map { nextEvent ->
             NextEvent(nextEvent3 = nextEvent, modifier = modifier)
