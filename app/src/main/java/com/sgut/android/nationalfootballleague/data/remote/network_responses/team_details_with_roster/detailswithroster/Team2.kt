@@ -47,7 +47,7 @@ fun Team3.asDomain(): FullTeamDetailWithRosterModel {
     franchise = franchise?.asDomain() ?: FullTeamDetailsFranchiseModel(),
     nickname = nickname,
     athletes = athletes.map { it.asDomain() },
-    nextEvent = nextEvent,
+    nextEvent = nextEvent.map { it.asDomain() },
     standingSummary = standingSummary
   )
 }

@@ -1,7 +1,5 @@
 package com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster
 
-import com.sgut.android.nationalfootballleague.NextEvent3
-
 data class FullTeamDetailWithRosterModel(
     val id: String = "",
     val uid: String = "",
@@ -18,6 +16,6 @@ data class FullTeamDetailWithRosterModel(
     val record: RecordModel? = RecordModel(),
     val athletes: List<AthletesRosterModel> = listOf(),
     var franchise: FullTeamDetailsFranchiseModel = FullTeamDetailsFranchiseModel(),
-    val nextEvent: List<NextEvent3> = listOf(),
+    val nextEvent: List<NextEventModel> = listOf(),
     val standingSummary: String = "",
 )

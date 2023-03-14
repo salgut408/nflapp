@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
-import com.sgut.android.nationalfootballleague.Venue3
 import com.sgut.android.nationalfootballleague.commoncomposables.InjuriesBox
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.VenueModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GeneralImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.HeadingSection
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportDivider
@@ -213,7 +213,7 @@ fun Body(
             Spacer(Modifier.height(16.dp))
 
             VenueCard(
-                venue3 = team.franchise.venue ?: Venue3(),
+                venue = team.franchise.venue ?: VenueModel(),
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(Modifier.height(16.dp))
@@ -223,7 +223,7 @@ fun Body(
                 { AtheleteRow(team) })
 
             team.nextEvent.map { nextEvent ->
-                NextEvent(nextEvent3 = nextEvent, modifier = Modifier)
+                NextEvent(nextEvent = nextEvent, modifier = Modifier)
             }
             Spacer(Modifier.height(16.dp))
 

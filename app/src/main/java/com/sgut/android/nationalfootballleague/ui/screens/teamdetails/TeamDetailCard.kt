@@ -18,9 +18,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sgut.android.nationalfootballleague.Venue3
 import com.sgut.android.nationalfootballleague.commoncomposables.InjuriesBox
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.VenueModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.HeadingSection
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamLogoDetailImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.VenueCardImageLoader
@@ -71,7 +71,7 @@ fun TeamDetailCard(
         }
 
         VenueCard(
-            venue3 = team.franchise.venue ?: Venue3(),
+            venue = team.franchise.venue ?: VenueModel(),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -83,7 +83,7 @@ fun TeamDetailCard(
         )
 
         team.nextEvent.map { nextEvent ->
-            NextEvent(nextEvent3 = nextEvent, modifier = modifier)
+            NextEvent(nextEvent = nextEvent, modifier = modifier)
         }
         InjuriesBox(
             stats = team.record?.recordItems?.getOrNull(0)?.summary.toString(), team
@@ -107,7 +107,7 @@ object HexToJetpackColor2 {
 
 @Composable
 fun VenueCard(
-    venue3: Venue3,
+    venue: VenueModel,
     modifier: Modifier,
 ) {
 
@@ -115,7 +115,7 @@ fun VenueCard(
         modifier = Modifier.height(200.dp)
     ) {
         // image ()
-        VenueCardImageLoader(venue3)
+        VenueCardImageLoader(venue)
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -125,7 +125,7 @@ fun VenueCard(
             Row() {
                 val offset = Offset(5.0f, 5.0f)
                 Text(
-                    text = venue3.fullName,
+                    text = venue.fullName,
                     style = TextStyle(
                         fontSize = 54.sp,
                         shadow = Shadow(
@@ -141,7 +141,7 @@ fun VenueCard(
             }
             Row() {
                 Text(
-                    text = venue3.address?.city.toString() + " ," + venue3.address?.state.toString(),
+                    text = venue.address?.city.toString() + " ," + venue.address?.state.toString(),
                     style = TextStyle(color = Color.White, fontSize = 16.sp),
                     textAlign = TextAlign.Left,
                 )

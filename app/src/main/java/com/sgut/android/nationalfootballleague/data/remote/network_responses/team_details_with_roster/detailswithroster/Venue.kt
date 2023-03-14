@@ -1,12 +1,24 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.VenueModel
 
 
 data class Venue3 (
 
-  @SerializedName("fullName" ) var fullName : String  = "",
-  @SerializedName("address"  ) var address  : Address3? = Address3(),
-  @SerializedName("images"  ) var images3: List<Images3> = listOf()
+  @SerializedName("fullName" )
+  val fullName : String  = "",
+  @SerializedName("address"  )
+  val address  : Address3? = Address3(),
+  @SerializedName("images"  )
+  val images3: List<Images3> = listOf()
 
 )
+
+fun Venue3.asDomain(): VenueModel {
+  return VenueModel(
+    fullName = fullName,
+    address = address,
+    images3 = images3
+  )
+}

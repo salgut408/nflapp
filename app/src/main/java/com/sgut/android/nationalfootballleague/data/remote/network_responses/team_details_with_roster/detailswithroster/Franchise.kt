@@ -33,7 +33,7 @@ data class Franchise3(
          shortDisplayName = shortDisplayName ?: "",
          color = color ?: "",
          isActive = isActive ?: true,
-         venue = venue
+         venue = venue?.asDomain()
 
 
      )

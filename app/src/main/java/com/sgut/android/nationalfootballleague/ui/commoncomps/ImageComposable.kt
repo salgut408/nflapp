@@ -16,10 +16,14 @@ import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.GameDetailsAthlete
+import com.sgut.android.nationalfootballleague.GameDetailsVenue
+import com.sgut.android.nationalfootballleague.InjTeam
+import com.sgut.android.nationalfootballleague.TeamScoreboard
 import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.VenueModel
 
 
 @Composable
@@ -150,15 +154,15 @@ fun HeadshotImageLoader(athlete: GameDetailsAthlete, modifier: Modifier) {
 }
 
 @Composable
-fun VenueCardImageLoader(venue3: Venue3) {
+fun VenueCardImageLoader(venue: VenueModel) {
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
-            .data(venue3.images3.getOrNull(1)?.href ?: venue3.images3.getOrNull(0)?.href)
+            .data(venue.images3.getOrNull(1)?.href ?: venue.images3.getOrNull(0)?.href)
             .build(),
         loading = {
             CircularProgressIndicator()
         },
-        contentDescription = venue3.fullName,
+        contentDescription = venue.fullName,
         modifier=Modifier.fillMaxWidth()
 
         )
