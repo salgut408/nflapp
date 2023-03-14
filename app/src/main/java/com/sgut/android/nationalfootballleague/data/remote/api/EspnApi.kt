@@ -9,11 +9,6 @@ import retrofit2.http.Query
 
 interface EspnApi {
 
-    @GET("site/v2/sports/football/nfl/teams/{teamAbbreviation}?enable=roster,headshot")
-    suspend fun getSpecificNflTeam(
-        @Path("teamAbbreviation")
-        teamAbbreviation: String? = null
-    ): Response<TeamDetailResponse2>
 
     @GET("site/v2/sports/{sport}/{league}/teams/{teamAbbreviation}?enable=roster,headshot")
     suspend fun getSpecificTeam(
@@ -120,4 +115,7 @@ interface EspnApi {
 
 //    TODO Standings
 //    https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings
+
+
+
 }

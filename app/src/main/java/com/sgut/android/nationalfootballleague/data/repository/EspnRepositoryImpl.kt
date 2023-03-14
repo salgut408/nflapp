@@ -7,7 +7,6 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.*
 import com.sgut.android.nationalfootballleague.domain.dtomappers.NetworkGameDetailsToDomainModelMapper
 import com.sgut.android.nationalfootballleague.domain.dtomappers.NetworkScoreboardToDomainModelMapper
 import com.sgut.android.nationalfootballleague.domain.dtomappers.NetworkToDomainArticleMapper
-import com.sgut.android.nationalfootballleague.domain.dtomappers.TeamDetailWithRosterMapper
 import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
 import javax.inject.Inject
 
@@ -15,7 +14,6 @@ class EspnRepositoryImpl @Inject constructor(
     val espnApi: EspnApi,
     val sportsDataBase: SportsDataBase,
     val articleMapper: NetworkToDomainArticleMapper,
-    val rosterMapper: TeamDetailWithRosterMapper,
     val scoreboardDomainMapper: NetworkScoreboardToDomainModelMapper,
     val gameDetailsToDomainModelMapper: NetworkGameDetailsToDomainModelMapper,
 ) : EspnRepository {
@@ -31,21 +29,7 @@ class EspnRepositoryImpl @Inject constructor(
 
 
 
-    override suspend fun getSpecificTeam(
-        sport: String,
-        league: String,
-        team: String,
-    ): TeamDetailWithRosterModel {
-        val response = espnApi.getSpecificNflTeam(team)
-        if (response.isSuccessful) {
-            val teamDetailResponse = espnApi.getSpecificTeam(sport, league, team).body()?.fullTeam
-            return rosterMapper.mapToDomainModel(teamDetailResponse!!)
-        } else {
-            Log.e("TEAM DEBUG-repo", response.errorBody().toString())
-        }
-        val result = espnApi.getSpecificTeam(sport, league, team).body()?.fullTeam
-        return rosterMapper.mapToDomainModel(result!!)
-    }
+
 
     override suspend fun getGeneralScoreboardResponse(
         sport: String,
