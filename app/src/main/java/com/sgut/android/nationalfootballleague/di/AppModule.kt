@@ -86,13 +86,8 @@ object AppModule {
 
 
     @Provides
-    fun provideNetworkToTeamDomMapper(): NetworkToTeamDomainModelMapper = NetworkToTeamDomainModelMapper()
-
-    @Provides
     fun provideNetworkToDomainArticleMapper(): NetworkToDomainArticleMapper = NetworkToDomainArticleMapper()
 
-    @Provides
-    fun provideRosterMapper(): TeamDetailWithRosterMapper = TeamDetailWithRosterMapper()
 
     @Provides
     fun provideScoreboardMapper(): NetworkScoreboardToDomainModelMapper = NetworkScoreboardToDomainModelMapper()
