@@ -1,34 +1,46 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.LeagueModel
 
 
 data class LeaguesScoreboard(
 
     @SerializedName("id")
-    var id: String? = null,
+    val id: String? = null,
     @SerializedName("uid")
-    var uid: String? = null,
+    val uid: String? = null,
     @SerializedName("name")
-    var name: String? = null,
+    val name: String? = null,
     @SerializedName("abbreviation")
-    var abbreviation: String? = null,
+    val abbreviation: String? = null,
     @SerializedName("midsizeName")
-    var midsizeName: String? = null,
+    val midsizeName: String? = null,
     @SerializedName("slug")
-    var slug: String? = null,
+    val slug: String? = null,
     @SerializedName("season")
-    var season: SeasonScoreboard? = SeasonScoreboard(),
+    val season: SeasonScoreboard? = SeasonScoreboard(),
     @SerializedName("logos")
-    var logos: List<LogosScoreboard> = listOf(),
+    val logos: List<LogosScoreboard> = listOf(),
     @SerializedName("calendarType")
-    var calendarType: String? = null,
+    val calendarType: String? = null,
     @SerializedName("calendarIsWhitelist")
-    var calendarIsWhitelist: Boolean? = null,
+    val calendarIsWhitelist: Boolean? = null,
     @SerializedName("calendarStartDate")
-    var calendarStartDate: String? = null,
+    val calendarStartDate: String? = null,
     @SerializedName("calendarEndDate")
-    var calendarEndDate: String? = null,
+    val calendarEndDate: String? = null,
 //  @SerializedName("calendar"            ) var calendar            : List<String> = listOf()
 
 )
+
+fun LeaguesScoreboard.asDomain(): LeagueModel {
+    return LeagueModel(
+        abbreviation = abbreviation ?: "",
+        id = id ?: "",
+        logos = logos.map { it.asDomain() },
+        name = name ?: "",
+        slug = slug ?: "",
+        uid = uid ?: ""
+    )
+}

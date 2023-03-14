@@ -11,6 +11,6 @@ data class CompetitionsEventModel(
     val competitors: List<CompetitorsModel> = listOf(),
     val notes: List<String> = listOf(),
     val tickets: List<TicketsModel> = listOf(),
-    val status: CompetitionStatusModel? = CompetitionStatusModel(),
+    val status: StatusDomainModel? = StatusDomainModel(),
 
     )

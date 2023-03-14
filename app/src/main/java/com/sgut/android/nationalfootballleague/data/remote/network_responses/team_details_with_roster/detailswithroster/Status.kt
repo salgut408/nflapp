@@ -1,7 +1,7 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.CompetitionStatusModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.StatusDomainModel
 
 
 data class Status3(
@@ -15,8 +15,8 @@ data class Status3(
   @SerializedName("type")
   val type: Type3? = Type3(),
   )
-fun Status3.asDomain(): CompetitionStatusModel {
-  return CompetitionStatusModel(
+fun Status3.asDomain(): StatusDomainModel {
+  return StatusDomainModel(
     clock = clock ?: 0,
     displayClock = displayClock ?: "",
     period = period ?: 0,

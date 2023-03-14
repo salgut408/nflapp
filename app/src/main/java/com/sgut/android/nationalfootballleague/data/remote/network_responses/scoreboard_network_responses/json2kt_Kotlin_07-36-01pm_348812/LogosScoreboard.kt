@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.LogosModel
 
 
 data class LogosScoreboard (
@@ -13,3 +14,14 @@ data class LogosScoreboard (
   @SerializedName("lastUpdated" ) var lastUpdated : String?           = null
 
 )
+
+fun LogosScoreboard.asDomain() : LogosModel {
+  return LogosModel(
+    href = href ?: "",
+    alt =  alt ?: "",
+    rel = rel,
+    width = width ?: 0,
+    height = height ?: 0
+
+  )
+}

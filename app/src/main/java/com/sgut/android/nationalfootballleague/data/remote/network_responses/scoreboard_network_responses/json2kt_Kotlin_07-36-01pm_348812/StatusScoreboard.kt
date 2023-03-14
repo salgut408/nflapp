@@ -1,11 +1,21 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.StatusDomainModel
 
 
 data class StatusScoreboard(
-  @SerializedName("clock") var clock: String? = null,
-  @SerializedName("displayClock") var displayClock: String? = null,
-  @SerializedName("period") var period: Int = 0,
-  @SerializedName("type") var type: TypeScoreboard? = TypeScoreboard(),
+  @SerializedName("clock") val clock: String? = null,
+  @SerializedName("displayClock") val displayClock: String? = null,
+  @SerializedName("period") val period: Int = 0,
+  @SerializedName("type") val type: TypeScoreboard? = TypeScoreboard(),
   )
+
+fun StatusScoreboard.asDomain() : StatusDomainModel {
+  return StatusDomainModel(
+    clock = clock?.toInt() ?: 0,
+    displayClock = displayClock ?: "",
+    period = period,
+    type = type?.asDomain()
+  )
+}

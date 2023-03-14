@@ -1,6 +1,6 @@
 package com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster
 
-data class CompetitionStatusModel(
+data class StatusDomainModel(
     val clock: Int = 0,
     val displayClock: String = "",
     val period: Int = 0,
