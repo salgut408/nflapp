@@ -3,21 +3,23 @@ package com.sgut.android.nationalfootballleague
 import com.google.gson.annotations.SerializedName
 
 
-data class TeamScoreboard (
+data class TeamScoreboard(
 
-  @SerializedName("id" ) var id : String = "",
-  @SerializedName("abbreviation" ) var abbreviation : String = "",
-  @SerializedName("name" ) var name : String = "",
-  @SerializedName("logo"            ) var logo            : String = "",
-  @SerializedName("color"            ) var color            : String          = "",
-  @SerializedName("displayName"            ) var displayName            : String          = "",
-  @SerializedName("score"            ) var score            : Int          = 0,
-  @SerializedName("shortDisplayName"            ) var shortDisplayName            : String          = "",
+    @SerializedName("id")
+    val id: String = "",
+    @SerializedName("abbreviation")
+    val abbreviation: String = "",
+    @SerializedName("name")
+    val name: String = "",
+    @SerializedName("logo")
+    val logo: String = "",
+    @SerializedName("color")
+    val color: String = "",
+    @SerializedName("displayName")
+    var displayName: String = "",
+    @SerializedName("score")
+    val score: Int = 0,
+    @SerializedName("shortDisplayName")
+    val shortDisplayName: String = "",
 
-
-
-
-
-
-
-  )
+    )

@@ -44,14 +44,14 @@ class HomeListViewModel @Inject constructor(
     private val _listUiState = MutableStateFlow(ListUiState())
     val listUiState: StateFlow<ListUiState> = _listUiState.asStateFlow()
 
-    // TODO STORE ALL TEAMS IN DB FIRST THEN READ FROM THERE BASED ON LEAGUE ?
+//     TODO STORE ALL TEAMS IN DB FIRST THEN READ FROM THERE BASED ON LEAGUE ?
 
     init {
-
+//        to start
         loadAllNflTeams()
     }
 
-    // wrong model type
+//     wrong model type
     fun addTeamsToDb(teams: List<TeamModel>, sport: String, league: String, leagueAbrv: String) =
         viewModelScope.launch {
             fullTeamsListRepository.storeTeamsInSportsDatabaseFullInfoTable(

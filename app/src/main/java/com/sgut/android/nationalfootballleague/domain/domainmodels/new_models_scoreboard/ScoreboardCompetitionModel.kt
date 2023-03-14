@@ -12,7 +12,7 @@ data class ScoreboardCompetitionModel(
     val date: String = "",
     val startDate: String = "",
     val attendance: Int = 0,
-    val status: StatusDomainModel? = StatusDomainModel(), // move own obj
+    val status: StatusDomainModel? = StatusDomainModel(),
     val format: FormatScoreboard? = FormatScoreboard(), // move to own obj
     val competitors: List<CompetitorsScoreboard> = listOf(),// move to own obj
     val details: List<DetailsScoreboard> = listOf(), // move to own obj

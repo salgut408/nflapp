@@ -13,8 +13,15 @@ data class CompetitorsScoreboard(
   @SerializedName("winner") val winner: Boolean? = null,
   @SerializedName("form") val form: String? = null,
   @SerializedName("score") val score: String? = null,
-  @SerializedName("records") val records: ArrayList<RecordsScoreboard> = arrayListOf(),
+  @SerializedName("records") val records: List<RecordsScoreboard> = listOf(),
   @SerializedName("team") val team: TeamScoreboard? = TeamScoreboard(),
-  @SerializedName("statistics") val statistics: ArrayList<StatisticsScoreboard> = arrayListOf(),
+  @SerializedName("statistics") val statistics: List<StatisticsScoreboard> = listOf(),
 
   )
+
+//fun CompetitorsScoreboard.asDomain(): ScoreboardCompetitorsModel {
+//  return ScoreboardCompetitorsModel(
+//    id = id ?: "",
+//
+//  )
+//}

@@ -10,16 +10,6 @@ import retrofit2.http.Query
 interface EspnApi {
 
 
-    @GET("site/v2/sports/{sport}/{league}/teams/{teamAbbreviation}?enable=roster,headshot")
-    suspend fun getSpecificTeam(
-        @Path("sport")
-        sport: String? = null,
-        @Path("league")
-        league: String? = null,
-        @Path("teamAbbreviation")
-        teamAbbreviation: String? = null
-    ): Response<TeamDetailResponse2>
-
 
     @GET("site/v2/sports/{sport}/{league}/news")
     suspend fun getArticles(
@@ -58,7 +48,7 @@ interface EspnApi {
 
 
     @GET("site/v2/sports/{sport}/{league}/teams/{teamAbbreviation}?enable=roster,headshot")
-    suspend fun getSpecifcTeam(
+    suspend fun getSpecificTeam(
         @Path("sport")
         sport: String? = null,
         @Path("league")

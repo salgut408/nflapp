@@ -11,12 +11,13 @@ class TeamDetailsRepositoryImpl @Inject constructor(
     val espnApi: EspnApi,
     val sportsDataBase: SportsDataBase
 ): TeamDetailsRepository{
+
     override suspend fun getSpecificTeam(
         sport: String,
         league: String,
         team: String,
     ): FullTeamDetailWithRosterModel {
-        val result = espnApi.getSpecifcTeam(sport, league, team).body()?.fullTeam
+        val result = espnApi.getSpecificTeam(sport, league, team).body()?.fullTeam
         return result?.asDomain() ?: FullTeamDetailWithRosterModel()
     }
 }

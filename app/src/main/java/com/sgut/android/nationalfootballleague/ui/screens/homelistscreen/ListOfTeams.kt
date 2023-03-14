@@ -24,7 +24,6 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.TeamModel
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportSurface
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.VerticalGrid
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
@@ -99,16 +98,20 @@ fun TeamDisplayTile(
             .aspectRatio(1.45f)
             .shadow(elevation = 3.dp, shape = TileShape)
             .clip(TileShape)
-            .background(Brush.horizontalGradient(listOf(color, color2)))
+            .background(Brush.sweepGradient(listOf(color2, color)))
             .clickable {
-                navController.navigate(NavigationScreens.DetailScreenTeam.withArgs(team.abbreviation,
-                    sport,
-                    league))
+                navController.navigate(
+                    NavigationScreens.DetailScreenTeam.withArgs(
+                        team.abbreviation,
+                        sport,
+                        league
+                    )
+                )
             },
         content = {
             Text(
                     text = team.abbreviation,
-                    color = Color.Cyan,
+                    color = Color.White,
                     modifier = Modifier
                         .rotate(90f)
                 )
@@ -143,25 +146,19 @@ fun TeamDisplayTile(
 fun TeamLogoImage(
     team: TeamModel,
     contentDescription: String?,
-    modifier: Modifier = Modifier,
+    modifier: Modifier ,
     elevation: Dp = 0.dp,
 
     ) {
-    val color = HexToJetpackColor2.getColor(team.color)
 
-    SportSurface(
-        color = color,
-        elevation = elevation,
-        modifier = modifier
-    ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(team.logos ?: "")
                 .crossfade(true)
                 .build(),
             contentDescription = contentDescription,
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize()
+                .padding(8.dp),
             contentScale = ContentScale.Crop
         )
-    }
 }

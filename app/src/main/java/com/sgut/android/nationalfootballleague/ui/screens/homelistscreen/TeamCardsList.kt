@@ -1,6 +1,5 @@
 package com.sgut.android.nationalfootballleague.ui.screens.homelistscreen
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
@@ -22,7 +21,7 @@ import com.sgut.android.nationalfootballleague.R.string as AppText
 
 
 //Home Screen
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTeamCardsListScreen(
     navController: NavController,
@@ -192,7 +191,7 @@ fun HomeTeamCardsListScreen(
 @Composable
 fun LeagueName(league: String) {
     Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
