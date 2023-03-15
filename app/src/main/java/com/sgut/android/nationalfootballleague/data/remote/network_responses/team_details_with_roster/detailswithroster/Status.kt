@@ -17,7 +17,7 @@ data class Status3(
   )
 fun Status3.asDomain(): StatusDomainModel {
   return StatusDomainModel(
-    clock = clock ?: 0,
+    clock = clock.toString(),
     displayClock = displayClock ?: "",
     period = period ?: 0,
     type = type?.asDomain()

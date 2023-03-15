@@ -51,7 +51,7 @@ fun CompetitionsScoreboard.asDomain(): ScoreboardCompetitionModel {
         competitors = competitors.map { it.asDomain() },
         details = details.map { it.asDomain() },
         headlines = headlines.map { it.asDomain() },
-        venue = venue?.asDomain()
+        venue = venue.asDomain()
     )
 }
 
