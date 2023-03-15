@@ -12,6 +12,7 @@ import com.sgut.android.nationalfootballleague.data.db.article.ArticleDao
 import com.sgut.android.nationalfootballleague.data.db.team.TeamsDao
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import com.sgut.android.nationalfootballleague.data.repository.EspnRepositoryImpl
+import com.sgut.android.nationalfootballleague.data.repository.ScoreboardRepositoryImpl
 import com.sgut.android.nationalfootballleague.data.repository.TeamDetailsRepositoryImpl
 import com.sgut.android.nationalfootballleague.data.repository.TeamsListRepositoryImpl
 import com.sgut.android.nationalfootballleague.data.service.AccountService
@@ -22,6 +23,7 @@ import com.sgut.android.nationalfootballleague.data.service.impl.LogServiceImpl
 import com.sgut.android.nationalfootballleague.data.service.impl.StorageServiceImpl
 import com.sgut.android.nationalfootballleague.domain.dtomappers.*
 import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
+import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamDetailsRepository
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamsListsRepository
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASE_URL
@@ -80,6 +82,12 @@ object AppModule {
         espnApi: EspnApi,
         sportsDataBase: SportsDataBase
     ): TeamDetailsRepository = TeamDetailsRepositoryImpl(espnApi, sportsDataBase)
+
+    @Provides
+    fun provideScoreboardRepository(
+        espnApi: EspnApi,
+        sportsDataBase: SportsDataBase
+    ): ScoreboardRepository = ScoreboardRepositoryImpl(espnApi, sportsDataBase)
 
     @Provides
     fun provideNetworkGameDetailsToDomainModelMapper(): NetworkGameDetailsToDomainModelMapper = NetworkGameDetailsToDomainModelMapper()

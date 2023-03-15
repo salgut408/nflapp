@@ -18,10 +18,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
-import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamLogoScoreboardImageLoader
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamLogoScoreboardImageLoader
+import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.*
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FIRST_TEAM
@@ -58,12 +58,13 @@ fun ScoreboardScreen(
             .padding(8.dp)
             .background(MaterialTheme.colorScheme.background)
         ,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
 
 
         Row(
-            horizontalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
 
@@ -74,7 +75,6 @@ fun ScoreboardScreen(
                 maxLines = 4,
                 overflow = TextOverflow.Visible,
                 lineHeight = 40.sp,
-                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .width(200.dp)
                     .padding(8.dp)
@@ -89,16 +89,7 @@ fun ScoreboardScreen(
 
         Row() { ArticleRow(articleList = articles) }
 
-        when (scoreboardUiState.currentSport) {
-            "football" ->
 
-                OutlinedButton(onClick = {
-                    scoreboardViewModel.onYesterdayClick(sport, league, week)
-                },
-                    modifier = Modifier.basicButton()) {
-                    Text(text = "Last Week")
-                }
-        }
         TeamsMatchUpListFromEvents(events, modifier, sport, league, navController)
     }
 }

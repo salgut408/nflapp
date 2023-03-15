@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardTeamModel
 
 
 data class TeamScoreboard(
@@ -23,3 +24,16 @@ data class TeamScoreboard(
     val shortDisplayName: String = "",
 
     )
+
+fun TeamScoreboard.asDomain(): ScoreboardTeamModel {
+    return ScoreboardTeamModel(
+        id = id,
+        abbreviation = abbreviation,
+        name = name,
+        logo = logo,
+        color = color,
+        displayName = displayName,
+        score = score,
+        shortDisplayName = shortDisplayName
+    )
+}

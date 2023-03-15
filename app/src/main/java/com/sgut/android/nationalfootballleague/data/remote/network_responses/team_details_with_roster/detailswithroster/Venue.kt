@@ -18,7 +18,7 @@ data class Venue3 (
 fun Venue3.asDomain(): VenueModel {
   return VenueModel(
     fullName = fullName,
-    address = address,
+    address = address?.asDomain(),
     images3 = images3
   )
 }

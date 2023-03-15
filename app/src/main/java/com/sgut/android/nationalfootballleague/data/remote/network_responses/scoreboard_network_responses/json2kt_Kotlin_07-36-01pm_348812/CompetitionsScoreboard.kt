@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardCompetitionModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardFormatModel
 
 
 data class CompetitionsScoreboard(
@@ -21,7 +22,7 @@ data class CompetitionsScoreboard(
     @SerializedName("status")
     val status: StatusScoreboard? = StatusScoreboard(),
     @SerializedName("venue")
-    val venue: VenueScoreboard? = VenueScoreboard(),
+    val venue: VenueScoreboard = VenueScoreboard(),
     @SerializedName("format")
     val format: FormatScoreboard? = FormatScoreboard(),
     @SerializedName("geoBroadcasts")
@@ -46,10 +47,11 @@ fun CompetitionsScoreboard.asDomain(): ScoreboardCompetitionModel {
         startDate = startDate ?: "",
         attendance = attendance ?: 0,
         status = status?.asDomain(),
-        format = format,
-        competitors = competitors,
-        details = details,
-        headlines = headlines
+        format = format?.asDomain() ?: ScoreboardFormatModel(),
+        competitors = competitors.map { it.asDomain() },
+        details = details.map { it.asDomain() },
+        headlines = headlines.map { it.asDomain() },
+        venue = venue?.asDomain()
     )
 }
 

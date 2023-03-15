@@ -1,10 +1,18 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardFormatModel
 
 
-data class FormatScoreboard (
+data class FormatScoreboard(
 
-  @SerializedName("regulation" ) var regulation : RegulationScoreboard? = RegulationScoreboard()
+  @SerializedName("regulation")
+  val regulation: RegulationScoreboard? = RegulationScoreboard(),
 
-)
+  )
+
+fun FormatScoreboard.asDomain(): ScoreboardFormatModel {
+  return ScoreboardFormatModel(
+    regulation = regulation?.asDomain()
+  )
+}

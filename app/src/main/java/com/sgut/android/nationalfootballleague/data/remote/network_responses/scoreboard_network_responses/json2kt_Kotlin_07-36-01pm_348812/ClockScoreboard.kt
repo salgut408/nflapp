@@ -1,11 +1,21 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardClockModel
 
 
-data class ClockScoreboard (
+data class ClockScoreboard(
 
-  @SerializedName("value"        ) var value        : Int?    = null,
-  @SerializedName("displayValue" ) var displayValue : String? = null
+  @SerializedName("value")
+  val value: Int? = null,
+  @SerializedName("displayValue")
+  val displayValue: String? = null,
 
-)
+  )
+
+fun ClockScoreboard.asDomain(): ScoreboardClockModel {
+  return ScoreboardClockModel(
+    value = value ?: 0,
+    displayValue = displayValue ?: ""
+  )
+}

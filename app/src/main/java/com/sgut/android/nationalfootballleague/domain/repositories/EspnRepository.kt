@@ -21,11 +21,6 @@ interface EspnRepository {
         league: String,
     ): ScoreboardResponseEventModel
 
-    suspend fun getYesterdayGeneralScoreboardResponse(
-        sport: String,
-        league: String,
-        week: Int,
-    ): ScoreboardResponseEventModel
 
     suspend fun getArticles(sport: String, league: String): List<ArticleModel>
 

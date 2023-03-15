@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.ScoreboardResponseEventModel
 import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
+import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ScoreboardViewModel @Inject constructor(
-    private val espnRepository: EspnRepository
+    private val espnRepository: EspnRepository,
+    private val scoreboardRepository: ScoreboardRepository
 ): ViewModel() {
 
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())
@@ -30,6 +32,16 @@ class ScoreboardViewModel @Inject constructor(
     init {
         currentDate = getYesterdaysDate()
         week = _scoreboardUiState.value.scoreboardUiStateEvents.week.week
+        tryNewState()
+    }
+
+    fun tryNewState() = viewModelScope.launch {
+        try{
+            val new = scoreboardRepository.getGeneralScoreboard("basketball", "nba")
+            Log.e("NEWSCORBOARD-SUCC", new.toString())
+        } catch (e: Exception) {
+            Log.e("NEWSCORBOARD-FAIL", e.stackTraceToString())
+        }
     }
 
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
@@ -43,18 +55,7 @@ class ScoreboardViewModel @Inject constructor(
         }
     }
 
-    fun onYesterdayClick(sport: String, league: String, week: Int) = viewModelScope.launch {
 
-       val lastWeek = week -1
-        try{
-            val result = espnRepository.getYesterdayGeneralScoreboardResponse(sport, league, lastWeek)
-            val articlesListResult = espnRepository.getArticles(sport, league)
-
-            setScoreboardUiState(result, sport, league, articlesListResult, )
-        } catch (e: Exception) {
-            Log.i("DEBUG-rc vm",e.message.toString())
-        }
-    }
 
     fun setScoreboardUiState(scoreboardUiStateEvents  : ScoreboardResponseEventModel, currentSport: String, currentLeague: String, currentArticles: List<ArticleModel>,  ) {
         _scoreboardUiState.update {

@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class DayScoreboard (
 
-  @SerializedName("date" ) var date : String? = null
+  @SerializedName("date" )
+  val date : String? = null
 
 )

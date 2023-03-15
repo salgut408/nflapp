@@ -28,18 +28,13 @@ class EspnRepositoryImpl @Inject constructor(
 //    }
 
 
-
-
-
     override suspend fun getGeneralScoreboardResponse(
         sport: String,
         league: String,
     ): ScoreboardResponseEventModel {
         val response = espnApi.getGeneralScoreboard(sport, league)
-        if
-                (response.isSuccessful) {
+        if (response.isSuccessful) {
             val scoreBoardresponse = espnApi.getGeneralScoreboard(sport, league).body()
-            Log.e("gen board repo", "response succ $scoreBoardresponse")
             return scoreboardDomainMapper.mapToDomainModel(scoreBoardresponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
@@ -49,25 +44,6 @@ class EspnRepositoryImpl @Inject constructor(
         return scoreboardDomainMapper.mapToDomainModel(result!!)
     }
 
-    override suspend fun getYesterdayGeneralScoreboardResponse(
-        sport: String,
-        league: String,
-        week: Int,
-    ): ScoreboardResponseEventModel {
-        val response = espnApi.getYesterdayGeneralScoreboard(sport, league, week)
-        if
-                (response.isSuccessful) {
-            val scoreBoardresponse =
-                espnApi.getYesterdayGeneralScoreboard(sport, league, week).body()
-            Log.e("Scoreboard_Respo_yestrdy", "yesterday response  $scoreBoardresponse")
-            return scoreboardDomainMapper.mapToDomainModel(scoreBoardresponse!!)
-        } else {
-            Log.e(javaClass.name, response.errorBody().toString())
-
-        }
-        val result = espnApi.getYesterdayGeneralScoreboard(sport, league, week).body()
-        return scoreboardDomainMapper.mapToDomainModel(result!!)
-    }
 
     override suspend fun getArticles(sport: String, league: String): List<ArticleModel> {
         val response = espnApi.getArticles(sport, league)
