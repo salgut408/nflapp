@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.ScoreboardResponseEventModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,18 +27,13 @@ class ScoreboardViewModel @Inject constructor(
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())
     var scoreboardUiState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
 
-    var currentDate: Int
-    var week: Int = 0
+    var newScoreboardModelState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
 
-    init {
-        currentDate = getYesterdaysDate()
-        week = _scoreboardUiState.value.scoreboardUiStateEvents.week.week
-        tryNewState()
-    }
+    init {}
 
-    fun tryNewState() = viewModelScope.launch {
+    fun tryNewState(sport: String, league:String) = viewModelScope.launch {
         try{
-            val new = scoreboardRepository.getGeneralScoreboard("basketball", "nba")
+            val new = scoreboardRepository.getGeneralScoreboard(sport, league)
             Log.e("NEWSCORBOARD-SUCC", new.toString())
         } catch (e: Exception) {
             Log.e("NEWSCORBOARD-FAIL", e.stackTraceToString())
@@ -47,23 +43,36 @@ class ScoreboardViewModel @Inject constructor(
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
         try{
             val result = espnRepository.getGeneralScoreboardResponse(sport, league)
+
             val articlesListResult = espnRepository.getArticles(sport, league)
-            setScoreboardUiState(result, sport, league, articlesListResult)
+
+            val currentScoreboardModelUiState = scoreboardRepository.getGeneralScoreboard(sport, league)
+
+            Log.e("NEWSCORBOARDUiSate-SUCC", currentScoreboardModelUiState.toString())
+
+            setScoreboardUiState(result, sport, league, articlesListResult, currentScoreboardModelUiState )
 
         } catch (e: Exception) {
-            Log.i("DEBUG-rc vm",e.message.toString())
+            Log.i("DEBUG-rc vm",e.stackTraceToString())
         }
     }
 
 
 
-    fun setScoreboardUiState(scoreboardUiStateEvents  : ScoreboardResponseEventModel, currentSport: String, currentLeague: String, currentArticles: List<ArticleModel>,  ) {
+    fun setScoreboardUiState(
+        scoreboardUiStateEvents  : ScoreboardResponseEventModel,
+        currentSport: String,
+        currentLeague: String,
+        currentArticles: List<ArticleModel>,
+        currentScoreboardModelUiState: ScoreboardModel
+    ) {
         _scoreboardUiState.update {
             it.copy(
                 scoreboardUiStateEvents = scoreboardUiStateEvents,
                 currentSport = currentSport,
                 currentLeague = currentLeague,
                 currentArticles = currentArticles,
+                scoreboardModelUiState = currentScoreboardModelUiState
             )
         }
     }

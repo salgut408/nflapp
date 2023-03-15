@@ -3,6 +3,8 @@ package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardHeadlineModel
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamLogoScoreboardImageLoader
@@ -46,21 +49,25 @@ fun ScoreboardScreen(
     val leagues = scoreboardUiState.scoreboardUiStateEvents.leagues
     val articles = scoreboardUiState.currentArticles
 
-    val week = scoreboardUiState.scoreboardUiStateEvents.week.week
 
     val sport = scoreboardUiState.currentSport
     val league = scoreboardUiState.currentLeague
 
+    val newUiState by scoreboardViewModel.newScoreboardModelState.collectAsState()
 
     Column(
         modifier
             .verticalScroll(rememberScrollState())
             .padding(8.dp)
-            .background(MaterialTheme.colorScheme.background)
-        ,
+            .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+
+        Text(
+            text = newUiState.scoreboardModelUiState.day ?: ""
+        )
+
 
 
         Row(
@@ -68,8 +75,9 @@ fun ScoreboardScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
+
             Text(
-                text = leagues.getOrNull(0)?.name ?: "",
+                text = newUiState.scoreboardModelUiState.league?.name ?: "",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 maxLines = 4,
@@ -80,8 +88,15 @@ fun ScoreboardScreen(
                     .padding(8.dp)
             )
 
+            Text(
+                text = newUiState.scoreboardModelUiState.league?.abbreviation ?: "",
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+            )
+
+
             GenericImageLoader(
-                obj = leagues.getOrNull(0)?.logos?.getOrNull(0)?.href ?: "",
+                obj = newUiState.scoreboardModelUiState.league?.logos?.get(0)?.href ?: "",
                 modifier = Modifier.fillMaxSize()
             )
         }
@@ -89,11 +104,13 @@ fun ScoreboardScreen(
 
         Row() { ArticleRow(articleList = articles) }
 
-
+//        TODO take out nav navController
         TeamsMatchUpListFromEvents(events, modifier, sport, league, navController)
     }
 }
 
+
+//        TODO do
 
 @Composable
 fun TeamsMatchUpListFromEvents(
@@ -111,7 +128,8 @@ fun TeamsMatchUpListFromEvents(
             .padding(vertical = 8.dp)
         ) {
             events.competitions.map {
-                TeamComponent2(compScoreboard = it,
+                TeamComponent2(
+                    compScoreboard = it,
                     modifier = Modifier,
                     navController = navController,
                     sport = sport,
@@ -124,17 +142,31 @@ fun TeamsMatchUpListFromEvents(
 
 }
 
+//@Composable
+//fun EventsHeadLines(events: List<EventsScoreboard>) {
+//    events.map {
+//        it.competitions.map {
+//            it.headlines.map {
+//                Text(text = it.description ?: "")
+//            }
+//        }
+//    }
+//}
+
 @Composable
-fun EventsHeadLines(events: List<EventsScoreboard>) {
-    events.map {
-        it.competitions.map {
-            it.headlines.map {
-                Text(text = it.description ?: "")
-            }
+fun EventsHeadLines(headlines: List<ScoreboardHeadlineModel>) {
+    headlines.map { HeadLine(headline = it) }
+}
+
+@Composable
+fun HeadLine(headline: ScoreboardHeadlineModel) {
+    Row() {
+        Text(text = headline.type)
+        Column() {
+            Text(text = headline.description)
         }
     }
 }
-
 
 
 @Composable
@@ -231,18 +263,32 @@ fun TeamComponent2(
                 league,
                 compScoreboard.id ?: ""))
         }) {
-        
-        Button(onClick = { }) {
-            Text(text = "Notify me")
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(onClick = { }) {
+                Text(text = "Notify me")
+            }
+
+            Icon(
+                imageVector = Icons.Default.Info, contentDescription = "Match Preview",
+                modifier = Modifier.clickable { }
+            )
         }
 
-        Box(modifier = modifier
-            .fillMaxSize()
-            .padding(8.dp)
-            .background(Brush.horizontalGradient(
-                listOf(color1, color2)
-            ))
-            .fillMaxWidth(3f)) {
+
+
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(8.dp)
+                .background(
+                    Brush.horizontalGradient(
+                        listOf(color1, color2)
+                    )
+                )
+                .fillMaxWidth(3f)) {
 
             Surface(color = Color.LightGray.copy(alpha = 0.3f), modifier = modifier.fillMaxSize()) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -322,16 +368,16 @@ fun TeamComponent2(
                         textAlign = TextAlign.Center)
 
 
-                        Text(
-                            text = dateString ?: "",
-                            style = TextStyle(fontSize = 9.sp),
-                            color = Color.White,
-                            textAlign = TextAlign.Center)
-                        Text(
-                            text = date ?: "",
-                            style = TextStyle(fontSize = 9.sp),
-                            color = Color.White,
-                            textAlign = TextAlign.Center)
+                    Text(
+                        text = dateString ?: "",
+                        style = TextStyle(fontSize = 9.sp),
+                        color = Color.White,
+                        textAlign = TextAlign.Center)
+                    Text(
+                        text = date ?: "",
+                        style = TextStyle(fontSize = 9.sp),
+                        color = Color.White,
+                        textAlign = TextAlign.Center)
 
 
 
