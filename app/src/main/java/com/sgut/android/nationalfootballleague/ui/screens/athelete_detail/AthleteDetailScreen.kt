@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.ui.screens.atheletedetail
+package com.sgut.android.nationalfootballleague.ui.screens.athelete_detail
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween

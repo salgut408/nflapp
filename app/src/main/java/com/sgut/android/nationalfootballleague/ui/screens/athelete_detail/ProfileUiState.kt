@@ -1,6 +1,4 @@
-package com.sgut.android.nationalfootballleague.ui.screens.atheletedetail
-
-import androidx.compose.material3.CircularProgressIndicator
+package com.sgut.android.nationalfootballleague.ui.screens.athelete_detail
 
 sealed class ProfileUiState
 

@@ -7,5 +7,4 @@ data class ScoreboardModel(
     val day: String? = "",
     val events: List<ScoreboardEventModel> = listOf(),
     val week: WeekScoreboard = WeekScoreboard(),
-
     )

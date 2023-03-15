@@ -18,7 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.sgut.android.nationalfootballleague.ui.application.EspnAppState
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
-import com.sgut.android.nationalfootballleague.ui.screens.atheletedetail.AthleteDetailScreen
+import com.sgut.android.nationalfootballleague.ui.screens.athelete_detail.AthleteDetailScreen
 import com.sgut.android.nationalfootballleague.ui.screens.gamedetailscreen.GameDetailsScreen
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeTeamCardsListScreen
 import com.sgut.android.nationalfootballleague.ui.screens.basics.log_in.LoginScreen

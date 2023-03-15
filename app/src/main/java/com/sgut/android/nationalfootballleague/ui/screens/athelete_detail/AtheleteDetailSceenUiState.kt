@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.ui.screens.atheletedetail
+package com.sgut.android.nationalfootballleague.ui.screens.athelete_detail
 
 data class AtheleteDetailSceenUiState(
     val currentSport: String = "",
