@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.RecordModel
 
 //TODO only pass what is needed
 
@@ -41,41 +41,51 @@ fun TeamDetailScreen(
 
 @Composable
 fun TeamRecord(
-    team: FullTeamDetailWithRosterModel,
+    record: RecordModel,
     modifier: Modifier,
 ) {
-    val recordItems = team.record?.recordItems?.getOrNull(0)?.stats
+    if(record.recordItems.isEmpty()){
+        Text(text = "no records")
+    } else {
 
-    Card( modifier = modifier.fillMaxWidth()) {
+        val recordItems = record.recordItems.getOrNull(0)?.stats
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Card( modifier = modifier.fillMaxWidth()) {
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
 
 
-            modifier = modifier.fillMaxWidth().background(MaterialTheme.colorScheme.secondary),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.secondary),
 
 
-        ) {
-            Text(text = team.record?.recordItems?.getOrNull(0)?.summary ?: "" , fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSecondary)
-            Text(text = team.record?.recordItems?.getOrNull(0)?.type ?: "", color =  MaterialTheme.colorScheme.onSecondary)
-        }
-
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.background(MaterialTheme.colorScheme.secondary)
-        ) {
-            Column() {
-                recordItems?.map { recordItems ->
-                    Text(text = recordItems.name ?: "", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSecondary)
-                }
+                ) {
+                Text(text = record.recordItems.getOrNull(0)?.summary ?: "" , fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSecondary)
+                Text(text = record.recordItems.getOrNull(0)?.type ?: "", color =  MaterialTheme.colorScheme.onSecondary)
             }
-            Column() {
-                recordItems?.map { recordItems ->
-                    Text(text = recordItems.value.toString(), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSecondary)
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier.background(MaterialTheme.colorScheme.secondary)
+            ) {
+                Column() {
+                    recordItems?.map { recordItems ->
+                        Text(text = recordItems.name ?: "", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSecondary)
+                    }
+                }
+                Column() {
+                    recordItems?.map { recordItems ->
+                        Text(text = recordItems.value.toString(), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSecondary)
+                    }
                 }
             }
         }
     }
+
+
+
 
 
 }

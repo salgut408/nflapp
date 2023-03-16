@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.ui.screens.teamdetails
 
+import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import com.sgut.android.nationalfootballleague.commoncomposables.InjuriesBox
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.RecordModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.VenueModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GeneralImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.HeadingSection
@@ -190,7 +192,6 @@ fun Body(
     scroll: ScrollState,
 ) {
     val color = HexToJetpackColor2.getColor(team.color)
-    val altColor = HexToJetpackColor2.getColor(team.alternateColor)
     Column(
         modifier = Modifier
             .verticalScroll(scroll)
@@ -227,8 +228,11 @@ fun Body(
             }
             Spacer(Modifier.height(16.dp))
 
-            TeamRecord(team = team, modifier = Modifier.padding(8.dp))
-
+            TeamRecord(
+                record = team.record ?: RecordModel(),
+                modifier = Modifier.padding(8.dp)
+            )
+            Log.e("TEAMRECORD", team.toString())
 
             //injusries box
             InjuriesBox(

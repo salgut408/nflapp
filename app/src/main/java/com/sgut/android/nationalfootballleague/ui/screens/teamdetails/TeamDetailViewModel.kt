@@ -25,8 +25,10 @@ class TeamDetailViewModel @Inject constructor(
 
     // able to just pass TeamModel ? or team id with room?
     fun getFullTeamDetails(teamAbrv: String, sport: String, league: String) = viewModelScope.launch {
+
             val teamDetails = teamDetailsRepository.getSpecificTeam(sport, league, teamAbrv)
-           setTeamDetailUiState(teamDetails, sport, league)
+            setTeamDetailUiState(teamDetails, sport, league)
+
     }
 
 
