@@ -44,6 +44,8 @@ fun ScoreboardScreen(
     scoreboardViewModel.loadGenericScoreboard(sport, league)
 
     val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
+
+//    TODO articles move to usecase
     val articles = scoreboardUiState.currentArticles
 
 
