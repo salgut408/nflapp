@@ -49,8 +49,6 @@ fun ScoreboardScreen(
     val articles = scoreboardUiState.currentArticles
 
 
-
-
     val newUiState by scoreboardViewModel.newScoreboardModelState.collectAsState()
     val sport = newUiState.currentSport
     val league = newUiState.currentLeague
@@ -142,7 +140,7 @@ fun TeamsMatchUpListFromEvents(
 
             events.competitions.map {
 //                TODO new card
-                Column(){
+                Column() {
 
                     Competition(it)
                 }
@@ -193,7 +191,7 @@ fun EventName(event: ScoreboardEventModel) {
 
 @Composable
 fun Competitor(competitor: ScoreboardCompetitorsModel) {
-    Row(){
+    Row() {
         Text(text = competitor.team.name)
         Text(text = " - ")
         Text(text = competitor.score)
@@ -204,21 +202,26 @@ fun Competitor(competitor: ScoreboardCompetitorsModel) {
 @Composable
 fun Competition(competition: ScoreboardCompetitionModel) {
     Text(text = competition.status?.displayClock ?: "")
-   Text(text = competition.attendance.toString())
+    Text(text = competition.attendance.toString())
 
-        competition.competitors.map { competitor ->
-
+    competition.competitors.map { competitor ->
+        Row(verticalAlignment = Alignment.Top) {
             Competitor(competitor = competitor)
-            Row() {
+            Spacer(modifier = Modifier.width(20.dp))
+            Column(verticalArrangement = Arrangement.Center) {
                 CompetitorRecords(competitor.records)
+
             }
+        }
+
+
     }
 }
 
 @Composable
 fun Event(event: ScoreboardEventModel) {
     Text(text = event.name)
-    Text(text = event.status.type?.state ?:"noState")
+    Text(text = event.status.type?.state ?: "noState")
     event.competitions.map { competition ->
         Competition(competition = competition)
     }
@@ -411,7 +414,7 @@ fun TeamComponent2(
                         Spacer(modifier = modifier.padding(8.dp))
 
 
-                        TeamLogoScoreboardImageLoader(team = team2 )
+                        TeamLogoScoreboardImageLoader(team = team2)
                         Spacer(modifier = modifier.padding(8.dp))
                     }
                 }
