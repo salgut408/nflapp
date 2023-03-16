@@ -68,6 +68,7 @@ fun ScoreboardScreen(
             text = newUiState.scoreboardModelUiState.day ?: ""
         )
 
+
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
@@ -117,7 +118,7 @@ fun ScoreboardScreen(
 
 @Composable
 fun MatchPreview() {
-    
+
 }
 
 
@@ -136,7 +137,16 @@ fun TeamsMatchUpListFromEvents(
             .fillMaxWidth()
             .padding(vertical = 8.dp)
         ) {
+
+            EventName(events)
+
             events.competitions.map {
+//                TODO new card
+                Column(){
+
+                    Competition(it)
+                }
+
                 TeamComponent2(
                     compScoreboard = it,
                     modifier = Modifier,
@@ -163,8 +173,55 @@ fun TeamsMatchUpListFromEvents(
 //}
 
 @Composable
-fun EventsHeadLines(headlines: List<ScoreboardHeadlineModel>) {
-    headlines.map { HeadLine(headline = it) }
+fun Record(record: ScoreboardRecordModel) {
+    Row() {
+        Text(text = record.name)
+        Text(text = " - ")
+        Text(text = record.summary)
+    }
+}
+
+@Composable
+fun CompetitorRecords(records: List<ScoreboardRecordModel>) {
+    records.map { Record(record = it) }
+}
+
+@Composable
+fun EventName(event: ScoreboardEventModel) {
+    Text(event.shortName)
+}
+
+@Composable
+fun Competitor(competitor: ScoreboardCompetitorsModel) {
+    Row(){
+        Text(text = competitor.team.name)
+        Text(text = " - ")
+        Text(text = competitor.score)
+    }
+
+}
+
+@Composable
+fun Competition(competition: ScoreboardCompetitionModel) {
+    Text(text = competition.status?.displayClock ?: "")
+   Text(text = competition.attendance.toString())
+
+        competition.competitors.map { competitor ->
+
+            Competitor(competitor = competitor)
+            Row() {
+                CompetitorRecords(competitor.records)
+            }
+    }
+}
+
+@Composable
+fun Event(event: ScoreboardEventModel) {
+    Text(text = event.name)
+    Text(text = event.status.type?.state ?:"noState")
+    event.competitions.map { competition ->
+        Competition(competition = competition)
+    }
 }
 
 @Composable
@@ -265,7 +322,7 @@ fun TeamComponent2(
         .clickable {
             navController.navigate(NavigationScreens.GameDetailScreen.withArgs(sport,
                 league,
-                compScoreboard.id ?: ""))
+                compScoreboard.id))
         }) {
 
         Row(
