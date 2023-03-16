@@ -11,22 +11,36 @@ import javax.inject.Inject
 class ScoreboardRepositoryImpl @Inject constructor(
     val espnApi: EspnApi,
     val sportsDataBase: SportsDataBase,
-): ScoreboardRepository{
+) : ScoreboardRepository {
 
-//    TODO handle null check / try's better '
+    //    TODO handle null check / try's better '
     override suspend fun getGeneralScoreboard(
         sport: String,
         league: String,
     ): ScoreboardModel {
         val response = espnApi.getGeneralScoreboard(sport, league)
-        if (response.isSuccessful){
-            Log.e("scrbrdRepo-SUCC", "response succ ${response.body()}")
+        if (response.isSuccessful) {
             return response.body()?.asDomain()!!
         } else {
-            Log.e("scrbrdRepo-FAIL", response.errorBody().toString())
+            Log.e("scrbrdRepGen-FAIL", response.errorBody().toString())
         }
         val result = espnApi.getGeneralScoreboard(sport, league)
-    return result.body()?.asDomain()!!
+        return result.body()?.asDomain()!!
+    }
+
+    override suspend fun getCollegeBasketballScoreboard(
+        sport: String,
+        league: String,
+        limit: String,
+    ): ScoreboardModel {
+        val response = espnApi.getCollegeBasketballScoreboard(sport, league, limit)
+        if (response.isSuccessful) {
+            return response.body()?.asDomain()!!
+        } else {
+            Log.e("scrbrdRepmarch-FAIL", response.errorBody().toString())
+        }
+        val result = espnApi.getCollegeBasketballScoreboard(sport, league, limit)
+        return result.body()?.asDomain()!!
     }
 
     override suspend fun getGeneralScoreboardByDate(
@@ -36,4 +50,6 @@ class ScoreboardRepositoryImpl @Inject constructor(
     ): ScoreboardModel {
         TODO("Not yet implemented")
     }
+
+
 }

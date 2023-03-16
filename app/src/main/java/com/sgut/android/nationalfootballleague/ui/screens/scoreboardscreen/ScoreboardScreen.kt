@@ -1,6 +1,5 @@
 package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 
-import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -46,7 +45,6 @@ fun ScoreboardScreen(
 
     val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
     val events = scoreboardUiState.scoreboardUiStateEvents.events
-    val leagues = scoreboardUiState.scoreboardUiStateEvents.leagues
     val articles = scoreboardUiState.currentArticles
 
 
@@ -68,13 +66,10 @@ fun ScoreboardScreen(
             text = newUiState.scoreboardModelUiState.day ?: ""
         )
 
-
-
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-
 
             Text(
                 text = newUiState.scoreboardModelUiState.league?.name ?: "",
@@ -250,11 +245,6 @@ fun TeamComponent2(
     val dateString = compScoreboard.date?.toDate()?.formatTo("MMM-dd")
     val date = compScoreboard.date?.toDate()?.formatTo("K:mm aa")
 
-    Log.d("DATE-Time", date.toString())
-    Log.d("DATE-String", dateString.toString())
-
-
-
     Card(modifier = modifier
 
         .fillMaxSize()
@@ -276,8 +266,6 @@ fun TeamComponent2(
                 modifier = Modifier.clickable { }
             )
         }
-
-
 
         Box(
             modifier = modifier
@@ -366,8 +354,6 @@ fun TeamComponent2(
                         style = TextStyle(fontSize = 12.sp),
                         color = Color.White,
                         textAlign = TextAlign.Center)
-
-
                     Text(
                         text = dateString ?: "",
                         style = TextStyle(fontSize = 9.sp),
@@ -378,13 +364,6 @@ fun TeamComponent2(
                         style = TextStyle(fontSize = 9.sp),
                         color = Color.White,
                         textAlign = TextAlign.Center)
-
-
-
-
-
-
-
                     Text(
                         text = compScoreboard.id ?: "",
                         style = TextStyle(fontSize = 9.sp),

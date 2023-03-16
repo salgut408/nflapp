@@ -15,4 +15,10 @@ interface ScoreboardRepository {
         date: String
     ): ScoreboardModel
 
+    suspend fun getCollegeBasketballScoreboard(
+        sport: String,
+        league: String,
+        limit: String
+    ): ScoreboardModel
+
 }

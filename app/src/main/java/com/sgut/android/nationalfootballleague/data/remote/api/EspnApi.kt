@@ -28,13 +28,16 @@ interface EspnApi {
     ): Response<NetworkScoreboardResponse>
 
     @GET("site/v2/sports/{sport}/{league}/scoreboard")
-    suspend fun getYesterdayGeneralScoreboard(
+    suspend fun getCollegeBasketballScoreboard(
         @Path("sport")
         sport: String? = null,
         @Path("league")
         league: String? = null,
-        @Query("week") week: Int
+        @Query("limit")
+        limit: String = "500"
+
     ): Response<NetworkScoreboardResponse>
+
 
     @GET("site/v2/sports/{sport}/{league}/teams")
     suspend fun getTeamsListForLeague(

@@ -8,6 +8,7 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.ScoreboardRes
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASKETBALL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -42,15 +43,21 @@ class ScoreboardViewModel @Inject constructor(
 
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
         try{
-            val result = espnRepository.getGeneralScoreboardResponse(sport, league)
 
-            val articlesListResult = espnRepository.getArticles(sport, league)
+            if(league.equals(NCAA_BASKETBALL)) {
+                val result = espnRepository.getGeneralScoreboardResponse(sport, league)
+                val articlesListResult = espnRepository.getArticles(sport, league)
+                val currentScoreboardModelUiState = scoreboardRepository.getCollegeBasketballScoreboard(sport, league, "200")
+                setScoreboardUiState(result, sport, league, articlesListResult, currentScoreboardModelUiState )
+            } else {
+                val result = espnRepository.getGeneralScoreboardResponse(sport, league)
+                val articlesListResult = espnRepository.getArticles(sport, league)
+                val currentScoreboardModelUiState = scoreboardRepository.getGeneralScoreboard(sport, league)
+                Log.e("NEWSCORBOARDUiSate-SUCC", currentScoreboardModelUiState.toString())
+                setScoreboardUiState(result, sport, league, articlesListResult, currentScoreboardModelUiState )
+            }
 
-            val currentScoreboardModelUiState = scoreboardRepository.getGeneralScoreboard(sport, league)
 
-            Log.e("NEWSCORBOARDUiSate-SUCC", currentScoreboardModelUiState.toString())
-
-            setScoreboardUiState(result, sport, league, articlesListResult, currentScoreboardModelUiState )
 
         } catch (e: Exception) {
             Log.i("DEBUG-rc vm",e.stackTraceToString())
