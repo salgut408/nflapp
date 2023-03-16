@@ -22,6 +22,7 @@ import com.sgut.android.nationalfootballleague.InjTeam
 import com.sgut.android.nationalfootballleague.TeamScoreboard
 import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardTeamModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.VenueModel
 
@@ -52,7 +53,7 @@ fun TeamLogoDetailImageLoader(team: FullTeamDetailWithRosterModel) {
         )
 }
 @Composable
-fun TeamLogoScoreboardImageLoader(team: TeamScoreboard) {
+fun TeamLogoScoreboardImageLoader(team: ScoreboardTeamModel) {
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
             .data(team.logo)

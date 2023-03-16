@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.ScoreboardResponseEventModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
@@ -15,8 +14,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,33 +29,20 @@ class ScoreboardViewModel @Inject constructor(
 
     init {}
 
-    fun tryNewState(sport: String, league:String) = viewModelScope.launch {
-        try{
-            val new = scoreboardRepository.getGeneralScoreboard(sport, league)
-            Log.e("NEWSCORBOARD-SUCC", new.toString())
-        } catch (e: Exception) {
-            Log.e("NEWSCORBOARD-FAIL", e.stackTraceToString())
-        }
-    }
 
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
         try{
 
             if(league.equals(NCAA_BASKETBALL)) {
-                val result = espnRepository.getGeneralScoreboardResponse(sport, league)
                 val articlesListResult = espnRepository.getArticles(sport, league)
                 val currentScoreboardModelUiState = scoreboardRepository.getCollegeBasketballScoreboard(sport, league, "200")
-                setScoreboardUiState(result, sport, league, articlesListResult, currentScoreboardModelUiState )
+                setScoreboardUiState( sport, league, articlesListResult, currentScoreboardModelUiState )
             } else {
-                val result = espnRepository.getGeneralScoreboardResponse(sport, league)
                 val articlesListResult = espnRepository.getArticles(sport, league)
                 val currentScoreboardModelUiState = scoreboardRepository.getGeneralScoreboard(sport, league)
                 Log.e("NEWSCORBOARDUiSate-SUCC", currentScoreboardModelUiState.toString())
-                setScoreboardUiState(result, sport, league, articlesListResult, currentScoreboardModelUiState )
+                setScoreboardUiState( sport, league, articlesListResult, currentScoreboardModelUiState )
             }
-
-
-
         } catch (e: Exception) {
             Log.i("DEBUG-rc vm",e.stackTraceToString())
         }
@@ -67,7 +51,6 @@ class ScoreboardViewModel @Inject constructor(
 
 
     fun setScoreboardUiState(
-        scoreboardUiStateEvents  : ScoreboardResponseEventModel,
         currentSport: String,
         currentLeague: String,
         currentArticles: List<ArticleModel>,
@@ -75,7 +58,6 @@ class ScoreboardViewModel @Inject constructor(
     ) {
         _scoreboardUiState.update {
             it.copy(
-                scoreboardUiStateEvents = scoreboardUiStateEvents,
                 currentSport = currentSport,
                 currentLeague = currentLeague,
                 currentArticles = currentArticles,
@@ -84,11 +66,4 @@ class ScoreboardViewModel @Inject constructor(
         }
     }
 
-
-    fun getYesterdaysDate(): Int {
-        val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
-        val formatted = current.format(formatter).toInt()
-        return formatted - 1
-    }
 }

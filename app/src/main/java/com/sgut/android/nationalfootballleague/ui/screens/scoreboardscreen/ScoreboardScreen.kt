@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardHeadlineModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.*
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamLogoScoreboardImageLoader
@@ -44,14 +44,14 @@ fun ScoreboardScreen(
     scoreboardViewModel.loadGenericScoreboard(sport, league)
 
     val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
-    val events = scoreboardUiState.scoreboardUiStateEvents.events
     val articles = scoreboardUiState.currentArticles
 
 
-    val sport = scoreboardUiState.currentSport
-    val league = scoreboardUiState.currentLeague
+
 
     val newUiState by scoreboardViewModel.newScoreboardModelState.collectAsState()
+    val sport = newUiState.currentSport
+    val league = newUiState.currentLeague
 
     Column(
         modifier
@@ -100,7 +100,13 @@ fun ScoreboardScreen(
         Row() { ArticleRow(articleList = articles) }
 
 //        TODO take out nav navController
-        TeamsMatchUpListFromEvents(events, modifier, sport, league, navController)
+        TeamsMatchUpListFromEvents(
+            newUiState.scoreboardModelUiState.events,
+            modifier,
+            sport,
+            league,
+            navController
+        )
     }
 }
 
@@ -108,8 +114,14 @@ fun ScoreboardScreen(
 //        TODO do
 
 @Composable
+fun MatchPreview() {
+    
+}
+
+
+@Composable
 fun TeamsMatchUpListFromEvents(
-    events: List<EventsScoreboard>,
+    events: List<ScoreboardEventModel>,
     modifier: Modifier,
     sport: String,
     league: String,
@@ -165,8 +177,8 @@ fun HeadLine(headline: ScoreboardHeadlineModel) {
 
 
 @Composable
-fun TeamComponent(team: CompetitorsScoreboard, modifier: Modifier) {
-    val color = HexToJetpackColor2.getColor(team.team?.color!!)
+fun TeamComponent(team: ScoreboardCompetitorsModel, modifier: Modifier) {
+    val color = HexToJetpackColor2.getColor(team.team.color)
 
     Box(modifier = modifier
         .padding(8.dp)
@@ -183,12 +195,12 @@ fun TeamComponent(team: CompetitorsScoreboard, modifier: Modifier) {
                 .fillMaxWidth()
                 .height(50.dp)
         ) {
-            TeamLogoScoreboardImageLoader(team = team.team!!)
+            TeamLogoScoreboardImageLoader(team = team.team)
 
 
             if (team.winner == true) {
                 Text(
-                    text = team.team!!.name,
+                    text = team.team.name,
                     style = TextStyle(fontSize = 20.sp),
                     textAlign = TextAlign.Left,
                     fontWeight = FontWeight.Bold
@@ -202,7 +214,7 @@ fun TeamComponent(team: CompetitorsScoreboard, modifier: Modifier) {
             } else {
 
                 Text(
-                    text = team.team!!.name,
+                    text = team.team.name,
                     style = TextStyle(fontSize = 20.sp),
                     textAlign = TextAlign.Left,
                     fontWeight = FontWeight.Light
@@ -227,7 +239,7 @@ fun WeekHeader() {
 
 @Composable
 fun TeamComponent2(
-    compScoreboard: CompetitionsScoreboard,
+    compScoreboard: ScoreboardCompetitionModel,
     modifier: Modifier,
     navController: NavController,
     sport: String,
@@ -236,14 +248,14 @@ fun TeamComponent2(
     ) {
     val team1 = compScoreboard.competitors[FIRST_TEAM].team
     val team2 = compScoreboard.competitors[SECOND_TEAM].team
-    val color1 = HexToJetpackColor2.getColor(team1!!.color)
-    val color2 = HexToJetpackColor2.getColor(team2!!.color)
+    val color1 = HexToJetpackColor2.getColor(team1.color)
+    val color2 = HexToJetpackColor2.getColor(team2.color)
     val team1Score = compScoreboard.competitors[FIRST_TEAM].score
     val team2Score = compScoreboard.competitors[SECOND_TEAM].score
     val whiteColor = Color.White
 
-    val dateString = compScoreboard.date?.toDate()?.formatTo("MMM-dd")
-    val date = compScoreboard.date?.toDate()?.formatTo("K:mm aa")
+    val dateString = compScoreboard.date.toDate()?.formatTo("MMM-dd")
+    val date = compScoreboard.date.toDate()?.formatTo("K:mm aa")
 
     Card(modifier = modifier
 
@@ -290,7 +302,7 @@ fun TeamComponent2(
 
                         Spacer(modifier = modifier.padding(8.dp))
 
-                        TeamLogoScoreboardImageLoader(team = team1 ?: TeamScoreboard())
+                        TeamLogoScoreboardImageLoader(team = team1)
                         Spacer(modifier = modifier.padding(8.dp))
 
                         Text(
@@ -303,7 +315,7 @@ fun TeamComponent2(
                         Spacer(modifier = modifier.padding(8.dp))
 
                         Text(
-                            text = team1Score.toString(),
+                            text = team1Score,
                             style = TextStyle(fontSize = 12.sp),
                             textAlign = TextAlign.Left,
                             fontWeight = FontWeight.Bold,
@@ -323,7 +335,7 @@ fun TeamComponent2(
                     ) {
 
                         Text(
-                            text = team2Score.toString(),
+                            text = team2Score,
                             style = TextStyle(fontSize = 12.sp),
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.Bold,
@@ -340,7 +352,7 @@ fun TeamComponent2(
                         Spacer(modifier = modifier.padding(8.dp))
 
 
-                        TeamLogoScoreboardImageLoader(team = team2 ?: TeamScoreboard())
+                        TeamLogoScoreboardImageLoader(team = team2 )
                         Spacer(modifier = modifier.padding(8.dp))
                     }
                 }

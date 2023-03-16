@@ -8,7 +8,7 @@ import androidx.room.OnConflictStrategy
 @Dao
 interface TeamsDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addAllTeams(teams: List<TeamDbObjFullInfo>): List<Long>
 
     @Delete
