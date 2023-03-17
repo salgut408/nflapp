@@ -3,10 +3,9 @@ package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticleDomianModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ArticleRepository
-import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASKETBALL
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,51 +18,57 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ScoreboardViewModel @Inject constructor(
-    private val espnRepository: EspnRepository,
     private val scoreboardRepository: ScoreboardRepository,
-    private val articleRepository: ArticleRepository
-): ViewModel() {
+    private val articleRepository: ArticleRepository,
+) : ViewModel() {
 
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())
     var scoreboardUiState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
 
     var newScoreboardModelState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
 
-    init {}
+    init {
+
+    }
 
 
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
-        try{
+        try {
 
-            if(league.equals(NCAA_BASKETBALL)) {
-                val articlesListResult = espnRepository.getArticles(sport, league)
-                val currentScoreboardModelUiState = scoreboardRepository.getCollegeBasketballScoreboard(sport, league, "200")
-                setScoreboardUiState( sport, league, articlesListResult, currentScoreboardModelUiState )
+            if (league.equals(NCAA_BASKETBALL)) {
+                val currentScoreboardModelUiState =
+                    scoreboardRepository.getCollegeBasketballScoreboard(sport, league, "200")
+                val articlesListResult = articleRepository.getArticles(sport, league)
+                setScoreboardUiState(
+                    sport, league,
+                    currentScoreboardModelUiState, articlesListResult,
+                )
             } else {
-                val articlesListResult = espnRepository.getArticles(sport, league)
-                val currentScoreboardModelUiState = scoreboardRepository.getGeneralScoreboard(sport, league)
-                Log.e("NEWSCORBOARDUiSate-SUCC", currentScoreboardModelUiState.toString())
-                setScoreboardUiState( sport, league, articlesListResult, currentScoreboardModelUiState )
+                val articlesListResult = articleRepository.getArticles(sport, league)
+                val currentScoreboardModelUiState =
+                    scoreboardRepository.getGeneralScoreboard(sport, league)
+                setScoreboardUiState(
+                    sport, league,
+                    currentScoreboardModelUiState, articlesListResult)
             }
         } catch (e: Exception) {
-            Log.i("DEBUG-rc vm",e.stackTraceToString())
+            Log.i("DEBUG-rc vm", e.stackTraceToString())
         }
     }
-
 
 
     fun setScoreboardUiState(
         currentSport: String,
         currentLeague: String,
-        currentArticles: List<ArticleModel>,
-        currentScoreboardModelUiState: ScoreboardModel
+        currentScoreboardModelUiState: ScoreboardModel,
+        currentArticles: List<ArticleDomianModel>,
     ) {
         _scoreboardUiState.update {
             it.copy(
                 currentSport = currentSport,
                 currentLeague = currentLeague,
-                currentArticles = currentArticles,
-                scoreboardModelUiState = currentScoreboardModelUiState
+                scoreboardModelUiState = currentScoreboardModelUiState,
+                currentArticles = currentArticles
             )
         }
     }

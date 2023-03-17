@@ -39,7 +39,7 @@ interface EspnApi {
     ): Response<NetworkScoreboardResponse>
 
 //    TODO adding limit takes a long time to load teams ?limit=200
-    @GET("site/v2/sports/{sport}/{league}/teams?limit=200")
+    @GET("site/v2/sports/{sport}/{league}/teams")
     suspend fun getTeamsListForLeague(
         @Path("sport")
         sport: String? = null,

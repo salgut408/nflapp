@@ -1,6 +1,5 @@
 package com.sgut.android.nationalfootballleague.domain.repositories
 
-import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.ScoreboardResponseEventModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamScheduleModel
@@ -11,20 +10,13 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamScheduleM
 interface EspnRepository {
 //    suspend fun getSavedArticles(): Flow<List<ArticleModel>>
 
-
     suspend fun saveArticle(article: GameDetailModel)
 
-
-
-    suspend fun getGeneralScoreboardResponse(
+    suspend fun getGameDetails(
         sport: String,
         league: String,
-    ): ScoreboardResponseEventModel
-
-
-    suspend fun getArticles(sport: String, league: String): List<ArticleModel>
-
-    suspend fun getGameDetails(sport: String, league: String, event: String): GameDetailModel
+        event: String
+    ): GameDetailModel
 
     suspend fun getGeneralScoreboardResponseByDate(
         sport: String,

@@ -40,12 +40,12 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
+import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DetailVenueCardImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.PressIconButton
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.VideoPlayer
-import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
-import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FIRST_TEAM
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.SECOND_TEAM
@@ -88,6 +88,11 @@ fun GameDetailsScreen(
 
                 HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
                     ?: GameDetailModel())
+
+                Text(
+                    text = gameDetailUiState.currentGameDetails?.plays?.get(0)?.text ?: "",
+                    style = MaterialTheme.typography.headlineLarge
+                )
 
 //                issues w pickcenter
 //                PickCenter(pickCenterInfo = ((gameDetailUiState.currentGameDetails?.pickcenter ?: Pickcenter()) as Pickcenter))
@@ -1611,7 +1616,7 @@ fun LastFiveGameRow(lastEvents: GameDetailsEvents) {
 @Composable
 fun LastFiveGames2(
     lastFiveGames: List<LastFiveGames>,
-    teamInt: Int
+    teamInt: Int,
 ) {
     val team1Info = lastFiveGames.getOrNull(teamInt)
     val team2Info = lastFiveGames.getOrNull(1)

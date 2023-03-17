@@ -58,11 +58,9 @@ object AppModule {
     @Provides
     fun provideEspnRepository(
         espnApi: EspnApi,
-        articleMapper: NetworkToDomainArticleMapper,
-        scoreboardMapper: NetworkScoreboardToDomainModelMapper,
         gameDetailsToDomainModelMapper: NetworkGameDetailsToDomainModelMapper,
         sportsDataBase: SportsDataBase
-    ): EspnRepository = EspnRepositoryImpl( espnApi, sportsDataBase, articleMapper, scoreboardMapper, gameDetailsToDomainModelMapper)
+    ): EspnRepository = EspnRepositoryImpl( espnApi, sportsDataBase, gameDetailsToDomainModelMapper)
 
 
     @Provides
@@ -93,13 +91,6 @@ object AppModule {
     @Provides
     fun provideNetworkGameDetailsToDomainModelMapper(): NetworkGameDetailsToDomainModelMapper = NetworkGameDetailsToDomainModelMapper()
 
-
-    @Provides
-    fun provideNetworkToDomainArticleMapper(): NetworkToDomainArticleMapper = NetworkToDomainArticleMapper()
-
-
-    @Provides
-    fun provideScoreboardMapper(): NetworkScoreboardToDomainModelMapper = NetworkScoreboardToDomainModelMapper()
 
     @Singleton
     @Provides

@@ -1,6 +1,5 @@
 package com.sgut.android.nationalfootballleague.data.repository
 
-import android.util.Log
 import com.sgut.android.nationalfootballleague.asDomain
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
@@ -15,7 +14,6 @@ class ArticleRepositoryImpl @Inject constructor(
     override suspend fun getArticles(sport: String, league: String): List<ArticleDomianModel> {
         val articleResponse = espnApi.getArticles(sport, league)
         if (articleResponse.isSuccessful) {
-            Log.e("articles resp repo", "response succ $articleResponse")
             return articleResponse.body()?.articles?.map { it.asDomain() } ?: listOf()
         }
         return articleResponse.body()?.articles?.map { it.asDomain() } ?: listOf()

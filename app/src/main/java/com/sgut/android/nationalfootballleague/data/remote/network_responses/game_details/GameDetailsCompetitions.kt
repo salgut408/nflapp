@@ -19,6 +19,10 @@ data class GameDetailsCompetitions (
   @SerializedName("playByPlaySource"      ) var playByPlaySource      : String?                = null,
   @SerializedName("competitors"           ) var competitors           : List<GameDetailsCompetitors> = listOf(),
   @SerializedName("status"                ) var status                : GameDetailsStatus?                = GameDetailsStatus(),
-  @SerializedName("broadcasts"            ) var broadcasts            : ArrayList<GameDetailsBroadcasts>  = arrayListOf()
+  @SerializedName("broadcasts"            ) var broadcasts            : ArrayList<GameDetailsBroadcasts>  = arrayListOf(),
+  @SerializedName("shotChartAvailable"       ) var shotChartAvailable       : Boolean?               = null,
+  @SerializedName("timeoutsAvailable"        ) var timeoutsAvailable        : Boolean?               = null,
+  @SerializedName("possessionArrowAvailable" ) var possessionArrowAvailable : Boolean?               = null,
 
-)
+
+  )

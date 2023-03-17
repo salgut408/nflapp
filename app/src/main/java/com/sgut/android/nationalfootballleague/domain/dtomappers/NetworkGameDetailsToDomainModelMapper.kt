@@ -25,6 +25,7 @@ class NetworkGameDetailsToDomainModelMapper: DomainMapper<GameDetailResponse, Ga
             scoringPlays = model.scoringPlays,
             videos = model.videos,
             singleArticle = model.singleGameArticle,
+            plays = model.plays
 
         )
     }
