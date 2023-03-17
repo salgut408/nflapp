@@ -7,5 +7,6 @@ data class ScoreboardUiState (
     val currentSport: String = "",
     val currentLeague: String = "",
     val currentArticles: List<ArticleModel> = listOf(),
+    val NEWcurrentArticles: List<ArticleModel> = listOf(),
     val scoreboardModelUiState: ScoreboardModel = ScoreboardModel()
     )

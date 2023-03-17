@@ -11,10 +11,7 @@ import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.db.article.ArticleDao
 import com.sgut.android.nationalfootballleague.data.db.team.TeamsDao
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
-import com.sgut.android.nationalfootballleague.data.repository.EspnRepositoryImpl
-import com.sgut.android.nationalfootballleague.data.repository.ScoreboardRepositoryImpl
-import com.sgut.android.nationalfootballleague.data.repository.TeamDetailsRepositoryImpl
-import com.sgut.android.nationalfootballleague.data.repository.TeamsListRepositoryImpl
+import com.sgut.android.nationalfootballleague.data.repository.*
 import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.data.service.LogService
 import com.sgut.android.nationalfootballleague.data.service.StorageService
@@ -22,10 +19,7 @@ import com.sgut.android.nationalfootballleague.data.service.impl.AccountServiceI
 import com.sgut.android.nationalfootballleague.data.service.impl.LogServiceImpl
 import com.sgut.android.nationalfootballleague.data.service.impl.StorageServiceImpl
 import com.sgut.android.nationalfootballleague.domain.dtomappers.*
-import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
-import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
-import com.sgut.android.nationalfootballleague.domain.repositories.TeamDetailsRepository
-import com.sgut.android.nationalfootballleague.domain.repositories.TeamsListsRepository
+import com.sgut.android.nationalfootballleague.domain.repositories.*
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASE_URL
 import dagger.Binds
 import dagger.Module
@@ -48,6 +42,7 @@ object AppModule {
 
     @Provides
     fun provideTeamDao(sportsDataBase: SportsDataBase): TeamsDao = sportsDataBase.getTeamsDao()
+
 
 
     @Provides
@@ -88,6 +83,12 @@ object AppModule {
         espnApi: EspnApi,
         sportsDataBase: SportsDataBase
     ): ScoreboardRepository = ScoreboardRepositoryImpl(espnApi, sportsDataBase)
+
+    @Provides
+    fun provideArticleRepository(
+        espnApi: EspnApi,
+        sportsDataBase: SportsDataBase,
+    ): ArticleRepository = ArticleRepositoryImpl(espnApi, sportsDataBase)
 
     @Provides
     fun provideNetworkGameDetailsToDomainModelMapper(): NetworkGameDetailsToDomainModelMapper = NetworkGameDetailsToDomainModelMapper()

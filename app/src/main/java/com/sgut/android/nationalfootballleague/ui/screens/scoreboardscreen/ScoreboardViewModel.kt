@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
+import com.sgut.android.nationalfootballleague.domain.repositories.ArticleRepository
 import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASKETBALL
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ScoreboardViewModel @Inject constructor(
     private val espnRepository: EspnRepository,
-    private val scoreboardRepository: ScoreboardRepository
+    private val scoreboardRepository: ScoreboardRepository,
+    private val articleRepository: ArticleRepository
 ): ViewModel() {
 
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())

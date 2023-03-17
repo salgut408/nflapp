@@ -142,7 +142,10 @@ fun TeamsMatchUpListFromEvents(
 //                TODO new card
                 Column() {
 
-                    Competition(it)
+                    Icon(
+                        imageVector = Icons.Default.Info, contentDescription = "Match Preview",
+                        modifier = Modifier.clickable { }
+                    )
                 }
 
                 TeamComponent2(
@@ -200,10 +203,16 @@ fun Competitor(competitor: ScoreboardCompetitorsModel) {
 }
 
 @Composable
+fun QuickGlance(competition: ScoreboardCompetitionModel) {
+    Card() {
+        Competition(competition = competition)
+
+    }
+}
+
+@Composable
 fun Competition(competition: ScoreboardCompetitionModel) {
     Text(text = competition.status?.displayClock ?: "")
-    Text(text = competition.attendance.toString())
-
     competition.competitors.map { competitor ->
         Row(verticalAlignment = Alignment.Top) {
             Competitor(competitor = competitor)
@@ -335,10 +344,7 @@ fun TeamComponent2(
                 Text(text = "Notify me")
             }
 
-            Icon(
-                imageVector = Icons.Default.Info, contentDescription = "Match Preview",
-                modifier = Modifier.clickable { }
-            )
+
         }
 
         Box(

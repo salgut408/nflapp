@@ -45,6 +45,14 @@ fun HomeTeamCardsListScreen(
                     contentPadding = padding,
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
+
+                    item {
+                        OutlinedButton(onClick = { homeListViewModel.setCollegeBasketballTeams() }) {
+                            Text(stringResource(R.string.NCAA_mens_basketball),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
                     item {
                         OutlinedButton(
                             onClick = {
@@ -104,12 +112,7 @@ fun HomeTeamCardsListScreen(
                         }
                     }
 
-                    item {
-                        OutlinedButton(onClick = { homeListViewModel.setCollegeBasketballTeams() }) {
-                            Text(stringResource(R.string.NCAA_mens_basketball),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
+
 
                     item {
                         OutlinedButton(onClick = { homeListViewModel.setMlsTeams() }) {
