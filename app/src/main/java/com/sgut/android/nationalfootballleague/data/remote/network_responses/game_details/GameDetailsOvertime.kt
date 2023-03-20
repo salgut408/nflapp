@@ -3,11 +3,15 @@ package com.sgut.android.nationalfootballleague
 import com.google.gson.annotations.SerializedName
 
 
-data class GameDetailsOvertime (
+data class GameDetailsOvertime(
 
-  @SerializedName("periods"     ) var periods     : Int?    = null,
-  @SerializedName("displayName" ) var displayName : String? = null,
-  @SerializedName("slug"        ) var slug        : String? = null,
-  @SerializedName("clock"       ) var clock       : Int?    = null
+  @SerializedName("periods")
+  val periods: Int? = null,
+  @SerializedName("displayName")
+  val displayName: String? = null,
+  @SerializedName("slug")
+  val slug: String? = null,
+  @SerializedName("clock")
+  val clock: Int? = null,
 
-)
+  )

@@ -87,10 +87,11 @@ fun GameDetailsScreen(
                 HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
                     ?: GameDetailModel())
 
-                Text(
-                    text = gameDetailUiState.currentGameDetails?.plays?.get(0)?.text ?: "",
-                    style = MaterialTheme.typography.headlineLarge
-                )
+//                TODO issues with blank current plays
+//                Text(
+//                    text = gameDetailUiState.currentGameDetails?.plays?.getOrNull(0)?.text ?: "",
+//                    style = MaterialTheme.typography.headlineLarge
+//                )
 
 //                issues w pickcenter
 //                PickCenter(pickCenterInfo = ((gameDetailUiState.currentGameDetails?.pickcenter ?: Pickcenter()) as Pickcenter))

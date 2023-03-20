@@ -53,7 +53,7 @@ data class GameDetailResponse(
 
 fun GameDetailResponse.asDomain(): GameDetailsModel {
     return GameDetailsModel(
-    boxscore = boxscore,
+    boxscore = boxscore?.asDomain(),
         format = format,
         gameInfo = gameInfo,
         lastFiveGames = lastFiveGames,

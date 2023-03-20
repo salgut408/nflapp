@@ -5,7 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class GameInfo (
 
-  @SerializedName("venue"   ) var venue   : GameDetailsVenue?   = GameDetailsVenue(),
-  @SerializedName("weather" ) var weather : Weather? = Weather()
+  @SerializedName("venue"   )
+  val venue   : GameDetailsVenue?   = GameDetailsVenue(),
+  @SerializedName("weather" )
+  val weather : Weather? = Weather()
 
 )

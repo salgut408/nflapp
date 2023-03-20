@@ -4,8 +4,11 @@ import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Drives
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
 
+
+//    TODO - Make Domain Objcts
+
 data class GameDetailsModel(
-    val boxscore: GameDetailsBoxscore? = GameDetailsBoxscore(), // needs mod
+    val boxscore: BoxScoreModel? = BoxScoreModel(), // done
     val format: GameDetailsFormat? = GameDetailsFormat(), // needs mod
     val gameInfo: GameInfo? = GameInfo(), // needs mod
     val lastFiveGames: List<LastFiveGames> = listOf(), // needs mod
