@@ -5,25 +5,25 @@ import com.sgut.android.nationalfootballleague.data.remote.network_responses.gam
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
 
 data class GameDetailsModel(
-    val boxscore: GameDetailsBoxscore? = GameDetailsBoxscore(),
-    val format: GameDetailsFormat? = GameDetailsFormat(),
-    val gameInfo: GameInfo? = GameInfo(),
-    val lastFiveGames: List<LastFiveGames> = listOf(),
-    val leaders: List<GameDetailsLeaders> = listOf(),
-    val injuries: List<GameDetailsInjuries> = listOf(),
-    val broadcasts: List<GameDetailsBroadcasts> = listOf(),
-    val predictor: Predictor? = Predictor(),
-    val pickcenter: List<Pickcenter> = listOf(),
-    val againstTheSpread: List<AgainstTheSpread> = listOf(),
-    val odds: List<Odds> = listOf(),
-    val header: Header? = Header(),
-    val news: News? = News(),
-    val singleGameArticle: GameDetailsArticle? = GameDetailsArticle(),
-    val ticketsInfo: GameDetailsTicketsInfo? = GameDetailsTicketsInfo(),
-    val standings: GameDetailsStandings? = GameDetailsStandings(),
-    val drives: Drives? = Drives(),
-    val winprobability: List<Winprobability> = listOf(),
-    val scoringPlays: List<ScoringPlays> = listOf(),
-    val videos: List<Videos> = listOf(),
-    val plays: List<NetworkPlays> = listOf(),
+    val boxscore: GameDetailsBoxscore? = GameDetailsBoxscore(), // needs mod
+    val format: GameDetailsFormat? = GameDetailsFormat(), // needs mod
+    val gameInfo: GameInfo? = GameInfo(), // needs mod
+    val lastFiveGames: List<LastFiveGames> = listOf(), // needs mod
+    val leaders: List<GameDetailsLeaders> = listOf(), // needs mod
+    val injuries: List<GameDetailsInjuries> = listOf(), // needs mod
+    val broadcasts: List<GameDetailsBroadcasts> = listOf(), // needs mod
+    val predictor: Predictor? = Predictor(), // needs mod
+    val pickcenter: List<Pickcenter> = listOf(), // needs mod
+    val againstTheSpread: List<AgainstTheSpread> = listOf(), // needs mod
+    val odds: List<Odds> = listOf(), // needs mod
+    val header: Header? = Header(), // needs mod
+    val news: News? = News(), // needs mod
+    val singleGameArticle: GameDetailsArticle? = GameDetailsArticle(),  // needs mod
+    val ticketsInfo: GameDetailsTicketsInfo? = GameDetailsTicketsInfo(), // needs mod
+    val standings: GameDetailsStandings? = GameDetailsStandings(), // needs mod
+    val drives: Drives? = Drives(), // needs mod
+    val winprobability: List<Winprobability> = listOf(), // needs mod
+    val scoringPlays: List<ScoringPlays> = listOf(), // needs mod
+    val videos: List<Videos> = listOf(),// needs mod
+    val plays: List<NetworkPlays> = listOf(), // needs mod
 )

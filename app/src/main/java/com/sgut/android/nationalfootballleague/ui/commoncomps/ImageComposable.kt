@@ -2,7 +2,6 @@ package com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -15,30 +14,12 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
-import coil.size.Size
-import com.sgut.android.nationalfootballleague.GameDetailsAthlete
 import com.sgut.android.nationalfootballleague.GameDetailsVenue
-import com.sgut.android.nationalfootballleague.InjTeam
-import com.sgut.android.nationalfootballleague.TeamScoreboard
-import com.sgut.android.nationalfootballleague.domain.domainmodels.ArticleModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDomainModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardTeamModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.VenueModel
 
 
-@Composable
-fun TeamLogoImageLoader(team: TeamDomainModel) {
-    SubcomposeAsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(team.logos?.getOrNull(0)?.href)
-            .build(),
-        loading = {
-            CircularProgressIndicator()
-        },
-        contentDescription = team.displayName,
-    )
-}
 
 @Composable
 fun TeamLogoDetailImageLoader(team: FullTeamDetailWithRosterModel) {
@@ -66,18 +47,6 @@ fun TeamLogoScoreboardImageLoader(team: ScoreboardTeamModel) {
 }
 
 
-@Composable
-fun TeamLogoImageloadiner2(team: TeamScoreboard) {
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(team.logo)
-            .crossfade(true)
-            .build(),
-        contentDescription = team.displayName,
-        contentScale = ContentScale.Crop,
-        modifier = Modifier.size(140.dp)
-    )
-}
 
 
 
@@ -108,19 +77,6 @@ fun GeneralImageLoader(
 }
 
 
-@Composable
-fun ArticleCardImageLoader(articleModel: ArticleModel) {
-    SubcomposeAsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(articleModel.images.getOrNull(0)?.url).size(Size.ORIGINAL)
-            .build(),
-        loading = {
-            CircularProgressIndicator()
-        },
-        contentDescription = articleModel.headline,
-
-        )
-}
 
 
 
@@ -139,20 +95,7 @@ fun GenericImageLoader(obj: String, modifier: Modifier) {
         )
 }
 
-@Composable
-fun HeadshotImageLoader(athlete: GameDetailsAthlete, modifier: Modifier) {
-    SubcomposeAsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(athlete.headshot?.href)
-            .build(),
-        modifier = modifier.size(100.dp),
-        loading = {
-            CircularProgressIndicator()
-        },
-        contentDescription = athlete.displayName,
 
-        )
-}
 
 @Composable
 fun VenueCardImageLoader(venue: VenueModel) {
@@ -169,20 +112,7 @@ fun VenueCardImageLoader(venue: VenueModel) {
         )
 }
 
-@Composable
-fun GameDetailLogoImageLoader(team: InjTeam, modifier: Modifier) {
-    SubcomposeAsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(team.logo)
-            .build(),
-        modifier = modifier.size(100.dp),
-        loading = {
-            CircularProgressIndicator()
-        },
-        contentDescription = team.displayName,
 
-        )
-}
 
 
 @Composable

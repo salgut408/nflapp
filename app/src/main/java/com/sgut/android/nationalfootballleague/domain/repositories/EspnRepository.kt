@@ -1,7 +1,6 @@
 package com.sgut.android.nationalfootballleague.domain.repositories
 
 import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.ScoreboardResponseEventModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamScheduleModel
 
 
@@ -18,11 +17,6 @@ interface EspnRepository {
         event: String
     ): GameDetailModel
 
-    suspend fun getGeneralScoreboardResponseByDate(
-        sport: String,
-        league: String,
-        date: String
-    ): ScoreboardResponseEventModel
 
     suspend fun getTeamSchedule(
         sport: String,

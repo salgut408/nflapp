@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class News (
 
-  @SerializedName("header"   ) var header   : String?             = null,
-  @SerializedName("link"     ) var link     : GameDetailsLink?           = GameDetailsLink(),
-  @SerializedName("articles" ) var articles : List<Articles> = listOf()
+  @SerializedName("header"   ) val header   : String?             = null,
+  @SerializedName("link"     ) val link     : GameDetailsLink?           = GameDetailsLink(),
+  @SerializedName("articles" ) val articles : List<Articles> = listOf() // same as ArticleDomianModel
 
 )
 

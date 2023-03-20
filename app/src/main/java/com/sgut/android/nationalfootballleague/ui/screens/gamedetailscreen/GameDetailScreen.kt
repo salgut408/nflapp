@@ -73,8 +73,6 @@ fun GameDetailsScreen(
 
 
     Scaffold(
-
-
         content = { padding ->
             Column(
                 modifier

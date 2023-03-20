@@ -19,28 +19,20 @@ class GameDetailViewModel @Inject constructor(
     private val espnRepository: EspnRepository,
 ): ViewModel() {
 
-
     private val _gameDetailUiState = MutableStateFlow(GameDetailsScreenUiState())
-
     var gameDetailUiState: StateFlow<GameDetailsScreenUiState> = _gameDetailUiState.asStateFlow()
-
-    private val _sealedGameDetailUiState = MutableStateFlow(GameDetailModel())
-
-    val sealedGameDetailUiState: StateFlow<GameDetailModel> = _sealedGameDetailUiState.asStateFlow()
 
      var _colorsTeamList: MutableList<Color> = mutableListOf()
 
 
-    init {
-
-    }
-
+    init {}
 
     private fun render(viewState: SealedGameDetailUiState) {
         when(viewState) {
             Loading -> {}
             Error -> {}
             is GameDetailsLoaded -> {}
+            else -> {}
         }
     }
 
@@ -68,12 +60,12 @@ class GameDetailViewModel @Inject constructor(
 
     fun setGameDetailsUiState(gameDetails: GameDetailModel, currentSport: String, currentLeague: String) {
         _gameDetailUiState.update {
-            it.copy(currentLeague  = currentLeague,
+            it.copy(
+                currentLeague  = currentLeague,
                 currentSport = currentSport,
                 currentGameDetails = gameDetails
             )
         }
     }
-
 
 }

@@ -39,7 +39,7 @@ class EspnRepositoryImpl @Inject constructor(
         val response = espnApi.getGameDetails(sport, league, event)
         if (response.isSuccessful) {
             val getGameDetailsResponse = espnApi.getGameDetails(sport, league, event).body()
-            Log.e("game_details repo", getGameDetailsResponse?.plays.toString())
+//            Log.e("game_details repo", getGameDetailsResponse?.news .toString())
             return gameDetailsToDomainModelMapper.mapToDomainModel(getGameDetailsResponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
@@ -50,13 +50,6 @@ class EspnRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun getGeneralScoreboardResponseByDate(
-        sport: String,
-        league: String,
-        date: String,
-    ): ScoreboardResponseEventModel {
-        TODO("Not yet implemented")
-    }
 
     override suspend fun getTeamSchedule(
         sport: String,
