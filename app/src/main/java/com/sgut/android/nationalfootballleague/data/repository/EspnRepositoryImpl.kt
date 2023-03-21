@@ -4,7 +4,6 @@ import android.util.Log
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.ScoreboardResponseEventModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamScheduleModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.asDbArticle
 import com.sgut.android.nationalfootballleague.domain.dtomappers.NetworkGameDetailsToDomainModelMapper
@@ -39,7 +38,7 @@ class EspnRepositoryImpl @Inject constructor(
         val response = espnApi.getGameDetails(sport, league, event)
         if (response.isSuccessful) {
             val getGameDetailsResponse = espnApi.getGameDetails(sport, league, event).body()
-//            Log.e("game_details repo", getGameDetailsResponse?.news .toString())
+            Log.e("game_SITUATIONSHIP", getGameDetailsResponse?.leaders .toString())
             return gameDetailsToDomainModelMapper.mapToDomainModel(getGameDetailsResponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())

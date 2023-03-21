@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsCompetitionModel
 
 
 data class GameDetailsCompetitions(
@@ -44,3 +45,16 @@ data class GameDetailsCompetitions(
 
 
     )
+
+fun GameDetailsCompetitions.asDomain(): GameDetailsCompetitionModel {
+    return GameDetailsCompetitionModel(
+        id = id ?: "",
+        date = date ?: "",
+        competitors = competitors.map { it.asDomain() }, // map
+        status = status,
+        shotChartAvailable = shotChartAvailable ?: false,
+        timeoutsAvailable = timeoutsAvailable ?: false,
+        possessionArrowAvailable = possessionArrowAvailable ?: false
+
+    )
+}

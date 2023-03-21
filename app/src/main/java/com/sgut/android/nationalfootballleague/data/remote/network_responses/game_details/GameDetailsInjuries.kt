@@ -7,12 +7,10 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_deta
 
 
 data class GameDetailsInjuries(
-
   @SerializedName("team")
   val team: InjTeam = InjTeam(),
   @SerializedName("injuries")
   val injuries: List<InjuriesItem> = listOf(),
-
   )
 fun GameDetailsInjuries.asDomain(): GameDetailsInjuriesListModel {
   return GameDetailsInjuriesListModel(
@@ -30,8 +28,6 @@ data class InjTeam(
   val displayName: String = "",
   @SerializedName("logo")
   val logo: String = "",
-
-
   )
 
 fun InjTeam.asDomain(): InjTeamModel {
@@ -51,10 +47,6 @@ data class InjuriesItem(
   val athlete: GameDetailsAthlete = GameDetailsAthlete(),
   @SerializedName("type")
   val type: GameDetailsType = GameDetailsType(),
-
-
-
-
   )
 
 fun InjuriesItem.asDomain(): InjuriesItemModel {

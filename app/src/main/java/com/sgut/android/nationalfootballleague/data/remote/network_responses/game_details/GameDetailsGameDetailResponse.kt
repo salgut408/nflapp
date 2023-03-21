@@ -2,11 +2,19 @@ package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Drives
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Rosters
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Situation
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsModel
 
 
 data class GameDetailResponse(
+    @SerializedName("rosters") val rosters: ArrayList<Rosters> = arrayListOf(),
+
+
+    @SerializedName("situation") val situation: Situation? = Situation(),
+    @SerializedName("notes") val notes: List<String> = listOf(),
+
     @SerializedName("boxscore")
     val boxscore: GameDetailsBoxscore? = GameDetailsBoxscore(),
     @SerializedName("format")
@@ -53,19 +61,19 @@ data class GameDetailResponse(
 
 fun GameDetailResponse.asDomain(): GameDetailsModel {
     return GameDetailsModel(
-    boxscore = boxscore?.asDomain(),
+        boxscore = boxscore?.asDomain(),
         format = format?.asDomain(),
         gameInfo = gameInfo?.asDomain(),
         lastFiveGames = lastFiveGames.map { it.asDomain() },
         leaders = leaders.map { it.asDomain() },
         injuries = injuries.map { it.asDomain() },
         broadcasts = broadcasts,
-        predictor = predictor,
-        pickcenter = pickcenter,
-        againstTheSpread = againstTheSpread,
-        odds = odds,
-        header = header,
-        news = news,
+        predictor = predictor?.asDomain(),
+        pickcenter = pickcenter.map { it.asDomain() },
+        againstTheSpread = againstTheSpread.map { it.asDomain() },
+        odds = odds.map { it.asDomain() },
+        header = header?.asDomain(),
+        news = news?.asDomain(),
         singleGameArticle = singleGameArticle,
         ticketsInfo = ticketsInfo,
         standings = standings,

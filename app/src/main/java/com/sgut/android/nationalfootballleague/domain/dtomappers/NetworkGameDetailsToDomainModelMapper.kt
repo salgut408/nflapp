@@ -6,6 +6,9 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailMod
 class NetworkGameDetailsToDomainModelMapper: DomainMapper<GameDetailResponse, GameDetailModel> {
     override fun mapToDomainModel(model: GameDetailResponse): GameDetailModel {
         return GameDetailModel(
+            rosters = model.rosters,
+            situation = model.situation,
+            notes = model.notes,
             boxscore = model.boxscore,
             broadcasts = model.broadcasts,
             format = model.format,

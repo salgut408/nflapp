@@ -3,10 +3,15 @@ package com.sgut.android.nationalfootballleague.domain.domainmodels
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.data.db.article.ArticleDbObject
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Drives
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Rosters
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Situation
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
 
 data class GameDetailModel(
 
+    val rosters: ArrayList<Rosters> = arrayListOf(),
+    val situation: Situation? = Situation(),
+    val notes: List<String> = listOf(),
     val boxscore: GameDetailsBoxscore? = GameDetailsBoxscore(),
     val format: GameDetailsFormat? = GameDetailsFormat(),
     val gameInfo: GameInfo? = GameInfo(),

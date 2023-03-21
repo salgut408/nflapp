@@ -1,14 +1,26 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.NewsModel
 
-data class News (
+data class News(
 
-  @SerializedName("header"   ) val header   : String?             = null,
-  @SerializedName("link"     ) val link     : GameDetailsLink?           = GameDetailsLink(),
-  @SerializedName("articles" ) val articles : List<Articles> = listOf() // same as ArticleDomianModel
+  @SerializedName("header")
+  val header: String? = null,
+  @SerializedName("link")
+  val link: GameDetailsLink? = GameDetailsLink(),
+  @SerializedName("articles")
+  val articles: List<Articles> = listOf(), // same as ArticleDomianModel
 
 )
+
+fun News.asDomain(): NewsModel {
+  return NewsModel(
+    header = header ?: "",
+    link = link,
+    articles = articles.map { it.asDomain() }
+  )
+}
 
 
 

@@ -40,6 +40,7 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Situation
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
 import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DetailVenueCardImageLoader
@@ -63,9 +64,8 @@ fun GameDetailsScreen(
     navController: NavController,
     event: String,
     gameDetailViewModel: GameDetailViewModel = hiltViewModel(),
-
-
     ) {
+
     gameDetailViewModel.loadGameDetails(sport, league, event)
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
@@ -108,6 +108,9 @@ fun GameDetailsScreen(
                     "football" -> DoughnutChart2(
                         gameDetailModel = gameDetailUiState.currentGameDetails
                             ?: GameDetailModel(),
+                    )
+                    "baseball" -> BaseballSituation(
+                        gameDetailSituation = gameDetailUiState.currentGameDetails?.situation ?: Situation()
                     )
                 }
 
@@ -922,6 +925,17 @@ fun AthleteNameAndPosition(athlete: GameDetailsAthlete) {
         Text(text = athlete.displayName ?: "")
         Text(text = " ")
         Text(text = athlete.position?.abbreviation ?: "", color = Color.Blue)
+    }
+}
+
+@Composable
+fun BaseballSituation(gameDetailSituation: Situation) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column() {
+        }
+            Text(text = "Balls " + gameDetailSituation.balls.toString() )
+            Text(text = "Outs " + gameDetailSituation.outs.toString())
+            Text(text = "Strikes " + gameDetailSituation.strikes.toString())
     }
 }
 
