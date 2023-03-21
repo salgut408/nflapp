@@ -5,15 +5,12 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_deta
 
 
 data class GameDetailsBoxscore(
-
   @SerializedName("teams")
   val teams: List<GameDetailsTeams> = listOf(),
   @SerializedName("players")
   val players: List<Players> = listOf(),
   @SerializedName("statistics")
-  val statistics: List<Statistics> = listOf(),
-
-
+  val statistics: List<GameDetailsStatistics> = listOf(),
   )
 
 fun GameDetailsBoxscore.asDomain(): BoxScoreModel {

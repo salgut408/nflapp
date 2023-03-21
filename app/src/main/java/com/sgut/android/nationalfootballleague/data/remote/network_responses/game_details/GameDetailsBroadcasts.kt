@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName
 
 data class GameDetailsBroadcasts (
 
-  @SerializedName("type"   ) var type   : GameDetailsType?   = GameDetailsType(),
-  @SerializedName("market" ) var market : GameDetailsMarket? = GameDetailsMarket(),
-  @SerializedName("media"  ) var media  : GameDetailsMedia?  = GameDetailsMedia(),
-  @SerializedName("lang"   ) var lang   : String? = null,
-  @SerializedName("region" ) var region : String? = null,
-  @SerializedName("station" ) var station : String? = null,
+  @SerializedName("type"   ) val type   : GameDetailsType?   = GameDetailsType(),
+  @SerializedName("market" ) val market : GameDetailsMarket? = GameDetailsMarket(),
+  @SerializedName("media"  ) val media  : GameDetailsMedia?  = GameDetailsMedia(),
+  @SerializedName("lang"   ) val lang   : String? = null,
+  @SerializedName("region" ) val region : String? = null,
+  @SerializedName("station" ) val station : String? = null,
 
 
 

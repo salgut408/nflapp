@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Odds (
 
-  @SerializedName("provider"    ) var provider    : Provider?    = Provider(),
-  @SerializedName("bettingOdds" ) var bettingOdds : BettingOdds? = BettingOdds()
+  @SerializedName("provider"    ) val provider    : Provider?    = Provider(),
+  @SerializedName("bettingOdds" ) val bettingOdds : BettingOdds? = BettingOdds()
 
 )

@@ -3,26 +3,44 @@ package com.sgut.android.nationalfootballleague
 import com.google.gson.annotations.SerializedName
 
 
-data class GameDetailsCompetitions (
+data class GameDetailsCompetitions(
 
-  @SerializedName("id"                    ) var id                    : String?                = null,
-  @SerializedName("uid"                   ) var uid                   : String?                = null,
-  @SerializedName("date"                  ) var date                  : String?                = null,
-  @SerializedName("neutralSite"           ) var neutralSite           : Boolean?               = null,
-  @SerializedName("conferenceCompetition" ) var conferenceCompetition : Boolean?               = null,
-  @SerializedName("boxscoreAvailable"     ) var boxscoreAvailable     : Boolean?               = null,
-  @SerializedName("commentaryAvailable"   ) var commentaryAvailable   : Boolean?               = null,
-  @SerializedName("liveAvailable"         ) var liveAvailable         : Boolean?               = null,
-  @SerializedName("onWatchESPN"           ) var onWatchESPN           : Boolean?               = null,
-  @SerializedName("recent"                ) var recent                : Boolean?               = null,
-  @SerializedName("boxscoreSource"        ) var boxscoreSource        : String?                = null,
-  @SerializedName("playByPlaySource"      ) var playByPlaySource      : String?                = null,
-  @SerializedName("competitors"           ) var competitors           : List<GameDetailsCompetitors> = listOf(),
-  @SerializedName("status"                ) var status                : GameDetailsStatus?                = GameDetailsStatus(),
-  @SerializedName("broadcasts"            ) var broadcasts            : ArrayList<GameDetailsBroadcasts>  = arrayListOf(),
-  @SerializedName("shotChartAvailable"       ) var shotChartAvailable       : Boolean?               = null,
-  @SerializedName("timeoutsAvailable"        ) var timeoutsAvailable        : Boolean?               = null,
-  @SerializedName("possessionArrowAvailable" ) var possessionArrowAvailable : Boolean?               = null,
+    @SerializedName("id")
+    val id: String? = null,
+    @SerializedName("uid")
+    val uid: String? = null,
+    @SerializedName("date")
+    val date: String? = null,
+    @SerializedName("neutralSite")
+    val neutralSite: Boolean? = null,
+    @SerializedName("conferenceCompetition")
+    val conferenceCompetition: Boolean? = null,
+    @SerializedName("boxscoreAvailable")
+    val boxscoreAvailable: Boolean? = null,
+    @SerializedName("commentaryAvailable")
+    val commentaryAvailable: Boolean? = null,
+    @SerializedName("liveAvailable")
+    val liveAvailable: Boolean? = null,
+    @SerializedName("onWatchESPN")
+    val onWatchESPN: Boolean? = null,
+    @SerializedName("recent")
+    val recent: Boolean? = null,
+    @SerializedName("boxscoreSource")
+    val boxscoreSource: String? = null,
+    @SerializedName("playByPlaySource")
+    val playByPlaySource: String? = null,
+    @SerializedName("competitors")
+    val competitors: List<GameDetailsCompetitors> = listOf(),
+    @SerializedName("status")
+    val status: GameDetailsStatus? = GameDetailsStatus(),
+    @SerializedName("broadcasts")
+    val broadcasts: ArrayList<GameDetailsBroadcasts> = arrayListOf(),
+    @SerializedName("shotChartAvailable")
+    val shotChartAvailable: Boolean? = null,
+    @SerializedName("timeoutsAvailable")
+    val timeoutsAvailable: Boolean? = null,
+    @SerializedName("possessionArrowAvailable")
+    val possessionArrowAvailable: Boolean? = null,
 
 
-  )
+    )

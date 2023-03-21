@@ -1,16 +1,34 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.WeatherModel
 
 
-data class Weather (
+data class Weather(
 
-  @SerializedName("temperature"     ) var temperature     : String?    = null,
-  @SerializedName("highTemperature" ) var highTemperature : Int?    = null,
-  @SerializedName("lowTemperature"  ) var lowTemperature  : Int?    = null,
-  @SerializedName("conditionId"     ) var conditionId     : String? = null,
-  @SerializedName("gust"            ) var gust            : Int?    = null,
-  @SerializedName("precipitation"   ) var precipitation   : Int?    = null,
-  @SerializedName("link"            ) var link            : GameDetailsLink?   = GameDetailsLink()
+  @SerializedName("temperature")
+  val temperature: String? = null,
+  @SerializedName("highTemperature")
+  val highTemperature: Int? = null,
+  @SerializedName("lowTemperature")
+  val lowTemperature: Int? = null,
+  @SerializedName("conditionId")
+  val conditionId: String? = null,
+  @SerializedName("gust")
+  val gust: Int? = null,
+  @SerializedName("precipitation")
+  val precipitation: Int? = null,
+  @SerializedName("link")
+  val link: GameDetailsLink? = GameDetailsLink(),
 
-)
+  )
+fun Weather.asDomain(): WeatherModel {
+  return WeatherModel(
+    temperature = temperature ?: "",
+    highTemperature = highTemperature ?: 0,
+    lowTemperature = lowTemperature ?: 0,
+    conditionId = conditionId ?: "",
+    gust = gust ?: 0,
+    precipitation = precipitation ?: 0
+  )
+}

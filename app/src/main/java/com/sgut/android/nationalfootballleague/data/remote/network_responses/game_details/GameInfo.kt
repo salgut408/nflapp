@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameInfoModel
 
 
 data class GameInfo (
@@ -11,3 +12,10 @@ data class GameInfo (
   val weather : Weather? = Weather()
 
 )
+
+fun GameInfo.asDomain(): GameInfoModel {
+  return GameInfoModel(
+    venue = venue?.asDomain(),
+    weather = weather?.asDomain()
+  )
+}

@@ -98,8 +98,6 @@ interface EspnApi {
     // TODO implement racing API Endpoint F1
 //    https://site.api.espn.com/apis/site/v2/sports/racing/f1/scoreboard
 
-    // TODO add STATS
-//    https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/statistics
 
 //    TODO add player info
 //    https://site.web.api.espn.com/apis/common/v3/sports/:sport/:league_abbrev/athletes/:athlete_id

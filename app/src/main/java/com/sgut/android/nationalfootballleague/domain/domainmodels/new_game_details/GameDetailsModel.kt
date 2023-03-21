@@ -9,11 +9,11 @@ import com.sgut.android.nationalfootballleague.data.remote.network_responses.gam
 
 data class GameDetailsModel(
     val boxscore: BoxScoreModel? = BoxScoreModel(), // done
-    val format: GameDetailsFormat? = GameDetailsFormat(), // needs mod
-    val gameInfo: GameInfo? = GameInfo(), // needs mod
-    val lastFiveGames: List<LastFiveGames> = listOf(), // needs mod
-    val leaders: List<GameDetailsLeaders> = listOf(), // needs mod
-    val injuries: List<GameDetailsInjuries> = listOf(), // needs mod
+    val format: GameDetailsFormatModel? = GameDetailsFormatModel(), // done
+    val gameInfo: GameInfoModel? = GameInfoModel(), // done
+    val lastFiveGames: List<LastFiveGamesModel> = listOf(), // done
+    val leaders: List<GameDetailsLeadersModel> = listOf(), // done
+    val injuries: List<GameDetailsInjuriesListModel> = listOf(), // done
     val broadcasts: List<GameDetailsBroadcasts> = listOf(), // needs mod
     val predictor: Predictor? = Predictor(), // needs mod
     val pickcenter: List<Pickcenter> = listOf(), // needs mod

@@ -54,11 +54,11 @@ data class GameDetailResponse(
 fun GameDetailResponse.asDomain(): GameDetailsModel {
     return GameDetailsModel(
     boxscore = boxscore?.asDomain(),
-        format = format,
-        gameInfo = gameInfo,
-        lastFiveGames = lastFiveGames,
-        leaders = leaders,
-        injuries = injuries,
+        format = format?.asDomain(),
+        gameInfo = gameInfo?.asDomain(),
+        lastFiveGames = lastFiveGames.map { it.asDomain() },
+        leaders = leaders.map { it.asDomain() },
+        injuries = injuries.map { it.asDomain() },
         broadcasts = broadcasts,
         predictor = predictor,
         pickcenter = pickcenter,

@@ -5,14 +5,22 @@ import com.google.gson.annotations.SerializedName
 
 data class GameDetailsType(
 
-  @SerializedName("id") var id: String = "",
-  @SerializedName("name") var name: String = "",
-  @SerializedName("completed") var completed: Boolean = false,
-  @SerializedName("description") var description: String = "",
-  @SerializedName("detail") var gameTimeDetail: String = "",
-  @SerializedName("shortDetail") var shortGameTimeDetail: String = "",
-  @SerializedName("text") var text: String = "",
-  @SerializedName("abbreviation") var abbreviation: String = "",
+  @SerializedName("id")
+  val id: String = "",
+  @SerializedName("name")
+  val name: String = "",
+  @SerializedName("completed")
+  val completed: Boolean = false,
+  @SerializedName("description")
+  val description: String = "",
+  @SerializedName("detail")
+  val gameTimeDetail: String = "",
+  @SerializedName("shortDetail")
+  val shortGameTimeDetail: String = "",
+  @SerializedName("text")
+  val text: String = "",
+  @SerializedName("abbreviation")
+  val abbreviation: String = "",
 
 
 

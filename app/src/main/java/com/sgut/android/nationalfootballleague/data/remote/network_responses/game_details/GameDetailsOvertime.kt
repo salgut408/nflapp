@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsOvertimeModel
 
 
 data class GameDetailsOvertime(
@@ -15,3 +16,12 @@ data class GameDetailsOvertime(
   val clock: Int? = null,
 
   )
+
+fun GameDetailsOvertime.asDomain(): GameDetailsOvertimeModel {
+  return GameDetailsOvertimeModel(
+    periods = periods ?: 0,
+    displayName = displayName ?: "",
+    slug = slug ?: "",
+    clock = clock ?: 0
+  )
+}
