@@ -58,6 +58,7 @@ data class GameDetailResponse(
 
 fun GameDetailResponse.asDomain(): GameDetailsModel {
     return GameDetailsModel(
+        baseballSituation = situation?.asDomain(),
         boxscore = boxscore?.asDomain(),
         format = format?.asDomain(),
         gameInfo = gameInfo?.asDomain(),
@@ -78,7 +79,8 @@ fun GameDetailResponse.asDomain(): GameDetailsModel {
         winprobability = winprobability.map { it.asDomain() },
         scoringPlays = scoringPlays.map { it.asDomain() },
         videos = videos.map { it.asDomain() },
-        plays = plays.map { it.asDomain() }
+        plays = plays.map { it.asDomain() },
+        rosters = rosters,
     )
 }
 

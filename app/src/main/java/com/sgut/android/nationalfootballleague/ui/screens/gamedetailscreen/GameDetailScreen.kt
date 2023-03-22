@@ -40,9 +40,9 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
-import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Situation
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
 import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.SituationModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DetailVenueCardImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.PressIconButton
@@ -69,7 +69,8 @@ fun GameDetailsScreen(
     gameDetailViewModel.loadGameDetails(sport, league, event)
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
-    Log.d("GAMEDETAIL-UISTATE", gameDetailUiState.toString())
+    Log.d("GAMEDETAIL-UISTATE", gameDetailUiState.currentGameUiState.toString())
+
 
 
     Scaffold(
@@ -83,6 +84,11 @@ fun GameDetailsScreen(
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
 
+                Text(
+                    text = gameDetailUiState.currentGameUiState?.header?.competitions?.get(0)?.status?.type?.shortGameTimeDetail .toString(),
+                    style = MaterialTheme.typography.headlineLarge
+
+                )
 
                 HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
                     ?: GameDetailModel())
@@ -110,7 +116,8 @@ fun GameDetailsScreen(
                             ?: GameDetailModel(),
                     )
                     "baseball" -> BaseballSituation(
-                        gameDetailSituation = gameDetailUiState.currentGameDetails?.situation ?: Situation()
+
+                        gameDetailSituation = gameDetailUiState.currentGameUiState?.baseballSituation ?: SituationModel()
                     )
                 }
 
@@ -480,10 +487,10 @@ fun SeasonLeaders(gameDetailModel: GameDetailModel) {
 
                             ) {
                             GenericImageLoader(
-                                obj = gameDetailsLeaders.team?.logo ?: "",
+                                obj = gameDetailsLeaders.team.logo ,
                                 modifier = Modifier.size(50.dp)
                             )
-                            Text(text = gameDetailsLeaders.team?.abbreviation ?: "",
+                            Text(text = gameDetailsLeaders.team.abbreviation ?: "",
                                 fontWeight = FontWeight.Bold)
                         }
 
@@ -929,7 +936,7 @@ fun AthleteNameAndPosition(athlete: GameDetailsAthlete) {
 }
 
 @Composable
-fun BaseballSituation(gameDetailSituation: Situation) {
+fun BaseballSituation(gameDetailSituation: SituationModel) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column() {
         }
@@ -937,6 +944,9 @@ fun BaseballSituation(gameDetailSituation: Situation) {
             Text(text = "Outs " + gameDetailSituation.outs.toString())
             Text(text = "Strikes " + gameDetailSituation.strikes.toString())
     }
+    Text(text = "Batter: " + gameDetailSituation.batter?.playerId.toString())
+    Text(text = "Pitcher: " + gameDetailSituation.pitcher?.playerId.toString())
+    Text(text = "Pitcher: " + gameDetailSituation.pitcher?.playerId.toString())
 }
 
 @Composable

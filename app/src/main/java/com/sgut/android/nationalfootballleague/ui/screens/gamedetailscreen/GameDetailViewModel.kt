@@ -5,7 +5,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsModel
 import com.sgut.android.nationalfootballleague.domain.repositories.EspnRepository
+import com.sgut.android.nationalfootballleague.domain.repositories.GameDetailsRepository
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GameDetailViewModel @Inject constructor(
     private val espnRepository: EspnRepository,
+    private val gameDetailsRepository: GameDetailsRepository
 ): ViewModel() {
 
     private val _gameDetailUiState = MutableStateFlow(GameDetailsScreenUiState())
@@ -36,14 +39,21 @@ class GameDetailViewModel @Inject constructor(
         }
     }
 
-    fun loadGameDetails(sport: String, league: String, event: String) = viewModelScope.launch {
+    fun loadGameDetails(
+        sport: String,
+        league: String,
+        event: String) = viewModelScope.launch {
         try {
+            val newGameDeetUiState = gameDetailsRepository.getGameDetails(sport, league, event)
+
             val result = espnRepository.getGameDetails(sport, league, event)
-            setGameDetailsUiState(result, sport, league, )
-                        Log.i("DEBUGDETAIL vm", result.toString())
-            result.boxscore?.teams?.forEach { i->
+
+            setGameDetailsUiState(result, sport, league, newGameDeetUiState)
+                        Log.i("NEWGAMEDEETUI", newGameDeetUiState.baseballSituation .toString())
+
+            newGameDeetUiState.boxscore?.teams?.forEach { i->
                 _colorsTeamList.add(HexToJetpackColor2.getColor(i.team?.color ?: "Color"))
-                Log.i("DEBUGDETAIL vm", _colorsTeamList.toString())
+//                Log.i("DEBUGDETAIL vm", _colorsTeamList.toString())
             }
             _colorsTeamList.add(Color.Black)
 
@@ -58,12 +68,18 @@ class GameDetailViewModel @Inject constructor(
     }
 
 
-    fun setGameDetailsUiState(gameDetails: GameDetailModel, currentSport: String, currentLeague: String) {
+    fun setGameDetailsUiState(
+        gameDetails: GameDetailModel,
+        currentSport: String,
+        currentLeague: String,
+        curentGameDeetUiState: GameDetailsModel
+    ) {
         _gameDetailUiState.update {
             it.copy(
                 currentLeague  = currentLeague,
                 currentSport = currentSport,
-                currentGameDetails = gameDetails
+                currentGameDetails = gameDetails,
+                currentGameUiState = curentGameDeetUiState
             )
         }
     }
