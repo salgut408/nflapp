@@ -54,6 +54,6 @@ fun InjuriesItem.asDomain(): InjuriesItemModel {
     status = status,
     date = date,
     athlete = athlete.asDomain(),
-    type = type
+    type = type.asDomain()
   )
 }

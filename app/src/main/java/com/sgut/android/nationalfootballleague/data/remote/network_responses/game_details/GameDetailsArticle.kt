@@ -1,31 +1,65 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsArticleModel
 
 
-data class GameDetailsArticle (
+data class GameDetailsArticle(
 
-  @SerializedName("keywords"     ) var keywords     : List<String>     = listOf(),
-  @SerializedName("description"  ) var description  : String?               = null,
-  @SerializedName("source"       ) var source       : String?               = null,
-  @SerializedName("video"        ) var video        : List<Video>      = listOf(),
-  @SerializedName("type"         ) var type         : String?               = null,
-  @SerializedName("nowId"        ) var nowId        : String?               = null,
-  @SerializedName("premium"      ) var premium      : Boolean?              = null,
-  @SerializedName("related"      ) var related      : List<String>     = listOf(),
-  @SerializedName("allowSearch"  ) var allowSearch  : Boolean?              = null,
-  @SerializedName("links"        ) var links        : Links?                = Links(),
-  @SerializedName("id"           ) var id           : Int?                  = null,
-  @SerializedName("categories"   ) var categories   : List<GameDetailsCategories> = listOf(),
-  @SerializedName("headline"     ) var headline     : String?               = null,
-  @SerializedName("gameId"       ) var gameId       : String?               = null,
-  @SerializedName("images"       ) var images       : List<GameDetailsImages>     = listOf(),
-  @SerializedName("linkText"     ) var linkText     : String?               = null,
-  @SerializedName("published"    ) var published    : String?               = null,
-  @SerializedName("guid"         ) var guid         : String?               = null,
-  @SerializedName("lastModified" ) var lastModified : String?               = null,
-  @SerializedName("metrics"      ) var metrics      : List<GameDetailsMetrics>    = listOf(),
-//  @SerializedName("inlines"      ) var inlines      : List<String>     = listOf(),
-  @SerializedName("story"        ) var story        : String?               = null
+  @SerializedName("keywords")
+  val keywords: List<String> = listOf(),
+  @SerializedName("description")
+  val description: String? = null,
+  @SerializedName("source")
+  val source: String? = null,
+  @SerializedName("video")
+  val video: List<Video> = listOf(),
+  @SerializedName("type")
+  val type: String? = null,
+  @SerializedName("nowId")
+  val nowId: String? = null,
+  @SerializedName("premium")
+  val premium: Boolean? = null,
+  @SerializedName("related")
+  val related: List<String> = listOf(),
+  @SerializedName("allowSearch")
+  val allowSearch: Boolean? = null,
+  @SerializedName("links")
+  val links: Links? = Links(),
+  @SerializedName("id")
+  val id: Int? = null,
+  @SerializedName("categories")
+  val categories: List<GameDetailsCategories> = listOf(),
+  @SerializedName("headline")
+  val headline: String? = null,
+  @SerializedName("gameId")
+  val gameId: String? = null,
+  @SerializedName("images")
+  val images: List<GameDetailsImages> = listOf(),
+  @SerializedName("linkText")
+  val linkText: String? = null,
+  @SerializedName("published")
+  val published: String? = null,
+  @SerializedName("guid")
+  val guid: String? = null,
+  @SerializedName("lastModified")
+  val lastModified: String? = null,
+  @SerializedName("metrics")
+  val metrics: List<GameDetailsMetrics> = listOf(),
+  @SerializedName("story")
+  val story: String? = null,
 
-)
+  )
+
+fun GameDetailsArticle.asDomain(): GameDetailsArticleModel {
+  return GameDetailsArticleModel(
+    description = description ?: "",
+    source = source ?: "",
+    headline = headline ?: "",
+    images = images,
+    published = published ?: "",
+    lastModified = lastModified ?: "",
+    story = story ?: ""
+
+  )
+}

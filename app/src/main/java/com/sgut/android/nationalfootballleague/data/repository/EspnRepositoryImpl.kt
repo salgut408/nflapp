@@ -25,11 +25,6 @@ class EspnRepositoryImpl @Inject constructor(
 //        return articleMapper.toDomainList(lists)
 //    }
 
-
-
-
-
-
     override suspend fun getGameDetails(
         sport: String,
         league: String,
@@ -38,7 +33,7 @@ class EspnRepositoryImpl @Inject constructor(
         val response = espnApi.getGameDetails(sport, league, event)
         if (response.isSuccessful) {
             val getGameDetailsResponse = espnApi.getGameDetails(sport, league, event).body()
-            Log.e("game_SITUATIONSHIP", getGameDetailsResponse?.leaders .toString())
+//            Log.e("game_SITUATIONSHIP", getGameDetailsResponse?.leaders .toString())
             return gameDetailsToDomainModelMapper.mapToDomainModel(getGameDetailsResponse!!)
         } else {
             Log.e(javaClass.name, response.errorBody().toString())

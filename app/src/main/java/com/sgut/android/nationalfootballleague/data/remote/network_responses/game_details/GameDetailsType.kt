@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsTypeModel
 
 
 data class GameDetailsType(
@@ -21,9 +22,16 @@ data class GameDetailsType(
   val text: String = "",
   @SerializedName("abbreviation")
   val abbreviation: String = "",
-
-
-
-
-
   )
+
+fun GameDetailsType.asDomain(): GameDetailsTypeModel {
+  return GameDetailsTypeModel(
+    name = name,
+    completed = completed,
+    description = description,
+    gameTimeDetail = gameTimeDetail,
+    shortGameTimeDetail = shortGameTimeDetail,
+    text = text,
+    abbreviation = abbreviation
+  )
+}

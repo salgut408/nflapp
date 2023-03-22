@@ -3,15 +3,22 @@ package com.sgut.android.nationalfootballleague
 import com.google.gson.annotations.SerializedName
 
 
-data class GameDetailsImages (
+data class GameDetailsImages(
 
-  @SerializedName("name"    ) var name    : String? = null,
-  @SerializedName("width"   ) var width   : Int?    = null,
-  @SerializedName("alt"     ) var alt     : String? = null,
-  @SerializedName("caption" ) var caption : String? = null,
-  @SerializedName("url"     ) var url     : String? = null,
-  @SerializedName("height"  ) var height  : Int?    = null,
-  @SerializedName("href"     ) var href     : String? = null,
+    @SerializedName("name")
+    val name: String? = null,
+    @SerializedName("width")
+    val width: Int? = null,
+    @SerializedName("alt")
+    val alt: String? = null,
+    @SerializedName("caption")
+    val caption: String? = null,
+    @SerializedName("url")
+    val url: String? = null,
+    @SerializedName("height")
+    val height: Int? = null,
+    @SerializedName("href")
+    val href: String? = null,
 
 
-)
+    )

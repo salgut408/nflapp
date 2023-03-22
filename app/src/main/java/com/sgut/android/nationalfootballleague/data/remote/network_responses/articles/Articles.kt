@@ -31,7 +31,7 @@ data class Articles(
 
 fun Articles.asDomain(): ArticleDomianModel {
     return ArticleDomianModel(
-      images = images.map{it.asDomain()},
+      images = images.map{ it.asDomain() },
       description = description,
       published = published,
       headline = headline,

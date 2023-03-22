@@ -1,10 +1,7 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Drives
-import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Rosters
-import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Situation
-import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.*
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsModel
 
 
@@ -74,14 +71,14 @@ fun GameDetailResponse.asDomain(): GameDetailsModel {
         odds = odds.map { it.asDomain() },
         header = header?.asDomain(),
         news = news?.asDomain(),
-        singleGameArticle = singleGameArticle,
-        ticketsInfo = ticketsInfo,
+        singleGameArticle = singleGameArticle?.asDomain(),
+        ticketsInfo = ticketsInfo?.asDomain(),
         standings = standings,
-        drives = drives,
-        winprobability = winprobability,
-        scoringPlays = scoringPlays,
-        videos = videos,
-        plays = plays
+        drives = drives?.asDomain(),
+        winprobability = winprobability.map { it.asDomain() },
+        scoringPlays = scoringPlays.map { it.asDomain() },
+        videos = videos.map { it.asDomain() },
+        plays = plays.map { it.asDomain() }
     )
 }
 

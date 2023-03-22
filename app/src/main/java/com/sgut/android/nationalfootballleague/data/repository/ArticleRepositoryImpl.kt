@@ -14,9 +14,12 @@ class ArticleRepositoryImpl @Inject constructor(
     override suspend fun getArticles(sport: String, league: String): List<ArticleDomianModel> {
         val articleResponse = espnApi.getArticles(sport, league)
         if (articleResponse.isSuccessful) {
-            return articleResponse.body()?.articles?.map { it.asDomain() } ?: listOf()
+            return articleResponse.body()?.asDomain()?.articles ?: listOf()
+//            return articleResponse.body()?.articles?.map { it.asDomain() } ?: listOf()
         }
-        return articleResponse.body()?.articles?.map { it.asDomain() } ?: listOf()
+//        return articleResponse.body()?.articles?.map { it.asDomain() } ?: listOf()
+        return articleResponse.body()?.asDomain()?.articles ?: listOf()
+
     }
 
     override suspend fun getGameArticle(sport: String, league: String): List<ArticleDomianModel> {

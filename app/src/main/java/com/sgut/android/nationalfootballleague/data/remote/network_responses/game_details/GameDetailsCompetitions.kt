@@ -51,7 +51,7 @@ fun GameDetailsCompetitions.asDomain(): GameDetailsCompetitionModel {
         id = id ?: "",
         date = date ?: "",
         competitors = competitors.map { it.asDomain() }, // map
-        status = status,
+        status = status?.asDomain(),
         shotChartAvailable = shotChartAvailable ?: false,
         timeoutsAvailable = timeoutsAvailable ?: false,
         possessionArrowAvailable = possessionArrowAvailable ?: false

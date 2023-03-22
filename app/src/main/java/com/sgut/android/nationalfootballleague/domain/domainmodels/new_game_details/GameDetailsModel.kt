@@ -1,15 +1,14 @@
 package com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details
 
-import com.sgut.android.nationalfootballleague.*
-import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Drives
+import com.sgut.android.nationalfootballleague.GameDetailsBroadcasts
+import com.sgut.android.nationalfootballleague.GameDetailsStandings
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Situation
-import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
 
 
 //    TODO - Make Domain Objcts
 
 data class GameDetailsModel(
-    val situation: Situation? = Situation(),
+    val baseballSituation: Situation? = Situation(),
     val notes: List<String> = listOf(),
     val boxscore: BoxScoreModel? = BoxScoreModel(),
     val format: GameDetailsFormatModel? = GameDetailsFormatModel(),
@@ -22,14 +21,14 @@ data class GameDetailsModel(
     val pickcenter: List<PickcenterModel> = listOf(),
     val againstTheSpread: List<AgainstTheSpreadModel> = listOf(),
     val odds: List<OddsModel> = listOf(),
-    val header: HeaderModel? = HeaderModel(), // done - > further
+    val header: HeaderModel? = HeaderModel(),
     val news: NewsModel? = NewsModel(),
-    val singleGameArticle: GameDetailsArticle? = GameDetailsArticle(),  // needs mod
-    val ticketsInfo: GameDetailsTicketsInfo? = GameDetailsTicketsInfo(), // needs mod
-    val standings: GameDetailsStandings? = GameDetailsStandings(), // needs mod
-    val drives: Drives? = Drives(), // needs mod
-    val winprobability: List<Winprobability> = listOf(), // needs mod
-    val scoringPlays: List<ScoringPlays> = listOf(), // needs mod
-    val videos: List<Videos> = listOf(),// needs mod
-    val plays: List<NetworkPlays> = listOf(), // needs mod
+    val singleGameArticle: GameDetailsArticleModel? = GameDetailsArticleModel(),
+    val ticketsInfo: TicketsInfoModel? = TicketsInfoModel(), //
+    val standings: GameDetailsStandings? = GameDetailsStandings(), // needs mod ? ?
+    val drives: DrivesModel? = DrivesModel(),
+    val winprobability: List<WinprobabilityModel> = listOf(),
+    val scoringPlays: List<ScoringPlayModel> = listOf(),
+    val videos: List<VideoModel> = listOf(),
+    val plays: List<BasketballPlayModel> = listOf(), // needs mod
 )

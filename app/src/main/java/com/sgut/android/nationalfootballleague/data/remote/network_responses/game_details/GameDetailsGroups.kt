@@ -3,10 +3,13 @@ package com.sgut.android.nationalfootballleague
 import com.google.gson.annotations.SerializedName
 
 
-data class GameDetailsGroups (
+data class GameDetailsGroups(
 
-  @SerializedName("standings" ) var standings : GameDetailsStandings? = GameDetailsStandings(),
-  @SerializedName("header"    ) var header    : String?    = null,
-  @SerializedName("href"      ) var href      : String?    = null
+  @SerializedName("standings")
+  val standings: GameDetailsStandings? = GameDetailsStandings(),
+  @SerializedName("header")
+  val header: String? = null,
+  @SerializedName("href")
+  val href: String? = null,
 
-)
+  )

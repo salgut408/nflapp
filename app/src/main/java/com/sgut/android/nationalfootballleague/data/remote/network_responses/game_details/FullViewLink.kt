@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class FullViewLink (
 
-  @SerializedName("text" ) var text : String? = null,
-  @SerializedName("href" ) var href : String? = null
+  @SerializedName("text" ) val text : String? = null,
+  @SerializedName("href" ) val href : String? = null
 
 )

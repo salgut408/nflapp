@@ -2,23 +2,52 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.ga
 
 import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.VideoModel
 
 
-data class Videos (
+data class Videos(
 
-    @SerializedName("source"              ) var source              : String?             = null,
-    @SerializedName("id"                  ) var id                  : Int?                = null,
-    @SerializedName("headline"            ) var headline            : String?             = null,
-    @SerializedName("description"         ) var description         : String?             = null,
-    @SerializedName("ad"                  ) var ad                  : Ad?                 = Ad(),
-    @SerializedName("tracking"            ) var tracking            : Tracking?           = Tracking(),
-    @SerializedName("cerebroId"           ) var cerebroId           : String?             = null,
-    @SerializedName("lastModified"        ) var lastModified        : String?             = null,
-    @SerializedName("originalPublishDate" ) var originalPublishDate : String?             = null,
-    @SerializedName("timeRestrictions"    ) var timeRestrictions    : TimeRestrictions?   = TimeRestrictions(),
-    @SerializedName("deviceRestrictions"  ) var deviceRestrictions  : DeviceRestrictions? = DeviceRestrictions(),
-    @SerializedName("duration"            ) var duration            : Int?                = null,
-    @SerializedName("thumbnail"           ) var thumbnail           : String?             = null,
-    @SerializedName("links"               ) var links               : GameDetailsLinks?              = GameDetailsLinks()
+    @SerializedName("source")
+    val source: String? = null,
+    @SerializedName("id")
+    val id: Int? = null,
+    @SerializedName("headline")
+    val headline: String? = null,
+    @SerializedName("description")
+    val description: String? = null,
+    @SerializedName("ad")
+    val ad: Ad? = Ad(),
+    @SerializedName("tracking")
+    val tracking: Tracking? = Tracking(),
+    @SerializedName("cerebroId")
+    val cerebroId: String? = null,
+    @SerializedName("lastModified")
+    val lastModified: String? = null,
+    @SerializedName("originalPublishDate")
+    val originalPublishDate: String? = null,
+    @SerializedName("timeRestrictions")
+    val timeRestrictions: TimeRestrictions? = TimeRestrictions(),
+    @SerializedName("deviceRestrictions")
+    val deviceRestrictions: DeviceRestrictions? = DeviceRestrictions(),
+    @SerializedName("duration")
+    val duration: Int? = null,
+    @SerializedName("thumbnail")
+    val thumbnail: String? = null,
+    @SerializedName("links")
+    val links: GameDetailsLinks? = GameDetailsLinks(),
 
-)
+    )
+
+fun Videos.asDomain(): VideoModel {
+    return VideoModel(
+        source = source ?: "",
+        id = id ?: 0,
+        headline = headline ?: "",
+        description = description ?: "",
+        lastModified = lastModified ?: "",
+        originalPublishDate = originalPublishDate ?: "",
+        duration = duration ?: 0,
+        thumbnail = thumbnail ?: "",
+        links = links ?: GameDetailsLinks()
+    )
+}

@@ -17,8 +17,8 @@ class TeamDetailsRepositoryImpl @Inject constructor(
         league: String,
         team: String,
     ): FullTeamDetailWithRosterModel {
-//        TODO fix certain teams being null @ request
+//        TODO fix certain teams being null @ request for team details screen
         val result = espnApi.getSpecificTeam(sport, league, team).body()?.fullTeam
-        return result?.asDomain() ?: FullTeamDetailWithRosterModel()
+        return result?.asDomain() ?:  FullTeamDetailWithRosterModel()
     }
 }
