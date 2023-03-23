@@ -1,7 +1,10 @@
 package com.sgut.android.nationalfootballleague.ui.screens.teamdetails
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -11,10 +14,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.RecordModel
 
 //TODO only pass what is needed
@@ -83,68 +84,4 @@ fun TeamRecord(
             }
         }
     }
-
-
-
-
-
 }
-
-
-@Composable
-fun TeamRecord2(
-    team: TeamDetailWithRosterModel,
-    modifier: Modifier,
-) {
-    val recordItems = team.record?.recordItems
-    Column() {
-        recordItems?.map { record ->
-            Text(text = record.type ?: "")
-            Row() {
-
-                Text(text = record.summary ?: "")
-                Spacer(modifier = modifier.width(20.dp))
-                Column() {
-                    recordItems.map { items ->
-                        items.stats.map { stats ->
-                            Text(text = stats?.name ?: "")
-                            Text(text = stats?.value.toString())
-
-
-                        }
-                    }
-                }
-
-//            records.items.map{ stat ->
-//                stat?.stats?.map{ teamStat ->
-//                    Text(text = teamStat?.name ?: "")
-//                    Text(text = teamStat?.value.toString())
-//
-//
-//                }
-//            }
-            }
-
-        }
-
-
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

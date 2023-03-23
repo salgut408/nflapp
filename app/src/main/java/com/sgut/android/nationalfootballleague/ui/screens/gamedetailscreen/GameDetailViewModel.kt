@@ -49,7 +49,7 @@ class GameDetailViewModel @Inject constructor(
             val result = espnRepository.getGameDetails(sport, league, event)
 
             setGameDetailsUiState(result, sport, league, newGameDeetUiState)
-                        Log.i("NEWGAMEDEETUI", newGameDeetUiState.baseballSituation .toString())
+                        Log.i("NEWGAMEDEETUI", newGameDeetUiState.rosters .toString())
 
             newGameDeetUiState.boxscore?.teams?.forEach { i->
                 _colorsTeamList.add(HexToJetpackColor2.getColor(i.team?.color ?: "Color"))

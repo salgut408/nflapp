@@ -15,9 +15,7 @@ class ArticleRepositoryImpl @Inject constructor(
         val articleResponse = espnApi.getArticles(sport, league)
         if (articleResponse.isSuccessful) {
             return articleResponse.body()?.asDomain()?.articles ?: listOf()
-//            return articleResponse.body()?.articles?.map { it.asDomain() } ?: listOf()
         }
-//        return articleResponse.body()?.articles?.map { it.asDomain() } ?: listOf()
         return articleResponse.body()?.asDomain()?.articles ?: listOf()
 
     }

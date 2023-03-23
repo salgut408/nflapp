@@ -40,9 +40,13 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Rosters
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
 import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.PickcenterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.SituationModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.TicketModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.TicketsInfoModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DetailVenueCardImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.PressIconButton
@@ -66,6 +70,9 @@ fun GameDetailsScreen(
     gameDetailViewModel: GameDetailViewModel = hiltViewModel(),
     ) {
 
+//    TODO gameDetailUiState.currentGameUiState IS THE NEW UI STATE TO USE
+//    TODO Make a different screen / widgets for each diff sport
+
     gameDetailViewModel.loadGameDetails(sport, league, event)
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
@@ -83,24 +90,30 @@ fun GameDetailsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
+                
 
-                Text(
-                    text = gameDetailUiState.currentGameUiState?.header?.competitions?.get(0)?.status?.type?.shortGameTimeDetail .toString(),
-                    style = MaterialTheme.typography.headlineLarge
-
-                )
+                gameDetailUiState.currentGameUiState?.pickcenter?.map { 
+                    Text(text = it.provider.name)
+                    Text(text = it.overUnder.toString())
+                }
+                
+                
+//                BaseBallRosterLineUp(rosters = gameDetailUiState.currentGameUiState?.rosters ?: listOf())
 
                 HeaderStatusSlot(gameDetailModel = gameDetailUiState.currentGameDetails
                     ?: GameDetailModel())
 
+
+
 //                TODO issues with blank current plays
-//                Text(
-//                    text = gameDetailUiState.currentGameDetails?.plays?.getOrNull(0)?.text ?: "",
-//                    style = MaterialTheme.typography.headlineLarge
-//                )
+
+                Text(
+                    text = gameDetailUiState.currentGameDetails?.plays?.getOrNull(0)?.text ?: "",
+                    style = MaterialTheme.typography.headlineLarge
+                )
 
 //                issues w pickcenter
-//                PickCenter(pickCenterInfo = ((gameDetailUiState.currentGameDetails?.pickcenter ?: Pickcenter()) as Pickcenter))
+//                PickCenter(pickCenterInfo = gameDetailUiState.currentGameUiState.pickcenter)
 
                 Spacer(modifier = modifier.height(8.dp))
 
@@ -116,9 +129,9 @@ fun GameDetailsScreen(
                             ?: GameDetailModel(),
                     )
                     "baseball" -> BaseballSituation(
-
                         gameDetailSituation = gameDetailUiState.currentGameUiState?.baseballSituation ?: SituationModel()
                     )
+
                 }
 
 
@@ -146,8 +159,8 @@ fun GameDetailsScreen(
                 )
 
                 FindTickets(
-                    ticketsInfo = gameDetailUiState.currentGameDetails?.ticketsInfo
-                        ?: GameDetailsTicketsInfo()
+                    ticketsInfo = gameDetailUiState.currentGameUiState?.ticketsInfo
+                        ?: TicketsInfoModel()
                 )
 
                 InjuriesReportCard(gameDetailModel = gameDetailUiState.currentGameDetails
@@ -936,6 +949,14 @@ fun AthleteNameAndPosition(athlete: GameDetailsAthlete) {
 }
 
 @Composable
+fun BaseBallRosterLineUp(rosters: List<Rosters>) {
+    Card() {
+//        Text(text = rosters.map { it.team?.abbreviation. })
+
+    }
+}
+
+@Composable
 fun BaseballSituation(gameDetailSituation: SituationModel) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column() {
@@ -1275,7 +1296,8 @@ fun SeasonLeaders() {
 }
 
 @Composable
-fun PickCenter(pickCenterInfo: Pickcenter) {
+fun PickCenter(
+    pickCenterInfo: PickcenterModel) {
     Card() {
         Text(text = pickCenterInfo.provider?.name ?: "")
     }
@@ -1358,10 +1380,9 @@ fun AddressComp(gameDetailModel: GameDetailModel) {
         Text(text = gameDetailModel.gameInfo?.venue?.address?.city ?: "")
         Text(text = ", ")
         Text(text = gameDetailModel.gameInfo?.venue?.address?.state ?: "")
-
-
     }
 }
+
 
 
 @Composable
@@ -1382,7 +1403,7 @@ fun getTeamsColorsList(gameDetailModel: GameDetailModel): List<Color?> {
 
 
 @Composable
-fun FindTickets(ticketsInfo: GameDetailsTicketsInfo) {
+fun FindTickets(ticketsInfo: TicketsInfoModel) {
     val team1 = ticketsInfo.seatSituation?.opponentTeamName
     val team2 = ticketsInfo.seatSituation?.currentTeamName
     val venueName = ticketsInfo.seatSituation?.venueName
@@ -1464,7 +1485,7 @@ fun FindTickets(ticketsInfo: GameDetailsTicketsInfo) {
 }
 
 @Composable
-fun DropDownFun(tickets: List<GameDetailsTickets>) {
+fun DropDownFun(tickets: List<TicketModel>) {
     val listItems = tickets
     val disabledItem = 1
     val toastConext = LocalContext.current.applicationContext

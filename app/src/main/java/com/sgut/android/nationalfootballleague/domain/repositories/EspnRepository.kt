@@ -1,7 +1,7 @@
 package com.sgut.android.nationalfootballleague.domain.repositories
 
 import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamScheduleModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.TeamScheduleModel
 
 
 // TODO move / break out to different repositories based on model

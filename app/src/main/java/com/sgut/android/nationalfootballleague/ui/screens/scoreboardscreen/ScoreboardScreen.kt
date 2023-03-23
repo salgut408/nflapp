@@ -26,8 +26,6 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.*
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FIRST_TEAM
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.SECOND_TEAM
 import java.util.*
 
 
@@ -317,13 +315,15 @@ fun TeamComponent2(
     league: String,
 
     ) {
-    val team1 = compScoreboard.competitors[FIRST_TEAM].team
-    val team2 = compScoreboard.competitors[SECOND_TEAM].team
+    val team1 = compScoreboard.getHomeTeam().team
+    val team2 = compScoreboard.getAwayTeam().team
     val color1 = HexToJetpackColor2.getColor(team1.color)
     val color2 = HexToJetpackColor2.getColor(team2.color)
-    val team1Score = compScoreboard.competitors[FIRST_TEAM].score
-    val team2Score = compScoreboard.competitors[SECOND_TEAM].score
+    val team1Score = compScoreboard.getHomeTeam().score
+    val team2Score = compScoreboard.getAwayTeam().score
     val whiteColor = Color.White
+
+
 
     val dateString = compScoreboard.date.toDate()?.formatTo("MMM-dd")
     val date = compScoreboard.date.toDate()?.formatTo("K:mm aa")

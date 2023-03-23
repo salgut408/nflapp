@@ -14,4 +14,45 @@ data class ScoreboardCompetitionModel(
     val details: List<ScoreboardDetailsModel> = listOf(),
     val headlines: List<ScoreboardHeadlineModel> = listOf(), // move to own obj
     val venue: ScoreboardVenueModel = ScoreboardVenueModel()
+    ) {
+    //return home Team
+
+    fun getHomeTeam(): ScoreboardCompetitorsModel {
+        return competitors.first {it.homeAway == "home"}
+    }
+
+    fun getAwayTeam(): ScoreboardCompetitorsModel {
+        return competitors.first {it.homeAway == "away"}
+    }
+//    returns team tht should be shown first
+    fun getFirstTeam() = getAwayTeam()
+
+    fun getSecondTeam() = getHomeTeam()
+
+//    TODO
+
+
+    fun getPairedStatistics(): List<PairedStatistic> {
+        return getFirstTeam().statistics.associateBy { it.name }.orEmpty().let { firstStatisticMap ->
+            getSecondTeam().statistics.orEmpty()
+                .filter { firstStatisticMap.containsKey(it.name) }
+                .map {
+                    PairedStatistic(
+                        it.abbreviation,
+                        firstStatisticMap.getValue(it.name).displayValue,
+                        it.displayValue
+                    )
+                }
+        }
+    }
+
+    data class PairedStatistic(
+        val name: String,
+        val firstDisplayValue: String,
+        val secondDisplayValue: String
     )
+
+
+
+
+}

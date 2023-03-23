@@ -23,7 +23,6 @@ class GameDetailsRepositoryImpl @Inject constructor(
             return gameResponse?.asDomain() !!
         } else {
             Log.e(javaClass.name, response.errorBody().toString())
-
         }
         val result = espnApi.getGameDetails(sport, league, event).body()
         return result?.asDomain() !!
