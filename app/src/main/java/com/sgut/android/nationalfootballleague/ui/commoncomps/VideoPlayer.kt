@@ -13,11 +13,11 @@ import androidx.lifecycle.*
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
-import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Videos
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.VideoModel
 
 @Composable
 fun VideoPlayer(
-    videos: Videos
+    videos: VideoModel
 ) {
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
@@ -28,7 +28,7 @@ fun VideoPlayer(
 
     val player = remember {
         val player = ExoPlayer.Builder(context).build()
-        val mediaItem = MediaItem.fromUri(videos.links?.source?.mezzanine?.href?: "")
+        val mediaItem = MediaItem.fromUri(videos.links.source?.mezzanine?.href?: "")
         player.setMediaItem(mediaItem)
         player.playWhenReady = autoPlay
         player.seekTo(window, position)

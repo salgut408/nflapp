@@ -63,6 +63,7 @@ fun ScoreboardScreen(
         Text(
             text = newUiState.scoreboardModelUiState.day ?: ""
         )
+        
 
 
         Row(
@@ -118,6 +119,8 @@ fun MatchPreview() {
 }
 
 
+
+
 @Composable
 fun TeamsMatchUpListFromEvents(
     events: List<ScoreboardEventModel>,
@@ -135,6 +138,7 @@ fun TeamsMatchUpListFromEvents(
         ) {
 
             EventName(events)
+            
 
             events.competitions.map {
 //                TODO new card
@@ -190,6 +194,7 @@ fun EventName(event: ScoreboardEventModel) {
     Text(event.shortName)
 }
 
+
 @Composable
 fun Competitor(competitor: ScoreboardCompetitorsModel) {
     Row() {
@@ -225,14 +230,7 @@ fun Competition(competition: ScoreboardCompetitionModel) {
     }
 }
 
-@Composable
-fun Event(event: ScoreboardEventModel) {
-    Text(text = event.name)
-    Text(text = event.status.type?.state ?: "noState")
-    event.competitions.map { competition ->
-        Competition(competition = competition)
-    }
-}
+
 
 @Composable
 fun HeadLine(headline: ScoreboardHeadlineModel) {

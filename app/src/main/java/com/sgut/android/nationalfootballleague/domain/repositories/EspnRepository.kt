@@ -11,11 +11,6 @@ interface EspnRepository {
 
     suspend fun saveArticle(article: GameDetailModel)
 
-    suspend fun getGameDetails(
-        sport: String,
-        league: String,
-        event: String
-    ): GameDetailModel
 
 
     suspend fun getTeamSchedule(

@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
-import com.sgut.android.nationalfootballleague.GameDetailsVenue
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsVenueModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardTeamModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.VenueModel
@@ -116,7 +116,7 @@ fun VenueCardImageLoader(venue: VenueModel) {
 
 
 @Composable
-fun DetailVenueCardImageLoader(venue: GameDetailsVenue) {
+fun DetailVenueCardImageLoader(venue: GameDetailsVenueModel) {
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
             .data(venue.images.getOrNull(1)?.href ?: venue.images.getOrNull(0)?.href)

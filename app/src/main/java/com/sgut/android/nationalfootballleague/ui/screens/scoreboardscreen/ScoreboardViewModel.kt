@@ -31,6 +31,9 @@ class ScoreboardViewModel @Inject constructor(
 
     }
 
+//    fun getCompetitionHomeTeam(): ScoreboardCompetitorsModel {
+//        return scoreboardUiState.value.scoreboardModelUiState.events.
+//    }
 
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
         try {

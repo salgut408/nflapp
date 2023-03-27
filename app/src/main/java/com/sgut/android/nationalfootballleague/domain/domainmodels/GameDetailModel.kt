@@ -6,7 +6,7 @@ import com.sgut.android.nationalfootballleague.data.remote.network_responses.gam
 
 data class GameDetailModel(
 
-    val rosters: ArrayList<Rosters> = arrayListOf(),
+    val rosters: List<Rosters> = listOf(),
     val situation: Situation? = Situation(),
     val notes: List<String> = listOf(),
     val boxscore: GameDetailsBoxscore? = GameDetailsBoxscore(),

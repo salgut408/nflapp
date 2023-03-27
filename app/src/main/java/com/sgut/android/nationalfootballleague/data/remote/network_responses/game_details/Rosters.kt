@@ -4,9 +4,10 @@ import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.Logos
 
 data class Rosters(
-    @SerializedName("homeAway") val homeAway: String? = null,
-    @SerializedName("team") val team: RosterTeam? = RosterTeam(),
-//    @SerializedName("roster") val roster: List<Roster> = listOf(),
+    @SerializedName("homeAway" ) val homeAway : String?           = null,
+    @SerializedName("winner"   ) val winner   : Boolean?          = null,
+//    @SerializedName("team"     ) val team     : Team?             = Team(),
+//    @SerializedName("roster"   ) val roster   : ArrayList<Roster> = arrayListOf()
 )
 
 //data class Roster(

@@ -2,5 +2,6 @@ package com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_det
 
 data class GameInfoModel(
     val venue   : GameDetailsVenueModel?   = GameDetailsVenueModel(),
-    val weather : WeatherModel? = WeatherModel()
+    val weather : WeatherModel? = WeatherModel(),
+
 )

@@ -4,6 +4,7 @@ import com.sgut.android.nationalfootballleague.asDomain
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.TeamScheduleModel
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamDetailsRepository
 import javax.inject.Inject
 
@@ -17,8 +18,19 @@ class TeamDetailsRepositoryImpl @Inject constructor(
         league: String,
         team: String,
     ): FullTeamDetailWithRosterModel {
-//        TODO fix certain teams being null @ request for team details screen
+//      TODO fix certain teams being null @ request for team details screen
+
         val result = espnApi.getSpecificTeam(sport, league, team).body()?.fullTeam
         return result?.asDomain() ?:  FullTeamDetailWithRosterModel()
     }
+
+    override suspend fun getTeamSchedule(
+        sport: String,
+        league: String,
+        teamId: Int,
+    ): TeamScheduleModel {
+        TODO("Not yet implemented")
+    }
+
+
 }
