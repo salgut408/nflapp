@@ -1605,9 +1605,13 @@ fun LastFiveGameRow(lastEvents: GameDetailsEventModel) {
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = lastEvents.atVs, fontSize = 16.sp)
-            GenericImageLoader(obj = lastEvents.opponentLogo, modifier = Modifier.size(30.dp))
-            Text(text = lastEvents.opponent.abbreviation,
+            Text(
+                text = lastEvents.atVs,
+                fontSize = 16.sp
+            )
+            GenericImageLoader(obj = lastEvents.opponent.logo, modifier = Modifier.size(30.dp))
+            Text(
+                text = lastEvents.opponent.abbreviation,
                 fontSize = 12.sp,
                 textAlign = TextAlign.Start)
         }

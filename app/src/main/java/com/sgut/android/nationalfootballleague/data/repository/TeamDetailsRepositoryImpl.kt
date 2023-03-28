@@ -1,10 +1,12 @@
 package com.sgut.android.nationalfootballleague.data.repository
 
+import android.util.Log
 import com.sgut.android.nationalfootballleague.asDomain
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.team_schedule.asDomain
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.TeamScheduleModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.ScheduleDomainModel
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamDetailsRepository
 import javax.inject.Inject
 
@@ -27,9 +29,22 @@ class TeamDetailsRepositoryImpl @Inject constructor(
     override suspend fun getTeamSchedule(
         sport: String,
         league: String,
-        teamId: Int,
-    ): TeamScheduleModel {
-        TODO("Not yet implemented")
+        teamId: String,
+    ): ScheduleDomainModel {
+        try {
+            val result = espnApi.getTeamSchedule(sport, league, teamId).body()
+            Log.e("SCHEDULE_REPOS", result?.team.toString())
+
+            return result?.asDomain() ?: ScheduleDomainModel()
+
+        } catch (e: Exception) {
+            Log.e("SCHEDULE ERR", e.toString())
+        }
+
+        val result = espnApi.getTeamSchedule(sport, league, teamId).body()
+//        Log.e("SCHEDULE_REPOS", result.toString())
+//
+        return result?.asDomain() ?: ScheduleDomainModel()
     }
 
 

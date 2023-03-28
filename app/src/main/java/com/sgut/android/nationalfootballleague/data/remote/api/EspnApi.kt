@@ -1,7 +1,7 @@
 package com.sgut.android.nationalfootballleague.data.remote.api
 
 import com.sgut.android.nationalfootballleague.*
-import com.sgut.android.nationalfootballleague.data.remote.network_responses.team_schedule.TeamScheduleNetworkResponse
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.team_schedule.ScheduleResponseNetwork
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -91,8 +91,12 @@ interface EspnApi {
         @Path("league")
         league: String? = null,
         @Path("teamId")
-        teamId: Int? = null,
-    ): Response<TeamScheduleNetworkResponse>
+        teamId: String? = null,
+    ): Response<ScheduleResponseNetwork>
+
+
+
+    //    https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams/ari/schedule
 
 
     // TODO implement racing API Endpoint F1

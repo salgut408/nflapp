@@ -3,6 +3,7 @@ package com.sgut.android.nationalfootballleague.ui.screens.teamdetails
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.AthletesRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.NextEventModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.ScheduleDomainModel
 
 data class TeamDetailsScreenUiState(
     var currentSport: String = "",
@@ -10,4 +11,5 @@ data class TeamDetailsScreenUiState(
     val currentTeamDetails: FullTeamDetailWithRosterModel = FullTeamDetailWithRosterModel(),
     val atheletes: List<AthletesRosterModel> = listOf(),
     val nextEvents: List<NextEventModel> = listOf(),
+    val schedule: ScheduleDomainModel? = ScheduleDomainModel()
     )

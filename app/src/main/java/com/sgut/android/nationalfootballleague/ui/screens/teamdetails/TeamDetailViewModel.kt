@@ -21,14 +21,17 @@ class TeamDetailViewModel @Inject constructor(
     val  teamDetailUiState: StateFlow<TeamDetailsScreenUiState> = _teamDetailUiState
 
 
-    // init{}
+     init{}
 
     // able to just pass TeamModel ? or team id with room?
     fun getFullTeamDetails(teamAbrv: String, sport: String, league: String) = viewModelScope.launch {
-
             val teamDetails = teamDetailsRepository.getSpecificTeam(sport, league, teamAbrv)
-            setTeamDetailUiState(teamDetails, sport, league)
+            setTeamDetailUiState(teamDetails, sport, league, )
 
+    }
+
+    fun getSchedule(team: String, sport: String, league: String ) = viewModelScope.launch {
+        val teamSched = teamDetailsRepository.getTeamSchedule(sport, team, league)
     }
 
 
@@ -43,7 +46,7 @@ class TeamDetailViewModel @Inject constructor(
                 currentLeague = league,
                 currentTeamDetails = team,
                 atheletes = team.athletes,
-                nextEvents = team.nextEvent
+                nextEvents = team.nextEvent,
             )
         }
     }

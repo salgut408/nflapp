@@ -1,7 +1,7 @@
 package com.sgut.android.nationalfootballleague.domain.repositories
 
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.TeamScheduleModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.ScheduleDomainModel
 
 interface TeamDetailsRepository {
 
@@ -14,7 +14,7 @@ interface TeamDetailsRepository {
     suspend fun getTeamSchedule(
         sport: String,
         league: String,
-        teamId: Int
-    ): TeamScheduleModel
+        teamId: String
+    ): ScheduleDomainModel
 
 }
