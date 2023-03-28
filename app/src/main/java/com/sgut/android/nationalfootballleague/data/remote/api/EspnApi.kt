@@ -83,7 +83,6 @@ interface EspnApi {
         @Query("dates") date: String
     ): Response<NetworkScoreboardResponse>
 
-// TODO implement team Schedule
     @GET("site/v2/sports/{sport}/{league}/teams/{teamId}/schedule")
     suspend fun getTeamSchedule(
         @Path("sport")
@@ -95,6 +94,9 @@ interface EspnApi {
     ): Response<ScheduleResponseNetwork>
 
 
+
+//    TODO get team stats
+//    https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/ari/statistics
 
     //    https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams/ari/schedule
 

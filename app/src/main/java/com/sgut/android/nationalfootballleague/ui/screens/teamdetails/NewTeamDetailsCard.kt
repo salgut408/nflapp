@@ -25,7 +25,6 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_te
 import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.ScheduleDomainModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GeneralImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.HeadingSection
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportDivider
 import kotlin.math.max
 import kotlin.math.min
 
@@ -94,6 +93,7 @@ fun Title(
         modifier = Modifier
             .heightIn(min = TitleHeight)
             .statusBarsPadding()
+            .fillMaxWidth()
             .offset {
                 val scroll = scrollProvider()
                 val offset = (maxOffset - scroll).coerceAtLeast(minOffset)
@@ -102,28 +102,18 @@ fun Title(
             .background(altcolor.copy(alpha = 0.97f))
     ) {
         Text(
-            text = team.shortDisplayName,
+            text = team.displayName,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Justify,
             style = MaterialTheme.typography.displaySmall,
             color = color
         )
         Text(
-            text = team.standingSummary,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Justify,
-            style = MaterialTheme.typography.displaySmall,
-            color = color
-        )
-        Text(
-            text = team.abbreviation,
+            text = team.nickname,
             style = MaterialTheme.typography.displaySmall,
             color = color,
             textAlign = TextAlign.Left,
         )
-        SportDivider()
-
-
     }
 
 

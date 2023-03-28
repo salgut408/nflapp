@@ -20,6 +20,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.RecordModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.*
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
+import com.sgut.android.nationalfootballleague.utils.formatTo
+import com.sgut.android.nationalfootballleague.utils.toDate
 
 //TODO only pass what is needed
 
@@ -82,7 +84,11 @@ fun PastGames(schedule: ScheduleDomainModel) {
 @Composable
 fun PastEventCard(event: ScheduleEventModel) {
     Card() {
-        Text(text = event.name)
+        Text(
+            text = event.shortName,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
         event.competitions.map { Competition(competitionModel = it) }
 
     }
@@ -110,8 +116,14 @@ fun Status(status: ScheduleStatusModel) {
 @Composable
 fun Competition(competitionModel: ScheduleCompetitionModel) {
     Column() {
-        Text(text = competitionModel.date)
-        Status(status = competitionModel.status)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Text(text = competitionModel.date.toDate()?.formatTo("MMM/dd") ?: "")
+            Spacer(modifier = Modifier.width(16.dp))
+            Status(status = competitionModel.status)
+        }
         competitionModel.status.featuredAthletes?.map { FeaturedAthelete(athelete = it) }
     }
 }
