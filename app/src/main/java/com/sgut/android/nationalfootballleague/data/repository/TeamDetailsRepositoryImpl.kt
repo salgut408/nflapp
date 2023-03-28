@@ -32,19 +32,22 @@ class TeamDetailsRepositoryImpl @Inject constructor(
         teamId: String,
     ): ScheduleDomainModel {
         try {
-            val result = espnApi.getTeamSchedule(sport, league, teamId).body()
-            Log.e("SCHEDULE_REPOS", result?.team.toString())
 
-            return result?.asDomain() ?: ScheduleDomainModel()
+
+            val result = espnApi.getTeamSchedule(sport, league, teamId)
+            if (result.isSuccessful) {
+                return result.body()?.asDomain() ?: ScheduleDomainModel()
+
+            }
 
         } catch (e: Exception) {
             Log.e("SCHEDULE ERR", e.toString())
         }
 
-        val result = espnApi.getTeamSchedule(sport, league, teamId).body()
+        val result = espnApi.getTeamSchedule(sport, league, teamId)
 //        Log.e("SCHEDULE_REPOS", result.toString())
 //
-        return result?.asDomain() ?: ScheduleDomainModel()
+        return result.body()?.asDomain() ?: ScheduleDomainModel()
     }
 
 

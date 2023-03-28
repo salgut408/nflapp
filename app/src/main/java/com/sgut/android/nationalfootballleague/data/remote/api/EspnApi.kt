@@ -84,7 +84,7 @@ interface EspnApi {
     ): Response<NetworkScoreboardResponse>
 
 // TODO implement team Schedule
-    @GET("site/v2/sports/{sport}/{league}/teams/{teamId}schedule")
+    @GET("site/v2/sports/{sport}/{league}/teams/{teamId}/schedule")
     suspend fun getTeamSchedule(
         @Path("sport")
         sport: String? = null,

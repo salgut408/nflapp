@@ -19,7 +19,7 @@ data class ScheduleCompetitionNetwork(
     val id: String = "",
     @SerializedName("neutralSite")
     val neutralSite: Boolean = false,
-    @SerializedName("notes")
+//    @SerializedName("notes")
 //    val notes: List<Any> = listOf(),
 //    @SerializedName("status")
     val status: ScheduleStatusNetwork = ScheduleStatusNetwork(),

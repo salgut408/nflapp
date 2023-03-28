@@ -1,9 +1,12 @@
 package com.sgut.android.nationalfootballleague.ui.screens.teamdetails
 
+import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.team_schedule.ScheduleResponseNetwork
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.ScheduleDomainModel
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamDetailsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,31 +17,36 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TeamDetailViewModel @Inject constructor(
-    private val teamDetailsRepository: TeamDetailsRepository
-): ViewModel() {
+    private val teamDetailsRepository: TeamDetailsRepository,
+) : ViewModel() {
 
     private val _teamDetailUiState = MutableStateFlow(TeamDetailsScreenUiState())
-    val  teamDetailUiState: StateFlow<TeamDetailsScreenUiState> = _teamDetailUiState
+    val teamDetailUiState: StateFlow<TeamDetailsScreenUiState> = _teamDetailUiState
+    lateinit var sched: ScheduleResponseNetwork
 
 
-     init{}
+    init {
+
+    }
 
     // able to just pass TeamModel ? or team id with room?
-    fun getFullTeamDetails(teamAbrv: String, sport: String, league: String) = viewModelScope.launch {
+    fun getFullTeamDetails(teamAbrv: String, sport: String, league: String) =
+        viewModelScope.launch {
             val teamDetails = teamDetailsRepository.getSpecificTeam(sport, league, teamAbrv)
-            setTeamDetailUiState(teamDetails, sport, league, )
+            val teamSched = teamDetailsRepository.getTeamSchedule(sport, league, teamAbrv )
 
-    }
+            setTeamDetailUiState(teamDetails, sport, league, teamSched)
+            Log.e("SCHED", teamSched.toString())
+        }
 
-    fun getSchedule(team: String, sport: String, league: String ) = viewModelScope.launch {
-        val teamSched = teamDetailsRepository.getTeamSchedule(sport, team, league)
-    }
+
 
 
     fun setTeamDetailUiState(
         team: FullTeamDetailWithRosterModel,
         sport: String,
         league: String,
+        schedule: ScheduleDomainModel,
     ) {
         _teamDetailUiState.update {
             it.copy(
@@ -47,6 +55,7 @@ class TeamDetailViewModel @Inject constructor(
                 currentTeamDetails = team,
                 atheletes = team.athletes,
                 nextEvents = team.nextEvent,
+                schedule = schedule
             )
         }
     }

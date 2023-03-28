@@ -9,7 +9,6 @@ data class CompetitionsEventModel(
     val boxscoreAvailable: Boolean? = null,
     val venue: VenueModel = VenueModel(),
     val competitors: List<CompetitorsModel> = listOf(),
-    val notes: List<String> = listOf(),
     val tickets: List<TicketsModel> = listOf(),
     val status: StatusDomainModel? = StatusDomainModel(),
 

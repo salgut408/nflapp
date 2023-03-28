@@ -26,8 +26,8 @@ data class Competitions3(
   val venue: Venue3 = Venue3(),
   @SerializedName("competitors")
   val competitors: List<Competitors3> = listOf(),
-  @SerializedName("notes")
-  val notes: List<String> = listOf(),
+//  @SerializedName("notes")
+//  val notes: List<String> = listOf(),
   @SerializedName("tickets")
   val tickets: List<Tickets3> = listOf(),
   @SerializedName("status")
@@ -43,7 +43,6 @@ fun Competitions3.asDomain(): CompetitionsEventModel {
     boxscoreAvailable = boxscoreAvailable,
     venue = venue.asDomain(),
     competitors = competitors.map { it.asDomain() },
-    notes = notes,
     status = status?.asDomain(),
     tickets = tickets.map { it.asDomain() }
   )
