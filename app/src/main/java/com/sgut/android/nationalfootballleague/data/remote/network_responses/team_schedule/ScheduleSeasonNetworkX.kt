@@ -19,6 +19,8 @@ data class ScheduleSeasonNetworkX(
 
 fun ScheduleSeasonNetworkX.asDomain(): ScheduleSeasonModelX {
     return ScheduleSeasonModelX(
-        displayName = displayName
+        displayName = displayName,
+        name = name,
+        year = year
     )
 }

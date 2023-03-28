@@ -2,4 +2,6 @@ package com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedul
 
 data class ScheduleSeasonModelX(
     val displayName: String = "",
+    val name: String = "",
+    val year: Int = 0,
 )

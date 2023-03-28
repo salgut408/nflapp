@@ -57,7 +57,8 @@ fun InjuredAtheleteRow(
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(
-            16.dp)
+            16.dp
+        )
     ) {
 
         items(athletesList){ athlete ->

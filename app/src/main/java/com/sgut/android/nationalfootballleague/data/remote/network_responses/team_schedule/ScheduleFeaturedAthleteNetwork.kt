@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.ScheduleFeaturedAthleteModel
 
 data class ScheduleFeaturedAthleteNetwork(
     @SerializedName("abbreviation")
@@ -19,3 +20,15 @@ data class ScheduleFeaturedAthleteNetwork(
     @SerializedName("team")
     val team: ScheduleTeamNetworkX = ScheduleTeamNetworkX()
 )
+
+fun ScheduleFeaturedAthleteNetwork.asDomain(): ScheduleFeaturedAthleteModel {
+    return ScheduleFeaturedAthleteModel(
+        abbreviation = abbreviation,
+        athlete = athlete.asDomain(),
+        displayName = displayName,
+        name = name,
+        playerId = playerId,
+        shortDisplayName = shortDisplayName,
+        team = team.asDomain()
+    )
+}

@@ -31,6 +31,7 @@ fun ScheduleEventNetwork.asDomain(): ScheduleEventModel {
         date = date,
         id = id,
         name = name,
-        shortName = shortName
+        shortName = shortName,
+        seasonType = seasonType.asDomain()
     )
 }

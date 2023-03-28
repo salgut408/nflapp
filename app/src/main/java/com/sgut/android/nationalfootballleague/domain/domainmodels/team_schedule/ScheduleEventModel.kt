@@ -6,4 +6,6 @@ data class ScheduleEventModel(
     val id: String = "",
     val name: String = "",
     val shortName: String = "",
-)
+    val seasonType: ScheduleSeasonTypeModel = ScheduleSeasonTypeModel(),
+
+    )

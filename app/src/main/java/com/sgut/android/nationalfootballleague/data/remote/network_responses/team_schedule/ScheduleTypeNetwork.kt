@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.ScheduleTypeModel
 
 data class ScheduleTypeNetwork(
     @SerializedName("completed")
@@ -19,3 +20,14 @@ data class ScheduleTypeNetwork(
     @SerializedName("state")
     val state: String = ""
 )
+
+fun ScheduleTypeNetwork.asDomain(): ScheduleTypeModel {
+    return ScheduleTypeModel(
+        completed = completed,
+        description = description,
+        detail = detail,
+        id = id,
+        shortDetail = shortDetail,
+        state = state
+    )
+}

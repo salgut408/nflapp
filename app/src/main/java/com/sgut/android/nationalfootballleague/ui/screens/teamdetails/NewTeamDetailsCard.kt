@@ -1,6 +1,5 @@
 package com.sgut.android.nationalfootballleague.ui.screens.teamdetails
 
-import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -23,6 +22,7 @@ import com.sgut.android.nationalfootballleague.commoncomposables.InjuriesBox
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.RecordModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.VenueModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.ScheduleDomainModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GeneralImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.HeadingSection
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportDivider
@@ -43,6 +43,8 @@ private val CollapsedImageSize = 100.dp
 @Composable
 fun NewTeamDetailCard(
     team: FullTeamDetailWithRosterModel,
+
+    schedule: ScheduleDomainModel,
     modifier: Modifier,
 ) {
     val color = HexToJetpackColor2.getColor(team.color)
@@ -53,7 +55,7 @@ fun NewTeamDetailCard(
     ) {
         val scroll = rememberScrollState(0)
         TeamHeader(team = team)
-        Body(team = team, scroll = scroll)
+        Body(team = team, scroll = scroll, teamSchedule = schedule)
         Title(team = team) { scroll.value }
         MainImage(team = team) { scroll.value }
 //        DynamicTeamCard(team = team)
@@ -189,6 +191,7 @@ fun CollapsingTeamLayout(
 @Composable
 fun Body(
     team: FullTeamDetailWithRosterModel,
+    teamSchedule: ScheduleDomainModel,
     scroll: ScrollState,
 ) {
     val color = HexToJetpackColor2.getColor(team.color)
@@ -232,7 +235,9 @@ fun Body(
                 record = team.record ?: RecordModel(),
                 modifier = Modifier.padding(8.dp)
             )
-            Log.e("TEAMRECORD", team.toString())
+
+            PastGames(schedule = teamSchedule )
+
 
             //injusries box
             InjuriesBox(
@@ -248,3 +253,5 @@ fun Body(
         }
     }
 }
+
+

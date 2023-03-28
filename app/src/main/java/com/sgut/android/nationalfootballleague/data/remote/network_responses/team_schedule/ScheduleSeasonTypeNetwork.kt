@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.ScheduleSeasonTypeModel
 
 data class ScheduleSeasonTypeNetwork(
     @SerializedName("abbreviation")
@@ -13,3 +14,12 @@ data class ScheduleSeasonTypeNetwork(
     @SerializedName("type")
     val type: Int = 0
 )
+
+fun ScheduleSeasonTypeNetwork.asDomain(): ScheduleSeasonTypeModel {
+    return ScheduleSeasonTypeModel(
+        abbreviation = abbreviation,
+        id = id,
+         name = name,
+        type = type
+    )
+}

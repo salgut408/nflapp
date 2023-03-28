@@ -5,5 +5,7 @@ data class ScheduleCompetitionModel(
     val competitors: List<ScheduleCompetitorModel> = listOf(),
     val date: String = "",
     val id: String = "",
-    val venue: ScheduleVenueModel = ScheduleVenueModel()
-)
+    val venue: ScheduleVenueModel = ScheduleVenueModel(),
+    val status: ScheduleStatusModel = ScheduleStatusModel(),
+
+    )

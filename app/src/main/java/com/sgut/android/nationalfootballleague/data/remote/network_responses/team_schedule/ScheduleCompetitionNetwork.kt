@@ -21,7 +21,7 @@ data class ScheduleCompetitionNetwork(
     val neutralSite: Boolean = false,
 //    @SerializedName("notes")
 //    val notes: List<Any> = listOf(),
-//    @SerializedName("status")
+    @SerializedName("status")
     val status: ScheduleStatusNetwork = ScheduleStatusNetwork(),
     @SerializedName("tickets")
     val tickets: List<ScheduleTicketNetwork>? = listOf(),
@@ -41,6 +41,7 @@ fun ScheduleCompetitionNetwork.asDomain(): ScheduleCompetitionModel {
         competitors = competitors.map { it.asDomain() },
         date = date,
         id = id,
-        venue = venue.asDomain()
+        venue = venue.asDomain(),
+        status = status.asDomain()
     )
 }
