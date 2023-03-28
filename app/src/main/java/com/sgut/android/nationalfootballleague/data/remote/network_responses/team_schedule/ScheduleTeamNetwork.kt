@@ -11,8 +11,6 @@ data class ScheduleTeamNetwork(
     val displayName: String = "",
     @SerializedName("id")
     val id: String = "",
-    @SerializedName("links")
-    val links: List<ScheduleLinkNetwork> = listOf(),
     @SerializedName("location")
     val location: String = "",
     @SerializedName("logos")

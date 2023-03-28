@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 class TeamDetailsRepositoryImpl @Inject constructor(
     val espnApi: EspnApi,
-    val sportsDataBase: SportsDataBase
-): TeamDetailsRepository{
+    val sportsDataBase: SportsDataBase,
+) : TeamDetailsRepository {
 
     override suspend fun getSpecificTeam(
         sport: String,
@@ -23,7 +23,7 @@ class TeamDetailsRepositoryImpl @Inject constructor(
 //      TODO fix certain teams being null @ request for team details screen
 
         val result = espnApi.getSpecificTeam(sport, league, team).body()?.fullTeam
-        return result?.asDomain() ?:  FullTeamDetailWithRosterModel()
+        return result?.asDomain() ?: FullTeamDetailWithRosterModel()
     }
 
     override suspend fun getTeamSchedule(
@@ -32,23 +32,15 @@ class TeamDetailsRepositoryImpl @Inject constructor(
         teamId: String,
     ): ScheduleDomainModel {
         try {
-
-
             val result = espnApi.getTeamSchedule(sport, league, teamId)
             if (result.isSuccessful) {
                 return result.body()?.asDomain() ?: ScheduleDomainModel()
-
             }
-
-        } catch (e: Exception) {
+        }
+        catch (e: Exception) {
             Log.e("SCHEDULE ERR", e.toString())
         }
-
         val result = espnApi.getTeamSchedule(sport, league, teamId)
-//        Log.e("SCHEDULE_REPOS", result.toString())
-//
         return result.body()?.asDomain() ?: ScheduleDomainModel()
     }
-
-
 }

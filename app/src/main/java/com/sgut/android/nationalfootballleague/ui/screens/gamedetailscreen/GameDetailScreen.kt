@@ -66,9 +66,6 @@ fun GameDetailsScreen(
     gameDetailViewModel: GameDetailViewModel = hiltViewModel(),
     ) {
 
-//    TODO gameDetailUiState.currentGameUiState IS THE NEW UI STATE TO USE
-//    TODO Make a different screen / widgets for each diff sport
-
     gameDetailViewModel.loadGameDetails(sport, league, event)
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()

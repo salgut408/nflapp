@@ -8,8 +8,8 @@ data class ScheduleTicketNetwork(
     val description: String = "",
     @SerializedName("id")
     val id: String = "",
-    @SerializedName("links")
-    val links: List<ScheduleLinkNetworkX> = listOf(),
+//    @SerializedName("links")
+//    val links: List<ScheduleLinkNetworkX> = listOf(),
     @SerializedName("maxPrice")
     val maxPrice: Double = 0.0,
     @SerializedName("numberAvailable")

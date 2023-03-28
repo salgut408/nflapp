@@ -11,8 +11,6 @@ data class ScheduleEventNetwork(
     val date: String = "",
     @SerializedName("id")
     val id: String = "",
-    @SerializedName("links")
-    val links: List<ScheduleLinkNetworkXXX> = listOf(),
     @SerializedName("name")
     val name: String = "",
     @SerializedName("season")

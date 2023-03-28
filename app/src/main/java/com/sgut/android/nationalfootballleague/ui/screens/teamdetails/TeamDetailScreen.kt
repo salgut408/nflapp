@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -49,13 +48,24 @@ fun TeamDetailScreen(
 
 @Composable
 fun PastGames(schedule: ScheduleDomainModel) {
-    Column(modifier = Modifier.background(Color.Yellow)) {
+    Column(
+        modifier = Modifier
+            .background(Color.Yellow)
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.Center
+    ) {
         PastGamesHeader(
             teamName = schedule.team.displayName,
             seasonName = schedule.season.name,
             logo = schedule.team.logo
         )
-        PastGamesBody(summary = schedule.team.recordSummary)
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            PastGamesBody(summary = schedule.team.recordSummary)
+        }
 
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -80,10 +90,7 @@ fun PastEventCard(event: ScheduleEventModel) {
 
 @Composable
 fun FeaturedAthelete(athelete: ScheduleFeaturedAthleteModel) {
-
-
     Row() {
-
         Text(text = athelete.displayName, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.width(8.dp))
 
@@ -92,7 +99,6 @@ fun FeaturedAthelete(athelete: ScheduleFeaturedAthleteModel) {
 
         Text(text = athelete.team.name)
         Spacer(modifier = Modifier.width(8.dp))
-
     }
 }
 
@@ -104,25 +110,16 @@ fun Status(status: ScheduleStatusModel) {
 @Composable
 fun Competition(competitionModel: ScheduleCompetitionModel) {
     Column() {
-
         Text(text = competitionModel.date)
         Status(status = competitionModel.status)
-
         competitionModel.status.featuredAthletes?.map { FeaturedAthelete(athelete = it) }
-
-
     }
 }
 
 
 @Composable
 fun PastGamesBody(summary: String) {
-    Column(
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(text = "Records Summary $summary")
-    }
-
+    Text(text = "Records Summary $summary")
 }
 
 @Composable
@@ -136,8 +133,7 @@ fun PastGamesHeader(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        Text(text = teamName, fontSize = 20.sp, textAlign = TextAlign.Center)
-        Text(text = seasonName)
+        Text(text = seasonName, fontSize = 20.sp)
         GenericImageLoader(obj = logo, modifier = Modifier.size(30.dp))
     }
 }
@@ -154,23 +150,22 @@ fun TeamRecord(
         val recordItems = record.recordItems.getOrNull(0)?.stats
 
         Card(modifier = modifier.fillMaxWidth()) {
-
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-
-
                 modifier = modifier
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.secondary),
-
-
-                ) {
-                Text(text = record.recordItems.getOrNull(0)?.summary ?: "",
+            ) {
+                Text(
+                    text = record.recordItems.getOrNull(0)?.summary ?: "",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onSecondary)
-                Text(text = record.recordItems.getOrNull(0)?.type ?: "",
-                    color = MaterialTheme.colorScheme.onSecondary)
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+                Text(
+                    text = record.recordItems.getOrNull(0)?.type ?: "",
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
             }
 
             Row(
