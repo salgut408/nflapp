@@ -7,18 +7,18 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_deta
 data class GameDetailsPosition(
 
   @SerializedName("name")
-  val name: String? = null,
+  val name: String = "",
   @SerializedName("displayName")
-  val displayName: String? = null,
+  val displayName: String = "",
   @SerializedName("abbreviation")
-  val abbreviation: String? = null,
+  val abbreviation: String = "",
 
   )
 
 fun GameDetailsPosition.asDomain(): GameDetailsPositionModel {
   return GameDetailsPositionModel(
-    name = name ?: "",
-    displayName = displayName ?: "",
-    abbreviation = abbreviation ?: ""
+    name = name ,
+    displayName = displayName ,
+    abbreviation = abbreviation
   )
 }

@@ -6,21 +6,35 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_te
 
 data class Team(
 
-  @SerializedName("id") var id: String = "",
-  @SerializedName("uid") val uid: String = "",
-  @SerializedName("slug") val slug: String = "",
-  @SerializedName("abbreviation") val abbreviation: String = "",
-  @SerializedName("displayName") val displayName: String = "",
-  @SerializedName("shortDisplayName") val shortDisplayName: String = "",
-  @SerializedName("name") val name: String = "",
-  @SerializedName("nickname") val nickname: String = "",
-  @SerializedName("location") val location: String = "",
-  @SerializedName("color") val color: String = "",
-  @SerializedName("alternateColor") val alternateColor: String = "",
-  @SerializedName("isActive") val isActive: Boolean? = null,
-  @SerializedName("isAllStar") val isAllStar: Boolean? = null,
-  @SerializedName("logos") val logos: List<Logos> = listOf(),
-  @SerializedName("links") val links: List<Links> = listOf(),
+  @SerializedName("id")
+  var id: String = "",
+  @SerializedName("uid")
+  val uid: String = "",
+  @SerializedName("slug")
+  val slug: String = "",
+  @SerializedName("abbreviation")
+  val abbreviation: String = "",
+  @SerializedName("displayName")
+  val displayName: String = "",
+  @SerializedName("shortDisplayName")
+  val shortDisplayName: String = "",
+  @SerializedName("name")
+  val name: String = "",
+  @SerializedName("nickname")
+  val nickname: String = "",
+  @SerializedName("location")
+  val location: String = "",
+  @SerializedName("color")
+  val color: String = "",
+  @SerializedName("alternateColor")
+  val alternateColor: String = "",
+  @SerializedName("isActive")
+  val isActive: Boolean? = null,
+  @SerializedName("isAllStar")
+  val isAllStar: Boolean? = null,
+  @SerializedName("logos")
+  val logos: List<Logos> = listOf(),
+
 
   )
 

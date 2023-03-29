@@ -5,3 +5,14 @@ data class GameDetailsStatisticModel(
     val displayValue: String = "",
     val label: String = "",
 )
+
+data class GameDetailsStatModel(
+    val name: String = "",
+    val displayName: String = "",
+    val shortDisplayName: String = "",
+    val description: String = "",
+    val abbreviation: String = "",
+    val type: String = "",
+    val value: Int = 0,
+    val displayValue: String = "",
+)

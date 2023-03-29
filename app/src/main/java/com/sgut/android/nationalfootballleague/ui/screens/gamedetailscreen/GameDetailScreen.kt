@@ -64,7 +64,7 @@ fun GameDetailsScreen(
     navController: NavController,
     event: String,
     gameDetailViewModel: GameDetailViewModel = hiltViewModel(),
-    ) {
+) {
 
     gameDetailViewModel.loadGameDetails(sport, league, event)
 
@@ -92,6 +92,9 @@ fun GameDetailsScreen(
                 }
 
 //                BaseBallRosterLineUp(rosters = gameDetailUiState.currentGameUiState?.rosters ?: listOf())
+
+                Text(text = gameDetailUiState.currentGameUiState?.rosters.toString())
+
 
                 HeaderStatusSlot(
                     gameDetailModel = gameDetailUiState.currentGameUiState ?: GameDetailsModel())
@@ -125,7 +128,7 @@ fun GameDetailsScreen(
 
 
                 NewVidList(
-                    vidList = gameDetailUiState.currentGameUiState ?.videos ?: listOf()
+                    vidList = gameDetailUiState.currentGameUiState?.videos ?: listOf()
                 )
 
 
@@ -156,16 +159,38 @@ fun GameDetailsScreen(
                     ?: BoxScoreModel())
 
 
-
-                WinProbabilityGraph(winProbability = gameDetailUiState.currentGameUiState?.winprobability
-                    ?: listOf())
-
             }
 
         }
     )
 
 
+}
+
+@Composable
+fun RosterItem(rosterPerson: RosterModel) {
+    Card() {
+        Column() {
+            Row() {
+                GenericImageLoader(
+                    obj = rosterPerson.athlete.headshot?.href ?: "",
+                    modifier = Modifier.size(60.dp)
+                )
+                Text(text = "Name: $rosterPerson.athlete.displayName, ${rosterPerson.position.displayName}")
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(text = "Bat order: $rosterPerson.batOrder.toString()")
+            }
+        }
+    }
+}
+
+// use for home and away
+@Composable
+fun LineUp(lineUp: List<RostersModel>) {
+
+    lineUp.map { roster ->
+        roster.roster .map { RosterItem(rosterPerson = it) }
+    }
 }
 
 
@@ -479,7 +504,7 @@ fun SeasonLeaders(gameDetailModel: GameDetailsModel) {
 
                             ) {
                             GenericImageLoader(
-                                obj = gameDetailsLeaders.team.logo ,
+                                obj = gameDetailsLeaders.team.logo,
                                 modifier = Modifier.size(50.dp)
                             )
                             Text(text = gameDetailsLeaders.team.abbreviation,
@@ -925,9 +950,9 @@ fun BaseballSituation(gameDetailSituation: SituationModel) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column() {
         }
-            Text(text = "Balls " + gameDetailSituation.balls.toString() )
-            Text(text = "Outs " + gameDetailSituation.outs.toString())
-            Text(text = "Strikes " + gameDetailSituation.strikes.toString())
+        Text(text = "Balls " + gameDetailSituation.balls.toString())
+        Text(text = "Outs " + gameDetailSituation.outs.toString())
+        Text(text = "Strikes " + gameDetailSituation.strikes.toString())
     }
     Text(text = "Batter: " + gameDetailSituation.batter?.playerId.toString())
     Text(text = "Pitcher: " + gameDetailSituation.pitcher?.playerId.toString())
@@ -1261,7 +1286,8 @@ fun SeasonLeaders() {
 
 @Composable
 fun PickCenter(
-    pickCenterInfo: PickcenterModel) {
+    pickCenterInfo: PickcenterModel,
+) {
     Card() {
         Text(text = pickCenterInfo.provider?.name)
     }
@@ -1666,7 +1692,8 @@ fun GameInfoCardVenueImage(
     modifier: Modifier,
 ) {
     Box(modifier = Modifier.height(200.dp)) {
-        DetailVenueCardImageLoader(venue = gameDetailModel.gameInfo?.venue ?: GameDetailsVenueModel())
+        DetailVenueCardImageLoader(venue = gameDetailModel.gameInfo?.venue
+            ?: GameDetailsVenueModel())
 
         Box(
             modifier = Modifier

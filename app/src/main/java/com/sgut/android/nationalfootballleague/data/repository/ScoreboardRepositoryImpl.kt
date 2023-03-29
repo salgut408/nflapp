@@ -50,7 +50,16 @@ class ScoreboardRepositoryImpl @Inject constructor(
         league: String,
         date: String,
     ): ScoreboardModel {
-        TODO("Not yet implemented")
+        val result = espnApi.getGeneralScoreboardWithDate(sport, league, date)
+        if (result.isSuccessful){
+            return result.body()?.asDomain()!!
+        } else {
+            Log.e("scrbrdRepGen-FAIL", result.errorBody().toString())
+
+        }
+        val response = espnApi.getGeneralScoreboardWithDate(sport, league, date)
+        return response.body()?.asDomain()!!
+
     }
 
 

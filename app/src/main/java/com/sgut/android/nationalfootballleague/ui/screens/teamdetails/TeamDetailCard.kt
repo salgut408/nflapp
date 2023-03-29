@@ -34,8 +34,6 @@ fun TeamDetailCard(
     val altcolor = HexToJetpackColor2.getColor(team.alternateColor)
     val scrollState = rememberScrollState()
 
-
-
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -58,7 +56,6 @@ fun TeamDetailCard(
                     color = Color.White
                 )
             }
-
         }
 
         if(team.standingSummary.isNotEmpty()){

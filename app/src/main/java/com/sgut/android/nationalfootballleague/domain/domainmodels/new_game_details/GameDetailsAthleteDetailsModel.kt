@@ -10,5 +10,19 @@ data class GameDetailsAthleteDetailsModel(
     val headshot: GameDetailsHeadshotModel? = GameDetailsHeadshotModel(),
     val jersey: String = "",
     val position: GameDetailsPositionModel? = GameDetailsPositionModel(),
-
+    val bats: BatsModel = BatsModel(),
+    val throws: ThrowModel = ThrowModel(),
     )
+
+
+data class BatsModel(
+    val type: String = "",
+    val abbreviation: String = "",
+    val displayValue: String = ""
+)
+
+data class ThrowModel(
+    val type: String = "",
+    val abbreviation: String = "",
+    val displayValue: String = ""
+)

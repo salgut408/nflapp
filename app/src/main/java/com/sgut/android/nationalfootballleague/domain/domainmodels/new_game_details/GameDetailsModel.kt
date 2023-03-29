@@ -2,13 +2,12 @@ package com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_det
 
 import com.sgut.android.nationalfootballleague.GameDetailsBroadcasts
 import com.sgut.android.nationalfootballleague.GameDetailsStandings
-import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.Rosters
 
 
 //    TODO - Make Domain Objcts
 
 data class GameDetailsModel(
-    val rosters: List<Rosters> = listOf(),// check on make mod
+    val rosters: List<RostersModel> = listOf(),
     val baseballSituation: SituationModel? = SituationModel(), // needs mod
     val notes: List<String> = listOf(),
     val boxscore: BoxScoreModel? = BoxScoreModel(),
@@ -32,4 +31,7 @@ data class GameDetailsModel(
     val scoringPlays: List<ScoringPlayModel> = listOf(),
     val videos: List<VideoModel> = listOf(),
     val plays: List<BasketballPlayModel> = listOf(), // needs mod
-)
+) {
+
+
+}

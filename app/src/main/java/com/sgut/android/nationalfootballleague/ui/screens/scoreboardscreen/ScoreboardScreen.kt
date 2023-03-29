@@ -63,6 +63,8 @@ fun ScoreboardScreen(
         Text(
             text = newUiState.scoreboardModelUiState.day ?: ""
         )
+
+        Text(text = scoreboardViewModel.getTodaysDate() , fontSize = 20.sp, fontWeight = FontWeight.Bold)
         
 
 

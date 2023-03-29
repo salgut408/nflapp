@@ -24,7 +24,7 @@ class GameDetailViewModel @Inject constructor(
     private val _gameDetailUiState = MutableStateFlow(GameDetailsScreenUiState())
     var gameDetailUiState: StateFlow<GameDetailsScreenUiState> = _gameDetailUiState.asStateFlow()
 
-    var _colorsTeamList: MutableList<Color> = mutableListOf()
+    private var _colorsTeamList: MutableList<Color> = mutableListOf()
 
 
     init {}
@@ -40,7 +40,7 @@ class GameDetailViewModel @Inject constructor(
             val newGameDeetUiState = gameDetailsRepository.getGameDetails(sport, league, event)
 
             setGameDetailsUiState( sport, league, newGameDeetUiState)
-            Log.i("NEWGAMEDEETUI", newGameDeetUiState.rosters.toString())
+            Log.d("ROSTER_GAMEDEET_VM", newGameDeetUiState.rosters.toString())
 
             newGameDeetUiState.boxscore?.teams?.forEach { i ->
                 _colorsTeamList.add(HexToJetpackColor2.getColor(i.team?.color ?: "Color"))
@@ -57,19 +57,20 @@ class GameDetailViewModel @Inject constructor(
 
     }
 
-//    fun getHomeTeam:
+
+
 
 
    private fun setGameDetailsUiState(
-        currentSport: String,
-        currentLeague: String,
-        curentGameUiState: GameDetailsModel,
+       currentSport: String,
+       currentLeague: String,
+       currentGameUiState: GameDetailsModel,
     ) {
         _gameDetailUiState.update {
             it.copy(
                 currentLeague = currentLeague,
                 currentSport = currentSport,
-                currentGameUiState = curentGameUiState
+                currentGameUiState = currentGameUiState
             )
         }
     }

@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 
+import android.icu.util.Calendar
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -59,6 +60,14 @@ class ScoreboardViewModel @Inject constructor(
         }
     }
 
+
+    fun getTodaysDate(): String {
+        val date = Calendar.getInstance()
+        val year = date.get(Calendar.YEAR).toString()
+        val month = (date.get(Calendar.MONTH) + 1).toString()
+        val day = date.get(Calendar.DAY_OF_MONTH).toString()
+        return year + month + day
+    }
 
     fun setScoreboardUiState(
         currentSport: String,

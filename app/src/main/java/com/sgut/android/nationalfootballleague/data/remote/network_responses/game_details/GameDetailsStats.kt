@@ -1,17 +1,39 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsStatModel
 
 
-data class GameDetailsStats (
+data class GameDetailsStats(
 
-  @SerializedName("name"             ) var name             : String? = null,
-  @SerializedName("displayName"      ) var displayName      : String? = null,
-  @SerializedName("shortDisplayName" ) var shortDisplayName : String? = null,
-  @SerializedName("description"      ) var description      : String? = null,
-  @SerializedName("abbreviation"     ) var abbreviation     : String? = null,
-  @SerializedName("type"             ) var type             : String? = null,
-  @SerializedName("value"            ) var value            : Int?    = null,
-  @SerializedName("displayValue"     ) var displayValue     : String? = null
+  @SerializedName("name")
+  val name: String = "",
+  @SerializedName("displayName")
+  val displayName: String = "",
+  @SerializedName("shortDisplayName")
+  val shortDisplayName: String = "",
+  @SerializedName("description")
+  val description: String = "",
+  @SerializedName("abbreviation")
+  val abbreviation: String = "",
+  @SerializedName("type")
+  val type: String = "",
+  @SerializedName("value")
+  val value: Int = 0,
+  @SerializedName("displayValue")
+  val displayValue: String = "",
 
-)
+  )
+
+fun GameDetailsStats.asDomain(): GameDetailsStatModel {
+  return GameDetailsStatModel(
+    name = name,
+    displayName = displayName,
+    shortDisplayName = shortDisplayName,
+    description = description,
+    abbreviation = abbreviation,
+    type = type,
+    value = value,
+    displayValue = displayValue
+  )
+}

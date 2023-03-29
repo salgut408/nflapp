@@ -6,7 +6,8 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_te
 
 data class Teams(
 
-  @SerializedName("team") var teamSingle: Team = Team(),
+  @SerializedName("team")
+  val teamSingle: Team = Team(),
 
   )
 

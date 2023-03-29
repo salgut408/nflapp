@@ -27,16 +27,12 @@ fun NextEvent(
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.elevatedCardElevation(),
         modifier = modifier
-
             ) {
         Column(
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally,
-
             modifier = Modifier.fillMaxWidth()
         ) {
-
-
 
             Text(text = "Next Event:",
                 style = MaterialTheme.typography.headlineMedium,
@@ -56,10 +52,7 @@ fun NextEvent(
             )
 
             Text(text = nextEvent.date.toDate()?.formatTo("MMM/dd") ?: "")
-
         }
-
-
     }
 }
 

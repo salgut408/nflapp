@@ -16,7 +16,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -25,11 +24,9 @@ import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Scale
-import com.sgut.android.nationalfootballleague.Athletes
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.AthletesRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportSurface
-
 
 
 @Composable
@@ -51,7 +48,7 @@ fun AltheleteCard2(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
-            ) {
+        ) {
 
             Box() {
                 val painter = rememberAsyncImagePainter(
@@ -94,50 +91,6 @@ fun AltheleteCard2(
 
 }
 
-@Composable
-fun AltheleteCard3(
-    athelete: Athletes,
-    modifier: Modifier,
-) {
-    Card(modifier = modifier.fillMaxWidth(2f),
-        shape = RoundedCornerShape(15.dp)) {
-        Box(modifier = Modifier.height(200.dp)) {
-            // image ()
-            val painter = rememberAsyncImagePainter(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(athelete.headshot.href ?: athelete.flag?.href)
-                    .crossfade(true)
-                    .scale(Scale.FILL)
-                    .crossfade(100)
-                    .build()
-            )
-            Image(
-                painter = painter,
-                contentDescription = athelete.displayName,
-                modifier = Modifier
-                    .size(350.dp)
-                    .background(Color.Transparent)
-            )
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.TopStart,
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.Start,
-                    modifier = Modifier.width(180.dp)
-                ) {
-                        Text(athelete.jersey, style = TextStyle(color = Color.Black, fontSize = 80.sp))
-                        Text(athelete.position.name, style = TextStyle(color = Color.Black, fontSize = 16.sp))
-                        Text(athelete.shortName, style = TextStyle(color = Color.Black, fontSize = 16.sp))
-                }
-            }
-        }
-    }
-}
-
-
-
-
 
 @Composable
 fun AthleteImage2(
@@ -168,7 +121,7 @@ fun AthleteImage2(
 fun VerticalAthleteCard(
     athelete: AthletesRosterModel,
     modifier: Modifier = Modifier,
-    team: FullTeamDetailWithRosterModel
+    team: FullTeamDetailWithRosterModel,
 ) {
 
     val color = HexToJetpackColor2.getColor(team.color)
@@ -177,10 +130,9 @@ fun VerticalAthleteCard(
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier.padding(
             start = 4.dp,
-            end= 4.dp,
+            end = 4.dp,
             bottom = 8.dp
         ),
-
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -188,29 +140,25 @@ fun VerticalAthleteCard(
                 .clickable { }
                 .padding(8.dp)
         ) {
-
             Box(
-                modifier = Modifier.wrapContentSize()
+                modifier = Modifier
+                    .wrapContentSize()
                     .background(color = color)
-
-            ){
+            ) {
                 AthleteImage2(
                     athletes = athelete,
-                    contentDescription = "" ,
+                    contentDescription = "",
                     elevation = 4.dp,
                     modifier = Modifier.size(120.dp)
-
                 )
             }
-
-
-            Row(){
+            Row() {
                 Text(
                     text = athelete.displayName,
                     modifier = Modifier.padding(top = 4.dp)
                 )
                 Text(
-                    text = " ${ athelete.jersey }",
+                    text = " ${athelete.jersey}",
                     modifier = Modifier.padding(top = 4.dp)
                 )
             }
@@ -218,7 +166,7 @@ fun VerticalAthleteCard(
                 text = athelete.position.displayName,
                 modifier = Modifier.padding(top = 4.dp)
             )
-            Row{
+            Row {
                 Text(
                     text = athelete.displayHeight,
                     modifier = Modifier.padding(top = 4.dp)

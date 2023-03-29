@@ -94,6 +94,19 @@ interface EspnApi {
     ): Response<ScheduleResponseNetwork>
 
 
+    @GET("common/v3/sports/{sport}/{league}/athletes/{athleteId}")
+    suspend fun getAthleteInfo(
+        @Path("sport")
+        sport: String? = null,
+        @Path("league")
+        league: String? = null,
+        @Path("athleteId")
+        athleteId: String? = null,
+    )
+
+//    TODO add player info
+//    https://site.web.api.espn.com/apis/common/v3/sports/:sport/:league_abbrev/athletes/:athlete_id
+//    https://site.web.api.espn.com/apis/common/v3/sports/baseball/mlb/athletes/36928
 
 //    TODO get team stats
 //    https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/ari/statistics
@@ -105,8 +118,6 @@ interface EspnApi {
 //    https://site.api.espn.com/apis/site/v2/sports/racing/f1/scoreboard
 
 
-//    TODO add player info
-//    https://site.web.api.espn.com/apis/common/v3/sports/:sport/:league_abbrev/athletes/:athlete_id
 
 //    TODO Standings
 //    https://site.api.espn.com/apis/v2/sports/baseball/mlb/standings

@@ -88,7 +88,7 @@ fun GameDetailResponse.asDomain(): GameDetailsModel {
         scoringPlays = scoringPlays.map { it.asDomain() },
         videos = videos.map { it.asDomain() },
         plays = plays.map { it.asDomain() },
-        rosters = rosters,
+        rosters = rosters.map { it.asDomain() },
     )
 }
 
