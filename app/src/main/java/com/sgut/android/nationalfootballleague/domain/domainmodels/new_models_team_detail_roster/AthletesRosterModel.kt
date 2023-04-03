@@ -26,6 +26,6 @@ data class AthletesRosterModel(
     val injuries: List<Injury>? = listOf(),
     val experience: Experience? = Experience(),
     val active: Boolean? = null,
-    val draft: Draft? = Draft(),
+    val draft: Draft = Draft(),
     val flag: Flag? = Flag(),
 )

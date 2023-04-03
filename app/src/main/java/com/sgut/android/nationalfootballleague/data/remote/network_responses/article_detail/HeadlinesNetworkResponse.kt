@@ -5,31 +5,34 @@ import com.google.gson.annotations.SerializedName
 
 data class HeadlinesNetworkResponse(
 
-    @SerializedName("dataSourceIdentifier") var dataSourceIdentifier: String? = null,
-    @SerializedName("keywords") var keywords: ArrayList<String> = arrayListOf(),
-    @SerializedName("description") var description: String? = null,
-    @SerializedName("source") var source: String? = null,
-    @SerializedName("video") var video: ArrayList<Video> = arrayListOf(),
-    @SerializedName("type") var type: String? = null,
-    @SerializedName("title") var title: String? = null,
-    @SerializedName("nowId") var nowId: String? = null,
-    @SerializedName("premium") var premium: Boolean? = null,
-//    @SerializedName("related"              ) var related              : ArrayList<Related>    = arrayListOf(),
-    @SerializedName("allowSearch") var allowSearch: Boolean? = null,
-    @SerializedName("links") var links: Links? = Links(),
-    @SerializedName("id") var id: Int? = null,
-//    @SerializedName("categories"           ) var categories           : ArrayList<Categories> = arrayListOf(),
-    @SerializedName("headline") var headline: String? = null,
-    @SerializedName("originallyPosted") var originallyPosted: String? = null,
-//    @SerializedName("images"               ) var images               : ArrayList<Images>     = arrayListOf(),
-    @SerializedName("allowCommerce") var allowCommerce: Boolean? = null,
-    @SerializedName("linkText") var linkText: String? = null,
-    @SerializedName("allowAMP") var allowAMP: Boolean? = null,
-    @SerializedName("published") var published: String? = null,
-    @SerializedName("allowComments") var allowComments: Boolean? = null,
-    @SerializedName("allowAds") var allowAds: Boolean? = null,
-    @SerializedName("lastModified") var lastModified: String? = null,
-//    @SerializedName("metrics"              ) var metrics              : ArrayList<Metrics>    = arrayListOf(),
-    @SerializedName("story") var story: String = "",
+    @SerializedName("dataSourceIdentifier")
+    val dataSourceIdentifier: String = "",
+    @SerializedName("keywords")
+    val keywords: ArrayList<String> = arrayListOf(),
+    @SerializedName("description")
+    val description: String = "",
+    @SerializedName("source")
+    val source: String = "",
+    @SerializedName("video")
+    val video: ArrayList<Video> = arrayListOf(),
+    @SerializedName("type")
+    val type: String = "",
+    @SerializedName("title")
+    val title: String = "",
+    @SerializedName("links")
+    val links: Links? = Links(),
+    @SerializedName("id")
+    val id: Int = 0,
+    @SerializedName("headline")
+    val headline: String = "",
+    @SerializedName("originallyPosted")
+    val originallyPosted: String = "",
+//    @SerializedName("images"               ) val images               : ArrayList<Images>     = arrayListOf(),
+    @SerializedName("published")
+    val published: String = "",
+    @SerializedName("lastModified")
+    val lastModified: String = "",
+    @SerializedName("story")
+    val story: String = "",
 
     )

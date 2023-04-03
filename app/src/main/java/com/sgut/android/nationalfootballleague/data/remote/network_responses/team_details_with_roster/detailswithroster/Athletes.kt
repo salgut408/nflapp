@@ -1,49 +1,78 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsAthleteDetailsModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.AthletesRosterModel
 
 
 data class Athletes(
-  @SerializedName("id") val id: String = "",
-  @SerializedName("uid") val uid: String = "",
-  @SerializedName("guid") val guid: String = "",
-  @SerializedName("type") val type: String = "",
-  @SerializedName("alternateIds") val alternateIds: AlternateIds? = AlternateIds(),
-  @SerializedName("firstName") val firstName: String = "",
-  @SerializedName("lastName") val lastName: String = "",
-  @SerializedName("fullName") val fullName: String = "",
-  @SerializedName("displayName") val displayName: String = "",
-  @SerializedName("shortName") val shortName: String = "",
-  @SerializedName("weight") val weight: Int? = null,
-  @SerializedName("displayWeight") val displayWeight: String = "",
-  @SerializedName("height") val height: Int? = null,
-  @SerializedName("displayHeight") val displayHeight: String = "",
-  @SerializedName("age") val age: Int? = null,
-  @SerializedName("dateOfBirth") val dateOfBirth: String = "",
-  @SerializedName("debutYear") val debutYear: Int? = null,
-  @SerializedName("birthPlace") val birthPlace: BirthPlace? = BirthPlace(),
-  @SerializedName("slug") val slug: String = "",
-  @SerializedName("headshot") val headshot: Headshot = Headshot(),
-  @SerializedName("jersey") val jersey: String = "",
-  @SerializedName("position") val position: Position = Position(),
-  @SerializedName("injuries") val injuries: List<Injury>? = listOf(),
-  @SerializedName("linked") val linked: Boolean? = null,
-  @SerializedName("experience") val experience: Experience? = Experience(),
-  @SerializedName("active") val active: Boolean? = null,
-  @SerializedName("draft") val draft: Draft? = Draft(),
-  @SerializedName("flag") val flag: Flag? = Flag(),
+  @SerializedName("id")
+  val id: String = "",
+  @SerializedName("uid")
+  val uid: String = "",
+  @SerializedName("guid")
+  val guid: String = "",
+  @SerializedName("type")
+  val type: String = "",
+  @SerializedName("alternateIds")
+  val alternateIds: AlternateIds? = AlternateIds(),
+  @SerializedName("firstName")
+  val firstName: String = "",
+  @SerializedName("lastName")
+  val lastName: String = "",
+  @SerializedName("fullName")
+  val fullName: String = "",
+  @SerializedName("displayName")
+  val displayName: String = "",
+  @SerializedName("shortName")
+  val shortName: String = "",
+  @SerializedName("weight")
+  val weight: Int = 0,
+  @SerializedName("displayWeight")
+  val displayWeight: String = "",
+  @SerializedName("height")
+  val height: Int = 0,
+  @SerializedName("displayHeight")
+  val displayHeight: String = "",
+  @SerializedName("age")
+  val age: Int? = null,
+  @SerializedName("dateOfBirth")
+  val dateOfBirth: String = "",
+  @SerializedName("debutYear")
+  val debutYear: Int? = null,
+  @SerializedName("birthPlace")
+  val birthPlace: BirthPlace? = BirthPlace(),
+  @SerializedName("slug")
+  val slug: String = "",
+  @SerializedName("headshot")
+  val headshot: Headshot = Headshot(),
+  @SerializedName("jersey")
+  val jersey: String = "",
+  @SerializedName("position")
+  val position: Position = Position(),
+  @SerializedName("injuries")
+  val injuries: List<Injury>? = listOf(),
+  @SerializedName("linked")
+  val linked: Boolean? = null,
+  @SerializedName("experience")
+  val experience: Experience? = Experience(),
+  @SerializedName("active")
+  val active: Boolean? = null,
+  @SerializedName("draft")
+  val draft: Draft = Draft(),
+  @SerializedName("flag")
+  val flag: Flag? = Flag(),
 )
 
 data class Flag(
-  @SerializedName("href") var href: String? = "",
+  @SerializedName("href") val href: String? = "",
   )
 
 data class Injury(
-    @SerializedName("shortComment") var shortComment: String? = null,
-    @SerializedName("longComment") var longComment: String? = null,
-    @SerializedName("status") var injuryStatus: String? = null,
-    @SerializedName("details") var detail: Details? = null,
+    @SerializedName("shortComment") val shortComment: String? = null,
+    @SerializedName("longComment") val longComment: String? = null,
+    @SerializedName("status") val injuryStatus: String? = null,
+    @SerializedName("details") val detail: Details? = null,
     )
 
 data class Details(
@@ -53,6 +82,20 @@ data class Details(
     @SerializedName("detail") var detail: String? = null,
     @SerializedName("returnDate") var returnDate: String? = null,
 )
+
+fun Athletes.asGameDetailsAthlete(): GameDetailsAthleteDetailsModel {
+    return GameDetailsAthleteDetailsModel(
+        id = id,
+        uid = uid,
+        lastName = lastName,
+        fullName = fullName,
+        shortName = shortName,
+        headshot = headshot.asDomain(),
+        jersey = jersey,
+        position = position.asDomain()
+
+    )
+}
 
 fun Athletes.asDomain(): AthletesRosterModel {
     return AthletesRosterModel(

@@ -13,7 +13,7 @@ data class NextEvent3(
   @SerializedName("shortName") val shortName: String = "",
   @SerializedName("season") val season: Season3 = Season3(),
   @SerializedName("seasonType") val seasonType: SeasonType3? = SeasonType3(),
-  @SerializedName("week") val week: Week3? = Week3(),
+  @SerializedName("week") val week: Week3 = Week3(),
   @SerializedName("timeValid") val timeValid: Boolean = false,
   @SerializedName("competitions") val competitions: List<Competitions3> = listOf(),
   @SerializedName("links") val links: List<Links3> = listOf(),

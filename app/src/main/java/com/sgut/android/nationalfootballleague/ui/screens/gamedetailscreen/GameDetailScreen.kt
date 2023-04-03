@@ -68,6 +68,8 @@ fun GameDetailsScreen(
 
     gameDetailViewModel.loadGameDetails(sport, league, event)
 
+//    val playerMap by gameDetailViewModel.getRosterMap()
+
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
     Log.d("GAMEDETAIL-UISTATE", gameDetailUiState.currentGameUiState.toString())
 
@@ -84,17 +86,20 @@ fun GameDetailsScreen(
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
 
-                gameDetailUiState.currentGameUiState?.pickcenter?.map {
-                    Card() {
-                        Text(text = it.provider.name)
-                        Text(text = it.overUnder.toString())
-                    }
-                }
 
 //                BaseBallRosterLineUp(rosters = gameDetailUiState.currentGameUiState?.rosters ?: listOf())
 
-                Text(text = gameDetailUiState.currentGameUiState?.rosters.toString())
 
+                gameDetailUiState.currentGameUiState?.header?.competitions?.map {
+                    Text(text = it.status?.type?.description ?: "")
+
+                }
+
+                Text(text = gameDetailViewModel.getPlayerFromId("35241").fullName)
+                Text(text = gameDetailViewModel.teamMap["35241"]?.fullName ?: "")
+
+
+//                PlayerMap(map = gameDetailViewModel.teamMap.toSortedMap())
 
                 HeaderStatusSlot(
                     gameDetailModel = gameDetailUiState.currentGameUiState ?: GameDetailsModel())
@@ -102,8 +107,12 @@ fun GameDetailsScreen(
 
                 Spacer(modifier = modifier.height(8.dp))
 
+                Probables(list = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.probables
+                    ?: listOf())
+
 
                 WeightedRows(header = gameDetailUiState.currentGameUiState ?: GameDetailsModel())
+
 
 
                 when (gameDetailUiState.currentSport) {
@@ -115,9 +124,12 @@ fun GameDetailsScreen(
                         gameDetailModel = gameDetailUiState.currentGameUiState
                             ?: GameDetailsModel(),
                     )
-                    "baseball" -> BaseballSituation(
+                    "baseball" -> BaseballSpecific(
                         gameDetailSituation = gameDetailUiState.currentGameUiState?.baseballSituation
-                            ?: SituationModel()
+                            ?: SituationModel(),
+                        gameDetailsModel = gameDetailUiState.currentGameUiState
+                            ?: GameDetailsModel(),
+                        teamMap = gameDetailViewModel.teamMap
                     )
                 }
 
@@ -163,9 +175,49 @@ fun GameDetailsScreen(
 
         }
     )
+}
 
+@Composable
+fun PlayerMap(map: Map<String, GameDetailsAthleteDetailsModel>) {
+    Card(Modifier.fillMaxWidth()) {
+        for (i in map) {
+            Column() {
+                Row() {
+                    Text(text = i.key)
+                    Spacer(modifier = Modifier.width(30.dp))
+                    Text(text = i.value.fullName)
+                }
+                GenericImageLoader(obj = i.value.headshot?.href ?: "",
+                    modifier = Modifier.size(40.dp))
+
+            }
+        }
+
+    }
 
 }
+
+@Composable
+fun BaseballSpecific(
+    gameDetailSituation: SituationModel,
+    gameDetailsModel: GameDetailsModel,
+    teamMap: MutableMap<String, GameDetailsAthleteDetailsModel>,
+) {
+    DoughnutChart2(
+        gameDetailModel = gameDetailsModel
+    )
+    BaseballSituation(
+        gameDetailSituation = gameDetailSituation,
+        teamMap = teamMap
+    )
+
+}
+
+//@Composable
+//fun DueUp() {
+//    gameDetailUiState.currentGameUiState?.baseballSituation?.dueUp?.map { Text(text = it.playerId) }
+//
+//}
 
 @Composable
 fun RosterItem(rosterPerson: RosterModel) {
@@ -189,7 +241,7 @@ fun RosterItem(rosterPerson: RosterModel) {
 fun LineUp(lineUp: List<RostersModel>) {
 
     lineUp.map { roster ->
-        roster.roster .map { RosterItem(rosterPerson = it) }
+        roster.roster.map { RosterItem(rosterPerson = it) }
     }
 }
 
@@ -389,14 +441,6 @@ fun ScoringPlay(scoringPlays: ScoringPlays) {
 
 
 @Composable
-fun ScoringPlaysList(gameDetailModel: GameDetailModel) {
-    gameDetailModel.scoringPlays.map { play ->
-        ScoringPlay(scoringPlays = play)
-    }
-
-}
-
-@Composable
 fun WinProbabilityGraph(winProbability: List<WinprobabilityModel>) {
 
     winProbability
@@ -406,7 +450,6 @@ fun WinProbabilityGraph(winProbability: List<WinprobabilityModel>) {
 
 @Composable
 fun HeaderTeamLogo(team: GameDetailsTeamInfoModel) {
-
     GenericImageLoader(
         obj = team.logos.href,
         modifier = Modifier.size(60.dp))
@@ -785,6 +828,16 @@ fun RightToLeftLayout(
 }
 
 @Composable
+fun Probables(list: List<ProbablesModel>) {
+    Card() {
+        list.map { prob ->
+            Text(text = prob.displayName)
+            Text(text = prob.athlete?.displayName ?: "")
+        }
+    }
+}
+
+@Composable
 fun HeaderStatusSlot(gameDetailModel: GameDetailsModel) {
     Card(
 
@@ -809,7 +862,7 @@ fun HeaderStatusSlot(gameDetailModel: GameDetailsModel) {
                     ) {
                         gameDetailModel.header.competitions.map {
                             Text(
-                                text = it.date?.toDate()?.formatTo("MMM/dd") ?: "",
+                                text = it.date.toDate()?.formatTo("MMM/dd") ?: "",
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }
@@ -820,8 +873,9 @@ fun HeaderStatusSlot(gameDetailModel: GameDetailsModel) {
                                 text = competition.status?.type?.description ?: "",
                                 fontSize = 12.sp
                             )
+
                             Text(
-                                text = competition.date?.toDate()?.formatTo("K:mm aa") ?: "",
+                                text = competition.date.toDate()?.formatTo("K:mm aa") ?: "",
                                 fontSize = 9.sp
 
                             )
@@ -946,17 +1000,29 @@ fun BaseBallRosterLineUp(rosters: List<Rosters>) {
 }
 
 @Composable
-fun BaseballSituation(gameDetailSituation: SituationModel) {
+fun BaseballSituation(
+    gameDetailSituation: SituationModel,
+    teamMap: MutableMap<String, GameDetailsAthleteDetailsModel>,
+) {
     Card(modifier = Modifier.fillMaxWidth()) {
-        Column() {
+        Column {
+            Row() {
+                Text(text = "Balls " + gameDetailSituation.balls.toString())
+                Text(text = "Outs " + gameDetailSituation.outs.toString())
+                Text(text = "Strikes " + gameDetailSituation.strikes.toString())
+            }
+            Divider()
+            Text(text = "Batter: " + teamMap[gameDetailSituation.batter?.playerId.toString()]?.shortName)
+            Text(text = "Pitcher: " + teamMap[gameDetailSituation.pitcher?.playerId.toString()]?.shortName)
+            Text(text = gameDetailSituation.toString())
+
+            gameDetailSituation.dueUp.map {
+                Text(text = teamMap[it.playerId].toString())
+            }
         }
-        Text(text = "Balls " + gameDetailSituation.balls.toString())
-        Text(text = "Outs " + gameDetailSituation.outs.toString())
-        Text(text = "Strikes " + gameDetailSituation.strikes.toString())
+
     }
-    Text(text = "Batter: " + gameDetailSituation.batter?.playerId.toString())
-    Text(text = "Pitcher: " + gameDetailSituation.pitcher?.playerId.toString())
-    Text(text = "Pitcher: " + gameDetailSituation.pitcher?.playerId.toString())
+
 }
 
 @Composable

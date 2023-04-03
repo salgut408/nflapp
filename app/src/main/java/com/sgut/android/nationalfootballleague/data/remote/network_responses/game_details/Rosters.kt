@@ -32,10 +32,10 @@ data class Roster(
     val position: GameDetailsPosition = GameDetailsPosition(),
     @SerializedName("batOrder")
     val batOrder: Int = 0,
-    @SerializedName("subbedIn")
-    val subbedIn: Boolean = false,
-    @SerializedName("subbedOut")
-    val subbedOut: Boolean = false,
+//    @SerializedName("subbedIn")
+//    val subbedIn: Boolean = false,
+//    @SerializedName("subbedOut")
+//    val subbedOut: Boolean = false,
     @SerializedName("stats")
     val stats: List<GameDetailsStats> = listOf(),
     @SerializedName("jersey")
@@ -50,8 +50,8 @@ fun Roster.asDomain(): RosterModel {
         athlete = athlete.asDomain(),
         position = position.asDomain(),
         batOrder = batOrder,
-        subbedIn = subbedIn,
-        subbedOut = subbedOut,
+//        subbedIn = subbedIn,
+//        subbedOut = subbedOut,
         stats = stats.map { it.asDomain() },
         jersey = jersey
     )

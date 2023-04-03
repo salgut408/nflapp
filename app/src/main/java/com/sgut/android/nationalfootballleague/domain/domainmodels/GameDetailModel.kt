@@ -4,6 +4,8 @@ import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.data.db.article.ArticleDbObject
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.*
 
+// TODO Delete this
+
 data class GameDetailModel(
 
     val rosters: List<Rosters> = listOf(),

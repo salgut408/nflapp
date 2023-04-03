@@ -28,10 +28,10 @@ data class GameDetailsAthlete(
     val jersey: String? = null,
     @SerializedName("position")
     val position: GameDetailsPosition? = GameDetailsPosition(),
-    @SerializedName("bats")
-    val bats: Bats = Bats(),
-    @SerializedName("throws")
-    val throws: Throw = Throw(),
+//    @SerializedName("bats")
+//    val bats: Bats = Bats(),
+//    @SerializedName("throws")
+//    val throws: Throw = Throw(),
 
     )
 
@@ -48,8 +48,8 @@ fun GameDetailsAthlete.asDomain(): GameDetailsAthleteDetailsModel {
         headshot = headshot?.asDomain(),
         jersey = jersey ?: "",
         position = position?.asDomain(),
-        throws = throws.asDomain(),
-        bats = bats.asDomain()
+//        throws = throws.asDomain(),
+//        bats = bats.asDomain()
     )
 }
 
@@ -69,6 +69,8 @@ return BatsModel(
     displayValue = displayValue,
 )
 }
+
+
 
 data class Throw(
   @SerializedName("type")

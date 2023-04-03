@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsCompetitionModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.ProbablesModel
 
 
 data class GameDetailsCompetitions(
@@ -42,7 +43,8 @@ data class GameDetailsCompetitions(
     val timeoutsAvailable: Boolean? = null,
     @SerializedName("possessionArrowAvailable")
     val possessionArrowAvailable: Boolean? = null,
-
+    @SerializedName("probables")
+    val probables: List<Probables> = listOf(),
 
     )
 
@@ -54,7 +56,35 @@ fun GameDetailsCompetitions.asDomain(): GameDetailsCompetitionModel {
         status = status?.asDomain(),
         shotChartAvailable = shotChartAvailable ?: false,
         timeoutsAvailable = timeoutsAvailable ?: false,
-        possessionArrowAvailable = possessionArrowAvailable ?: false
+        possessionArrowAvailable = possessionArrowAvailable ?: false,
+        probables = probables.map { it.asDomain() }
 
+    )
+}
+
+data class Probables(
+
+    @SerializedName("name")
+    val name: String = "",
+    @SerializedName("displayName")
+    val displayName: String = "",
+    @SerializedName("shortDisplayName")
+    val shortDisplayName:String = "",
+    @SerializedName("abbreviation")
+    val abbreviation: String = "",
+    @SerializedName("playerId")
+    val playerId: Int = 0,
+    @SerializedName("athlete")
+    val athlete: GameDetailsAthlete? = GameDetailsAthlete(),
+
+    )
+
+fun Probables.asDomain(): ProbablesModel {
+    return ProbablesModel(
+        name = name,
+        displayName = displayName,
+        shortDisplayName = shortDisplayName,
+        playerId = playerId,
+        athlete = athlete?.asDomain()
     )
 }

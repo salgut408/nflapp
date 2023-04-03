@@ -21,6 +21,8 @@ data class NetworkScoreboardResponse(
     val week: WeekScoreboard = WeekScoreboard(),
     )
 
+
+
 data class WeekScoreboard(
     @SerializedName("number") var week: Int = 0,
 

@@ -47,6 +47,13 @@ fun HomeTeamCardsListScreen(
                 ) {
 
                     item {
+                        OutlinedButton(onClick = { homeListViewModel.setBaseballTeams() }) {
+                            Text(stringResource(R.string.MLB_league),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
                         OutlinedButton(onClick = { homeListViewModel.setCollegeBasketballTeams() }) {
                             Text(stringResource(R.string.NCAA_mens_basketball),
                                 style = MaterialTheme.typography.labelSmall)
@@ -77,12 +84,7 @@ fun HomeTeamCardsListScreen(
                         }
                     }
 
-                    item {
-                        OutlinedButton(onClick = { homeListViewModel.setBaseballTeams() }) {
-                            Text(stringResource(R.string.MLB_league),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
+
 
                     item {
                         OutlinedButton(onClick = { homeListViewModel.setBasketballTeams() }) {

@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ArticleSelf (
 
-  @SerializedName("href" ) var href : String? = null
+  @SerializedName("href" )
+  val href : String? = null
 
 )

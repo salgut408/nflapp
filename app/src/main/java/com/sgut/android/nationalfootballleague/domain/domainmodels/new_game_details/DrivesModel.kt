@@ -5,6 +5,11 @@ data class DrivesModel(
 
 )
 
+data class DueUpItemModel (
+    val playerId: String = "",
+    val batOrder: String = ""
+        )
+
 
 
 

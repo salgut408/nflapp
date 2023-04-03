@@ -3,13 +3,19 @@ package com.sgut.android.nationalfootballleague
 import com.google.gson.annotations.SerializedName
 
 
-data class ArticleDetailNetworkResponse (
+data class ArticleDetailNetworkResponse(
 
-    @SerializedName("resultsOffset" ) var resultsOffset : Int?                 = null,
-    @SerializedName("resultsCount"  ) var resultsCount  : Int?                 = null,
-//    @SerializedName("headlines"     ) var headlines     : ArrayList<Headlines> = arrayListOf(),
-    @SerializedName("resultsLimit"  ) var resultsLimit  : Int?                 = null,
-    @SerializedName("timestamp"     ) var timestamp     : String?              = null,
-    @SerializedName("status"        ) var status        : String?              = null
+    @SerializedName("resultsOffset")
+    val resultsOffset: Int = 0,
+    @SerializedName("resultsCount")
+    val resultsCount:  Int = 0,
+//    @SerializedName("headlines"     )
+//    val headlines     : ArrayList<Headlines> = arrayListOf(),
+    @SerializedName("resultsLimit")
+    val resultsLimit:  Int = 0,
+    @SerializedName("timestamp")
+    val timestamp: String = "",
+    @SerializedName("status")
+    val status: String = "",
 
-)
+    )

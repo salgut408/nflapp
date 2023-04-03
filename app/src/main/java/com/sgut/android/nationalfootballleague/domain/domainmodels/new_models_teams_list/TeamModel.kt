@@ -1,7 +1,6 @@
 package com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list
 
 import com.sgut.android.nationalfootballleague.data.db.team.TeamDbObjFullInfo
-import com.sgut.android.nationalfootballleague.domain.domainmodels.TeamsDomInterface
 
 data class TeamModel(
     val id: String = "",
@@ -17,7 +16,7 @@ data class TeamModel(
     val alternateColor: String = "",
     val isFavorite: Boolean = false,
     val logos: String = ""
-    ) : TeamsDomInterface
+    )
 
     fun TeamModel.asDbObj(sport: String, league: String, leagueAbrv: String) : TeamDbObjFullInfo {
         return TeamDbObjFullInfo(

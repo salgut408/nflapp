@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ArticleMobile (
 
-  @SerializedName("leagues" ) var leagues : ArticleLeagues? = ArticleLeagues()
+  @SerializedName("leagues" )
+  val leagues : ArticleLeagues? = ArticleLeagues()
 
 )

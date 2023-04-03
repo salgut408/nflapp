@@ -10,8 +10,8 @@ data class GameDetailsAthleteDetailsModel(
     val headshot: GameDetailsHeadshotModel? = GameDetailsHeadshotModel(),
     val jersey: String = "",
     val position: GameDetailsPositionModel? = GameDetailsPositionModel(),
-    val bats: BatsModel = BatsModel(),
-    val throws: ThrowModel = ThrowModel(),
+//    val bats: BatsModel = BatsModel(),
+//    val throws: ThrowModel = ThrowModel(),
     )
 
 

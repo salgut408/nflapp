@@ -7,19 +7,17 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.A
 data class ArticleLink(
 
   @SerializedName("language")
-  val language: String? = null,
+  val language: String = "",
   @SerializedName("rel")
   val rel: ArrayList<String> = arrayListOf(),
   @SerializedName("href")
-  val href: String? = null,
+  val href: String = "",
   @SerializedName("text")
-  val text: String? = null,
+  val text: String = "",
   @SerializedName("shortText")
-  val shortText: String? = null,
+  val shortText: String = "",
   @SerializedName("isExternal")
-  val isExternal: Boolean? = null,
-  @SerializedName("isPremium")
-  val isPremium: Boolean? = null,
+  val isExternal: Boolean = false,
 
   )
 

@@ -9,4 +9,4 @@ data class GameDetailsTypeModel(
     val shortGameTimeDetail: String = "",
     val text: String = "",
     val abbreviation: String = "",
-)
+    )

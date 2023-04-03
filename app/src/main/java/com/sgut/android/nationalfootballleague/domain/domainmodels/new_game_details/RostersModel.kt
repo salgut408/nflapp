@@ -7,7 +7,10 @@ data class RostersModel(
     val winner: Boolean = false,
     val team: TeamModel = TeamModel(),
     val roster: List<RosterModel> = listOf(),
-)
+){
+    fun rosterMap(): Map<String, GameDetailsAthleteDetailsModel> = roster.associate { it.athlete.id to it.athlete }
+}
+
 
 data class RosterModel(
     val active: Boolean = false,
@@ -15,8 +18,8 @@ data class RosterModel(
     val athlete: GameDetailsAthleteDetailsModel = GameDetailsAthleteDetailsModel(),
     val position: GameDetailsPositionModel = GameDetailsPositionModel(),
     val batOrder: Int = 0,
-    val subbedIn: Boolean = false,
-    val subbedOut: Boolean = false,
+//    val subbedIn: Boolean = false,
+//    val subbedOut: Boolean = false,
     val stats: List<GameDetailsStatModel> = listOf(),
     var jersey: String = "",
 )

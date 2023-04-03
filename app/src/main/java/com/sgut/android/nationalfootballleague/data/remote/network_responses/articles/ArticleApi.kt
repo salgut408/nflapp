@@ -3,8 +3,9 @@ package com.sgut.android.nationalfootballleague
 import com.google.gson.annotations.SerializedName
 
 
-data class ArticleApi (
+data class ArticleApi(
 
-  @SerializedName("leagues" ) var leagues : ArticleLeagues? = ArticleLeagues()
+  @SerializedName("leagues")
+  val leagues: ArticleLeagues? = ArticleLeagues(),
 
-)
+  )

@@ -7,7 +7,7 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_deta
 data class AgainstTheSpread(
 
   @SerializedName("team")
-  val team: GameDetailsTeam? = GameDetailsTeam(),
+  val team: GameDetailsTeam = GameDetailsTeam(),
   @SerializedName("records")
   val records: ArrayList<String> = arrayListOf(),
 
@@ -15,7 +15,7 @@ data class AgainstTheSpread(
 
 fun AgainstTheSpread.asDomain(): AgainstTheSpreadModel {
   return AgainstTheSpreadModel(
-    team = team?.asDomain(),
+    team = team.asDomain(),
     records = records
   )
 }

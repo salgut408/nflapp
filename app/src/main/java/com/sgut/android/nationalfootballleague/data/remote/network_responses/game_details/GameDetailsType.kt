@@ -22,6 +22,11 @@ data class GameDetailsType(
   val text: String = "",
   @SerializedName("abbreviation")
   val abbreviation: String = "",
+
+
+
+
+
   )
 
 fun GameDetailsType.asDomain(): GameDetailsTypeModel {
@@ -32,6 +37,6 @@ fun GameDetailsType.asDomain(): GameDetailsTypeModel {
     gameTimeDetail = gameTimeDetail,
     shortGameTimeDetail = shortGameTimeDetail,
     text = text,
-    abbreviation = abbreviation
+    abbreviation = abbreviation,
   )
 }

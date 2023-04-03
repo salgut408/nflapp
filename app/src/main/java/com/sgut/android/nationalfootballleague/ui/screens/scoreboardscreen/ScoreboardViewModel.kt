@@ -8,6 +8,7 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.A
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ArticleRepository
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
+import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASKETBALL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class ScoreboardViewModel @Inject constructor(
     private val scoreboardRepository: ScoreboardRepository,
     private val articleRepository: ArticleRepository,
+    private val articlesUseCase: GetArticlesUseCase
 ) : ViewModel() {
 
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())

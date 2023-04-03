@@ -7,13 +7,20 @@ data class SituationModel(
     val outs: Int = 0,
     val pitcher: PitcherModel? = PitcherModel(),
     val batter: BatterModel? = BatterModel(),
+    val dueUp: List<DueUpItemModel> = listOf(),
+    val onSecond: OnSecondModel? = OnSecondModel()
 )
+
+data class OnSecondModel(
+    val playerId: Int? = null
+)
+
 data class BatterModel(
-    val playerId: Int = 0,
+    val playerId: Int? = null,
     )
 
 data class PitcherModel(
-    val playerId: Int = 0,
+    val playerId: Int? = null,
 
     )
 

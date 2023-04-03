@@ -64,10 +64,6 @@ fun ScoreboardScreen(
             text = newUiState.scoreboardModelUiState.day ?: ""
         )
 
-        Text(text = scoreboardViewModel.getTodaysDate() , fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        
-
-
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
@@ -90,8 +86,6 @@ fun ScoreboardScreen(
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
             )
-
-
             GenericImageLoader(
                 obj = newUiState.scoreboardModelUiState.league?.logos?.get(0)?.href ?: "",
                 modifier = Modifier.fillMaxSize()
@@ -133,23 +127,25 @@ fun TeamsMatchUpListFromEvents(
 ) {
 
 
-    events.map { events ->
+    events.map { event ->
         Card(modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
         ) {
-
-            EventName(events)
-            
-
-            events.competitions.map {
+            event.competitions.map {
 //                TODO new card
                 Column() {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Info, contentDescription = "Match Preview",
+                            modifier = Modifier.clickable { }
+                        )
+                        Spacer(modifier = Modifier.width(36.dp))
 
-                    Icon(
-                        imageVector = Icons.Default.Info, contentDescription = "Match Preview",
-                        modifier = Modifier.clickable { }
-                    )
+                        EventName(event)
+                    }
                 }
 
                 TeamComponent2(
@@ -193,7 +189,10 @@ fun CompetitorRecords(records: List<ScoreboardRecordModel>) {
 
 @Composable
 fun EventName(event: ScoreboardEventModel) {
-    Text(event.shortName)
+    Text(
+        event.shortName,
+        style = MaterialTheme.typography.headlineMedium
+    )
 }
 
 
@@ -340,9 +339,10 @@ fun TeamComponent2(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Button(onClick = { }) {
-                Text(text = "Notify me")
-            }
+            Text(
+                text = compScoreboard.status?.type?.detail ?: "",
+                style = MaterialTheme.typography.headlineLarge
+            )
 
 
         }
@@ -418,13 +418,10 @@ fun TeamComponent2(
                             color = whiteColor
                         )
                         Spacer(modifier = modifier.padding(8.dp))
-
-
                         TeamLogoScoreboardImageLoader(team = team2)
                         Spacer(modifier = modifier.padding(8.dp))
                     }
                 }
-
 //                Game id for info or date
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -449,14 +446,17 @@ fun TeamComponent2(
                         style = TextStyle(fontSize = 9.sp),
                         color = Color.White,
                         textAlign = TextAlign.Center)
-
                 }
-
-
             }
         }
-
     }
 }
 
+
+//@Composable
+//fun CalanderDates() {
+//    Row() {
+//        newUiState.scoreboardModelUiState.league?.calendar?.map { Text(text = it.toDate("MM").toString()) }
+//    }
+//}
 

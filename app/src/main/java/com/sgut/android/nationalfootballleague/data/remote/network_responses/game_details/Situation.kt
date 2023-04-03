@@ -1,10 +1,7 @@
 package com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details
 
 import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.BatterModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.LastPlayModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.PitcherModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.SituationModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.*
 
 
 data class Situation(
@@ -21,7 +18,38 @@ data class Situation(
     val pitcher: Pitcher? = Pitcher(),
     @SerializedName("batter")
     val batter: Batter? = Batter(),
+    @SerializedName("dueUp")
+    val dueUp: List<DueUpItem> = listOf(),
+    @SerializedName("onSecond")
+    val onSecond: OnSecond? = OnSecond()
 )
+
+data class OnSecond(
+    val playerId: Int? = null
+)
+
+fun OnSecond.asDomain(): OnSecondModel {
+    return OnSecondModel(
+        playerId = playerId
+    )
+}
+
+data class DueUpItem(
+    @SerializedName("playerId")
+    val playerId: String = "",
+    @SerializedName("batOrder")
+    val batOrder: String = "",
+
+)
+
+fun DueUpItem.asDomain(): DueUpItemModel {
+    return DueUpItemModel(
+        playerId = playerId,
+        batOrder = batOrder
+    )
+}
+
+
 
 fun Situation.asDomain(): SituationModel {
     return SituationModel(
@@ -30,7 +58,9 @@ fun Situation.asDomain(): SituationModel {
         strikes = strikes ?: 0,
         outs = outs ?: 0,
         pitcher = pitcher?.asDomain(),
-        batter = batter?.asDomain()
+        batter = batter?.asDomain(),
+        dueUp = dueUp.map { it.asDomain() },
+        onSecond = onSecond?.asDomain()
     )
 }
 

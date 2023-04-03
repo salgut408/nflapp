@@ -19,7 +19,7 @@ data class GameDetailsStats(
   @SerializedName("type")
   val type: String = "",
   @SerializedName("value")
-  val value: Int = 0,
+  val value: Double = 0.0,
   @SerializedName("displayValue")
   val displayValue: String = "",
 

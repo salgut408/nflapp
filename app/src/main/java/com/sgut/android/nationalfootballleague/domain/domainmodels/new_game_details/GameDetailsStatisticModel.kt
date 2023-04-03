@@ -13,6 +13,6 @@ data class GameDetailsStatModel(
     val description: String = "",
     val abbreviation: String = "",
     val type: String = "",
-    val value: Int = 0,
+    val value: Double = 0.0,
     val displayValue: String = "",
 )

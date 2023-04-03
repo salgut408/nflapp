@@ -6,7 +6,7 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.A
 
 data class NetworkArticleResponse(
   @SerializedName("header")
-  val header: String? = null,
+  val header: String = "",
   @SerializedName("link")
   val link: ArticleLink? = ArticleLink(),
   @SerializedName("articles")
@@ -15,7 +15,7 @@ data class NetworkArticleResponse(
 
 fun NetworkArticleResponse.asDomain(): ArticlesListModel {
   return ArticlesListModel(
-    header = header ?: "",
+    header = header,
     link = link?.asDomain(),
     articles = articles.map { it.asDomain() }
 

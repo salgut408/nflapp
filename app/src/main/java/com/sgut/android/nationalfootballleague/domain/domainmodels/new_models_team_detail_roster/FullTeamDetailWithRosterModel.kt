@@ -13,7 +13,7 @@ data class FullTeamDetailWithRosterModel(
     val color: String = "",
     val alternateColor: String = "",
     val logos: List<FullTeamDetailsLogoModel> = listOf(),
-    val record: RecordModel? = RecordModel(),
+    val record: RecordModel = RecordModel(),
     val athletes: List<AthletesRosterModel> = listOf(),
     var franchise: FullTeamDetailsFranchiseModel = FullTeamDetailsFranchiseModel(),
     val nextEvent: List<NextEventModel> = listOf(),

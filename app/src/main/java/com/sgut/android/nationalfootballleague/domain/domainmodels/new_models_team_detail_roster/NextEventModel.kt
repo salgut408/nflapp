@@ -7,6 +7,6 @@ data class NextEventModel(
     val shortName: String = "",
     val season: SeasonModel = SeasonModel(),
     val seasonType: SeasonTypeModel = SeasonTypeModel(),
-    val week: WeekModel? = WeekModel(),
+    val week: WeekModel = WeekModel(),
     val competitions: List<CompetitionsEventModel> = listOf()
 )

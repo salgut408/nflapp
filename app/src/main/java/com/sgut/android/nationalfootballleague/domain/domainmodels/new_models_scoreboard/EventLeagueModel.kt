@@ -8,6 +8,7 @@ data class EventLeagueModel(
     val logos: List<LogosModel>,
     val name: String,
     val slug: String,
-    val uid: String
+    val uid: String,
+    val calendar: List<String>
 ) {
 }
