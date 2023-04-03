@@ -93,6 +93,6 @@ data class Batter(
     )
 fun Batter.asDomain(): BatterModel {
     return BatterModel(
-        playerId = playerId ?: 0
+        playerId = playerId
     )
 }

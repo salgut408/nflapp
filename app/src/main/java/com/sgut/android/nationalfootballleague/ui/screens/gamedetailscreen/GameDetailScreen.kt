@@ -1345,17 +1345,14 @@ fun DisplayLegend2(color: Color, legend: String, value: Int) {
 }
 
 
-@Composable
-fun SeasonLeaders() {
 
-}
 
 @Composable
 fun PickCenter(
     pickCenterInfo: PickcenterModel,
 ) {
     Card() {
-        Text(text = pickCenterInfo.provider?.name)
+        Text(text = pickCenterInfo.provider.name)
     }
 }
 
@@ -1589,52 +1586,6 @@ fun DropDownMenuItem(
 
 }
 
-@Composable
-fun Leadrs(gameDetailsLeaders: List<GameDetailsLeaders>) {
-
-    gameDetailsLeaders.map {
-        Row() {
-            SznLeaders(leaders = it.leaders)
-        }
-    }
-}
-
-@Composable
-fun SznLeaders(leaders: List<GameDetailsLeaders2>) {
-    Card() {
-
-        leaders.map { SeasonLeaders2(seasonLeader = it) }
-
-
-    }
-}
-
-@Composable
-fun SeasonLeaders2(seasonLeader: GameDetailsLeaders2) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
-    ) {
-
-        Column() {
-            Text(text = seasonLeader.displayName.uppercase(), fontSize = 16.sp)
-            Text(text = seasonLeader.leadersAthlete.getOrNull(0)?.athlete?.shortName ?: "",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.SemiBold)
-            Text(text = seasonLeader.leadersAthlete.getOrNull(0)?.displayValue ?: "",
-                fontSize = 10.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.width(80.dp))
-//        GenericImageLoader(obj = , modifier = )
-
-        }
-        Column() {
-            GenericImageLoader(obj = seasonLeader.leadersAthlete.getOrNull(0)?.athlete?.headshot?.href
-                ?: "", modifier = Modifier.size(70.dp))
-        }
-    }
-}
 
 
 @Composable

@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsAthleteDetailsModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.RostersModel
 import com.sgut.android.nationalfootballleague.domain.repositories.GameDetailsRepository
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamDetailsRepository
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
@@ -44,9 +43,7 @@ class GameDetailViewModel @Inject constructor(
 //        return gameDetailUiState.value.currentGameUiState?.rosters?.first()?.rosterMap() ?: mutableMapOf()
 //    }
 
-    fun mapShit( list: List<RostersModel>) {
-//        return list.flatMap { it.roster to it.team.abbreviation } }
-    }
+
 
     fun getPlayerFromId(id: String): GameDetailsAthleteDetailsModel {
         return teamMap[id] ?: GameDetailsAthleteDetailsModel()
@@ -79,10 +76,10 @@ class GameDetailViewModel @Inject constructor(
                 loadPlayerMap(sport, league, team.team?.abbreviation ?: "")
 
                 Log.e("ROSTER_MAP", teamMap.toString())
-                Log.e("HEADER_PROBABLES", newGameDeetUiState.header?.competitions?.first()?.probables.toString())
+//                Log.e("HEADER_PROBABLES", newGameDeetUiState.header?.competitions?.first()?.probables.toString())
             }
 
-            Log.d("GAMEDEET_VIEWMODEL", newGameDeetUiState.header?.competitions?.first()?.probables.toString())
+            Log.d("GAMEDEET_VIEWMODEL", newGameDeetUiState.rosters.toString())
 
             newGameDeetUiState.boxscore?.teams?.forEach { i ->
                 _colorsTeamList.add(HexToJetpackColor2.getColor(i.team?.color ?: "Color"))
