@@ -15,16 +15,24 @@ class PlayersMapUseCase @Inject constructor(
 
     ) {
 
+    val map: MutableMap<String, GameDetailsAthleteDetailsModel> = mutableMapOf()
+
 
     suspend operator fun invoke(
         sport: String,
         league: String,
-        team: String,
+        teams: List<String>,
     ): Map<String, GameDetailsAthleteDetailsModel> = withContext(defaultDispatcher) {
 
-        val teamMap = teamDetailsRepository.getSpecificTeamRosterInGameDetails(sport, league, team)
-            .associate { it.id to it }
-        return@withContext teamMap
+        teams.forEach { team ->
+            map += teamDetailsRepository.getSpecificTeamRosterInGameDetails(sport, league, team ?: "").associate {
+                it.id to it
+            }.toMutableMap()
+        }
+
+//        val teamMap = teamDetailsRepository.getSpecificTeamRosterInGameDetails(sport, league, team)
+//            .associate { it.id to it }
+        return@withContext map
     }
 
 }

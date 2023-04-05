@@ -113,8 +113,9 @@ interface EspnApi {
 
     //    https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams/ari/schedule
 
-
-    // TODO implement racing API Endpoint F1
+//        article details / story
+//    https://now.core.api.espn.com/v1/sports/news/36080086
+    // TODO racing API Endpoint F1
 //    https://site.api.espn.com/apis/site/v2/sports/racing/f1/scoreboard
 
 

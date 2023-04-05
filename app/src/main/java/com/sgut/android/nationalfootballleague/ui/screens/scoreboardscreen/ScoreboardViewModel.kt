@@ -42,9 +42,10 @@ class ScoreboardViewModel @Inject constructor(
 
             if (league.equals(NCAA_BASKETBALL)) {
 
-                val currentScoreboardModelUiState = scoreboardRepository.getCollegeBasketballScoreboard(sport, league, "200")
-
                 val articlesListResult = getArticles(sport, league)
+
+
+                val currentScoreboardModelUiState = scoreboardRepository.getCollegeBasketballScoreboard(sport, league, "200")
 
                 setScoreboardUiState(
                     sport, league,

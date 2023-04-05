@@ -73,6 +73,7 @@ fun GameDetailsScreen(
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
     Log.d("GAMEDETAIL-UISTATE", gameDetailUiState.currentGameUiState.toString())
 
+//    val map by remember {gameDetailViewModel.teamMap}
 
 
     Scaffold(
@@ -89,13 +90,20 @@ fun GameDetailsScreen(
 //                messing around with
 //                Text(text = gameDetailUiState.currentGameUiState?.rosters?.last()?.roster.toString())
 
-                Text(text = gameDetailViewModel.teamMap.size.toString())
+                Card() {
 
-                Text(text = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.batter?.playerId.toString()).fullName)
-                GenericImageLoader(obj = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.batter?.playerId.toString()).headshot?.href
-                    ?: "", modifier = Modifier.size(80.dp))
+                    Text(text = gameDetailViewModel.teamMap.size.toString())
+
+                    Text(text = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.batter?.playerId.toString()).shortName)
+                    GenericImageLoader(obj = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.batter?.playerId.toString()).headshot?.href
+                        ?: "", modifier = Modifier.size(80.dp))
+
+                    Text(text = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.pitcher?.playerId.toString()).shortName)
+                    GenericImageLoader(obj = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.pitcher?.playerId.toString()).headshot?.href
+                        ?: "", modifier = Modifier.size(80.dp))
 
 
+                }
 
 
                 CompetitionStatus(competitions = gameDetailUiState.currentGameUiState?.header?.competitions
@@ -105,9 +113,7 @@ fun GameDetailsScreen(
 
 
 
-                Text(text = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.pitcher?.playerId.toString()).fullName)
 
-                Text(text = gameDetailViewModel.teamMap["29198"]?.fullName ?: "")
 
 
 //                PlayerMap(map = gameDetailViewModel.teamMap.toSortedMap())
@@ -212,7 +218,7 @@ fun PlayerMap(map: Map<String, GameDetailsAthleteDetailsModel>) {
 fun BaseballSpecific(
     gameDetailSituation: SituationModel,
     gameDetailsModel: GameDetailsModel,
-    teamMap: MutableMap<String, GameDetailsAthleteDetailsModel>,
+    teamMap: Map<String, GameDetailsAthleteDetailsModel>,
 ) {
     DoughnutChart2(
         gameDetailModel = gameDetailsModel
@@ -1021,7 +1027,7 @@ fun BaseBallRosterLineUp(rosters: List<Rosters>) {
 @Composable
 fun BaseballSituation(
     gameDetailSituation: SituationModel,
-    teamMap: MutableMap<String, GameDetailsAthleteDetailsModel>,
+    teamMap: Map<String, GameDetailsAthleteDetailsModel>,
 //    onPlayerId: (str: String) -> String
 ) {
     Card(modifier = Modifier.fillMaxWidth()) {
