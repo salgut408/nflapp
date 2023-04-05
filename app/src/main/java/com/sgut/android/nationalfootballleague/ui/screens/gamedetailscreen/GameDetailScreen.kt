@@ -86,17 +86,28 @@ fun GameDetailsScreen(
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
 
+//                messing around with
+//                Text(text = gameDetailUiState.currentGameUiState?.rosters?.last()?.roster.toString())
 
-//                BaseBallRosterLineUp(rosters = gameDetailUiState.currentGameUiState?.rosters ?: listOf())
+                Text(text = gameDetailViewModel.teamMap.size.toString())
+
+                Text(text = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.batter?.playerId.toString()).fullName)
+                GenericImageLoader(obj = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.batter?.playerId.toString()).headshot?.href
+                    ?: "", modifier = Modifier.size(80.dp))
 
 
-                gameDetailUiState.currentGameUiState?.header?.competitions?.map {
-                    Text(text = it.status?.type?.description ?: "")
 
-                }
 
-                Text(text = gameDetailViewModel.getPlayerFromId("35241").fullName)
-                Text(text = gameDetailViewModel.teamMap["35241"]?.fullName ?: "")
+                CompetitionStatus(competitions = gameDetailUiState.currentGameUiState?.header?.competitions
+                    ?: listOf())
+
+
+
+
+
+                Text(text = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.pitcher?.playerId.toString()).fullName)
+
+                Text(text = gameDetailViewModel.teamMap["29198"]?.fullName ?: "")
 
 
 //                PlayerMap(map = gameDetailViewModel.teamMap.toSortedMap())
@@ -232,6 +243,16 @@ fun RosterItem(rosterPerson: RosterModel) {
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(text = "Bat order: $rosterPerson.batOrder.toString()")
             }
+        }
+    }
+}
+
+
+@Composable
+fun CompetitionStatus(competitions: List<GameDetailsCompetitionModel>) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        competitions.map { status ->
+            Text(text = status.status?.type?.shortGameTimeDetail ?: "")
         }
     }
 }
@@ -840,7 +861,6 @@ fun Probables(list: List<ProbablesModel>) {
 @Composable
 fun HeaderStatusSlot(gameDetailModel: GameDetailsModel) {
     Card(
-
     ) {
 
         Box(modifier = Modifier
@@ -856,10 +876,10 @@ fun HeaderStatusSlot(gameDetailModel: GameDetailsModel) {
 
                 gameDetailModel.header?.competitions!!.map { competition ->
                     HeaderTeamSlot(competitors = competition.competitors.get(FIRST_TEAM))
-
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+
                         gameDetailModel.header.competitions.map {
                             Text(
                                 text = it.date.toDate()?.formatTo("MMM/dd") ?: "",
@@ -877,7 +897,6 @@ fun HeaderStatusSlot(gameDetailModel: GameDetailsModel) {
                             Text(
                                 text = competition.date.toDate()?.formatTo("K:mm aa") ?: "",
                                 fontSize = 9.sp
-
                             )
 
                         }
@@ -1003,6 +1022,7 @@ fun BaseBallRosterLineUp(rosters: List<Rosters>) {
 fun BaseballSituation(
     gameDetailSituation: SituationModel,
     teamMap: MutableMap<String, GameDetailsAthleteDetailsModel>,
+//    onPlayerId: (str: String) -> String
 ) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column {
@@ -1012,6 +1032,7 @@ fun BaseballSituation(
                 Text(text = "Strikes " + gameDetailSituation.strikes.toString())
             }
             Divider()
+
             Text(text = "Batter: " + teamMap[gameDetailSituation.batter?.playerId.toString()]?.shortName)
             Text(text = "Pitcher: " + teamMap[gameDetailSituation.pitcher?.playerId.toString()]?.shortName)
             Text(text = gameDetailSituation.toString())
@@ -1345,8 +1366,6 @@ fun DisplayLegend2(color: Color, legend: String, value: Int) {
 }
 
 
-
-
 @Composable
 fun PickCenter(
     pickCenterInfo: PickcenterModel,
@@ -1585,7 +1604,6 @@ fun DropDownMenuItem(
 ) {
 
 }
-
 
 
 @Composable

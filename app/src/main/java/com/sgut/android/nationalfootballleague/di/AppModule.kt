@@ -21,6 +21,7 @@ import com.sgut.android.nationalfootballleague.data.service.impl.StorageServiceI
 import com.sgut.android.nationalfootballleague.domain.dtomappers.*
 import com.sgut.android.nationalfootballleague.domain.repositories.*
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
+import com.sgut.android.nationalfootballleague.domain.use_cases.PlayersMapUseCase
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASE_URL
 import dagger.Binds
 import dagger.Module
@@ -100,6 +101,11 @@ object AppModule {
     fun provideArticleUseCase(
         articleRepository: ArticleRepository,
     ): GetArticlesUseCase = GetArticlesUseCase(articleRepository)
+
+    @Provides
+    fun providePlayersMapUseCase(
+        teamDetailsRepository: TeamDetailsRepository
+    ): PlayersMapUseCase = PlayersMapUseCase(teamDetailsRepository )
 
 
     @Singleton

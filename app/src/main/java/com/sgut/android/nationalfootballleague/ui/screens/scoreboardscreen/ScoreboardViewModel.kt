@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticleDomianModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
-import com.sgut.android.nationalfootballleague.domain.repositories.ArticleRepository
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASKETBALL
@@ -21,8 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ScoreboardViewModel @Inject constructor(
     private val scoreboardRepository: ScoreboardRepository,
-    private val articleRepository: ArticleRepository,
-    private val articlesUseCase: GetArticlesUseCase
+    private val getArticles: GetArticlesUseCase
 ) : ViewModel() {
 
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())
@@ -30,27 +28,32 @@ class ScoreboardViewModel @Inject constructor(
 
     var newScoreboardModelState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
 
-    init {
 
+    init {
     }
 
 //    fun getCompetitionHomeTeam(): ScoreboardCompetitorsModel {
 //        return scoreboardUiState.value.scoreboardModelUiState.events.
 //    }
 
+
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
         try {
 
             if (league.equals(NCAA_BASKETBALL)) {
-                val currentScoreboardModelUiState =
-                    scoreboardRepository.getCollegeBasketballScoreboard(sport, league, "200")
-                val articlesListResult = articleRepository.getArticles(sport, league)
+
+                val currentScoreboardModelUiState = scoreboardRepository.getCollegeBasketballScoreboard(sport, league, "200")
+
+                val articlesListResult = getArticles(sport, league)
+
                 setScoreboardUiState(
                     sport, league,
                     currentScoreboardModelUiState, articlesListResult,
                 )
             } else {
-                val articlesListResult = articleRepository.getArticles(sport, league)
+
+                val articlesListResult = getArticles(sport, league)
+
                 val currentScoreboardModelUiState =
                     scoreboardRepository.getGeneralScoreboard(sport, league)
                 setScoreboardUiState(

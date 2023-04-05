@@ -27,6 +27,7 @@ data class GameDetailsType(
 
 
 
+
   )
 
 fun GameDetailsType.asDomain(): GameDetailsTypeModel {
@@ -38,5 +39,6 @@ fun GameDetailsType.asDomain(): GameDetailsTypeModel {
     shortGameTimeDetail = shortGameTimeDetail,
     text = text,
     abbreviation = abbreviation,
+
   )
 }

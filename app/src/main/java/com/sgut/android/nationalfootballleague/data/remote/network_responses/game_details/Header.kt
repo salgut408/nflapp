@@ -21,7 +21,12 @@ data class Header(
   val league: GameDetailsLeague = GameDetailsLeague(),
   @SerializedName("gameNote")
   val gameNote: String? = null,
+
   )
+
+
+
+
 
 fun Header.asDomain(): HeaderModel {
   return HeaderModel(
@@ -31,6 +36,6 @@ fun Header.asDomain(): HeaderModel {
     competitions = competitions.map { it.asDomain() },
     week = week ?: 0,
     league = league.asDomain() ,
-    gameNote = gameNote ?: ""
+    gameNote = gameNote ?: "",
   )
 }

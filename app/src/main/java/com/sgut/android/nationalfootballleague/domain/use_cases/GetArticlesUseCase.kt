@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class GetArticlesUseCase @Inject constructor(
+open class GetArticlesUseCase @Inject constructor(
     private val articleRepository: ArticleRepository,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 

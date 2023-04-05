@@ -9,6 +9,7 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_deta
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsModel
 import com.sgut.android.nationalfootballleague.domain.repositories.GameDetailsRepository
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamDetailsRepository
+import com.sgut.android.nationalfootballleague.domain.use_cases.PlayersMapUseCase
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +23,9 @@ import javax.inject.Inject
 class GameDetailViewModel @Inject constructor(
     private val gameDetailsRepository: GameDetailsRepository,
     private val teamDetailsRepository: TeamDetailsRepository,
+    private val playersMap: PlayersMapUseCase
 ) : ViewModel() {
+
 
 //    TODO Move to UseCase
 //    TODO Move map to uiState
@@ -36,7 +39,6 @@ class GameDetailViewModel @Inject constructor(
 
 
     init {
-
     }
 
 //    fun getRosterMap(): Map<String, GameDetailsAthleteDetailsModel> {
@@ -75,8 +77,9 @@ class GameDetailViewModel @Inject constructor(
             newGameDeetUiState.boxscore?.teams?.forEach { team->
                 loadPlayerMap(sport, league, team.team?.abbreviation ?: "")
 
+                teamMap = playersMap(sport, league, team.team?.abbreviation ?: "").toMutableMap()
                 Log.e("ROSTER_MAP", teamMap.toString())
-//                Log.e("HEADER_PROBABLES", newGameDeetUiState.header?.competitions?.first()?.probables.toString())
+                Log.e("HEADER_PROBABLES", newGameDeetUiState.header?.competitions?.first()?.probables.toString())
             }
 
             Log.d("GAMEDEET_VIEWMODEL", newGameDeetUiState.rosters.toString())

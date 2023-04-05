@@ -20,8 +20,6 @@ data class Articles(
     val links: ArticleLinks = ArticleLinks(),
     @SerializedName("lastModified")
     val lastModified: String = "",
-    @SerializedName("categories")
-    val categories: List<ArticleCategories> = listOf(),
     @SerializedName("headline")
     val headline: String = "",
     @SerializedName("byline")

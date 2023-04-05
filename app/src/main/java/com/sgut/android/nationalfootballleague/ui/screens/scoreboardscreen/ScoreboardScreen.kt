@@ -45,6 +45,7 @@ fun ScoreboardScreen(
 
 //    TODO articles move to usecase
     val articles = scoreboardUiState.currentArticles
+    val articles2 = scoreboardViewModel
 
 
     val newUiState by scoreboardViewModel.newScoreboardModelState.collectAsState()

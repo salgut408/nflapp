@@ -10,6 +10,7 @@ data class HeaderModel(
     val gameNote: String = "",
 )
 
+
 data class GameDetailsLeagueModel(
     val id: Int = 0,
     val description: String? = null,

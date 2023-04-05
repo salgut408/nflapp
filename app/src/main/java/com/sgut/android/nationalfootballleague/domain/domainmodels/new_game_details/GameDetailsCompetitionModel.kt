@@ -10,7 +10,8 @@ data class GameDetailsCompetitionModel(
     val possessionArrowAvailable: Boolean = false,
     val probables: List<ProbablesModel> = listOf(),
 
-    )
+
+)
 
 
 
