@@ -21,12 +21,36 @@ data class Situation(
     @SerializedName("dueUp")
     val dueUp: List<DueUpItem> = listOf(),
     @SerializedName("onSecond")
-    val onSecond: OnSecond? = OnSecond()
+    val onSecond: OnSecond? = OnSecond(),
+    @SerializedName("onFirst")
+    val onFirst: OnFirst? = OnFirst(),
+    @SerializedName("onThird")
+    val onThird: OnThird? = OnThird(),
 )
 
+data class OnThird(
+    val playerId: Int? = null,
+
+    )
+
+fun OnThird.asDomain(): OnThirdModel {
+    return OnThirdModel(
+        playerId = playerId
+    )
+}
+
 data class OnSecond(
-    val playerId: Int? = null
+    val playerId: Int? = null,
 )
+
+data class OnFirst(
+    val playerId: Int? = null,
+)
+fun OnFirst.asDomain(): OnFirstModel {
+    return OnFirstModel(
+        playerId = playerId
+    )
+}
 
 fun OnSecond.asDomain(): OnSecondModel {
     return OnSecondModel(
@@ -40,7 +64,7 @@ data class DueUpItem(
     @SerializedName("batOrder")
     val batOrder: String = "",
 
-)
+    )
 
 fun DueUpItem.asDomain(): DueUpItemModel {
     return DueUpItemModel(
@@ -50,10 +74,9 @@ fun DueUpItem.asDomain(): DueUpItemModel {
 }
 
 
-
 fun Situation.asDomain(): SituationModel {
     return SituationModel(
-        lastPlay = lastPlay?.asDomain() ,
+        lastPlay = lastPlay?.asDomain(),
         balls = balls ?: 0,
         strikes = strikes ?: 0,
         outs = outs ?: 0,
@@ -70,6 +93,7 @@ data class LastPlay(
     val id: String? = null,
 
     )
+
 fun LastPlay.asDomain(): LastPlayModel {
     return LastPlayModel(
         id = id ?: ""
@@ -79,7 +103,8 @@ fun LastPlay.asDomain(): LastPlayModel {
 data class Pitcher(
     @SerializedName("playerId")
     val playerId: Int? = null,
-    )
+)
+
 fun Pitcher.asDomain(): PitcherModel {
     return PitcherModel(
         playerId = playerId ?: 0
@@ -91,6 +116,7 @@ data class Batter(
     val playerId: Int? = null,
 
     )
+
 fun Batter.asDomain(): BatterModel {
     return BatterModel(
         playerId = playerId

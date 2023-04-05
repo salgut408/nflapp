@@ -21,45 +21,28 @@ import javax.inject.Inject
 @HiltViewModel
 class GameDetailViewModel @Inject constructor(
     private val gameDetailsRepository: GameDetailsRepository,
-    private val playersMap: PlayersMapUseCase
+    private val playersMap: PlayersMapUseCase,
 ) : ViewModel() {
 
 
-//    TODO Move to UseCase
-//    TODO Move map to uiState
+//    TODO Move map from useCase to uiState
 
     private val _gameDetailUiState = MutableStateFlow(GameDetailsScreenUiState())
     var gameDetailUiState: StateFlow<GameDetailsScreenUiState> = _gameDetailUiState.asStateFlow()
 
     private val _colorsTeamList: MutableList<Color> = mutableListOf()
 
-      var teamMap: Map<String, GameDetailsAthleteDetailsModel> = mapOf()
+    var teamMap: Map<String, GameDetailsAthleteDetailsModel> = mapOf()
 
 
     init {
     }
 
-
-
-
-
     fun getPlayerFromId(id: String): GameDetailsAthleteDetailsModel {
         return teamMap[id] ?: GameDetailsAthleteDetailsModel()
     }
 
-//    fun loadPlayerMap(
-//        sport: String,
-//        league: String,
-//        teamAbr: String
-//    ) = viewModelScope.launch {
-//        try {
-//
-//                teamMap += teamDetailsRepository.getSpecificTeamRosterInGameDetails(sport, league, teamAbr).associate { it.id to it }.toMutableMap()
-//                Log.e("LOAD_ROSTER_MAP_SOLO", teamMap.toString())
-//        } catch (e: Exception) {
-//            Log.e("DEBUG DETAILS", e.message.toString())
-//        }
-//    }
+
 
     fun loadGameDetails(
         sport: String,
@@ -69,19 +52,17 @@ class GameDetailViewModel @Inject constructor(
         try {
             val newGameDeetUiState = gameDetailsRepository.getGameDetails(sport, league, event)
 
-            setGameDetailsUiState( sport, league, newGameDeetUiState)
+            setGameDetailsUiState(sport, league, newGameDeetUiState)
 
             val teams = listOf(
-                newGameDeetUiState.boxscore?.teams?.first()?.team?.abbreviation ?:"" ,
-                newGameDeetUiState.boxscore?.teams?.last()?.team?.abbreviation ?:"" ,
-                )
+                newGameDeetUiState.boxscore?.teams?.first()?.team?.abbreviation ?: "",
+                newGameDeetUiState.boxscore?.teams?.last()?.team?.abbreviation ?: "",
+            )
 
-                teamMap = playersMap(sport, league, teams)
-                Log.e("ROSTER_MAP", teamMap.toString())
-                Log.e("HEADER_PROBABLES", newGameDeetUiState.header?.competitions?.first()?.probables.toString())
+            teamMap = playersMap(sport, league, teams)
 
 
-            Log.d("GAMEDEET_VIEWMODEL", newGameDeetUiState.rosters.toString())
+            Log.d("GAMEDEET_VIEWMODEL", newGameDeetUiState.plays .toString())
 
             newGameDeetUiState.boxscore?.teams?.forEach { i ->
                 _colorsTeamList.add(HexToJetpackColor2.getColor(i.team?.color ?: "Color"))
@@ -99,9 +80,9 @@ class GameDetailViewModel @Inject constructor(
     }
 
     private fun setGameDetailsUiState(
-       currentSport: String,
-       currentLeague: String,
-       currentGameUiState: GameDetailsModel,
+        currentSport: String,
+        currentLeague: String,
+        currentGameUiState: GameDetailsModel,
     ) {
         _gameDetailUiState.update {
             it.copy(
@@ -111,5 +92,21 @@ class GameDetailViewModel @Inject constructor(
             )
         }
     }
+
+
+//      moved to use case for all player maps
+//    fun loadPlayerMap(
+//        sport: String,
+//        league: String,
+//        teamAbr: String
+//    ) = viewModelScope.launch {
+//        try {
+//
+//                teamMap += teamDetailsRepository.getSpecificTeamRosterInGameDetails(sport, league, teamAbr).associate { it.id to it }.toMutableMap()
+//                Log.e("LOAD_ROSTER_MAP_SOLO", teamMap.toString())
+//        } catch (e: Exception) {
+//            Log.e("DEBUG DETAILS", e.message.toString())
+//        }
+//    }
 
 }

@@ -8,10 +8,21 @@ data class SituationModel(
     val pitcher: PitcherModel? = PitcherModel(),
     val batter: BatterModel? = BatterModel(),
     val dueUp: List<DueUpItemModel> = listOf(),
-    val onSecond: OnSecondModel? = OnSecondModel()
+    val onSecond: OnSecondModel? = OnSecondModel(),
+    val onFirst: OnFirstModel? = OnFirstModel(),
+    val onThird: OnThirdModel? = OnThirdModel()
+
+)
+
+data class OnThirdModel(
+    val playerId: Int? = null
+
 )
 
 data class OnSecondModel(
+    val playerId: Int? = null
+)
+data class OnFirstModel(
     val playerId: Int? = null
 )
 

@@ -2,4 +2,5 @@ package com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_det
 
 data class GameDetailsStatusModel (
     val type: GameDetailsTypeModel? = GameDetailsTypeModel(),
+    val periodPrefix: String = ""
 )

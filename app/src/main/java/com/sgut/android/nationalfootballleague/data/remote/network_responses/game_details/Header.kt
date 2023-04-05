@@ -22,6 +22,7 @@ data class Header(
   @SerializedName("gameNote")
   val gameNote: String? = null,
 
+
   )
 
 

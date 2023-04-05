@@ -90,33 +90,24 @@ fun GameDetailsScreen(
 //                messing around with
 //                Text(text = gameDetailUiState.currentGameUiState?.rosters?.last()?.roster.toString())
 
-                Card() {
+//                Card(modifier = Modifier.fillMaxWidth()) {
+//
+//                    //size of map
+//                    Text(text = gameDetailViewModel.teamMap.size.toString())
 
-                    Text(text = gameDetailViewModel.teamMap.size.toString())
-
-                    Text(text = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.batter?.playerId.toString()).shortName)
-                    GenericImageLoader(obj = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.batter?.playerId.toString()).headshot?.href
-                        ?: "", modifier = Modifier.size(80.dp))
-
-                    Text(text = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.pitcher?.playerId.toString()).shortName)
-                    GenericImageLoader(obj = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.pitcher?.playerId.toString()).headshot?.href
-                        ?: "", modifier = Modifier.size(80.dp))
-
-
-                }
+//                    Text(text = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.batter?.playerId.toString()).shortName)
+//                    GenericImageLoader(obj = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.batter?.playerId.toString()).headshot?.href
+//                        ?: "", modifier = Modifier.size(80.dp))
+//
+//                    Text(text = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.pitcher?.playerId.toString()).shortName)
+//                    GenericImageLoader(obj = gameDetailViewModel.getPlayerFromId(gameDetailUiState.currentGameUiState?.baseballSituation?.pitcher?.playerId.toString()).headshot?.href
+//                        ?: "", modifier = Modifier.size(80.dp))
+//
+//                }
 
 
                 CompetitionStatus(competitions = gameDetailUiState.currentGameUiState?.header?.competitions
                     ?: listOf())
-
-
-
-
-
-
-
-
-//                PlayerMap(map = gameDetailViewModel.teamMap.toSortedMap())
 
                 HeaderStatusSlot(
                     gameDetailModel = gameDetailUiState.currentGameUiState ?: GameDetailsModel())
@@ -194,25 +185,12 @@ fun GameDetailsScreen(
     )
 }
 
+
 @Composable
-fun PlayerMap(map: Map<String, GameDetailsAthleteDetailsModel>) {
-    Card(Modifier.fillMaxWidth()) {
-        for (i in map) {
-            Column() {
-                Row() {
-                    Text(text = i.key)
-                    Spacer(modifier = Modifier.width(30.dp))
-                    Text(text = i.value.fullName)
-                }
-                GenericImageLoader(obj = i.value.headshot?.href ?: "",
-                    modifier = Modifier.size(40.dp))
-
-            }
-        }
-
-    }
+fun EnhancedBaseballSituation() {
 
 }
+
 
 @Composable
 fun BaseballSpecific(
@@ -220,13 +198,17 @@ fun BaseballSpecific(
     gameDetailsModel: GameDetailsModel,
     teamMap: Map<String, GameDetailsAthleteDetailsModel>,
 ) {
+    BaseballSituation(
+        gameDetailSituation = gameDetailSituation,
+        teamMap = teamMap,
+        competition = gameDetailsModel.header?.competitions?.first()
+            ?: GameDetailsCompetitionModel()
+    )
+
     DoughnutChart2(
         gameDetailModel = gameDetailsModel
     )
-    BaseballSituation(
-        gameDetailSituation = gameDetailSituation,
-        teamMap = teamMap
-    )
+
 
 }
 
@@ -1027,28 +1009,114 @@ fun BaseBallRosterLineUp(rosters: List<Rosters>) {
 @Composable
 fun BaseballSituation(
     gameDetailSituation: SituationModel,
+    competition: GameDetailsCompetitionModel,
     teamMap: Map<String, GameDetailsAthleteDetailsModel>,
 //    onPlayerId: (str: String) -> String
 ) {
+
+//    TOP/MIDDLE/BOTTOM/END are Competition status types
     Card(modifier = Modifier.fillMaxWidth()) {
         Column {
-            Row() {
-                Text(text = "Balls " + gameDetailSituation.balls.toString())
-                Text(text = "Outs " + gameDetailSituation.outs.toString())
-                Text(text = "Strikes " + gameDetailSituation.strikes.toString())
-            }
+            InningText(competition = competition)
+            Divider()
+            OutsBallsStrikes(gameDetailSituation = gameDetailSituation)
             Divider()
 
-            Text(text = "Batter: " + teamMap[gameDetailSituation.batter?.playerId.toString()]?.shortName)
-            Text(text = "Pitcher: " + teamMap[gameDetailSituation.pitcher?.playerId.toString()]?.shortName)
-            Text(text = gameDetailSituation.toString())
+            if (competition.status?.periodPrefix.equals("End")){
 
-            gameDetailSituation.dueUp.map {
-                Text(text = teamMap[it.playerId].toString())
+                gameDetailSituation.dueUp.map { dueUp ->
+                    Player(player = teamMap[dueUp.playerId.toString()] ?: GameDetailsAthleteDetailsModel())
+                }
+                gameDetailSituation.dueUp.map { dueUp ->
+                    DueUpItem(dueUpItemModel = dueUp)
+                }
+            } else {
+
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Player(player = teamMap[gameDetailSituation.batter?.playerId.toString()]
+                        ?: GameDetailsAthleteDetailsModel())
+
+                    Text(text = "Vs")
+
+                    Player(player = teamMap[gameDetailSituation.pitcher?.playerId.toString()]
+                        ?: GameDetailsAthleteDetailsModel())
+
+                }
+            }
+
+//            Text(text = gameDetailSituation.toString())
+            Divider()
+
+            Text(text = "On First")
+            Row() {
+                Player(player = teamMap[gameDetailSituation.onFirst.toString()] ?: GameDetailsAthleteDetailsModel())
+            }
+            Text(text = "On Second")
+            Row() {
+                Player(player = teamMap[gameDetailSituation.onSecond.toString()] ?: GameDetailsAthleteDetailsModel())
+            }
+            Text(text = "On Third")
+            Row() {
+                Player(player = teamMap[gameDetailSituation.onThird.toString()] ?: GameDetailsAthleteDetailsModel())
             }
         }
-
     }
+
+}
+
+@Composable
+fun DueUpItem(dueUpItemModel: DueUpItemModel) {
+    Text(text = "${dueUpItemModel.playerId}, ${dueUpItemModel.batOrder.toString()}  ")
+}
+
+
+
+@Composable
+fun Player(player: GameDetailsAthleteDetailsModel) {
+    Box(modifier = Modifier.wrapContentSize()) {
+        Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Text(text = player.shortName, fontWeight = FontWeight.Bold)
+
+            GenericImageLoader(obj = player.headshot?.href ?: "", modifier = Modifier.size(60.dp))
+            Text(text = player.position?.displayName ?: "non")
+
+        }
+    }
+}
+
+@Composable
+fun PitcherVsBatter(gameDetailSituation: SituationModel) {
+
+}
+
+@Composable
+fun OutsBallsStrikes(
+    gameDetailSituation: SituationModel,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        Text(text = "Outs " + gameDetailSituation.outs.toString())
+        Text(text = "Balls " + gameDetailSituation.balls.toString())
+        Text(text = "Strikes " + gameDetailSituation.strikes.toString())
+    }
+}
+
+@Composable
+fun InningText(competition: GameDetailsCompetitionModel) {
+
+    Text(text = competition.status?.type?.gameTimeDetail ?: "", style = MaterialTheme.typography.displayMedium)
+    Divider()
+    Text(text = competition.status?.periodPrefix ?: "")
 
 }
 

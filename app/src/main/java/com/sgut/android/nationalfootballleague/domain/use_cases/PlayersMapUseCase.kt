@@ -25,13 +25,11 @@ class PlayersMapUseCase @Inject constructor(
     ): Map<String, GameDetailsAthleteDetailsModel> = withContext(defaultDispatcher) {
 
         teams.forEach { team ->
-            map += teamDetailsRepository.getSpecificTeamRosterInGameDetails(sport, league, team ?: "").associate {
+            map += teamDetailsRepository.getSpecificTeamRosterInGameDetails(sport, league, team).associate {
                 it.id to it
             }.toMutableMap()
         }
 
-//        val teamMap = teamDetailsRepository.getSpecificTeamRosterInGameDetails(sport, league, team)
-//            .associate { it.id to it }
         return@withContext map
     }
 

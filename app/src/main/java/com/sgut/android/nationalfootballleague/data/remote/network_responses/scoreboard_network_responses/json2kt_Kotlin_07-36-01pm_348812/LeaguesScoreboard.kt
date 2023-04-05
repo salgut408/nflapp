@@ -30,8 +30,8 @@ data class LeaguesScoreboard(
     val calendarStartDate: String? = null,
     @SerializedName("calendarEndDate")
     val calendarEndDate: String? = null,
-    @SerializedName("calendar")
-    val calendar: List<String> = listOf(),
+//    @SerializedName("calendar")
+//    val calendar: List<C> = listOf(),
 
     )
 
@@ -43,6 +43,6 @@ fun LeaguesScoreboard.asDomain(): EventLeagueModel {
         name = name ?: "",
         slug = slug ?: "",
         uid = uid ?: "",
-        calendar = calendar
+//        calendar = calendar
     )
 }

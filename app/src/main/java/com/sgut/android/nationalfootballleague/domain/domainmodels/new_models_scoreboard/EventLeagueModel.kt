@@ -9,6 +9,6 @@ data class EventLeagueModel(
     val name: String,
     val slug: String,
     val uid: String,
-    val calendar: List<String>
+//    val calendar: List<String>
 ) {
 }
