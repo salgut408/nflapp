@@ -17,9 +17,6 @@ data class GameDetailResponse(
     val notes: List<String> = listOf(),
 
 
-
-
-
     @SerializedName("boxscore")
     val boxscore: GameDetailsBoxscore? = GameDetailsBoxscore(),
     @SerializedName("format")
@@ -62,7 +59,10 @@ data class GameDetailResponse(
     val scoringPlays: List<ScoringPlays> = listOf(),
     @SerializedName("videos")
     val videos: List<Videos> = listOf(),
-)
+//    @SerializedName("seasonseries")
+//    val seasonseries: List<Seasonseries> = listOf(),
+
+    )
 
 fun GameDetailResponse.asDomain(): GameDetailsModel {
     return GameDetailsModel(

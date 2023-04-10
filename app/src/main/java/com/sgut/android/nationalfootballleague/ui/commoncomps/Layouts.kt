@@ -1,8 +1,6 @@
 package com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
@@ -52,13 +50,26 @@ fun VerticalGrid(
     }
 
 }
+//reusable Spacer you can input for height or width
+@Composable
+fun SpacerDp(
+    modifier: Modifier,
+    height: Int =  0,
+    width: Int = 0
+) {
+   Spacer(
+       modifier = modifier
+       .height(height.dp)
+           .width(width.dp)
+   )
+}
 
 @Composable
 fun SportDivider(
     modifier: Modifier = Modifier,
     color: Color = Color.Yellow,
     thickness: Dp = 1.dp,
-    startIndent: Dp = 0.dp
+    startIndent: Dp = 0.dp,
 ) {
     Divider(
         modifier = modifier,

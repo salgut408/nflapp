@@ -164,7 +164,7 @@ fun TeamsMatchUpListFromEvents(
 }
 
 //@Composable
-//fun EventsHeadLines(events: List<EventsScoreboard>) {
+//fun EventsHeadLines(events: List<EventScoreboard>) {
 //    events.map {
 //        it.competitions.map {
 //            it.headlines.map {

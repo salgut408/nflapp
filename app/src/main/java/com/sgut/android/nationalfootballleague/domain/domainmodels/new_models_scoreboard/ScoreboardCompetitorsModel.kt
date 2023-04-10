@@ -10,5 +10,6 @@ data class ScoreboardCompetitorsModel(
     val winner: Boolean = false,
     val records: List<ScoreboardRecordModel>,
     val team: ScoreboardTeamModel = ScoreboardTeamModel(),
-    val statistics: List<ScoreboardStatisticModel>
+    val statistics: List<ScoreboardStatisticModel>,
+//    val probables : List<ProbablesModel>
 )

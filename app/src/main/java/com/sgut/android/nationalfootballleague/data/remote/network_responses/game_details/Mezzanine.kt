@@ -3,8 +3,9 @@ package com.sgut.android.nationalfootballleague
 import com.google.gson.annotations.SerializedName
 
 
-data class Mezzanine (
+data class Mezzanine(
 
-  @SerializedName("href" ) var href : String? = null
+  @SerializedName("href")
+  val href: String? = null,
 
-)
+  )

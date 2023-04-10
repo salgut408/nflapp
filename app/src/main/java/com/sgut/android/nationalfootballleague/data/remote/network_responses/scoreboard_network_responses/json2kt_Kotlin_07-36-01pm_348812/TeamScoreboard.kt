@@ -5,7 +5,6 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_sc
 
 
 data class TeamScoreboard(
-
     @SerializedName("id")
     val id: String = "",
     @SerializedName("abbreviation")

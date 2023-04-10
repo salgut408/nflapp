@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardCompetitorsModel
 
 
-data class CompetitorsScoreboard(
+data class CompetitorScoreboard(
 
   @SerializedName("id")
   val id: String? = null,
@@ -28,10 +28,38 @@ data class CompetitorsScoreboard(
   val team: TeamScoreboard = TeamScoreboard(),
   @SerializedName("statistics")
   val statistics: List<StatisticsScoreboard> = listOf(),
+//  TODO Fix probables w Probable v probableS
+//  @SerializedName("probables")
+//  val probables: List<Probables> = listOf(),
 
   )
 
-fun CompetitorsScoreboard.asDomain(): ScoreboardCompetitorsModel {
+data class Probable(
+  @SerializedName("name")
+  val name: String? = "",
+  @SerializedName("displayName")
+  val displayName: String? = "",
+  @SerializedName("abbreviation")
+  val abbreviation: String? = "",
+  @SerializedName("playerId")
+  val playerId: String? = "",
+  @SerializedName("athlete")
+  val athlete: ProbableAthlete? = null
+
+)
+
+data class ProbableAthlete(
+  @SerializedName("id")
+  val id: String? = "",
+  @SerializedName("fullName")
+  val fullName: String? = "",
+  @SerializedName("displayName")
+  val displayName: String? = "",
+  @SerializedName("shortName")
+  val shortName: String? = "",
+)
+
+fun CompetitorScoreboard.asDomain(): ScoreboardCompetitorsModel {
   return ScoreboardCompetitorsModel(
     id = id ?: "",
     uid = uid ?: "",
@@ -42,7 +70,8 @@ fun CompetitorsScoreboard.asDomain(): ScoreboardCompetitorsModel {
     score = score ?: "",
     records = records.map { it.asDomain() },
     team = team.asDomain(),
-    statistics = statistics.map { it.asDomain() }
+    statistics = statistics.map { it.asDomain() },
+//    probables = probables.map { it.asDomain() }
 
 
   )

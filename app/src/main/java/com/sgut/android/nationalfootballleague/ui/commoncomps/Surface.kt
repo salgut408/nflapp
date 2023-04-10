@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.sgut.android.nationalfootballleague.ui.commoncomps.SIXTEEN
 import kotlin.math.ln
 
 
@@ -29,7 +31,8 @@ fun SportSurface(
     contentColor: Color = MaterialTheme.colorScheme.onBackground,
     border: BorderStroke? = null,
     elevation: Dp = 0.dp,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
+
 ) {
     Box(
         modifier = modifier
@@ -40,6 +43,7 @@ fun SportSurface(
                 color = getBackgroundColorForElevation(color = color, elevation = elevation),
                 shape = shape
             )
+            .padding(SIXTEEN.dp)
             .clip(shape)
     ) {
         CompositionLocalProvider(LocalContentColor provides contentColor, content = content)

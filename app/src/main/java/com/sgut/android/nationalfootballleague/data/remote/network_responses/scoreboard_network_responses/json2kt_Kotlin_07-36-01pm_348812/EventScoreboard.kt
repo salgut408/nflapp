@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardEventModel
 
 
-data class EventsScoreboard(
+data class EventScoreboard(
 
   @SerializedName("id")
   val id: String? = null,
@@ -16,18 +16,14 @@ data class EventsScoreboard(
   val name: String? = null,
   @SerializedName("shortName")
   val shortName: String? = null,
-  @SerializedName("season")
-  val season: SeasonScoreboard? = SeasonScoreboard(),
   @SerializedName("competitions")
-  val competitions: List<CompetitionsScoreboard> = listOf(),
+  val competitions: List<CompetitionScoreboard> = listOf(),
   @SerializedName("status")
   val status: StatusScoreboard = StatusScoreboard(),
-  @SerializedName("links")
-  val links: ArrayList<LinksScoreboard> = arrayListOf(),
 
   )
 
-fun EventsScoreboard.asDomain(): ScoreboardEventModel {
+fun EventScoreboard.asDomain(): ScoreboardEventModel {
   return  ScoreboardEventModel(
     id = id ?: "",
     uid = uid ?: "",

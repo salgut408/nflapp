@@ -33,6 +33,7 @@ fun Articles.asDomain(): ArticleDomianModel {
       description = description,
       published = published,
       headline = headline,
-      byline = byline
+      byline = byline,
+        links = links,
     )
 }

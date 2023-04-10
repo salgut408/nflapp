@@ -18,20 +18,9 @@ data class LeaguesScoreboard(
     val midsizeName: String? = null,
     @SerializedName("slug")
     val slug: String? = null,
-    @SerializedName("season")
-    val season: SeasonScoreboard? = SeasonScoreboard(),
     @SerializedName("logos")
     val logos: List<LogosScoreboard> = listOf(),
-    @SerializedName("calendarType")
-    val calendarType: String? = null,
-    @SerializedName("calendarIsWhitelist")
-    val calendarIsWhitelist: Boolean? = null,
-    @SerializedName("calendarStartDate")
-    val calendarStartDate: String? = null,
-    @SerializedName("calendarEndDate")
-    val calendarEndDate: String? = null,
-//    @SerializedName("calendar")
-//    val calendar: List<C> = listOf(),
+
 
     )
 

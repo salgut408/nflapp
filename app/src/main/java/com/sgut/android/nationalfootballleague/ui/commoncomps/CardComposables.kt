@@ -8,9 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,8 +16,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.sgut.android.nationalfootballleague.ui.commoncomps.SIXTEEN
 import com.sgut.android.nationalfootballleague.ui.theme.NationalFootballLeagueTheme
 import com.sgut.android.nationalfootballleague.utils.dropdownSelector
 
@@ -117,16 +114,34 @@ fun CardSelector(
     }
 }
 
+@Composable
+fun DefaultCard(
+    modifier: Modifier,
+    color: Color = Color.LightGray,
+    contentColor: Color = Color.Black,
+    content: () -> Unit,
+
+) {
+    Card(
+        backgroundColor = color,
+        contentColor = contentColor,
+        modifier = modifier.fillMaxWidth()
+            .padding(SIXTEEN.dp)
+
+    ) {
+        content()
+    }
+
+}
 
 @Composable
 fun SportCard(
     modifier: Modifier = Modifier,
     shape: Shape = MaterialTheme.shapes.medium,
-    color: Color = MaterialTheme.colors.primaryVariant,
-    contentColor: Color = MaterialTheme.colors.onPrimary,
+    color: Color = Color.LightGray,
+    contentColor: Color = Color.Black,
     border: BorderStroke? = null,
-    elevation: Dp = 4.dp,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
     ) {
     SportSurface(
         modifier = modifier,
@@ -134,7 +149,6 @@ fun SportCard(
         color = color,
         contentColor = contentColor,
         border = border,
-        elevation = elevation,
         content = content
     )
 }
@@ -144,7 +158,7 @@ fun SportCard(
 fun CardPreview() {
     NationalFootballLeagueTheme{
         SportCard() {
-            Text(text = "Demo", modifier = Modifier.padding(16.dp))
+            Text(text = "Demo",)
 
         }
     }

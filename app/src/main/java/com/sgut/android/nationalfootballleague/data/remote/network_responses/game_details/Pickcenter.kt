@@ -14,15 +14,13 @@ data class Pickcenter(
   @SerializedName("details")
   val details: String? = null,
   @SerializedName("overUnder")
-  val overUnder: Float? = null,
+  val overUnder: Double? = null,
   @SerializedName("spread")
-  val spread: Float? = null,
+  val spread: Double? = null,
   @SerializedName("awayTeamOdds")
   val awayTeamOdds: AwayTeamOdds? = AwayTeamOdds(),
   @SerializedName("homeTeamOdds")
   val homeTeamOdds: HomeTeamOdds? = HomeTeamOdds(),
-  @SerializedName("links")
-  val links: ArrayList<String> = arrayListOf(),
 
   )
 
@@ -30,8 +28,8 @@ fun Pickcenter.asDomain(): PickcenterModel {
   return PickcenterModel(
     provider = provider?.asDomain() ?: ProviderModel(),
     details = details ?: "",
-    overUnder = overUnder ?: 0f,
-    spread = spread ?: 0f,
+    overUnder = overUnder ?: 0.0,
+    spread = spread ?: 0.0,
     awayTeamOdds = awayTeamOdds?.asDomain() ?: AwayTeamOddsModel(),
     homeTeamOdds = homeTeamOdds?.asDomain() ?: HomeTeamOddsModel()
   )

@@ -15,24 +15,18 @@ data class NetworkScoreboardResponse(
     val day: DayScoreboard? = DayScoreboard(),
 
     @SerializedName("events")
-    val events: List<EventsScoreboard> = listOf(),
-
-    @SerializedName("week")
-    val week: WeekScoreboard = WeekScoreboard(),
-    )
-
-
-
-data class WeekScoreboard(
-    @SerializedName("number") var week: Int = 0,
+    val events: List<EventScoreboard> = listOf(),
 
     )
+
+
+
+
 
 fun NetworkScoreboardResponse.asDomain(): ScoreboardModel {
     return ScoreboardModel(
-        league = leagues.get(0).asDomain(),
+        league = leagues.first().asDomain(),
         day = day?.date ,
         events = events.map { it.asDomain() },
-        week = week
     )
 }

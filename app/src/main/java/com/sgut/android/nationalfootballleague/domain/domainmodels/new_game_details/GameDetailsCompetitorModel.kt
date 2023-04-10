@@ -7,4 +7,5 @@ data class GameDetailsCompetitorModel(
     val team: GameDetailsTeamInfoModel? = GameDetailsTeamInfoModel(),
     val record: List<GameDetailsRecordModel> = listOf(),
     val possession: Boolean = false,
+    val score: Int = 0
 )

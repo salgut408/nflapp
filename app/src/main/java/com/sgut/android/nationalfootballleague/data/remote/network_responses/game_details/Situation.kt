@@ -91,12 +91,14 @@ data class LastPlay(
 
     @SerializedName("id")
     val id: String? = null,
+    val text: String = ""
 
     )
 
 fun LastPlay.asDomain(): LastPlayModel {
     return LastPlayModel(
-        id = id ?: ""
+        id = id ?: "",
+        text = text
     )
 }
 

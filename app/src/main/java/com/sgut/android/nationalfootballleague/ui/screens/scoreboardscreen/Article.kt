@@ -42,7 +42,7 @@ fun ArticleCard(
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.secondary)
             ) {
-                GenericImageLoader(obj = articleModel.images.getOrNull(0)?.url.toString(),
+                GenericImageLoader(obj = articleModel.images.first().url,
                     modifier = Modifier.width(200.dp))
                 Text(
                     text = articleModel.headline,
@@ -59,6 +59,7 @@ fun ArticleCard(
     }
 }
 
+// if list is needed
 @Composable
 fun ArticleList(articleList: List<ArticleDomianModel>) {
     LazyColumn(contentPadding = PaddingValues(8.dp)) {

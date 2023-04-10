@@ -62,7 +62,7 @@ class GameDetailViewModel @Inject constructor(
             teamMap = playersMap(sport, league, teams)
 
 
-            Log.d("GAMEDEET_VIEWMODEL", newGameDeetUiState.plays .toString())
+            Log.d("GAMEDEET_VIEWMODEL", newGameDeetUiState.baseballSituation .toString())
 
             newGameDeetUiState.boxscore?.teams?.forEach { i ->
                 _colorsTeamList.add(HexToJetpackColor2.getColor(i.team?.color ?: "Color"))

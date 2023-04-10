@@ -19,9 +19,12 @@ data class GameDetailsCompetitors(
   @SerializedName("record")
   val record: List<GameDetailsRecord> = listOf(),
   @SerializedName("possession")
-  val possession: Boolean? = null,
+  val possession: Boolean = false,
+  @SerializedName("score")
+  val score: Int = 0
 
-  )
+
+)
 
 fun GameDetailsCompetitors.asDomain(): GameDetailsCompetitorModel {
   return GameDetailsCompetitorModel(
@@ -30,6 +33,7 @@ fun GameDetailsCompetitors.asDomain(): GameDetailsCompetitorModel {
     isHomeOrAway = isHomeOrAway ?: "",
     team = team?.asDomain(),
     record = record.map { it.asDomain() },
-    possession = possession ?: false
+    possession = possession,
+    score = score
   )
 }

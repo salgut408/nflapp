@@ -36,5 +36,6 @@ data class PitcherModel(
     )
 
 data class LastPlayModel(
-    val id: String = ""
+    val id: String = "",
+    val text: String = ""
 )

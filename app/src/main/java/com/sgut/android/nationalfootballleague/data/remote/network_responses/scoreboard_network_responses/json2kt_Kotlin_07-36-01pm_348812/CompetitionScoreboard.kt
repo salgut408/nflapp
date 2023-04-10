@@ -5,7 +5,7 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_sc
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardFormatModel
 
 
-data class CompetitionsScoreboard(
+data class CompetitionScoreboard(
 
     @SerializedName("id")
     val id: String? = null,
@@ -17,29 +17,22 @@ data class CompetitionsScoreboard(
     val startDate: String? = null,
     @SerializedName("attendance")
     val attendance: Int? = null,
-    @SerializedName("timeValid")
-    val timeValid: Boolean? = null,
     @SerializedName("status")
     val status: StatusScoreboard? = StatusScoreboard(),
     @SerializedName("venue")
     val venue: VenueScoreboard = VenueScoreboard(),
     @SerializedName("format")
     val format: FormatScoreboard? = FormatScoreboard(),
-    @SerializedName("geoBroadcasts")
-    val geoBroadcasts: List<GeoBroadcastsScoreboard> = listOf(),
-    @SerializedName("broadcasts")
-    val broadcasts: List<BroadcastsScoreboard> = listOf(),
+
     @SerializedName("competitors")
-    val competitors: List<CompetitorsScoreboard> = listOf(),
+    val competitors: List<CompetitorScoreboard> = listOf(),
     @SerializedName("details")
     val details: List<DetailsScoreboard> = listOf(),
     @SerializedName("headlines")
     val headlines: List<HeadlinesScoreboard> = listOf(),
-
-
     )
 
-fun CompetitionsScoreboard.asDomain(): ScoreboardCompetitionModel {
+fun CompetitionScoreboard.asDomain(): ScoreboardCompetitionModel {
     return ScoreboardCompetitionModel(
         id = id ?: "",
         uid = uid ?: "",

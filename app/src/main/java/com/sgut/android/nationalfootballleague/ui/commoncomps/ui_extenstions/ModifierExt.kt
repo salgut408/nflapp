@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.unit.dp
+import com.sgut.android.nationalfootballleague.ui.commoncomps.EIGHT
 import kotlin.math.max
 import kotlin.math.min
 
@@ -23,6 +24,10 @@ fun Modifier.basicButton(): Modifier {
 
 fun Modifier.card(): Modifier {
     return this.padding(16.dp, 0.dp, 16.dp, 8.dp)
+}
+
+fun Modifier.defaultSpacer(): Modifier {
+ return this.height(EIGHT.dp)
 }
 
 fun Modifier.contextMenu(): Modifier {
