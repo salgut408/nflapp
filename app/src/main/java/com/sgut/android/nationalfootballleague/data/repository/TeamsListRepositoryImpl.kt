@@ -25,7 +25,7 @@ class TeamsListRepositoryImpl @Inject constructor(
             val result = espnApi.getTeamsListForLeague(sport, league).body()?.toDomain()!!
             return result
         } catch (e: Exception) {
-            Log.e("LISTS", e.stackTraceToString())
+            Log.e("LISTS", e.message.toString())
         }
         val result = espnApi.getTeamsListForLeague(sport, league).body()?.toDomain()!!
         return result
