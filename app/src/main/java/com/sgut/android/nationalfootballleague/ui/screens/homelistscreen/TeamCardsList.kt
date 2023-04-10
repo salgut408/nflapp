@@ -114,7 +114,12 @@ fun HomeTeamCardsListScreen(
                         }
                     }
 
-
+                    item {
+                        OutlinedButton(onClick = { homeListViewModel.setCollegeBaseballTeams() }) {
+                            Text(stringResource(R.string.NCAA_baseball),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
 
                     item {
                         OutlinedButton(onClick = { homeListViewModel.setMlsTeams() }) {

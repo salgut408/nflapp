@@ -80,7 +80,7 @@ fun GameDetailsScreen(
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
 
-                LastPlay(play = gameDetailUiState.currentGameUiState?.plays?.last()?.text ?: "")
+//                LastPlay(play = gameDetailUiState.currentGameUiState?.plays?.last()?.text ?: "")
 
                 CompetitionStatus(
                     modifier = modifier,
@@ -669,16 +669,13 @@ fun TeamStatCard3(
     modifier: Modifier,
     boxscore: BoxScoreModel
 ) {
-
     Card(modifier = modifier.fillMaxWidth()) {
 
-        Text(
-            text = "Team Stats", fontSize = 26.sp,
-            fontWeight = FontWeight.SemiBold
-        )
         Column(
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
+            modifier = modifier.padding(SIXTEEN.dp)
         ) {
+            CardHeaderText(text = "Team Stats")
             Row(
                 modifier = modifier
                     .fillMaxWidth()

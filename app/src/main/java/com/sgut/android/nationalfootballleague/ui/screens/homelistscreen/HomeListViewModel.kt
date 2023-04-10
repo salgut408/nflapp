@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuthException
 import com.sgut.android.nationalfootballleague.data.db.sport.SportDbObj
 import com.sgut.android.nationalfootballleague.data.service.AccountService
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.FullTeamsListsModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.TeamModel
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamsListsRepository
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASEBALL
@@ -19,6 +20,7 @@ import com.sgut.android.nationalfootballleague.utils.Constants.Companion.LA_LIGA
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.MLB
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.MLS
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NBA
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASEBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASKETBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_FOOTBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NFL
@@ -105,6 +107,24 @@ class HomeListViewModel @Inject constructor(
         _listUiState.update {
             val fullTeamsList =
                 fullTeamsListRepository.getFullSportLeagueAndTeamsList(SOCCER, LA_LIGA)
+            addTeamsToDb(
+                teams = fullTeamsList.sport.league?.teams ?: listOf(),
+                sport = fullTeamsList.sport.name,
+                league = fullTeamsList.sport.league?.name ?: "",
+                leagueAbrv = fullTeamsList.sport.league?.abbreviation ?: ""
+            )
+            it.copy(
+                currentTeams = fullTeamsList.sport.league?.teams ?: listOf(),
+                currentSport = fullTeamsList.sport.slug,
+                currentLeague = fullTeamsList.sport.league?.slug ?: "",
+                fullTeamInfo = fullTeamsList,
+            )
+        }
+    }
+
+    fun setCollegeBaseballTeams() = viewModelScope.launch {
+        _listUiState.update {
+            val fullTeamsList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(BASEBALL, NCAA_BASEBALL)
             addTeamsToDb(
                 teams = fullTeamsList.sport.league?.teams ?: listOf(),
                 sport = fullTeamsList.sport.name,
@@ -343,22 +363,36 @@ class HomeListViewModel @Inject constructor(
 
     fun setWorldCupTeams() = viewModelScope.launch {
         val fullTeamsList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(SOCCER, FIFA)
+
+        addTeamsToDb(
+            teams = fullTeamsList.sport.league?.teams ?: listOf(),
+            sport = fullTeamsList.sport.name,
+            league = fullTeamsList.sport.league?.name ?: "",
+            leagueAbrv = fullTeamsList.sport.league?.abbreviation ?: ""
+        )
+        setListUiState(
+            currentTeams = fullTeamsList.sport.league?.teams ?: listOf(),
+            currentSport = fullTeamsList.sport.slug,
+            currentLeague = fullTeamsList.sport.league?.slug ?: "",
+            fullTeamInfo = fullTeamsList
+        )
+    }
+
+    private fun setListUiState(
+        currentSport: String,
+        currentLeague: String,
+        currentTeams: List<TeamModel>,
+        fullTeamInfo: FullTeamsListsModel
+    ) {
         _listUiState.update {
-            addTeamsToDb(
-                teams = fullTeamsList.sport.league?.teams ?: listOf(),
-                sport = fullTeamsList.sport.name,
-                league = fullTeamsList.sport.league?.name ?: "",
-                leagueAbrv = fullTeamsList.sport.league?.abbreviation ?: ""
-            )
             it.copy(
-                currentTeams = fullTeamsList.sport.league?.teams ?: listOf(),
-                currentSport = fullTeamsList.sport.slug,
-                currentLeague = fullTeamsList.sport.league?.slug ?: "",
-                fullTeamInfo = fullTeamsList
+                currentSport = currentSport,
+                currentLeague = currentLeague,
+                currentTeams = currentTeams,
+                fullTeamInfo = fullTeamInfo,
             )
         }
     }
-
 
     private fun setAccount() = viewModelScope.launch {
         if (!accountService.hasUser) {
