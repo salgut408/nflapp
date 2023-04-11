@@ -42,9 +42,7 @@ import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.*
-import com.sgut.android.nationalfootballleague.ui.commoncomps.CardHeaderText
-import com.sgut.android.nationalfootballleague.ui.commoncomps.EIGHT
-import com.sgut.android.nationalfootballleague.ui.commoncomps.SIXTEEN
+import com.sgut.android.nationalfootballleague.ui.commoncomps.*
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.*
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.formatTo
@@ -513,7 +511,7 @@ fun SeasonLeaders(
 ) {
     DefaultCard(modifier = modifier) {
         CardHeaderText(text = "Season Leaders")
-        Divider()
+        NormalDivider()
         Row(
         ) {
             gameDetailModel.leaders.map { gameDetailsLeaders ->
@@ -829,7 +827,7 @@ fun InjuriesReportCard(
 
                 CardHeaderText(text = "Injury Report")
 
-                Divider()
+                NormalDivider()
 
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -953,7 +951,7 @@ fun BaseballSituation(
             }
         }
 //            Text(text = gameDetailSituation.toString())
-        Divider()
+        NormalDivider()
 
         Text(text = "On First", fontWeight = FontWeight.Bold)
         Row() {
@@ -995,7 +993,7 @@ fun Player(player: GameDetailsAthleteDetailsModel) {
                     .background(Color.LightGray))
             Row() {
                 Text(text = player.shortName, fontSize = 10.sp)
-                Spacer(modifier = Modifier.width(16.dp))
+                SpacerDp(modifier = Modifier, width = SIXTEEN)
                 Text(text = player.position?.abbreviation ?: "",
                     fontWeight = FontWeight.Bold,
                     fontSize = 10.sp)
@@ -1034,7 +1032,7 @@ fun InningText(competition: GameDetailsCompetitionModel) {
 
     Text(text = competition.status?.type?.gameTimeDetail ?: "",
         style = MaterialTheme.typography.bodyMedium)
-    Divider()
+    NormalDivider()
     Text(text = competition.status?.periodPrefix ?: "")
 
 }
@@ -1110,14 +1108,14 @@ fun DoughnutChart2(
                 ) {
 
                     Text(
-                        text = teams?.get(0)?.team?.abbreviation ?: "",
+                        text = teams?.first()?.team?.abbreviation ?: "",
                         fontSize = 16.sp,
                         color = Color.Gray,
                         fontWeight = FontWeight.Bold,
                     )
                     Spacer(modifier = modifier.width(8.dp))
                     Divider(
-                        color = Color.LightGray,
+                        color = Color.Black,
                         modifier = Modifier
                             .height(100.dp)
                             .width(1.dp)
@@ -1125,7 +1123,7 @@ fun DoughnutChart2(
                     Spacer(modifier = modifier.width(8.dp))
 
                     Text(
-                        text = teams?.get(1)?.team?.abbreviation ?: "",
+                        text = teams?.last()?.team?.abbreviation ?: "",
                         fontSize = 16.sp,
                         color = Color.Gray,
                         fontWeight = FontWeight.Bold
@@ -1154,7 +1152,8 @@ fun DoughnutChart2(
             }
         } //end of box
 
-        Spacer(modifier = modifier.height(8.dp))
+        SpacerDp(modifier = modifier, height = EIGHT)
+
 
         Column() {
 
@@ -1185,7 +1184,8 @@ fun DisplayLegend(color: Color, legend: String) {
                 .size(10.dp)
                 .background(color = color, shape = CircleShape)
         )
-        Spacer(modifier = Modifier.width(4.dp))
+        SpacerDp(modifier = Modifier, width = 4)
+
         Text(text = legend, color = Color.Blue, fontSize = 12.sp)
 
     }
@@ -1232,7 +1232,7 @@ fun DoughnutChartForBasketball(
         ) {
             CardHeaderText(text = "Matchup Predictor")
         }
-        Divider()
+        NormalDivider()
         Box(
             modifier = modifier
                 .fillMaxSize()
@@ -1266,14 +1266,14 @@ fun DoughnutChartForBasketball(
                         color = Color.Gray,
                         fontWeight = FontWeight.Bold,
                     )
-                    Spacer(modifier = modifier.width(8.dp))
-                    Divider(
-                        color = Color.LightGray,
+                    SpacerDp(modifier = modifier, width = EIGHT)
+                    NormalDivider(
+                        color = Color.Black,
                         modifier = modifier
                             .height(100.dp)
                             .width(1.dp)
                     )
-                    Spacer(modifier = modifier.width(8.dp))
+                    SpacerDp(modifier = modifier, width = EIGHT)
                     Text(
                         text = teams?.get(0)?.team?.abbreviation ?: "",
                         fontSize = 16.sp,
@@ -1304,7 +1304,7 @@ fun DoughnutChartForBasketball(
             }
         }
 
-        Spacer(modifier = modifier.height(32.dp))
+        SpacerDp(modifier = modifier, height = THIRTYSIX)
 
         Column(verticalArrangement = Arrangement.Center) {
             Text(text = "Win Prediction", textAlign = TextAlign.Center)
@@ -1422,7 +1422,7 @@ fun FindTickets(
                 CardHeaderText(text = "Find Tickets")
 
             }
-            Divider()
+            NormalDivider()
             Row(
                 modifier = modifier.align(Alignment.CenterHorizontally)
             ) {
@@ -1452,7 +1452,7 @@ fun FindTickets(
                     color = Color.Blue
                 )
             }
-            Divider()
+            NormalDivider()
             Row(
                 modifier = modifier.align(Alignment.CenterHorizontally)
             ) {
@@ -1463,7 +1463,7 @@ fun FindTickets(
                     color = Color.Blue
                 )
             }
-            Divider()
+            NormalDivider()
             // dropdowm
             DropDownFun(dropDownOptions)
         }
@@ -1618,7 +1618,7 @@ fun LastFiveGames2(
                 .padding(8.dp),
         ) {
             CardHeaderText(text = "Last Five Games")
-            Divider()
+            NormalDivider()
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly,

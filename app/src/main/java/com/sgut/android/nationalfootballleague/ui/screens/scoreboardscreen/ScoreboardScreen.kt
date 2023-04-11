@@ -2,8 +2,6 @@ package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,7 +19,10 @@ import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.*
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
+import com.sgut.android.nationalfootballleague.ui.commoncomps.EIGHT
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DefaultCard
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SpacerDp
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamLogoScoreboardImageLoader
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
@@ -55,7 +56,7 @@ fun ScoreboardScreen(
     Column(
         modifier
             .verticalScroll(rememberScrollState())
-            .padding(8.dp)
+            .padding(EIGHT.dp)
             .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -79,14 +80,9 @@ fun ScoreboardScreen(
                 lineHeight = 40.sp,
                 modifier = Modifier
                     .width(200.dp)
-                    .padding(8.dp)
             )
 
-            Text(
-                text = newUiState.scoreboardModelUiState.league?.abbreviation ?: "",
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-            )
+
             GenericImageLoader(
                 obj = newUiState.scoreboardModelUiState.league?.logos?.get(0)?.href ?: "",
                 modifier = Modifier.fillMaxSize()
@@ -129,38 +125,21 @@ fun TeamsMatchUpListFromEvents(
 
 
     events.map { event ->
-        Card(modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-        ) {
-            event.competitions.map {
-//                TODO new card
-                Column() {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Info, contentDescription = "Match Preview",
-                            modifier = Modifier.clickable { }
-                        )
-                        Spacer(modifier = Modifier.width(36.dp))
 
-                        EventName(event)
-                    }
-                }
+            event.competitions.map {
 
                 TeamComponent2(
                     compScoreboard = it,
-                    modifier = Modifier,
+                    modifier = modifier,
                     navController = navController,
                     sport = sport,
                     league = league,
                 )
+                SpacerDp(modifier = modifier, height = 8)
+
             }
-        }
+
     }
-
-
 }
 
 //@Composable
@@ -300,10 +279,6 @@ fun TeamComponent(team: ScoreboardCompetitorsModel, modifier: Modifier) {
     }
 }
 
-@Composable
-fun WeekHeader() {
-
-}
 
 
 @Composable
@@ -315,8 +290,8 @@ fun TeamComponent2(
     league: String,
 
     ) {
-    val team1 = compScoreboard.getHomeTeam().team
-    val team2 = compScoreboard.getAwayTeam().team
+    val team1 = compScoreboard.competitors.first().team
+    val team2 = compScoreboard.competitors.last().team
     val color1 = HexToJetpackColor2.getColor(team1.color)
     val color2 = HexToJetpackColor2.getColor(team2.color)
     val team1Score = compScoreboard.getHomeTeam().score
@@ -325,33 +300,21 @@ fun TeamComponent2(
 
 
 
-    val dateString = compScoreboard.date.toDate()?.formatTo("MMM-dd")
     val date = compScoreboard.date.toDate()?.formatTo("K:mm aa")
 
-    Card(modifier = modifier
+    DefaultCard(
+        modifier = modifier
+            .fillMaxSize()
+            .clickable {
+                navController.navigate(NavigationScreens.GameDetailScreen.withArgs(sport,
+                    league,
+                    compScoreboard.id))
+            }) {
 
-        .fillMaxSize()
-        .clickable {
-            navController.navigate(NavigationScreens.GameDetailScreen.withArgs(sport,
-                league,
-                compScoreboard.id))
-        }) {
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = compScoreboard.status?.type?.detail ?: "",
-                style = MaterialTheme.typography.headlineLarge
-            )
-
-
-        }
 
         Box(
             modifier = modifier
                 .fillMaxSize()
-                .padding(8.dp)
                 .background(
                     Brush.horizontalGradient(
                         listOf(color1, color2)
@@ -369,19 +332,18 @@ fun TeamComponent2(
                             .height(50.dp)
                     ) {
 
-                        Spacer(modifier = modifier.padding(8.dp))
-
+                        SpacerDp(modifier = modifier, width = EIGHT)
                         TeamLogoScoreboardImageLoader(team = team1)
-                        Spacer(modifier = modifier.padding(8.dp))
+                        SpacerDp(modifier = modifier, width = EIGHT)
 
                         Text(
-                            text = team1.name,
+                            text = team1.abbreviation,
                             style = TextStyle(fontSize = 12.sp),
                             textAlign = TextAlign.Left,
                             color = whiteColor
                         )
 
-                        Spacer(modifier = modifier.padding(8.dp))
+                        SpacerDp(modifier = modifier, width = EIGHT)
 
                         Text(
                             text = team1Score,
@@ -410,54 +372,53 @@ fun TeamComponent2(
                             fontWeight = FontWeight.Bold,
                             color = whiteColor
                         )
-                        Spacer(modifier = modifier.padding(8.dp))
+                        SpacerDp(modifier = modifier, width = EIGHT)
 
                         Text(
-                            text = team2.name,
+                            text = team2.abbreviation,
                             style = TextStyle(fontSize = 12.sp),
                             textAlign = TextAlign.Center,
                             color = whiteColor
                         )
-                        Spacer(modifier = modifier.padding(8.dp))
+                        SpacerDp(modifier = modifier, width = EIGHT)
                         TeamLogoScoreboardImageLoader(team = team2)
-                        Spacer(modifier = modifier.padding(8.dp))
+                        SpacerDp(modifier = modifier, width = EIGHT)
                     }
                 }
 //                Game id for info or date
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(text = compScoreboard.status?.type?.description ?: "",
-                        style = TextStyle(fontSize = 12.sp),
-                        color = Color.White,
-                        textAlign = TextAlign.Center)
-                    Text(
-                        text = dateString ?: "",
-                        style = TextStyle(fontSize = 9.sp),
-                        color = Color.White,
-                        textAlign = TextAlign.Center)
-                    Text(
-                        text = date ?: "",
-                        style = TextStyle(fontSize = 9.sp),
-                        color = Color.White,
-                        textAlign = TextAlign.Center)
-                    Text(
-                        text = compScoreboard.id ?: "",
-                        style = TextStyle(fontSize = 9.sp),
-                        color = Color.White,
-                        textAlign = TextAlign.Center)
-                }
+
+                GameInfoColumn(
+                    description = compScoreboard.status?.type?.description ?: "",
+                    date = date ?: "",
+                    id = compScoreboard.id
+                )
             }
         }
     }
 }
 
+@Composable
+fun GameInfoColumn(description: String, date: String, id: String) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+       Text(text = description,
+            style = TextStyle(fontSize = 12.sp),
+            color = Color.White,
+            textAlign = TextAlign.Center)
+       Text(
+            text = date,
+            style = TextStyle(fontSize = 9.sp),
+            color = Color.White,
+            textAlign = TextAlign.Center)
+     Text(
+            text = id,
+            style = TextStyle(fontSize = 9.sp),
+            color = Color.White,
+            textAlign = TextAlign.Center)
+    }
+}
 
-//@Composable
-//fun CalanderDates() {
-//    Row() {
-//        newUiState.scoreboardModelUiState.league?.calendar?.map { Text(text = it.toDate("MM").toString()) }
-//    }
-//}
+
 
