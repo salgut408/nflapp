@@ -66,6 +66,7 @@ fun GameDetailsScreen(
     gameDetailViewModel.loadGameDetails(sport, league, event)
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
+
     Log.d("GAMEDETAIL-UISTATE", gameDetailUiState.currentGameUiState.toString())
 
 //    val map by remember {gameDetailViewModel.teamMap}
@@ -106,10 +107,12 @@ fun GameDetailsScreen(
 
                 when (gameDetailUiState.currentSport) {
                     "basketball" -> DoughnutChartForBasketball(
+                        modifier = modifier,
                         gameDetailModel = gameDetailUiState.currentGameUiState
                             ?: GameDetailsModel(),
                     )
                     "football" -> DoughnutChart2(
+                        modifier = modifier,
                         gameDetailModel = gameDetailUiState.currentGameUiState
                             ?: GameDetailsModel(),
                     )
@@ -140,18 +143,21 @@ fun GameDetailsScreen(
                 SpacerDp(modifier = modifier, height = EIGHT)
 
                 TabsLastFiveGames(
+                    modifier = modifier,
                     lastFiveGames = gameDetailUiState.currentGameUiState?.lastFiveGames ?: listOf()
                 )
 
                 SpacerDp(modifier = modifier, height = EIGHT)
 
                 ExpandableGameArticle(
+                    modifier =  modifier,
                     gameDetailModel = gameDetailUiState.currentGameUiState ?: GameDetailsModel(),
                     )
 
                 SpacerDp(modifier = modifier, height = EIGHT)
 
                 FindTickets(
+                    modifier = modifier,
                     ticketsInfo = gameDetailUiState.currentGameUiState?.ticketsInfo
                         ?: TicketsInfoModel()
                 )
@@ -187,10 +193,10 @@ fun GameDetailsScreen(
 
 @Composable
 fun BaseballSpecific(
+    modifier: Modifier,
     gameDetailSituation: SituationModel,
     gameDetailsModel: GameDetailsModel,
     teamMap: Map<String, GameDetailsAthleteDetailsModel>,
-    modifier: Modifier,
 ) {
     BaseballSituation(
         modifier = modifier,
@@ -203,6 +209,7 @@ fun BaseballSpecific(
     SpacerDp(modifier = modifier, height = EIGHT)
 
     DoughnutChart2(
+        modifier = modifier,
         gameDetailModel = gameDetailsModel
     )
 
@@ -231,15 +238,10 @@ fun CompetitionStatus(
     modifier: Modifier,
     competitions: List<GameDetailsCompetitionModel>,
 ) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-    ) {
+
+    DefaultCard(modifier = modifier) {
         competitions.map { status ->
-            Text(
-                text = status.status?.type?.shortGameTimeDetail ?: "",
-                modifier = modifier.padding(16.dp)
-            )
+            Text(text = status.status?.type?.shortGameTimeDetail ?: "")
         }
     }
 }
@@ -275,18 +277,16 @@ fun BoxScore(boxscore: GameDetailsBoxscore) {
 
 @Composable
 fun ExpandableGameArticle(
+    modifier: Modifier,
     gameDetailModel: GameDetailsModel,
     //take gamedeetail viewmodel out of here
 ) {
     var showMore by remember { mutableStateOf(false) }
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        Column(modifier = Modifier
+
+    DefaultCard(modifier = modifier) {
+        Column(modifier = modifier
             .animateContentSize(animationSpec = tween(100))
             .fillMaxWidth()
-            .padding(EIGHT.dp)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null
@@ -357,46 +357,38 @@ fun WeightedRows(
     modifier: Modifier,
     header: GameDetailsModel,
 ) {
-    Card(
-        modifier = modifier.fillMaxWidth()
-    ) {
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(SIXTEEN.dp)
 
+    DefaultCard(modifier = modifier) {
+        Row(modifier = modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Row(modifier = modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                header.header?.competitions?.map { competitions ->
-                    Text(text = competitions.status?.type?.description ?: "")
+            header.header?.competitions?.map { competitions ->
+                Text(text = competitions.status?.type?.description ?: "")
 
-                    competitions.competitors.map { competitors ->
-                        competitors.team?.record?.map { teamRecord ->
-                            Column() {
-                                Text(text = teamRecord.type)
-                                Text(text = teamRecord.displayValue)
-                                Text(text = teamRecord.summary)
-                            }
+                competitions.competitors.map { competitors ->
+                    competitors.team?.record?.map { teamRecord ->
+                        Column() {
+                            Text(text = teamRecord.type)
+                            Text(text = teamRecord.displayValue)
+                            Text(text = teamRecord.summary)
                         }
-                        Box() {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Start
-                            ) {
-                                Text(
-                                    text = competitors.team?.abbreviation ?: "",
-                                    fontSize = 11.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                SpacerDp(modifier = modifier, width = SIXTEEN)
-                                GenericImageLoader(
-                                    obj = competitors.team?.logos?.href ?: "",
-                                    modifier = Modifier.width(20.dp)
-                                )
-                            }
+                    }
+                    Box() {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Start
+                        ) {
+                            Text(
+                                text = competitors.team?.abbreviation ?: "",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                            SpacerDp(modifier = modifier, width = SIXTEEN)
+                            GenericImageLoader(
+                                obj = competitors.team?.logos?.href ?: "",
+                                modifier = Modifier.width(20.dp)
+                            )
                         }
                     }
                 }
@@ -519,41 +511,35 @@ fun SeasonLeaders(
     modifier: Modifier,
     gameDetailModel: GameDetailsModel,
 ) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-    ) {
+    DefaultCard(modifier = modifier) {
+        CardHeaderText(text = "Season Leaders")
+        Divider()
+        Row(
+        ) {
+            gameDetailModel.leaders.map { gameDetailsLeaders ->
+                Row() {
+                    Column(
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
 
-        Column(modifier = modifier.padding(SIXTEEN.dp)) {
-            CardHeaderText(text = "Season Leaders")
-            Divider()
-            Row(
-            ) {
-                gameDetailModel.leaders.map { gameDetailsLeaders ->
-                    Row() {
-                        Column(
-                            horizontalAlignment = Alignment.Start
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                            GenericImageLoader(
+                                obj = gameDetailsLeaders.team.logo,
+                                modifier = Modifier.size(50.dp)
+                            )
+                            Text(text = gameDetailsLeaders.team.abbreviation,
+                                fontWeight = FontWeight.Bold)
+                        }
 
-                                ) {
-                                GenericImageLoader(
-                                    obj = gameDetailsLeaders.team.logo,
-                                    modifier = Modifier.size(50.dp)
-                                )
-                                Text(text = gameDetailsLeaders.team.abbreviation,
-                                    fontWeight = FontWeight.Bold)
-                            }
-
-                            gameDetailsLeaders.leaders.map { gameDetailsLeaders ->
-                                Text(text = gameDetailsLeaders.displayName,
-                                    fontWeight = FontWeight.Bold)
-                                Column() {
-                                    Row() {
-                                        gameDetailsLeaders.leadersAthlete.map { leaderAthlete ->
-                                            SeasonLeadersPlayer(athlete = leaderAthlete)
-                                        }
+                        gameDetailsLeaders.leaders.map { gameDetailsLeaders ->
+                            Text(text = gameDetailsLeaders.displayName,
+                                fontWeight = FontWeight.Bold)
+                            Column() {
+                                Row() {
+                                    gameDetailsLeaders.leadersAthlete.map { leaderAthlete ->
+                                        SeasonLeadersPlayer(athlete = leaderAthlete)
                                     }
                                 }
                             }
@@ -584,8 +570,6 @@ fun SeasonLeaderPlayerItem(athlete: AthleteLeaders) {
         Column() {
             Text(text = athlete.athlete.shortName ?: "")
             Text(text = athlete.displayValue)
-
-
         }
 
     }
@@ -596,21 +580,19 @@ fun NewVidList(
     modifier: Modifier,
     vidList: List<VideoModel>,
 ) {
-    Card {
 
-        Column(modifier = modifier.padding(SIXTEEN.dp)) {
-            CardHeaderText(text = if (vidList.isEmpty()) "No Videos" else "Videos")
+    DefaultCard(modifier = modifier) {
+        CardHeaderText(text = if (vidList.isEmpty()) "No Videos" else "Videos")
 
-            SpacerDp(modifier = modifier, width = SIXTEEN)
+        SpacerDp(modifier = modifier, width = SIXTEEN)
 
-            LazyRow(contentPadding = PaddingValues(EIGHT.dp)) {
-                items(items = vidList) { vid ->
-                    VideoPreview(video = vid, modifier = modifier.padding(EIGHT.dp))
-                }
+        LazyRow(contentPadding = PaddingValues(EIGHT.dp)) {
+            items(items = vidList) { vid ->
+                VideoPreview(video = vid, modifier = modifier.padding(EIGHT.dp))
             }
-
         }
     }
+
 
 }
 
@@ -669,12 +651,7 @@ fun TeamStatCard3(
     modifier: Modifier,
     boxscore: BoxScoreModel
 ) {
-    Card(modifier = modifier.fillMaxWidth()) {
-
-        Column(
-            verticalArrangement = Arrangement.Center,
-            modifier = modifier.padding(SIXTEEN.dp)
-        ) {
+    DefaultCard(modifier = modifier) {
             CardHeaderText(text = "Team Stats")
             Row(
                 modifier = modifier
@@ -688,11 +665,8 @@ fun TeamStatCard3(
                         Column() {
                             Text(text = it.label)
                             Text(text = it.displayValue)
-
-
                         }
                     }
-
                 }
 
                 boxscore.teams.map {
@@ -716,7 +690,7 @@ fun TeamStatCard3(
             }
 
 
-        }
+
     }
 }
 
@@ -785,8 +759,9 @@ fun HeaderStatusSlot(
     modifier: Modifier,
     gameDetailModel: GameDetailsModel,
 ) {
-    Card(
-        modifier = modifier.fillMaxWidth()
+    DefaultCard(
+        modifier = modifier
+
     ) {
         Box(
             modifier = modifier.fillMaxWidth()
@@ -796,8 +771,6 @@ fun HeaderStatusSlot(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = modifier.fillMaxWidth()
             ) {
-
-
                 gameDetailModel.header?.competitions!!.map { competition ->
                     HeaderTeamSlot(
                         modifier = modifier,
@@ -815,13 +788,11 @@ fun HeaderStatusSlot(
                             text = competition.status?.type?.description ?: "",
                             fontSize = 12.sp
                         )
-
                         Text(
                             text = competition.date.toDate()?.formatTo("K:mm aa") ?: "",
                             fontSize = 9.sp
                         )
                     }
-
                     RightToLeftLayout {
                         HeaderTeamSlot(
                             modifier = modifier,
@@ -852,15 +823,10 @@ fun InjuriesReportCard(
     if (injuries1?.injuries?.isEmpty() == true) {
         Text(text = "")
     } else {
-        Card(
+        DefaultCard(
             modifier = modifier
-                .fillMaxWidth()
         ) {
 
-            Column(
-                modifier = modifier
-                    .padding(EIGHT.dp)
-            ) {
                 CardHeaderText(text = "Injury Report")
 
                 Divider()
@@ -891,7 +857,7 @@ fun InjuriesReportCard(
                 if (injuries2 != null) {
                     InjuryColumn(modifier = modifier, injuries = injuries2)
                 }
-            }
+
         }
 
 
@@ -952,70 +918,63 @@ fun BaseballSituation(
 ) {
 
 //    TOP/MIDDLE/BOTTOM/END are Competition status types
-    Card(modifier = modifier.fillMaxWidth()) {
+    DefaultCard(modifier = modifier) {
+        CardHeaderText(text = "Current Situation")
+        InningText(competition = competition)
+        Divider()
+        OutsBallsStrikes(gameDetailSituation = gameDetailSituation)
+        Divider()
 
-        Column(modifier = modifier.padding(SIXTEEN.dp)) {
-            CardHeaderText(text = "Current Situation")
-            InningText(competition = competition)
-            Divider()
-            OutsBallsStrikes(gameDetailSituation = gameDetailSituation)
-            Divider()
-
-
-            if (competition.status?.periodPrefix.equals("End") || equals("Mid")) {
-
-                Text(text = "Due up", fontWeight = FontWeight.Bold)
-
-                gameDetailSituation.dueUp.map {
-                    teamMap[it.playerId]?.let { it1 -> Player(player = it1) }
-                }
-                Spacer(modifier = Modifier.width(20.dp))
-
-
-            } else {
-
-
-                Row(
-                    modifier = modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Player(player = teamMap[gameDetailSituation.batter?.playerId.toString()]
-                        ?: GameDetailsAthleteDetailsModel())
-
-                    Text(text = "Vs", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-
-                    Player(player = teamMap[gameDetailSituation.pitcher?.playerId.toString()]
-                        ?: GameDetailsAthleteDetailsModel())
-
-                }
-            }
-
-//            Text(text = gameDetailSituation.toString())
-            Divider()
-
-            Text(text = "On First", fontWeight = FontWeight.Bold)
-            Row() {
-                teamMap[gameDetailSituation.onFirst?.playerId.toString()]?.let { Player(player = it) }
-            }
-            Text(text = "On Second", fontWeight = FontWeight.Bold)
-            Row() {
-                teamMap[gameDetailSituation.onSecond?.playerId.toString()]?.let { Player(player = it) }
-            }
-            Text(text = "On Third", fontWeight = FontWeight.Bold)
-            Row() {
-                teamMap[gameDetailSituation.onThird?.playerId.toString()]?.let { Player(player = it) }
-            }
-
+        if (
+            competition.status?.periodPrefix.equals("End") ) {
             Text(text = "Due up", fontWeight = FontWeight.Bold)
-
 
             gameDetailSituation.dueUp.map {
                 teamMap[it.playerId]?.let { it1 -> Player(player = it1) }
             }
+            Spacer(modifier = Modifier.width(20.dp))
+
+
+        } else {
+
+
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Player(player = teamMap[gameDetailSituation.batter?.playerId.toString()]
+                    ?: GameDetailsAthleteDetailsModel())
+
+                Text(text = "Vs", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+
+                Player(player = teamMap[gameDetailSituation.pitcher?.playerId.toString()]
+                    ?: GameDetailsAthleteDetailsModel())
+            }
+        }
+//            Text(text = gameDetailSituation.toString())
+        Divider()
+
+        Text(text = "On First", fontWeight = FontWeight.Bold)
+        Row() {
+            teamMap[gameDetailSituation.onFirst?.playerId.toString()]?.let { Player(player = it) }
+        }
+        Text(text = "On Second", fontWeight = FontWeight.Bold)
+        Row() {
+            teamMap[gameDetailSituation.onSecond?.playerId.toString()]?.let { Player(player = it) }
+        }
+        Text(text = "On Third", fontWeight = FontWeight.Bold)
+        Row() {
+            teamMap[gameDetailSituation.onThird?.playerId.toString()]?.let { Player(player = it) }
+        }
+
+        Text(text = "Due up", fontWeight = FontWeight.Bold)
+
+
+        gameDetailSituation.dueUp.map {
+            teamMap[it.playerId]?.let { it1 -> Player(player = it1) }
         }
     }
-
 }
 
 
@@ -1082,6 +1041,7 @@ fun InningText(competition: GameDetailsCompetitionModel) {
 
 @Composable
 fun DoughnutChart2(
+    modifier: Modifier,
     gameDetailModel: GameDetailsModel,
     size: Dp = 200.dp,
     thickness: Dp = 20.dp,
@@ -1113,111 +1073,101 @@ fun DoughnutChart2(
     val proportions = values.map { it * 100 / sumOfValues }
     val sweepAngles = proportions.map { it * 360 / 100 }
 
-
-    Card(
-        modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth()
-    ) {
-        Column(
-            modifier = Modifier.padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+    DefaultCard(modifier = modifier) {
+        Row(
+            modifier = modifier.fillMaxWidth()
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                CardHeaderText(text = "Matchup Predictor")
-            }
-            Divider()
+            CardHeaderText(text = "Matchup Predictor")
+        }
+        Divider()
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+        ) {
+            Text(
+                text = "$gameProjection%",
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(10.dp)
+            )
+            Text(
+                text = "$teamChanceLoss%",
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = modifier
+                    .align(Alignment.TopStart)
+                    .padding(10.dp)
+            )
+
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
+                modifier = modifier
+                    .height(IntrinsicSize.Max)
+                    .align(Alignment.Center)
             ) {
-                Text(
-                    text = "$gameProjection%",
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(10.dp)
-                )
-                Text(
-                    text = "$teamChanceLoss%",
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(10.dp)
-                )
-
-                Box(
-                    modifier = Modifier
-                        .height(IntrinsicSize.Max)
-                        .align(Alignment.Center)
-                ) {
-                    Row(
-                        modifier = Modifier,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        Text(
-                            text = teams?.get(0)?.team?.abbreviation ?: "",
-                            fontSize = 16.sp,
-                            color = Color.Gray,
-                            fontWeight = FontWeight.Bold,
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Divider(
-                            color = Color.LightGray,
-                            modifier = Modifier
-                                .height(100.dp)
-                                .width(1.dp)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-
-                        Text(
-                            text = teams?.get(1)?.team?.abbreviation ?: "",
-                            fontSize = 16.sp,
-                            color = Color.Gray,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-                Canvas(
-                    modifier = Modifier
-                        .size(size = size)
-                        .padding(16.dp)
-                        .align(Alignment.Center),
+                Row(
+                    modifier = modifier,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    var startAngle = -90f
-                    for (i in values.indices) {
+                    Text(
+                        text = teams?.get(0)?.team?.abbreviation ?: "",
+                        fontSize = 16.sp,
+                        color = Color.Gray,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Spacer(modifier = modifier.width(8.dp))
+                    Divider(
+                        color = Color.LightGray,
+                        modifier = Modifier
+                            .height(100.dp)
+                            .width(1.dp)
+                    )
+                    Spacer(modifier = modifier.width(8.dp))
 
-                        drawArc(
-                            color = colors.getOrElse(i) { color -> Color.White },
-                            startAngle = startAngle,
-                            sweepAngle = sweepAngles[i],
-                            useCenter = false,
-                            style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt)
-                        )
-                        startAngle += sweepAngles[i]
-                    }
+                    Text(
+                        text = teams?.get(1)?.team?.abbreviation ?: "",
+                        fontSize = 16.sp,
+                        color = Color.Gray,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
-            } //end of box
+            }
+            Canvas(
+                modifier = modifier
+                    .size(size = size)
+                    .padding(16.dp)
+                    .align(Alignment.Center),
+            ) {
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Column() {
-
-                Text(
-                    text = "Tie: $teamChanceTie%",
-                    color = Color.Gray,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Center,
-                )
+                var startAngle = -90f
                 for (i in values.indices) {
-                    DisplayLegend(
-                        color = colors.getOrElse(i, { color -> Color.White }),
-                        legend = legends.getOrElse(i, { word -> "" }))
+
+                    drawArc(
+                        color = colors.getOrElse(i) { color -> Color.White },
+                        startAngle = startAngle,
+                        sweepAngle = sweepAngles[i],
+                        useCenter = false,
+                        style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt)
+                    )
+                    startAngle += sweepAngles[i]
                 }
+            }
+        } //end of box
+
+        Spacer(modifier = modifier.height(8.dp))
+
+        Column() {
+
+            Text(
+                text = "Tie: $teamChanceTie%",
+                color = Color.Gray,
+                fontWeight = FontWeight.SemiBold,
+                textAlign = TextAlign.Center,
+            )
+            for (i in values.indices) {
+                DisplayLegend(
+                    color = colors.getOrElse(i, { color -> Color.White }),
+                    legend = legends.getOrElse(i, { word -> "" }))
             }
         }
     }
@@ -1244,6 +1194,7 @@ fun DisplayLegend(color: Color, legend: String) {
 
 @Composable
 fun DoughnutChartForBasketball(
+    modifier: Modifier,
     gameDetailModel: GameDetailsModel,
     size: Dp = 200.dp,
     thickness: Dp = 20.dp,
@@ -1256,8 +1207,6 @@ fun DoughnutChartForBasketball(
         colors.add(HexToJetpackColor2.getColor(it.team?.color ?: ""))
         legends.add(it.team?.name ?: "")
     }
-
-
     colors.add(Color.LightGray)
     legends.add("Tie")
 
@@ -1273,128 +1222,103 @@ fun DoughnutChartForBasketball(
     val sweepAngles = proportions.map { it * 360 / 100 }
 
 
-    Card(
-        elevation = CardDefaults.elevatedCardElevation(),
-        modifier = Modifier
-            .fillMaxHeight()
+    DefaultCard(
+        modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)) {
-        Column(
-            modifier = Modifier.padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxHeight()
+    ) {
+        Row(
+            modifier = modifier.fillMaxWidth()
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                CardHeaderText(text = "Matchup Predictor")
-            }
-            Divider()
+            CardHeaderText(text = "Matchup Predictor")
+        }
+        Divider()
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+        ) {
+            Text(
+                text = "$gameProjection%",
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(10.dp)
+            )
+            Text(
+                text = "$teamChanceLoss%",
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = modifier
+                    .align(Alignment.TopStart)
+                    .padding(10.dp)
+            )
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
+                modifier = modifier
+                    .height(IntrinsicSize.Max)
+                    .align(Alignment.Center)
             ) {
-                Text(
-                    text = "$gameProjection%",
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(10.dp)
-                )
-                Text(
-                    text = "$teamChanceLoss%",
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(10.dp)
-                )
-                Box(
-                    modifier = Modifier
-                        .height(IntrinsicSize.Max)
-                        .align(Alignment.Center)
+                Row(
+                    modifier = modifier,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
-                        modifier = Modifier,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = teams?.get(1)?.team?.abbreviation ?: "",
-                            fontSize = 16.sp,
-                            color = Color.Gray,
-                            fontWeight = FontWeight.Bold,
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Divider(
-                            color = Color.LightGray,
-                            modifier = Modifier
-                                .height(100.dp)
-                                .width(1.dp)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = teams?.get(0)?.team?.abbreviation ?: "",
-                            fontSize = 16.sp,
-                            color = Color.Gray,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-
-                Canvas(
-                    modifier = Modifier
-                        .size(size = size)
-                        .padding(16.dp)
-                        .align(Alignment.Center),
-                ) {
-                    var startAngle = -90f
-                    for (i in values.indices) {
-                        drawArc(
-                            color = colors.getOrElse(i) { color -> Color.White },
-                            startAngle = startAngle,
-                            sweepAngle = sweepAngles[i],
-                            useCenter = false,
-                            style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt),
-                        )
-                        startAngle += sweepAngles[i]
-                    }
-
+                    Text(
+                        text = teams?.get(1)?.team?.abbreviation ?: "",
+                        fontSize = 16.sp,
+                        color = Color.Gray,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Spacer(modifier = modifier.width(8.dp))
+                    Divider(
+                        color = Color.LightGray,
+                        modifier = modifier
+                            .height(100.dp)
+                            .width(1.dp)
+                    )
+                    Spacer(modifier = modifier.width(8.dp))
+                    Text(
+                        text = teams?.get(0)?.team?.abbreviation ?: "",
+                        fontSize = 16.sp,
+                        color = Color.Gray,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Column() {
-                Text(text = "Win Prediction", textAlign = TextAlign.Center)
+            Canvas(
+                modifier = modifier
+                    .size(size = size)
+                    .padding(16.dp)
+                    .align(Alignment.Center),
+            ) {
+                var startAngle = -90f
                 for (i in values.indices) {
-                    DisplayLegend(
-                        color = colors.getOrElse(i, { color -> Color.White }),
-                        legend = legends.getOrElse(i, { word -> "" }))
+                    drawArc(
+                        color = colors.getOrElse(i) { color -> Color.White },
+                        startAngle = startAngle,
+                        sweepAngle = sweepAngles[i],
+                        useCenter = false,
+                        style = Stroke(width = thickness.toPx(), cap = StrokeCap.Butt),
+                    )
+                    startAngle += sweepAngles[i]
                 }
+
+            }
+        }
+
+        Spacer(modifier = modifier.height(32.dp))
+
+        Column(verticalArrangement = Arrangement.Center) {
+            Text(text = "Win Prediction", textAlign = TextAlign.Center)
+            for (i in values.indices) {
+                DisplayLegend(
+                    color = colors.getOrElse(i, { color -> Color.White }),
+                    legend = legends.getOrElse(i, { word -> "" }))
             }
         }
     }
-}
-
-
-@Composable
-fun DisplayLegend2(color: Color, legend: String, value: Int) {
-    Row(
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(
-            modifier = Modifier
-                .size(10.dp)
-                .background(color = color, shape = CircleShape)
-        )
-        Spacer(modifier = Modifier.width(4.dp))
-        Text(text = legend, color = Color.Blue, fontSize = 16.sp)
-        Spacer(modifier = Modifier.width(4.dp))
-
-        Text(text = value.toString(), color = Color.Blue, fontSize = 16.sp)
-
-    }
 
 }
+
+
 
 
 @Composable
@@ -1412,12 +1336,9 @@ fun GameInformation(
     modifier: Modifier,
     gameDetailModel: GameDetailsModel,
 ) {
-    Card(
+    DefaultCard(
         modifier = modifier
-            .fillMaxWidth()
     ) {
-
-        Column(modifier = modifier.padding(SIXTEEN.dp)) {
             CardHeaderText(text = "Game Information")
             Divider()
 
@@ -1443,7 +1364,6 @@ fun GameInformation(
                 Text(text = "CAPACITY: ", fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 Text(text = gameDetailModel.gameInfo?.venue?.capacity.toString(), fontSize = 12.sp)
             }
-        }
     }
 }
 
@@ -1475,7 +1395,10 @@ fun getTeamsColorsList(gameDetailModel: GameDetailModel): List<Color?> {
 
 
 @Composable
-fun FindTickets(ticketsInfo: TicketsInfoModel) {
+fun FindTickets(
+    modifier: Modifier,
+    ticketsInfo: TicketsInfoModel
+) {
     val team1 = ticketsInfo.seatSituation?.opponentTeamName
     val team2 = ticketsInfo.seatSituation?.currentTeamName
     val venueName = ticketsInfo.seatSituation?.venueName
@@ -1488,11 +1411,11 @@ fun FindTickets(ticketsInfo: TicketsInfoModel) {
     } else {
 
         Card(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth(),
         ) {
             Row(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(8.dp)
             ) {
@@ -1501,7 +1424,7 @@ fun FindTickets(ticketsInfo: TicketsInfoModel) {
             }
             Divider()
             Row(
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text(
                     text = "$team1 vs $team2",
@@ -1510,7 +1433,7 @@ fun FindTickets(ticketsInfo: TicketsInfoModel) {
                 )
             }
             Row(
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text(
                     text = "$venueName - $dateDay $shortDate",
@@ -1520,7 +1443,7 @@ fun FindTickets(ticketsInfo: TicketsInfoModel) {
                 )
             }
             Row(
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text(
                     text = ticketsInfo.seatSituation?.summary ?: "",
@@ -1531,7 +1454,7 @@ fun FindTickets(ticketsInfo: TicketsInfoModel) {
             }
             Divider()
             Row(
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text(
                     text = "Buy $team2 tickets with VividSeats",
@@ -1541,15 +1464,10 @@ fun FindTickets(ticketsInfo: TicketsInfoModel) {
                 )
             }
             Divider()
-
             // dropdowm
             DropDownFun(dropDownOptions)
-
         }
-
     }
-
-
 }
 
 @Composable
@@ -1604,43 +1522,45 @@ fun DropDownMenuItem(
 
 
 @Composable
-fun TabsLastFiveGames(lastFiveGames: List<LastFiveGamesModel>) {
+fun TabsLastFiveGames(
+    modifier: Modifier,
+    lastFiveGames: List<LastFiveGamesModel>) {
 
     var tabIndex by remember { mutableStateOf(0) }
     val tabTitles = listOf(lastFiveGames.getOrNull(0)?.team,
         lastFiveGames.getOrNull(1)?.team)
 
-    Card() {
-        Column(modifier = Modifier.fillMaxWidth()) {
+    DefaultCard(modifier = modifier) {
 
-            TabRow(selectedTabIndex = tabIndex) {
-                tabTitles.forEachIndexed { index, team ->
-                    Tab(
-                        selected = tabIndex == index,
-                        onClick = { tabIndex = index },
-                        text = {
-                            Box() {
-                                Row(horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
+        TabRow(selectedTabIndex = tabIndex) {
+            tabTitles.forEachIndexed { index, team ->
+                Tab(
+                    selected = tabIndex == index,
+                    onClick = { tabIndex = index },
+                    text = {
+                        Box() {
+                            Row(horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
 
-                                    GenericImageLoader(obj = team?.logo.toString(),
-                                        modifier = Modifier.size(30.dp))
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(text = team?.abbreviation ?: "")
+                                GenericImageLoader(obj = team?.logo.toString(),
+                                    modifier = modifier.size(30.dp))
+                                Spacer(modifier = modifier.width(8.dp))
+                                Text(text = team?.abbreviation ?: "")
 
-                                }
                             }
-                        },
-                    )
-                }
-            }
-            when (tabIndex) {
-                0 -> LastFiveGames2(lastFiveGames = lastFiveGames, teamInt = 0)
-                1 -> LastFiveGames2(lastFiveGames = lastFiveGames, teamInt = 1)
+                        }
+                    },
+                )
             }
         }
+        when (tabIndex) {
+            0 -> LastFiveGames2(lastFiveGames = lastFiveGames, teamInt = 0)
+            1 -> LastFiveGames2(lastFiveGames = lastFiveGames, teamInt = 1)
+        }
     }
+
+
 }
 
 

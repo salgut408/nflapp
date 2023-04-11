@@ -17,7 +17,6 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_te
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.InjuredAtheleteRow
 
 @Composable
-//Actually injuries box
 fun InjuriesBox(stats: String, team: FullTeamDetailWithRosterModel) {
     var expanded by remember { mutableStateOf(false) }
     val extraPadding by animateDpAsState(
