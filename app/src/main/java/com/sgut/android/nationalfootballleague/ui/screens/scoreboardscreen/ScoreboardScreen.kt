@@ -25,6 +25,7 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SpacerDp
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamLogoScoreboardImageLoader
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
+import com.sgut.android.nationalfootballleague.ui.screens.standings_screen.Standings
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.*
 import java.util.*
@@ -45,11 +46,13 @@ fun ScoreboardScreen(
     val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
 
 //    TODO articles move to usecase
-    val articles = scoreboardUiState.currentArticles
+//    val articles = scoreboardUiState.currentArticles
     val articles2 = scoreboardViewModel
 
 
     val newUiState by scoreboardViewModel.newScoreboardModelState.collectAsState()
+    val articles = newUiState.currentArticles
+
     val sport = newUiState.currentSport
     val league = newUiState.currentLeague
 
@@ -61,6 +64,8 @@ fun ScoreboardScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+
+
 
         Text(
             text = newUiState.scoreboardModelUiState.day ?: ""
@@ -100,6 +105,9 @@ fun ScoreboardScreen(
             league,
             navController
         )
+
+        Standings(sport = sport, league = league, type = "0")
+
     }
 }
 

@@ -157,7 +157,7 @@ fun GameDetailsScreen(
                 FindTickets(
                     modifier = modifier,
                     ticketsInfo = gameDetailUiState.currentGameUiState?.ticketsInfo
-                        ?: TicketsInfoModel()
+                        ?: TicketsInfoModel(),
                 )
 
                 SpacerDp(modifier = modifier, height = EIGHT)
@@ -637,7 +637,7 @@ fun VideoPreview(
 fun DisplayLabels(list: List<GameDetailsStatisticModel>) {
     Column() {
         list.map {
-            Text(text = it.label, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
+            Text(text = it.name, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)
             Text(text = it.displayValue, fontSize = 10.sp)
         }
     }
@@ -661,7 +661,7 @@ fun TeamStatCard3(
                 Row() {
                     boxscore.statistics.map {
                         Column() {
-                            Text(text = it.label)
+                            Text(text = it.name)
                             Text(text = it.displayValue)
                         }
                     }
@@ -679,6 +679,10 @@ fun TeamStatCard3(
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Column() {
+                                it.statistics.map { txt ->
+                                    Text(text = txt.name)
+                                    Text(text = txt.displayValue)
+                                }
                                 DisplayLabels(list = it.statistics)
                             }
                         }
@@ -1077,7 +1081,7 @@ fun DoughnutChart2(
         ) {
             CardHeaderText(text = "Matchup Predictor")
         }
-        Divider()
+        NormalDivider()
         Box(
             modifier = modifier
                 .fillMaxSize()
@@ -1116,7 +1120,7 @@ fun DoughnutChart2(
                     Spacer(modifier = modifier.width(8.dp))
                     Divider(
                         color = Color.Black,
-                        modifier = Modifier
+                        modifier = modifier
                             .height(100.dp)
                             .width(1.dp)
                     )
@@ -1308,11 +1312,13 @@ fun DoughnutChartForBasketball(
 
         Column(verticalArrangement = Arrangement.Center) {
             Text(text = "Win Prediction", textAlign = TextAlign.Center)
-            for (i in values.indices) {
+            values.indices.map { int ->
                 DisplayLegend(
-                    color = colors.getOrElse(i, { color -> Color.White }),
-                    legend = legends.getOrElse(i, { word -> "" }))
+                    color = colors.getOrElse(int, {color -> Color.White}),
+                    legend = legends.getOrElse(int, { word -> "" })
+                )
             }
+
         }
     }
 
@@ -1397,7 +1403,7 @@ fun getTeamsColorsList(gameDetailModel: GameDetailModel): List<Color?> {
 @Composable
 fun FindTickets(
     modifier: Modifier,
-    ticketsInfo: TicketsInfoModel
+    ticketsInfo: TicketsInfoModel,
 ) {
     val team1 = ticketsInfo.seatSituation?.opponentTeamName
     val team2 = ticketsInfo.seatSituation?.currentTeamName
@@ -1412,17 +1418,16 @@ fun FindTickets(
 
         Card(
             modifier = modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .background(Color.LightGray),
+
         ) {
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
+
                 CardHeaderText(text = "Find Tickets")
 
-            }
+
             NormalDivider()
+
             Row(
                 modifier = modifier.align(Alignment.CenterHorizontally)
             ) {
@@ -1474,7 +1479,6 @@ fun FindTickets(
 fun DropDownFun(tickets: List<TicketModel>) {
     val listItems = tickets
     val disabledItem = 1
-    val toastConext = LocalContext.current.applicationContext
     var expanded by remember { mutableStateOf(false) }
 
     Box(contentAlignment = Alignment.Center) {
@@ -1520,6 +1524,20 @@ fun DropDownMenuItem(
 
 }
 
+@Composable
+fun RosterTabs(
+    modifier: Modifier,
+    rosters: List<RostersModel>
+) {
+    var tabIndex by remember { mutableStateOf(0) }
+    val tabTitles = listOf(
+        rosters.getOrNull(0)?.team?.abbreviation,
+        rosters.getOrNull(1)?.team?.abbreviation
+    )
+
+
+
+}
 
 @Composable
 fun TabsLastFiveGames(
@@ -1527,7 +1545,9 @@ fun TabsLastFiveGames(
     lastFiveGames: List<LastFiveGamesModel>) {
 
     var tabIndex by remember { mutableStateOf(0) }
-    val tabTitles = listOf(lastFiveGames.getOrNull(0)?.team,
+
+    val tabTitles = listOf(
+        lastFiveGames.getOrNull(0)?.team,
         lastFiveGames.getOrNull(1)?.team)
 
     DefaultCard(modifier = modifier) {

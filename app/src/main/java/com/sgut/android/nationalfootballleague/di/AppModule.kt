@@ -70,6 +70,12 @@ object AppModule {
         sportsDataBase: SportsDataBase,
     ): TeamsListsRepository = TeamsListRepositoryImpl(espnApi, sportsDataBase)
 
+    @Provides
+    fun provideStandingsRepository(
+        espnApi: EspnApi,
+        sportsDataBase: SportsDataBase,
+    ): StandingsRepository = StandingsRepositoryImpl(espnApi, sportsDataBase)
+
 
     @Provides
     fun provideTeamsDetailRepository(

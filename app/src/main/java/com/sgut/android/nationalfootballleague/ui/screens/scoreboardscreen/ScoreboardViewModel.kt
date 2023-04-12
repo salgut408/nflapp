@@ -44,7 +44,6 @@ class ScoreboardViewModel @Inject constructor(
 
                 val articlesListResult = getArticles(sport, league)
 
-
                 val currentScoreboardModelUiState = scoreboardRepository.getCollegeBasketballScoreboard(sport, league, "200")
 
                 setScoreboardUiState(

@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague.data.remote.api
 
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.standings.StandingsNetworkResponse
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.team_schedule.ScheduleResponseNetwork
 import retrofit2.Response
 import retrofit2.http.GET
@@ -103,6 +104,17 @@ interface EspnApi {
         @Path("athleteId")
         athleteId: String? = null,
     )
+
+    @GET("v2/sports/{sport}/{league}/standings")
+    suspend fun getStandings(
+        @Path("sport")
+        sport: String? = null,
+        @Path("league")
+        league: String? = null,
+        @Query("type") type: String = "0"
+    ): Response<StandingsNetworkResponse>
+
+//    TODO get standings - has type Parameters 0 = overall, 1 = wildcard, 2 = Expanded Standings, 3 = "Vs. Division Standings", 4 = Monthly Standings
 
 //    TODO add player info
 //    https://site.web.api.espn.com/apis/common/v3/sports/:sport/:league_abbrev/athletes/:athlete_id
