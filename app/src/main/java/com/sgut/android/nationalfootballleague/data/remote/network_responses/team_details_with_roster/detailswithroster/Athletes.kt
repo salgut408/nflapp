@@ -65,22 +65,32 @@ data class Athletes(
 )
 
 data class Flag(
-  @SerializedName("href") val href: String? = "",
+  @SerializedName("href")
+  val href: String? = "",
   )
 
 data class Injury(
-    @SerializedName("shortComment") val shortComment: String? = null,
-    @SerializedName("longComment") val longComment: String? = null,
-    @SerializedName("status") val injuryStatus: String? = null,
-    @SerializedName("details") val detail: Details? = null,
+    @SerializedName("shortComment")
+    val shortComment: String? = null,
+    @SerializedName("longComment")
+    val longComment: String? = null,
+    @SerializedName("status")
+    val injuryStatus: String? = null,
+    @SerializedName("details")
+    val detail: Details? = null,
     )
 
 data class Details(
-    @SerializedName("type") var type: String? = null,
-    @SerializedName("location") var location: String? = null,
-    @SerializedName("side") var side: String? = null,
-    @SerializedName("detail") var detail: String? = null,
-    @SerializedName("returnDate") var returnDate: String? = null,
+    @SerializedName("type")
+    val type: String? = null,
+    @SerializedName("location")
+    val location: String? = null,
+    @SerializedName("side")
+    val side: String? = null,
+    @SerializedName("detail")
+    val detail: String? = null,
+    @SerializedName("returnDate")
+    val returnDate: String? = null,
 )
 
 fun Athletes.asGameDetailsAthlete(): GameDetailsAthleteDetailsModel {

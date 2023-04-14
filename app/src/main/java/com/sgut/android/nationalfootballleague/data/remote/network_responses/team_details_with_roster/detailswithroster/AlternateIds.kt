@@ -5,6 +5,6 @@ import com.google.gson.annotations.SerializedName
 
 data class AlternateIds (
 
-  @SerializedName("sdr" ) var sdr : String? = null
+  @SerializedName("sdr" ) val sdr : String? = null
 
 )

@@ -41,12 +41,21 @@ fun TeamDetailScreen(
     val teamDetailUiState by teamDetailViewModel.teamDetailUiState.collectAsState()
     val teamDetail = teamDetailUiState.currentTeamDetails
     val teamSchedule = teamDetailUiState.schedule
+    val roster = teamDetailUiState.atheletes
+
+
 
     NewTeamDetailCard(team = teamDetail,
+        roster= roster,
         modifier = Modifier,
-        schedule = teamSchedule ?: ScheduleDomainModel())
+        schedule = teamSchedule ?: ScheduleDomainModel()
+    )
+
+
 
 }
+
+
 
 @Composable
 fun PastGames(schedule: ScheduleDomainModel) {
@@ -186,7 +195,7 @@ fun TeamRecord(
             ) {
                 Column() {
                     recordItems?.map { recordItems ->
-                        Text(text = recordItems.name ?: "",
+                        Text(text = recordItems.name,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onSecondary)

@@ -83,7 +83,7 @@ fun TeamDetailCard(
             NextEvent(nextEvent = nextEvent, modifier = modifier)
         }
         InjuriesBox(
-            stats = team.record?.recordItems?.getOrNull(0)?.summary.toString(), team
+            stats = team.record.recordItems.getOrNull(0)?.summary.toString(), team
         )
     }
 }

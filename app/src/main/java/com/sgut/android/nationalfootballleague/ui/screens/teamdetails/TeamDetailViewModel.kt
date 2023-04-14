@@ -1,10 +1,10 @@
 package com.sgut.android.nationalfootballleague.ui.screens.teamdetails
 
-import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sgut.android.nationalfootballleague.data.remote.network_responses.team_schedule.ScheduleResponseNetwork
+import com.sgut.android.nationalfootballleague.Position
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.AthletesRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.ScheduleDomainModel
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamDetailsRepository
@@ -22,10 +22,11 @@ class TeamDetailViewModel @Inject constructor(
 
     private val _teamDetailUiState = MutableStateFlow(TeamDetailsScreenUiState())
     val teamDetailUiState: StateFlow<TeamDetailsScreenUiState> = _teamDetailUiState
-    lateinit var sched: ScheduleResponseNetwork
 
+    lateinit var playaMap: Map<AthletesRosterModel, Position>
 
     init {
+      playaMap =  getPositionMap(_teamDetailUiState.value.atheletes)
 
     }
 
@@ -36,13 +37,16 @@ class TeamDetailViewModel @Inject constructor(
             val teamSched = teamDetailsRepository.getTeamSchedule(sport, league, teamAbrv )
 
             setTeamDetailUiState(teamDetails, sport, league, teamSched)
-            Log.e("SCHED", teamSched.toString())
         }
 
 
+    fun getPositionMap(list: List<AthletesRosterModel>): Map<AthletesRosterModel, Position> {
+        val  map = list.associate { it to it.position }
+        return map
+    }
 
 
-    fun setTeamDetailUiState(
+    private fun setTeamDetailUiState(
         team: FullTeamDetailWithRosterModel,
         sport: String,
         league: String,
@@ -53,7 +57,7 @@ class TeamDetailViewModel @Inject constructor(
                 currentSport = sport,
                 currentLeague = league,
                 currentTeamDetails = team,
-                atheletes = team.athletes,
+                atheletes = team.athletes.sortedBy { it.position.id },
                 nextEvents = team.nextEvent,
                 schedule = schedule
             )

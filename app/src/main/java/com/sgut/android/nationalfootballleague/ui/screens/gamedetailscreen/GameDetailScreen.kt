@@ -874,8 +874,7 @@ fun InjuryColumn(
     injuries: GameDetailsInjuriesListModel,
 ) {
     Column() {
-        Row() {
-        }
+
         injuries.injuries.map {
             Row(
                 modifier = modifier
@@ -883,7 +882,7 @@ fun InjuryColumn(
                     .padding(start = 8.dp, end = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                AthleteNameAndPosition(athlete = it.athlete)
+                AthleteNameAndPosition(athlete = it.athlete, modifier = modifier)
                 Text(text = it.status, textAlign = TextAlign.Right)
             }
         }
@@ -892,10 +891,14 @@ fun InjuryColumn(
 }
 
 @Composable
-fun AthleteNameAndPosition(athlete: GameDetailsAthleteDetailsModel) {
+fun AthleteNameAndPosition(athlete: GameDetailsAthleteDetailsModel, modifier: Modifier) {
     Row() {
+        GenericImageLoader(obj = athlete.headshot?.href ?: "", modifier = modifier.size(40.dp))
+        Spacer(modifier = Modifier.width(16.dp))
+
         Text(text = athlete.displayName)
-        Text(text = " ")
+        Spacer(modifier = Modifier.width(8.dp))
+
         Text(text = athlete.position?.abbreviation ?: "", color = Color.Blue)
     }
 }
@@ -974,7 +977,10 @@ fun BaseballSituation(
 
 
         gameDetailSituation.dueUp.map {
-            teamMap[it.playerId]?.let { it1 -> Player(player = it1) }
+            Row{
+                teamMap[it.playerId]?.let { it1 -> Player(player = it1) }
+
+            }
         }
     }
 }

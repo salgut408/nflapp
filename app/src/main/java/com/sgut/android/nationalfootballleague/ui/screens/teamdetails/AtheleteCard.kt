@@ -1,6 +1,5 @@
 package com.sgut.android.nationalfootballleague.ui.screens.teamdetails
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,7 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -21,11 +19,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import coil.size.Scale
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.AthletesRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportSurface
 
 
@@ -51,22 +48,8 @@ fun AltheleteCard2(
         ) {
 
             Box() {
-                val painter = rememberAsyncImagePainter(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(athelete.headshot.href ?: athelete.flag?.href)
-                        .crossfade(true)
-                        .scale(Scale.FILL)
-                        .crossfade(100)
-                        .build()
-                )
-                Image(
-                    painter = painter,
-                    contentDescription = athelete.displayName,
-                    modifier = Modifier
-                        .size(150.dp)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.background)
-                )
+                GenericImageLoader(obj = athelete.headshot.href ?: "",
+                    modifier = modifier.size(150.dp))
             }
 
             Column(modifier = Modifier.padding(16.dp)) {

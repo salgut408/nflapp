@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.standings_models.ChildrenModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.standings_models.StandingsResponseModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.standings_models.TeamModel
+import com.sgut.android.nationalfootballleague.ui.commoncomps.CardHeaderText
 import com.sgut.android.nationalfootballleague.ui.commoncomps.EIGHT
 import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
 import com.sgut.android.nationalfootballleague.ui.commoncomps.THIRTYSIX
@@ -35,6 +36,8 @@ fun Standings(
     val standings by standingsViewModel.standingsState.collectAsState()
 
     DefaultCard(modifier = modifier) {
+        CardHeaderText(text = "Standings")
+        NormalDivider()
         Row {
             standings.standingsUiState.children.map { child ->
                 Children(child = child, modifier = modifier)
@@ -67,8 +70,9 @@ fun TeamComp(team: TeamModel, modifier: Modifier) {
 
 @Composable
 fun Children(child: ChildrenModel, modifier: Modifier) {
-    Column {
-        Text(text = child.name, fontWeight = FontWeight.Bold)
+
+    Column (horizontalAlignment = Alignment.End){
+        Text(text = child.name, fontWeight = FontWeight.Bold, fontSize = 10.sp)
         Standings(standings = child.standings, modifier)
     }
 

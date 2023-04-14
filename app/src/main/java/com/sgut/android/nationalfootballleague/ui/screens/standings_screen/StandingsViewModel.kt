@@ -17,35 +17,14 @@ import javax.inject.Inject
 class StandingsViewModel @Inject constructor(
     private val standingsRepository: StandingsRepository,
 ): ViewModel() {
+
     private val _standingsUiState = MutableStateFlow(StandingsUiState())
-    var standings: StateFlow<StandingsUiState> = _standingsUiState.asStateFlow()
     var standingsState: StateFlow<StandingsUiState> = _standingsUiState.asStateFlow()
 
     init {
-        crazyLog(n = 15)
+
     }
 
-    fun crazyLog(n: Int): List<String>{
-        val list = mutableListOf<String>()
-        for (i in 1..n) {
-
-           if (i % 3 == 0) {
-               list.add("$i - Fizz")
-
-           }
-            if(i % 5 == 0){
-                list.add("$i - Buzz")
-            }
-            if(i % 5 == 0 && i % 3 == 0){
-                list.add("$i - FizBuzz")
-            }
-           else {
-               list.add(i.toString())
-           }
-        }
-        Log.e("CRZY LOG", list.toString() )
-        return list
-    }
 
     fun loadStandings(sport: String, league: String, type: String) = viewModelScope.launch {
         try {
