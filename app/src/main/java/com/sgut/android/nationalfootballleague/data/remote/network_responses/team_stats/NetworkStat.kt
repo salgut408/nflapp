@@ -19,7 +19,7 @@ data class NetworkStat(
 
 fun NetworkStat.asDomain(): TeamStatsModelModel {
     return TeamStatsModelModel(
-//        results = results,
+        results = results,
 //        season = season,
 //        team = team
     )
