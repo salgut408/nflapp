@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_stats_models.SplitModel
 
 data class Split(
     @SerializedName("abbreviation")
@@ -13,3 +14,11 @@ data class Split(
     @SerializedName("name")
     val name: String = ""
 )
+fun Split.asDomain(): SplitModel {
+    return SplitModel(
+        abbreviation = abbreviation,
+        categories = categories.map { it.asDomain() },
+        id = id,
+        name = name
+    )
+}

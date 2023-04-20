@@ -21,9 +21,9 @@ import androidx.compose.ui.unit.lerp
 import com.sgut.android.nationalfootballleague.commoncomposables.InjuriesBox
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.AthletesRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.RecordModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.VenueModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.ScheduleDomainModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_stats_models.TeamStatsModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GeneralImageLoader
 import kotlin.math.max
 import kotlin.math.min
@@ -44,6 +44,7 @@ fun NewTeamDetailCard(
     team: FullTeamDetailWithRosterModel,
     roster: List<AthletesRosterModel>,
     schedule: ScheduleDomainModel,
+    stats: TeamStatsModel,
     modifier: Modifier,
 ) {
     val color = HexToJetpackColor2.getColor(team.color)
@@ -54,7 +55,7 @@ fun NewTeamDetailCard(
     ) {
         val scroll = rememberScrollState(0)
         TeamHeader(team = team)
-        Body(roster = roster, team = team, scroll = scroll, teamSchedule = schedule)
+        Body(roster = roster, team = team, scroll = scroll, teamSchedule = schedule, stats = stats)
         Title(team = team) { scroll.value }
         MainImage(team = team) { scroll.value }
     }
@@ -182,6 +183,7 @@ fun Body(
     roster: List<AthletesRosterModel>,
     team: FullTeamDetailWithRosterModel,
     teamSchedule: ScheduleDomainModel,
+    stats: TeamStatsModel,
     scroll: ScrollState,
 ) {
     val color = HexToJetpackColor2.getColor(team.color)
@@ -216,7 +218,8 @@ fun Body(
             TabLayout(
                 team = team,
                 modifier = Modifier,
-                people = roster
+                people = roster,
+                stats = stats
             )
 
             team.nextEvent.map { nextEvent ->
@@ -225,7 +228,7 @@ fun Body(
             Spacer(Modifier.height(16.dp))
 
             TeamRecord(
-                record = team.record ?: RecordModel(),
+                record = team.record,
                 modifier = Modifier.padding(8.dp)
             )
 

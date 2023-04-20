@@ -2,7 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.domain.domainmodels.team_stats_models.TeamStatsModelModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_stats_models.TeamStatsModel
 
 data class NetworkStat(
     @SerializedName("requestedSeason")
@@ -17,10 +17,10 @@ data class NetworkStat(
     val team: Team = Team()
 )
 
-fun NetworkStat.asDomain(): TeamStatsModelModel {
-    return TeamStatsModelModel(
-        results = results,
-//        season = season,
-//        team = team
+fun NetworkStat.asDomain(): TeamStatsModel {
+    return TeamStatsModel(
+        results = results.asDomain(),
+        season = season.asDomain(),
+        team = team.asDomain()
     )
 }

@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.ui.screens.teamdetails
 
+import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +8,7 @@ import com.sgut.android.nationalfootballleague.Position
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.AthletesRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.ScheduleDomainModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_stats_models.TeamStatsModel
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamDetailsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +25,7 @@ class TeamDetailViewModel @Inject constructor(
     private val _teamDetailUiState = MutableStateFlow(TeamDetailsScreenUiState())
     val teamDetailUiState: StateFlow<TeamDetailsScreenUiState> = _teamDetailUiState
 
-    lateinit var playaMap: Map<AthletesRosterModel, Position>
+     var playaMap: Map<AthletesRosterModel, Position>
 
     init {
       playaMap =  getPositionMap(_teamDetailUiState.value.atheletes)
@@ -35,8 +37,10 @@ class TeamDetailViewModel @Inject constructor(
         viewModelScope.launch {
             val teamDetails = teamDetailsRepository.getSpecificTeam(sport, league, teamAbrv)
             val teamSched = teamDetailsRepository.getTeamSchedule(sport, league, teamAbrv )
+            val stats = teamDetailsRepository.getTeamStats(sport, league, teamAbrv )
 
-            setTeamDetailUiState(teamDetails, sport, league, teamSched)
+            setTeamDetailUiState(teamDetails, sport, league, teamSched, stats)
+            Log.d("TEAM_STATS VM", stats.toString())
         }
 
 
@@ -51,6 +55,7 @@ class TeamDetailViewModel @Inject constructor(
         sport: String,
         league: String,
         schedule: ScheduleDomainModel,
+        stats: TeamStatsModel
     ) {
         _teamDetailUiState.update {
             it.copy(
@@ -59,7 +64,8 @@ class TeamDetailViewModel @Inject constructor(
                 currentTeamDetails = team,
                 atheletes = team.athletes.sortedBy { it.position.id },
                 nextEvents = team.nextEvent,
-                schedule = schedule
+                schedule = schedule,
+                stats = stats
             )
         }
     }

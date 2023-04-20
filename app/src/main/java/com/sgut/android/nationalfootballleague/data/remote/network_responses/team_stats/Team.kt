@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_stats_models.TeamModel
 
 data class Team(
     @SerializedName("abbreviation")
@@ -25,3 +26,18 @@ data class Team(
     @SerializedName("standingSummary")
     val standingSummary: String = ""
 )
+
+fun Team.asDomain(): TeamModel {
+    return TeamModel(
+        abbreviation = abbreviation,
+        color = color,
+        displayName = displayName,
+        id = id,
+        location = location,
+        logo = logo,
+        name = name,
+        recordSummary = recordSummary,
+        seasonSummary = seasonSummary,
+        standingSummary = standingSummary
+    )
+}

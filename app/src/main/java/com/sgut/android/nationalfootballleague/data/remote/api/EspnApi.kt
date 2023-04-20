@@ -115,13 +115,14 @@ interface EspnApi {
         @Query("type") type: String = "0"
     ): Response<StandingsNetworkResponse>
 
-    @GET("v2/sports/{sport}/{league}/teams/{team}/statistics")
+    @GET("site/v2/sports/{sport}/{league}/teams/{team}/statistics")
     suspend fun getStats(
         @Path("sport")
         sport: String? = null,
         @Path("league")
-        team: String? = null,
-        @Query("type") type: String = "0"
+        league: String? = null,
+        @Path("team")
+        team: String? = null
     ): Response<NetworkStat>
 
 //    TODO get standings - has type Parameters 0 = overall, 1 = wildcard, 2 = Expanded Standings, 3 = "Vs. Division Standings", 4 = Monthly Standings

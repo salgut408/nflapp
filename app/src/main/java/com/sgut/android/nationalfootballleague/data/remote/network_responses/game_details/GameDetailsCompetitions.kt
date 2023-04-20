@@ -43,8 +43,7 @@ data class GameDetailsCompetitions(
     val timeoutsAvailable: Boolean? = null,
     @SerializedName("possessionArrowAvailable")
     val possessionArrowAvailable: Boolean? = null,
-    @SerializedName("probables")
-    val probables: List<Probables> = listOf(),
+
 
     )
 
@@ -57,7 +56,7 @@ fun GameDetailsCompetitions.asDomain(): GameDetailsCompetitionModel {
         shotChartAvailable = shotChartAvailable ?: false,
         timeoutsAvailable = timeoutsAvailable ?: false,
         possessionArrowAvailable = possessionArrowAvailable ?: false,
-        probables = probables.map { it.asDomain() }
+
 
     )
 }

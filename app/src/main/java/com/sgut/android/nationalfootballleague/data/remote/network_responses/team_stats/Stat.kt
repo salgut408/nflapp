@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_stats_models.StatModel
 
 data class Stat(
     @SerializedName("abbreviation")
@@ -19,3 +20,15 @@ data class Stat(
     @SerializedName("value")
     val value: Double = 0.0
 )
+
+fun Stat.asDomain(): StatModel {
+    return StatModel(
+        abbreviation = abbreviation,
+        description = description,
+        displayName = displayName,
+        displayValue = displayValue,
+        name = name,
+        shortDisplayName = shortDisplayName,
+        value = value
+    )
+}

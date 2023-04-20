@@ -17,6 +17,6 @@ data class TeamDomainModel(
     val color: String = "",
     val alternateColor: String = "",
     val logos: List<Logos>? = listOf(),
-): TeamsDomInterface
+)
 
 

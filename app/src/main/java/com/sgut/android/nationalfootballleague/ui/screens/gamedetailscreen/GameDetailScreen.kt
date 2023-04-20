@@ -64,8 +64,8 @@ fun GameDetailsScreen(
     gameDetailViewModel.loadGameDetails(sport, league, event)
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
+//    var state by remember { mutableStateOf(gameDetailViewModel.gameDetailUiState.value)}
 
-    Log.d("GAMEDETAIL-UISTATE", gameDetailUiState.currentGameUiState.toString())
 
 //    val map by remember {gameDetailViewModel.teamMap}
 
@@ -86,6 +86,11 @@ fun GameDetailsScreen(
                     competitions = gameDetailUiState.currentGameUiState?.header?.competitions
                         ?: listOf()
                 )
+
+
+
+
+//                Text(text = gameDetailUiState.currentGameUiState.header.competitions.f)
 
                 SpacerDp(modifier = modifier, height = EIGHT)
 
@@ -211,7 +216,14 @@ fun BaseballSpecific(
         gameDetailModel = gameDetailsModel
     )
 
+    SpacerDp(modifier = modifier, height = EIGHT)
+
+
+    ProbablesList(list = gameDetailsModel.header?.competitions?.first()?.competitors ?: listOf(), modifier = modifier)
+
 }
+
+
 
 @Composable
 fun RosterItem(rosterPerson: RosterModel) {
@@ -747,12 +759,30 @@ fun RightToLeftLayout(
 }
 
 @Composable
-fun Probables(list: List<ProbablesModel>) {
-    Card() {
-        list.map { prob ->
-            Text(text = prob.displayName)
-            Text(text = prob.athlete?.displayName ?: "")
-        }
+fun ProbablesList(list: List<GameDetailsCompetitorModel>, modifier: Modifier) {
+    DefaultCard(modifier = Modifier, ) {
+
+        CardHeaderText(text = "Probables")
+        NormalDivider()
+            Text(text = list.first().probables.first().displayName, fontSize = 25.sp, fontWeight = FontWeight.Bold)
+            Spacer(modifier = modifier.height(16.dp))
+            list.map { competitor ->
+                Row(
+                    modifier = modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = competitor.team?.displayName ?: "", fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        GenericImageLoader(obj = competitor.probables.first().athlete?.headshot?.href ?: "", modifier = modifier.fillMaxWidth())
+                        Text(text = competitor.probables.first().athlete?.displayName ?: "", fontSize = 15.sp)
+
+                    }
+                }
+            }
+
+
     }
 }
 
@@ -1352,7 +1382,7 @@ fun GameInformation(
         modifier = modifier
     ) {
             CardHeaderText(text = "Game Information")
-            Divider()
+            NormalDivider()
 
             GameInfoCardVenueImage(gameDetailModel = gameDetailModel, modifier = modifier)
 

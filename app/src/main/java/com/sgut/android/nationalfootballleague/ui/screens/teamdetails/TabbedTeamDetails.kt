@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.AthletesRosterModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.FullTeamDetailWithRosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.team_stats_models.TeamStatsModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.CardHeaderText
 import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DefaultCard
@@ -42,7 +43,8 @@ fun TabbedTeamScreen(
 fun TabLayout(
     modifier: Modifier,
     people: List<AthletesRosterModel>,
-    team: FullTeamDetailWithRosterModel
+    team: FullTeamDetailWithRosterModel,
+    stats: TeamStatsModel
 ) {
    var tabIndex by remember { mutableStateOf(0)}
     val tabTitles = listOf( "Stats", "Roster")
@@ -60,7 +62,7 @@ fun TabLayout(
             }
         }
         when(tabIndex) {
-            0 -> TeamStats(team = team, modifier = modifier)
+            0 -> TeamStats(team = team, modifier = modifier, stats = stats)
             1 -> PeopleList(list = people, modifier = modifier)
         }
     }
@@ -70,9 +72,11 @@ fun TabLayout(
 @Composable
 fun TeamStats(
     modifier: Modifier,
-    team: FullTeamDetailWithRosterModel
+    team: FullTeamDetailWithRosterModel,
+    stats: TeamStatsModel
 ) {
-    Text(text = team.displayName)
+    Text(text = team.displayName, fontSize = 40.sp)
+    Text(text = stats.team.standingSummary, fontSize = 20.sp)
 }
 
 @Composable
@@ -149,20 +153,7 @@ fun AthleteRow(athlete: AthletesRosterModel, modifier: Modifier) {
         Spacer(modifier = modifier.width(12.dp))
         Text(text = athlete.jersey, fontSize = 10.sp)
         Text(text = athlete.position.abbreviation, fontSize = 10.sp)
-//        val itemsList = (0..5).toList()
-//        val itemsIndexedList = listOf("A", "B", "C")
 
-//        LazyRow {
-//            items(itemsList.size) {
-//                Text("Item is $it")
-//            }
-//            item {
-//                Text("Single item")
-//            }
-//            itemsIndexed(itemsIndexedList) { index, item ->
-//                Text("Item at index $index is $item")
-//            }
-//        }
 
     }
 }

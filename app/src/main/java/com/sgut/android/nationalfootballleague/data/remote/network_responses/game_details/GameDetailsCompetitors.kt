@@ -21,8 +21,9 @@ data class GameDetailsCompetitors(
   @SerializedName("possession")
   val possession: Boolean = false,
   @SerializedName("score")
-  val score: Int = 0
-
+  val score: Int = 0,
+  @SerializedName("probables")
+val probables: List<Probables> = listOf(),
 
 )
 
@@ -34,6 +35,7 @@ fun GameDetailsCompetitors.asDomain(): GameDetailsCompetitorModel {
     team = team?.asDomain(),
     record = record.map { it.asDomain() },
     possession = possession,
-    score = score
+    score = score,
+    probables = probables.map { it.asDomain() }
   )
 }
