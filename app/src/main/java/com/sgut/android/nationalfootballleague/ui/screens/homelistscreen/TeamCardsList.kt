@@ -2,18 +2,19 @@ package com.sgut.android.nationalfootballleague.ui.screens.homelistscreen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.R
+import com.sgut.android.nationalfootballleague.di.ToolBar3
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicButton
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.utils.basicButton
@@ -26,7 +27,6 @@ import com.sgut.android.nationalfootballleague.R.string as AppText
 fun HomeTeamCardsListScreen(
     navController: NavController,
     homeListViewModel: HomeListViewModel = hiltViewModel(),
-    openDrawer: () -> Unit,
 ) {
 
     val uiState by homeListViewModel.listUiState.collectAsState()
@@ -36,9 +36,17 @@ fun HomeTeamCardsListScreen(
     val sportStateLeagueName = uiState.fullTeamInfo?.sport?.league?.name
     val sportStateTeamsFullInfo = uiState.fullTeamInfo
 
-    val scrollState = rememberScrollState()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+
+        topBar = {
+            ToolBar3(
+                title = sportStateLeagueName ?: "",
+                scrollBehavior = scrollBehavior )
+        },
+
         content = { padding ->
             Column() {
                 LazyRow(
@@ -180,9 +188,6 @@ fun HomeTeamCardsListScreen(
                         )
                     })
 
-                LeagueName(
-                    league = sportStateLeagueName ?: ""
-                )
 
                 if (sportStateTeamsFullInfo != null) {
                     ListOfTeams(

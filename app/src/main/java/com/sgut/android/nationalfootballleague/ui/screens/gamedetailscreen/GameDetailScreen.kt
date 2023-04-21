@@ -47,6 +47,7 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.formatTo
 import com.sgut.android.nationalfootballleague.utils.toDate
+import java.util.*
 import kotlin.math.nextUp
 
 
@@ -70,6 +71,8 @@ fun GameDetailsScreen(
 //    val map by remember {gameDetailViewModel.teamMap}
 
     Scaffold(
+
+
         content = { padding ->
             Column(
                 modifier
@@ -761,29 +764,39 @@ fun RightToLeftLayout(
 @Composable
 fun ProbablesList(list: List<GameDetailsCompetitorModel>, modifier: Modifier) {
     DefaultCard(modifier = Modifier, ) {
-
         CardHeaderText(text = "Probables")
         NormalDivider()
-            Text(text = list.first().probables.first().displayName, fontSize = 25.sp, fontWeight = FontWeight.Bold)
-            Spacer(modifier = modifier.height(16.dp))
-            list.map { competitor ->
-                Row(
-                    modifier = modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(text = competitor.team?.displayName ?: "", fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        GenericImageLoader(obj = competitor.probables.first().athlete?.headshot?.href ?: "", modifier = modifier.fillMaxWidth())
-                        Text(text = competitor.probables.first().athlete?.displayName ?: "", fontSize = 15.sp)
-
-                    }
-                }
-            }
-
-
+        Text(text = list.first().probables.last().displayName, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        Spacer(modifier = modifier.height(16.dp))
+        PitcherMatchUp(competitor = list.first(), modifier = modifier)
+        RightToLeftLayout {
+            PitcherMatchUp(competitor = list.last(), modifier = modifier)
+        }
     }
+}
+
+@Composable
+fun PitcherMatchUp(competitor: GameDetailsCompetitorModel, modifier: Modifier) {
+    val color = competitor.team?.color?.let { HexToJetpackColor2.getColor(it) }
+    if (color != null ){
+        Row(
+            modifier = modifier
+                .fillMaxWidth(1f)
+                .background(color),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = competitor.team.abbreviation, fontSize = 80.sp, fontWeight = FontWeight.SemiBold, color = Color.White, )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                GenericImageLoader(obj = competitor.probables.first().athlete?.headshot?.href ?: "", modifier = modifier.fillMaxWidth())
+                Text(text = competitor.probables.first().athlete?.displayName ?: "", fontSize = 15.sp, color = Color.White, fontWeight = FontWeight.Bold)
+            }
+        }
+    }
+
+
 }
 
 @Composable
@@ -793,7 +806,6 @@ fun HeaderStatusSlot(
 ) {
     DefaultCard(
         modifier = modifier
-
     ) {
         Box(
             modifier = modifier.fillMaxWidth()
@@ -953,11 +965,13 @@ fun BaseballSituation(
 ) {
 
 //    TOP/MIDDLE/BOTTOM/END are Competition status types
-    DefaultCard(modifier = modifier) {
+    DefaultCard(modifier = modifier.fillMaxWidth()) {
         CardHeaderText(text = "Current Situation")
         InningText(competition = competition)
         Divider()
-        OutsBallsStrikes(gameDetailSituation = gameDetailSituation)
+        OutsBallsStrikes(gameDetailSituation = gameDetailSituation, modifier = modifier)
+
+
         Divider()
 
         if (
@@ -965,7 +979,7 @@ fun BaseballSituation(
             Text(text = "Due up", fontWeight = FontWeight.Bold)
 
             gameDetailSituation.dueUp.map {
-                teamMap[it.playerId]?.let { it1 -> Player(player = it1) }
+                teamMap[it.playerId]?.let { it1 -> Player(player = it1,) }
             }
             Spacer(modifier = Modifier.width(20.dp))
 
@@ -978,7 +992,8 @@ fun BaseballSituation(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Player(player = teamMap[gameDetailSituation.batter?.playerId.toString()]
+                Player(
+                    player = teamMap[gameDetailSituation.batter?.playerId.toString()]
                     ?: GameDetailsAthleteDetailsModel())
 
                 Text(text = "Vs", fontWeight = FontWeight.Bold, fontSize = 20.sp)
@@ -987,7 +1002,6 @@ fun BaseballSituation(
                     ?: GameDetailsAthleteDetailsModel())
             }
         }
-//            Text(text = gameDetailSituation.toString())
         NormalDivider()
 
         Text(text = "On First", fontWeight = FontWeight.Bold)
@@ -1003,21 +1017,49 @@ fun BaseballSituation(
             teamMap[gameDetailSituation.onThird?.playerId.toString()]?.let { Player(player = it) }
         }
 
-        Text(text = "Due up", fontWeight = FontWeight.Bold)
+//        Text(text = "Due up", fontWeight = FontWeight.Bold)
 
 
-        gameDetailSituation.dueUp.map {
-            Row{
-                teamMap[it.playerId]?.let { it1 -> Player(player = it1) }
-
-            }
-        }
+//        gameDetailSituation.dueUp.map {
+//            Row{
+//                teamMap[it.playerId]?.let { it1 -> Player(player = it1) }
+//
+//            }
+//        }
     }
 }
 
 
 @Composable
-fun Player(player: GameDetailsAthleteDetailsModel) {
+fun Tracker(tracking: String, count: Int, modifier: Modifier) {
+    val color = Color(0xFFFC0000)
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Start
+    ) {
+        Text(text = tracking.uppercase(Locale.getDefault()))
+
+
+        for (i in 1.. count) {
+            Canvas(
+                modifier = modifier
+                    .size(20.dp)
+                    .padding(8.dp),
+                onDraw = {
+                    drawCircle(color)
+                }
+            )
+            Spacer(modifier = modifier.width(8.dp))
+        }
+    }
+
+
+
+}
+
+@Composable
+fun Player(player: GameDetailsAthleteDetailsModel, ) {
     Box(modifier = Modifier.wrapContentSize()) {
         Column(
             verticalArrangement = Arrangement.Center,
@@ -1031,15 +1073,13 @@ fun Player(player: GameDetailsAthleteDetailsModel) {
                     .clip(
                         CircleShape)
                     .background(Color.LightGray))
-            Row() {
+
                 Text(text = player.shortName, fontSize = 10.sp)
                 SpacerDp(modifier = Modifier, width = SIXTEEN)
                 Text(text = player.position?.abbreviation ?: "",
                     fontWeight = FontWeight.Bold,
                     fontSize = 10.sp)
 
-
-            }
 
         }
     }
@@ -1053,17 +1093,23 @@ fun PitcherVsBatter(gameDetailSituation: SituationModel) {
 @Composable
 fun OutsBallsStrikes(
     gameDetailSituation: SituationModel,
+    modifier: Modifier
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly
+//        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically,
+
     ) {
-        Text(text = "Outs " + gameDetailSituation.outs.toString(),
-            style = MaterialTheme.typography.bodyMedium)
-        Text(text = "Balls " + gameDetailSituation.balls.toString(),
-            style = MaterialTheme.typography.bodyMedium)
-        Text(text = "Strikes " + gameDetailSituation.strikes.toString(),
-            style = MaterialTheme.typography.bodyMedium)
+//        Text(text = "Outs " + gameDetailSituation.outs.toString(),
+//            style = MaterialTheme.typography.bodyMedium)
+//        Text(text = "Balls " + gameDetailSituation.balls.toString(),
+//            style = MaterialTheme.typography.bodyMedium)
+//        Text(text = "Strikes " + gameDetailSituation.strikes.toString(),
+//            style = MaterialTheme.typography.bodyMedium)
+        Tracker(tracking = "balls", count = gameDetailSituation.balls, modifier = modifier)
+        Tracker(tracking = "strikes", count = gameDetailSituation.strikes, modifier= modifier)
+        Tracker(tracking = "outs", count = gameDetailSituation.outs, modifier= modifier)
     }
 }
 

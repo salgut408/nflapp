@@ -4,19 +4,19 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sgut.android.nationalfootballleague.di.ToolBar2
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.RecordModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.*
 import com.sgut.android.nationalfootballleague.domain.domainmodels.team_stats_models.TeamStatsModel
@@ -26,14 +26,16 @@ import com.sgut.android.nationalfootballleague.utils.toDate
 
 //TODO only pass what is needed
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TeamDetailScreen(
     modifier: Modifier = Modifier,
     teamDetailViewModel: TeamDetailViewModel = hiltViewModel(),
-    sendButtonOnclick: (String, String) -> Unit,
     team: String,
     sport: String,
     league: String,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit,
 
     ) {
 
@@ -44,15 +46,33 @@ fun TeamDetailScreen(
     val teamSchedule = teamDetailUiState.schedule
     val roster = teamDetailUiState.atheletes
     val stats = teamDetailUiState.stats
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
 
 
-    NewTeamDetailCard(team = teamDetail,
-        roster= roster,
-        modifier = Modifier,
-        schedule = teamSchedule ?: ScheduleDomainModel(),
-        stats = stats ?: TeamStatsModel()
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            ToolBar2(
+                title = teamDetail.displayName,
+                canNavigateBack = canNavigateBack,
+                navigateUp = navigateUp,
+                scrollBehavior = scrollBehavior
+            )
+        },
+        content = { padding ->
+            NewTeamDetailCard(team = teamDetail,
+                roster= roster,
+                modifier = Modifier,
+                schedule = teamSchedule ?: ScheduleDomainModel(),
+                stats = stats ?: TeamStatsModel()
+            )
+            padding.toString()
+        }
     )
+
+
+
 
 
 

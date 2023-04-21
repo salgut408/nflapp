@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.di.ToolBar2
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.*
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
 import com.sgut.android.nationalfootballleague.ui.commoncomps.EIGHT
@@ -37,78 +39,97 @@ fun ScoreboardScreen(
     modifier: Modifier = Modifier,
     sport: String,
     league: String,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit,
     scoreboardViewModel: ScoreboardViewModel = hiltViewModel(),
     navController: NavController,
 ) {
 
     scoreboardViewModel.loadGenericScoreboard(sport, league)
 
-    val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
+//    val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
 
-//    TODO articles move to usecase
-//    val articles = scoreboardUiState.currentArticles
-    val articles2 = scoreboardViewModel
 
 
     val newUiState by scoreboardViewModel.newScoreboardModelState.collectAsState()
     val articles = newUiState.currentArticles
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+
 
     val sport = newUiState.currentSport
     val league = newUiState.currentLeague
 
-    Column(
-        modifier
-            .verticalScroll(rememberScrollState())
-            .padding(EIGHT.dp)
-            .background(MaterialTheme.colorScheme.background),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
 
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
 
+        topBar = {
+            ToolBar2(
+                title = newUiState.scoreboardModelUiState.league?.name ?: "",
+                canNavigateBack = canNavigateBack ,
+                navigateUp = navigateUp,
+                scrollBehavior = scrollBehavior )
+        },
 
-        Text(
-            text = newUiState.scoreboardModelUiState.day ?: ""
-        )
-
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
+    ) { innerPadding ->
+        Column(
+            modifier
+                .verticalScroll(rememberScrollState())
+                .padding(innerPadding)
+                .background(MaterialTheme.colorScheme.background),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
 
+
+
             Text(
-                text = newUiState.scoreboardModelUiState.league?.name ?: "",
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-                maxLines = 4,
-                overflow = TextOverflow.Visible,
-                lineHeight = 40.sp,
-                modifier = Modifier
-                    .width(200.dp)
+                text = newUiState.scoreboardModelUiState.day ?: ""
             )
 
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
 
-            GenericImageLoader(
-                obj = newUiState.scoreboardModelUiState.league?.logos?.get(0)?.href ?: "",
-                modifier = Modifier.fillMaxSize()
-            )
-        }
+                Text(
+                    text = newUiState.scoreboardModelUiState.league?.name ?: "",
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 4,
+                    overflow = TextOverflow.Visible,
+                    lineHeight = 40.sp,
+                    modifier = Modifier
+                        .width(200.dp)
+                )
 
 
-        Row() { ArticleRow(articleList = articles) }
+                GenericImageLoader(
+                    obj = newUiState.scoreboardModelUiState.league?.logos?.get(0)?.href ?: "",
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+
+
+            Row() { ArticleRow(articleList = articles) }
 
 //        TODO take out nav navController
-        TeamsMatchUpListFromEvents(
-            newUiState.scoreboardModelUiState.events,
-            modifier,
-            sport,
-            league,
-            navController
-        )
+            TeamsMatchUpListFromEvents(
+                newUiState.scoreboardModelUiState.events,
+                modifier,
+                sport,
+                league,
+                navController
+            )
 
-        Standings(sport = sport, league = league, type = "0")
+            Standings(sport = sport, league = league, type = "0")
 
+        }
     }
+
+
+
+
 }
 
 

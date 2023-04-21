@@ -4,10 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.DrawerState
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -19,15 +16,14 @@ import androidx.navigation.navArgument
 import com.sgut.android.nationalfootballleague.ui.application.EspnAppState
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.athelete_detail.AthleteDetailScreen
-import com.sgut.android.nationalfootballleague.ui.screens.gamedetailscreen.GameDetailsScreen
-import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeTeamCardsListScreen
 import com.sgut.android.nationalfootballleague.ui.screens.basics.log_in.LoginScreen
-import com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen.ScoreboardScreen
 import com.sgut.android.nationalfootballleague.ui.screens.basics.settings.SettingsScreen
 import com.sgut.android.nationalfootballleague.ui.screens.basics.sign_up.SignUpScreen
+import com.sgut.android.nationalfootballleague.ui.screens.gamedetailscreen.GameDetailsScreen
+import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeTeamCardsListScreen
+import com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen.ScoreboardScreen
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.TeamDetailScreen
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 
 
@@ -37,7 +33,6 @@ fun Navigation(
     appState: EspnAppState,
     padding: PaddingValues,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
 ) {
 
     NavHost(
@@ -51,8 +46,6 @@ fun Navigation(
         ) {
             HomeTeamCardsListScreen(
                 navController = appState.navController,
-                        openDrawer = {coroutineScope.launch { drawerState.open() }}
-
             )
         }
         composable(
@@ -81,12 +74,8 @@ fun Navigation(
                 team = teamName,
                 sport = sportName,
                 league = leagueName,
-                sendButtonOnclick = { subject: String, summary: String ->
-                    shareTeamAndNextEvent(
-                        context,
-                        subject, summary
-                    )
-                }
+                canNavigateBack = appState.navController.previousBackStackEntry != null,
+                navigateUp = { appState.navController.navigateUp() }
             )
         }
         composable(
@@ -146,7 +135,7 @@ fun Navigation(
                 league = leagueName,
                 event = event,
 
-            )
+                )
 
         }
 
@@ -169,6 +158,8 @@ fun Navigation(
                 sport = sportName,
                 league = leagueName,
                 navController = appState.navController,
+                canNavigateBack = appState.navController.previousBackStackEntry != null,
+                navigateUp = { appState.navController.navigateUp() }
 
             )
         }
@@ -193,7 +184,6 @@ private fun shareTeamAndNextEvent(
         )
     )
 }
-
 
 
 private fun createCalenderNote(
