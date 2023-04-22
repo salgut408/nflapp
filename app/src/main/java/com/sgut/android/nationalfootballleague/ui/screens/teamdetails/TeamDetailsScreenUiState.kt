@@ -12,6 +12,6 @@ data class TeamDetailsScreenUiState(
     val currentTeamDetails: FullTeamDetailWithRosterModel = FullTeamDetailWithRosterModel(),
     val atheletes: List<AthletesRosterModel> = listOf(),
     val nextEvents: List<NextEventModel> = listOf(),
-    val schedule: ScheduleDomainModel? = ScheduleDomainModel(),
-    val stats: TeamStatsModel? = TeamStatsModel()
+    val schedule: ScheduleDomainModel = ScheduleDomainModel(),
+    val stats: TeamStatsModel = TeamStatsModel()
     )

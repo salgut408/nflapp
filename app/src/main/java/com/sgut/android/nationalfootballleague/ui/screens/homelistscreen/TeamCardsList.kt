@@ -181,14 +181,13 @@ fun HomeTeamCardsListScreen(
                         )
                     })
 
-                BasicButton(
-                    text = AppText.standings,
-                    modifier = Modifier.basicButton(),
-                    action = {
-                        navController.navigate(
-                            NavigationScreens.ScoreboardScreen.withArgs(sport ?: "", league ?: "")
-                        )
-                    })
+//                BasicButtonToNavigate(
+//                    text = AppText.standings,
+//                    modifier = Modifier.basicButton(),
+//                    onNavigateTo = onNavigateTo,
+//                    sport = sport ?: "",
+//                    league = league?: ""
+//                )
 
 
                 if (sportStateTeamsFullInfo != null) {

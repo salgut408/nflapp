@@ -32,7 +32,10 @@ class GameDetailViewModel @Inject constructor(
 
     private val _colorsTeamList: MutableList<Color> = mutableListOf()
 
-    var teamMap: Map<String, GameDetailsAthleteDetailsModel> = mapOf()
+    private val _map = MutableStateFlow(mapOf<String, GameDetailsAthleteDetailsModel> ())
+    val map: StateFlow<Map<String, GameDetailsAthleteDetailsModel>> = _map.asStateFlow()
+
+    private var teamMap: Map<String, GameDetailsAthleteDetailsModel> = mapOf()
 
 
     init {
@@ -41,8 +44,6 @@ class GameDetailViewModel @Inject constructor(
     fun getPlayerFromId(id: String): GameDetailsAthleteDetailsModel {
         return teamMap[id] ?: GameDetailsAthleteDetailsModel()
     }
-
-
 
     fun loadGameDetails(
         sport: String,
@@ -61,8 +62,10 @@ class GameDetailViewModel @Inject constructor(
 
             teamMap = playersMap(sport, league, teams)
 
+            _map.update {
+                it + playersMap(sport, league, teams)
+            }
 
-            Log.d("GAMEDEET_VIEWMODEL", newGameDeetUiState.baseballSituation .toString())
 
             newGameDeetUiState.boxscore?.teams?.forEach { i ->
                 _colorsTeamList.add(HexToJetpackColor2.getColor(i.team?.color ?: "Color"))
@@ -92,21 +95,5 @@ class GameDetailViewModel @Inject constructor(
             )
         }
     }
-
-
-//      moved to use case for all player maps
-//    fun loadPlayerMap(
-//        sport: String,
-//        league: String,
-//        teamAbr: String
-//    ) = viewModelScope.launch {
-//        try {
-//
-//                teamMap += teamDetailsRepository.getSpecificTeamRosterInGameDetails(sport, league, teamAbr).associate { it.id to it }.toMutableMap()
-//                Log.e("LOAD_ROSTER_MAP_SOLO", teamMap.toString())
-//        } catch (e: Exception) {
-//            Log.e("DEBUG DETAILS", e.message.toString())
-//        }
-//    }
 
 }

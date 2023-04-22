@@ -19,7 +19,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.di.ToolBar2
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.RecordModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.*
-import com.sgut.android.nationalfootballleague.domain.domainmodels.team_stats_models.TeamStatsModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.utils.formatTo
 import com.sgut.android.nationalfootballleague.utils.toDate
@@ -51,7 +50,7 @@ fun TeamDetailScreen(
 
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             ToolBar2(
                 title = teamDetail.displayName,
@@ -61,11 +60,12 @@ fun TeamDetailScreen(
             )
         },
         content = { padding ->
-            NewTeamDetailCard(team = teamDetail,
+            NewTeamDetailCard(
+                team = teamDetail,
                 roster= roster,
                 modifier = Modifier,
-                schedule = teamSchedule ?: ScheduleDomainModel(),
-                stats = stats ?: TeamStatsModel()
+                schedule = teamSchedule,
+                stats = stats
             )
             padding.toString()
         }

@@ -50,7 +50,6 @@ fun ScoreboardScreen(
 //    val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
 
 
-
     val newUiState by scoreboardViewModel.newScoreboardModelState.collectAsState()
     val articles = newUiState.currentArticles
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
@@ -66,9 +65,9 @@ fun ScoreboardScreen(
         topBar = {
             ToolBar2(
                 title = newUiState.scoreboardModelUiState.league?.name ?: "",
-                canNavigateBack = canNavigateBack ,
+                canNavigateBack = canNavigateBack,
                 navigateUp = navigateUp,
-                scrollBehavior = scrollBehavior )
+                scrollBehavior = scrollBehavior)
         },
         content = { innerPadding ->
             Column(
@@ -79,7 +78,6 @@ fun ScoreboardScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-
 
 
                 Text(
@@ -138,8 +136,6 @@ fun MatchPreview() {
 }
 
 
-
-
 @Composable
 fun TeamsMatchUpListFromEvents(
     events: List<ScoreboardEventModel>,
@@ -152,22 +148,21 @@ fun TeamsMatchUpListFromEvents(
 
     events.map { event ->
 
-            event.competitions.map {
+        event.competitions.map {
 
-                TeamComponent2(
-                    compScoreboard = it,
-                    modifier = modifier,
-                    navController = navController,
-                    sport = sport,
-                    league = league,
-                )
-                SpacerDp(modifier = modifier, height = 8)
+            TeamComponent2(
+                compScoreboard = it,
+                modifier = modifier,
+                navController = navController,
+                sport = sport,
+                league = league,
+            )
+            SpacerDp(modifier = modifier, height = 8)
 
-            }
+        }
 
     }
 }
-
 
 
 @Composable
@@ -227,7 +222,6 @@ fun Competition(competition: ScoreboardCompetitionModel) {
 
     }
 }
-
 
 
 @Composable
@@ -297,7 +291,6 @@ fun TeamComponent(team: ScoreboardCompetitorsModel, modifier: Modifier) {
 }
 
 
-
 @Composable
 fun TeamComponent2(
     compScoreboard: ScoreboardCompetitionModel,
@@ -316,7 +309,6 @@ fun TeamComponent2(
     val whiteColor = Color.White
 
 
-
     val date = compScoreboard.date.toDate()?.formatTo("K:mm aa")
 
     DefaultCard(
@@ -327,8 +319,6 @@ fun TeamComponent2(
                     league,
                     compScoreboard.id))
             }) {
-
-
         Box(
             modifier = modifier
                 .fillMaxSize()
@@ -420,16 +410,16 @@ fun GameInfoColumn(description: String, date: String, id: String) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-       Text(text = description,
+        Text(text = description,
             style = TextStyle(fontSize = 12.sp),
             color = Color.White,
             textAlign = TextAlign.Center)
-       Text(
+        Text(
             text = date,
             style = TextStyle(fontSize = 9.sp),
             color = Color.White,
             textAlign = TextAlign.Center)
-     Text(
+        Text(
             text = id,
             style = TextStyle(fontSize = 9.sp),
             color = Color.White,

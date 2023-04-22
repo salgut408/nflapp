@@ -65,17 +65,10 @@ fun GameDetailsScreen(
     gameDetailViewModel.loadGameDetails(sport, league, event)
 
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
-//    var state by remember { mutableStateOf(gameDetailViewModel.gameDetailUiState.value)}
+    val map by gameDetailViewModel.map.collectAsState()
 
-
-//    val map by remember {gameDetailViewModel.teamMap}
 
     SportScaffold(
-
-
-
-
-
         content = { padding ->
             Column(
                 modifier
@@ -131,7 +124,7 @@ fun GameDetailsScreen(
                             ?: SituationModel(),
                         gameDetailsModel = gameDetailUiState.currentGameUiState
                             ?: GameDetailsModel(),
-                        teamMap = gameDetailViewModel.teamMap
+                        teamMap = map
                     )
                 }
 

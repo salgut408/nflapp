@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticleDomianModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
@@ -38,17 +37,17 @@ fun ArticleCard(
             .background(MaterialTheme.colorScheme.secondary)
             .fillMaxSize()) {
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.secondary)
             ) {
                 GenericImageLoader(obj = articleModel.images.first().url,
-                    modifier = Modifier.width(200.dp))
+                    modifier = modifier.width(200.dp))
                 Text(
                     text = articleModel.headline,
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(8.dp),
+                    modifier = modifier.padding(8.dp),
                     textAlign = TextAlign.Left,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
@@ -61,10 +60,10 @@ fun ArticleCard(
 
 // if list is needed
 @Composable
-fun ArticleList(articleList: List<ArticleDomianModel>) {
+fun ArticleList(articleList: List<ArticleDomianModel>, modifier: Modifier) {
     LazyColumn(contentPadding = PaddingValues(8.dp)) {
         items(items = articleList) { article ->
-            ArticleCard(articleModel = article, modifier = Modifier.padding(8.dp))
+            ArticleCard(articleModel = article, modifier = modifier.padding(8.dp))
         }
     }
 }
@@ -78,11 +77,10 @@ fun ArticleRow(articleList: List<ArticleDomianModel>) {
     }
 }
 
-@Preview
 @Composable
-fun HeadLine() {
+fun HeadLine(modifier: Modifier) {
     Card(shape = RoundedCornerShape(10.dp)) {
-        Box(modifier = Modifier.width(350.dp)) {
+        Box(modifier = modifier.width(350.dp)) {
             Column() {
                 Row(
                     verticalAlignment = Alignment.CenterVertically

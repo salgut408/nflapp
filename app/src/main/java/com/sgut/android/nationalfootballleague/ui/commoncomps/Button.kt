@@ -1,26 +1,24 @@
 package com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables
 
-import android.graphics.drawable.Icon
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.ripple.RippleAlpha
-import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.delay
 
 
 @Composable
@@ -42,6 +40,28 @@ fun BasicTextButton(
         Text(
             text = stringResource(text)
         )
+    }
+}
+
+@Composable
+fun BasicButtonToNavigate(
+    @StringRes text: Int,
+    modifier: Modifier,
+    sport: String,
+    league: String,
+    onNavigateTo: (sport: String, league: String) -> Unit
+) {
+    val onNavTo = {onNavigateTo(sport, league)}
+    Button(
+        onClick = onNavTo,
+        modifier = modifier,
+        colors =
+        ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colors.primary,
+            contentColor = MaterialTheme.colors.onPrimary
+        )
+    ) {
+        Text(text = stringResource(text), fontSize = 16.sp)
     }
 }
 

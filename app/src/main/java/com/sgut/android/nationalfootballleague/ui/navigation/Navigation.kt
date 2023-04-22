@@ -44,8 +44,11 @@ fun Navigation(
         composable(
             route = NavigationScreens.MainScreenTeamsList.route
         ) {
+            val sport = it.arguments?.getString("sport")
+            val league = it.arguments?.getString("league")
             HomeTeamCardsListScreen(
                 navController = appState.navController,
+
             )
         }
         composable(
