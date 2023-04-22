@@ -12,18 +12,16 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
-import com.sgut.android.nationalfootballleague.di.ToolBar2
+import com.sgut.android.nationalfootballleague.di.TopAppBarWithLogo
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.*
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
 import com.sgut.android.nationalfootballleague.ui.commoncomps.EIGHT
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DefaultCard
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SpacerDp
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamLogoScoreboardImageLoader
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
@@ -52,7 +50,7 @@ fun ScoreboardScreen(
 
     val newUiState by scoreboardViewModel.newScoreboardModelState.collectAsState()
     val articles = newUiState.currentArticles
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
 
     val sport = newUiState.currentSport
@@ -63,11 +61,15 @@ fun ScoreboardScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
 
         topBar = {
-            ToolBar2(
-                title = newUiState.scoreboardModelUiState.league?.name ?: "",
+
+            TopAppBarWithLogo(
+                title = newUiState.scoreboardModelUiState.league?.abbreviation ?: "",
+                logo = newUiState.scoreboardModelUiState.league?.logos?.first()?.href ?: "",
                 canNavigateBack = canNavigateBack,
                 navigateUp = navigateUp,
-                scrollBehavior = scrollBehavior)
+                scrollBehavior = scrollBehavior
+            )
+
         },
         content = { innerPadding ->
             Column(
@@ -78,39 +80,9 @@ fun ScoreboardScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+                Row { ArticleRow(articleList = articles) }
 
-
-                Text(
-                    text = newUiState.scoreboardModelUiState.day ?: ""
-                )
-
-                Row(
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Text(
-                        text = newUiState.scoreboardModelUiState.league?.name ?: "",
-                        fontSize = 30.sp,
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 4,
-                        overflow = TextOverflow.Visible,
-                        lineHeight = 40.sp,
-                        modifier = Modifier
-                            .width(200.dp)
-                    )
-
-
-                    GenericImageLoader(
-                        obj = newUiState.scoreboardModelUiState.league?.logos?.get(0)?.href ?: "",
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
-
-
-                Row() { ArticleRow(articleList = articles) }
-
-//        TODO take out nav navController
+//              TODO take out nav navController
                 TeamsMatchUpListFromEvents(
                     newUiState.scoreboardModelUiState.events,
                     modifier,
@@ -118,9 +90,10 @@ fun ScoreboardScreen(
                     league,
                     navController
                 )
-
-                Standings(sport = sport, league = league, type = "0")
-
+                Standings(
+                    sport = sport,
+                    league = league, type = "0"
+                )
             }
         }
 

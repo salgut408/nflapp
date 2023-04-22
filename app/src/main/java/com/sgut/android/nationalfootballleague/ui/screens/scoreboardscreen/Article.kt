@@ -41,8 +41,13 @@ fun ArticleCard(
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.secondary)
             ) {
-                GenericImageLoader(obj = articleModel.images.first().url,
-                    modifier = modifier.width(200.dp))
+                if (articleModel.images.isNotEmpty()) {
+                    GenericImageLoader(
+                        obj = articleModel.images.first().url,
+                        modifier = modifier.width(200.dp)
+                    )
+                }
+
                 Text(
                     text = articleModel.headline,
                     style = MaterialTheme.typography.bodySmall,

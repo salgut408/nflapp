@@ -45,7 +45,8 @@ fun HomeTeamCardsListScreen(
         topBar = {
             ToolBar3(
                 title = sportStateLeagueName ?: "",
-                scrollBehavior = scrollBehavior )
+                scrollBehavior = scrollBehavior
+            )
         },
 
 

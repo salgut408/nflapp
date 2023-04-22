@@ -45,7 +45,7 @@ fun TeamDetailScreen(
     val teamSchedule = teamDetailUiState.schedule
     val roster = teamDetailUiState.atheletes
     val stats = teamDetailUiState.stats
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior (rememberTopAppBarState())
 
 
 
