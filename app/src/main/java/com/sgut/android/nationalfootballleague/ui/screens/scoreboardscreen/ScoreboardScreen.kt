@@ -70,66 +70,63 @@ fun ScoreboardScreen(
                 navigateUp = navigateUp,
                 scrollBehavior = scrollBehavior )
         },
-
-    ) { innerPadding ->
-        Column(
-            modifier
-                .verticalScroll(rememberScrollState())
-                .padding(innerPadding)
-                .background(MaterialTheme.colorScheme.background),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-
-
-
-            Text(
-                text = newUiState.scoreboardModelUiState.day ?: ""
-            )
-
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
+        content = { innerPadding ->
+            Column(
+                modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(innerPadding)
+                    .background(MaterialTheme.colorScheme.background),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
 
+
+
                 Text(
-                    text = newUiState.scoreboardModelUiState.league?.name ?: "",
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 4,
-                    overflow = TextOverflow.Visible,
-                    lineHeight = 40.sp,
-                    modifier = Modifier
-                        .width(200.dp)
+                    text = newUiState.scoreboardModelUiState.day ?: ""
                 )
 
+                Row(
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
 
-                GenericImageLoader(
-                    obj = newUiState.scoreboardModelUiState.league?.logos?.get(0)?.href ?: "",
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
+                    Text(
+                        text = newUiState.scoreboardModelUiState.league?.name ?: "",
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 4,
+                        overflow = TextOverflow.Visible,
+                        lineHeight = 40.sp,
+                        modifier = Modifier
+                            .width(200.dp)
+                    )
 
 
-            Row() { ArticleRow(articleList = articles) }
+                    GenericImageLoader(
+                        obj = newUiState.scoreboardModelUiState.league?.logos?.get(0)?.href ?: "",
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+
+
+                Row() { ArticleRow(articleList = articles) }
 
 //        TODO take out nav navController
-            TeamsMatchUpListFromEvents(
-                newUiState.scoreboardModelUiState.events,
-                modifier,
-                sport,
-                league,
-                navController
-            )
+                TeamsMatchUpListFromEvents(
+                    newUiState.scoreboardModelUiState.events,
+                    modifier,
+                    sport,
+                    league,
+                    navController
+                )
 
-            Standings(sport = sport, league = league, type = "0")
+                Standings(sport = sport, league = league, type = "0")
 
+            }
         }
-    }
 
-
-
-
+    )
 }
 
 
@@ -171,16 +168,7 @@ fun TeamsMatchUpListFromEvents(
     }
 }
 
-//@Composable
-//fun EventsHeadLines(events: List<EventScoreboard>) {
-//    events.map {
-//        it.competitions.map {
-//            it.headlines.map {
-//                Text(text = it.description ?: "")
-//            }
-//        }
-//    }
-//}
+
 
 @Composable
 fun Record(record: ScoreboardRecordModel) {

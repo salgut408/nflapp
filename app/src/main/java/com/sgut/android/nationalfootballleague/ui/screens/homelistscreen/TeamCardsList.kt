@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.R
 import com.sgut.android.nationalfootballleague.di.ToolBar3
+import com.sgut.android.nationalfootballleague.ui.commoncomps.SportScaffold
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicButton
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.utils.basicButton
@@ -38,7 +39,7 @@ fun HomeTeamCardsListScreen(
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
-    Scaffold(
+    SportScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
 
         topBar = {
@@ -46,6 +47,7 @@ fun HomeTeamCardsListScreen(
                 title = sportStateLeagueName ?: "",
                 scrollBehavior = scrollBehavior )
         },
+
 
         content = { padding ->
             Column() {

@@ -159,7 +159,8 @@ fun Navigation(
                 league = leagueName,
                 navController = appState.navController,
                 canNavigateBack = appState.navController.previousBackStackEntry != null,
-                navigateUp = { appState.navController.navigateUp() }
+                navigateUp = { appState.navController.navigateUp() },
+
 
             )
         }

@@ -70,7 +70,10 @@ fun GameDetailsScreen(
 
 //    val map by remember {gameDetailViewModel.teamMap}
 
-    Scaffold(
+    SportScaffold(
+
+
+
 
 
         content = { padding ->
@@ -983,9 +986,7 @@ fun BaseballSituation(
             }
             Spacer(modifier = Modifier.width(20.dp))
 
-
         } else {
-
 
             Row(
                 modifier = modifier.fillMaxWidth(),
@@ -1017,15 +1018,15 @@ fun BaseballSituation(
             teamMap[gameDetailSituation.onThird?.playerId.toString()]?.let { Player(player = it) }
         }
 
-//        Text(text = "Due up", fontWeight = FontWeight.Bold)
+        Text(text = "Due up", fontWeight = FontWeight.Bold)
 
 
-//        gameDetailSituation.dueUp.map {
-//            Row{
-//                teamMap[it.playerId]?.let { it1 -> Player(player = it1) }
-//
-//            }
-//        }
+        gameDetailSituation.dueUp.map {
+            Row{
+                teamMap[it.playerId]?.let { it1 -> Player(player = it1) }
+
+            }
+        }
     }
 }
 
