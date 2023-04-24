@@ -1,13 +1,16 @@
 package com.sgut.android.nationalfootballleague.ui.screens.homelistscreen
 
+import androidx.compose.animation.*
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -15,9 +18,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.R
 import com.sgut.android.nationalfootballleague.di.ToolBar3
+import com.sgut.android.nationalfootballleague.domain.domainmodels.FilterRepo
+import com.sgut.android.nationalfootballleague.domain.domainmodels.filters
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.TeamModel
+import com.sgut.android.nationalfootballleague.ui.commoncomps.FilterBar
 import com.sgut.android.nationalfootballleague.ui.commoncomps.SportScaffold
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicButton
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicCircleImage
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportSurface
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
+import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.basicButton
 import com.sgut.android.nationalfootballleague.R.string as AppText
 
@@ -39,19 +49,26 @@ fun HomeTeamCardsListScreen(
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
+    val categoryFilters = remember { FilterRepo.getFilters() }
+    var filtersVisible by rememberSaveable { mutableStateOf(false) }
+
+
     SportScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
 
         topBar = {
-            ToolBar3(
-                title = sportStateLeagueName ?: "",
-                scrollBehavior = scrollBehavior
-            )
+            Column() {
+                ToolBar3(
+                    title = sportStateLeagueName ?: "",
+                    scrollBehavior = scrollBehavior
+                )
+                FilterBar(filters, onShowFilters = { filtersVisible = true })
+            }
         },
-
-
         content = { padding ->
             Column() {
+
+
                 LazyRow(
                     contentPadding = padding,
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -192,12 +209,18 @@ fun HomeTeamCardsListScreen(
 
 
                 if (sportStateTeamsFullInfo != null) {
+                    TeamsListCircle(teams = uiState.fullTeamInfo?.sport?.league?.teams ?: listOf(),
+                        onTeamClick = {})
+
+
+
                     ListOfTeams(
                         currentTeams = uiState.fullTeamInfo?.sport?.league?.teams ?: listOf(),
                         navController = navController,
                         league = uiState.currentLeague,
                         sport = uiState.currentSport,
                     )
+
                 }
             }
         },
@@ -206,18 +229,58 @@ fun HomeTeamCardsListScreen(
 
 
 @Composable
-fun LeagueName(league: String) {
-    Row(
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
+fun TeamsListCircle(
+    teams: List<TeamModel>,
+    onTeamClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    LazyRow(
+        modifier = modifier,
+        contentPadding = PaddingValues(start = 12.dp, end = 12.dp)
     ) {
-        Text(
-            text = league,
-            style = MaterialTheme.typography.headlineLarge
-        )
+        items(teams) { team ->
+            TeamItem(team = team, onTeamClick = onTeamClick)
+        }
     }
 }
+
+@Composable
+fun TeamItem(
+    team: TeamModel,
+    onTeamClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val teamColor = HexToJetpackColor2.getColor(team.color)
+    SportSurface(
+        shape = MaterialTheme.shapes.medium,
+
+        ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier
+                .clickable(onClick = { onTeamClick(team.abbreviation) })
+                .padding(4.dp)
+        ) {
+            BasicCircleImage(
+                imgUrl = team.logos,
+                contentDescription = team.name,
+                modifier = modifier.size(100.dp),
+                elevation = 10.dp,
+                backgroundColor = teamColor,
+                borderColor = Color.Black,
+                borderWidth = 1.dp
+            )
+            Text(
+                text = team.abbreviation,
+                style = MaterialTheme.typography.labelSmall,
+                modifier = modifier.padding(top = 8.dp)
+            )
+        }
+    }
+}
+
+
+
+
+
 

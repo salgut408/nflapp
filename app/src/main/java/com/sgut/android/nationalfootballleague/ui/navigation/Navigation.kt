@@ -8,7 +8,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,7 +23,6 @@ import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeTea
 import com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen.ScoreboardScreen
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.TeamDetailScreen
 import kotlinx.coroutines.CoroutineScope
-import java.text.SimpleDateFormat
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,9 +68,6 @@ fun Navigation(
             val sportName = entry.arguments?.getString("sport")!!
             val leagueName = entry.arguments?.getString("league")!!
 
-
-            val context = LocalContext.current
-
             TeamDetailScreen(
                 team = teamName,
                 sport = sportName,
@@ -87,6 +82,59 @@ fun Navigation(
             AthleteDetailScreen()
         }
 
+
+
+        composable(
+            route = NavigationScreens.GameDetailScreen.route + "/{sport}/{league}/{event}",
+            arguments = listOf(
+                navArgument("sport") {
+                    type = NavType.StringType
+                },
+                navArgument("league") {
+                    type = NavType.StringType
+                },
+                navArgument("event") {
+                    type = NavType.StringType
+                },
+            )
+        ) {
+            val sportName = it.arguments?.getString("sport")!!
+            val leagueName = it.arguments?.getString("league")!!
+            val event = it.arguments?.getString("event")!!
+
+            GameDetailsScreen(
+                navController = appState.navController,
+                sport = sportName,
+                league = leagueName,
+                event = event,
+                )
+        }
+
+        composable(
+            route = NavigationScreens.ScoreboardScreen.route + "/{sport}/{league}",
+            arguments = listOf(
+                navArgument("sport") {
+                    type = NavType.StringType
+                },
+                navArgument("league") {
+                    type = NavType.StringType
+                },
+            )
+        ) {
+            val sportName = it.arguments?.getString("sport")!!
+            val leagueName = it.arguments?.getString("league")!!
+
+
+            ScoreboardScreen(
+                sport = sportName,
+                league = leagueName,
+                navController = appState.navController,
+                canNavigateBack = appState.navController.previousBackStackEntry != null,
+                navigateUp = { appState.navController.navigateUp() },
+            )
+        }
+
+        // settings screens
         composable(
             route = NavigationScreens.SignUpScreen.route
         ) {
@@ -113,60 +161,6 @@ fun Navigation(
                 openLogInScreen = { route -> appState.navigate(openLogInScreenRoute) }
             )
         }
-
-        composable(
-            route = NavigationScreens.GameDetailScreen.route + "/{sport}/{league}/{event}",
-            arguments = listOf(
-                navArgument("sport") {
-                    type = NavType.StringType
-                },
-                navArgument("league") {
-                    type = NavType.StringType
-                },
-                navArgument("event") {
-                    type = NavType.StringType
-                },
-            )
-        ) {
-            val sportName = it.arguments?.getString("sport")!!
-            val leagueName = it.arguments?.getString("league")!!
-            val event = it.arguments?.getString("event")!!
-
-            GameDetailsScreen(
-                navController = appState.navController,
-                sport = sportName,
-                league = leagueName,
-                event = event,
-
-                )
-
-        }
-
-        composable(
-            route = NavigationScreens.ScoreboardScreen.route + "/{sport}/{league}",
-            arguments = listOf(
-                navArgument("sport") {
-                    type = NavType.StringType
-                },
-                navArgument("league") {
-                    type = NavType.StringType
-                },
-            )
-        ) {
-            val sportName = it.arguments?.getString("sport")!!
-            val leagueName = it.arguments?.getString("league")!!
-
-
-            ScoreboardScreen(
-                sport = sportName,
-                league = leagueName,
-                navController = appState.navController,
-                canNavigateBack = appState.navController.previousBackStackEntry != null,
-                navigateUp = { appState.navController.navigateUp() },
-
-
-            )
-        }
     }
 }
 
@@ -187,28 +181,4 @@ private fun shareTeamAndNextEvent(
             "Check this out"
         )
     )
-}
-
-
-private fun createCalenderNote(
-    context: Context,
-) {
-    val startTime = "2022-02-1T09:00:00"
-    val endTime = "2022-02-1T12:00:00"
-
-    // Parsing the date and time
-    val mSimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-    val mStartTime = mSimpleDateFormat.parse(startTime)
-    val mEndTime = mSimpleDateFormat.parse(endTime)
-
-    val intent = Intent(Intent.ACTION_EDIT).apply {
-        type = "vnd.android.cursor.item/event"
-        putExtra("beginTime", mStartTime.time)
-        putExtra("time", true)
-        putExtra("rule", "FREQ=YEARLY")
-        putExtra("endTime", mEndTime.time)
-        putExtra("title", "EVENT")
-    }
-    context.startActivity(intent)
-
 }

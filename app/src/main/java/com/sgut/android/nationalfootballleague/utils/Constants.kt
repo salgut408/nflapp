@@ -33,6 +33,7 @@ class Constants {
         const val NCAA_BASEBALL = "college-baseball"
         const val NCAA_HOCKEY = "mens-college-hockey"
         const val NCAA_LACROSSE = "mens-college-lacrosse"
+        const val LACROSSE = "lacrosse"
 
 
 

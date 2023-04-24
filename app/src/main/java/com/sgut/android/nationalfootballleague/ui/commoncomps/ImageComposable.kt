@@ -1,7 +1,9 @@
 package com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -20,6 +22,35 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_te
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.VenueModel
 
 
+@Composable
+fun BasicCircleImage(
+    imgUrl: String,
+    contentDescription: String?,
+    modifier: Modifier = Modifier,
+    elevation: Dp,
+    backgroundColor: Color,
+    borderWidth: Dp,
+    borderColor: Color
+) {
+   SportSurface(
+       color = backgroundColor,
+       elevation = elevation,
+       shape = CircleShape,
+       modifier = modifier,
+       border = BorderStroke(borderWidth, borderColor)
+   ) {
+       AsyncImage(
+           model = ImageRequest.Builder(LocalContext.current)
+               .data(imgUrl)
+               .crossfade(true)
+               .build(),
+           contentDescription = contentDescription,
+       modifier = Modifier.fillMaxSize(),
+       contentScale = ContentScale.Crop
+       )
+
+   } 
+}
 
 @Composable
 fun TeamLogoDetailImageLoader(team: FullTeamDetailWithRosterModel) {

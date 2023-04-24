@@ -30,6 +30,8 @@ import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpa
 import kotlin.math.max
 
 
+
+
 @Composable
 fun ListOfTeams(
     currentTeams: List<TeamModel>,
@@ -157,7 +159,8 @@ fun TeamLogoImage(
                 .crossfade(true)
                 .build(),
             contentDescription = contentDescription,
-            modifier = modifier.fillMaxSize()
+            modifier = modifier
+                .fillMaxSize()
                 .padding(8.dp),
             contentScale = ContentScale.Crop
         )

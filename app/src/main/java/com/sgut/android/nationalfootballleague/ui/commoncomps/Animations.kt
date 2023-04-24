@@ -23,8 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -110,7 +108,7 @@ fun ExpandableFAB() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ){
-        var expanded: Boolean by remember { mutableStateOf(false) }
+        val expanded: Boolean by remember { mutableStateOf(false) }
         val offset by animateDpAsState(
             targetValue = if(expanded) 120.dp else 0.dp,
             spring(

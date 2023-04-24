@@ -592,7 +592,7 @@ fun NewVidList(
 
     DefaultCard(modifier = modifier) {
         CardHeaderText(text = if (vidList.isEmpty()) "No Videos" else "Videos")
-
+        NormalDivider()
         SpacerDp(modifier = modifier, width = SIXTEEN)
 
         LazyRow(contentPadding = PaddingValues(EIGHT.dp)) {
@@ -1060,13 +1060,15 @@ fun Player(player: GameDetailsAthleteDetailsModel, ) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            GenericImageLoader(
-                obj = player.headshot?.href ?: "",
-                modifier = Modifier
-                    .size(80.dp)
-                    .clip(
-                        CircleShape)
-                    .background(Color.LightGray))
+            BasicCircleImage(
+                imgUrl = player.headshot?.href ?:"",
+                contentDescription = player.displayName,
+                elevation = 2.dp,
+                backgroundColor = Color.White,
+                borderWidth = 1.dp,
+                borderColor = Color.Black,
+                modifier = Modifier.size(80.dp)
+            )
 
                 Text(text = player.shortName, fontSize = 10.sp)
                 SpacerDp(modifier = Modifier, width = SIXTEEN)
@@ -1090,17 +1092,11 @@ fun OutsBallsStrikes(
     modifier: Modifier
 ) {
     Row(
-//        modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
 
     ) {
-//        Text(text = "Outs " + gameDetailSituation.outs.toString(),
-//            style = MaterialTheme.typography.bodyMedium)
-//        Text(text = "Balls " + gameDetailSituation.balls.toString(),
-//            style = MaterialTheme.typography.bodyMedium)
-//        Text(text = "Strikes " + gameDetailSituation.strikes.toString(),
-//            style = MaterialTheme.typography.bodyMedium)
+
         Tracker(tracking = "balls", count = gameDetailSituation.balls, modifier = modifier)
         Tracker(tracking = "strikes", count = gameDetailSituation.strikes, modifier= modifier)
         Tracker(tracking = "outs", count = gameDetailSituation.outs, modifier= modifier)
@@ -1736,9 +1732,14 @@ fun GameInfoCardVenueImage(
     gameDetailModel: GameDetailsModel,
     modifier: Modifier,
 ) {
-    Box(modifier = Modifier.height(200.dp)) {
-        DetailVenueCardImageLoader(venue = gameDetailModel.gameInfo?.venue
-            ?: GameDetailsVenueModel())
+    Box(modifier = modifier.height(200.dp)) {
+        DetailVenueCardImageLoader(
+            venue = gameDetailModel.gameInfo?.venue ?: GameDetailsVenueModel()
+        )
+        if (gameDetailModel.gameInfo?.venue?.images?.isNotEmpty() == true) {
+            GenericImageLoader(obj = gameDetailModel.gameInfo.venue.images.first().href ?: "", modifier = modifier )
+
+        }
 
         Box(
             modifier = Modifier
