@@ -218,9 +218,6 @@ fun BaseballSpecific(
 
     SpacerDp(modifier = modifier, height = EIGHT)
 
-
-    AnimatedCircle(gameDetailModel = gameDetailsModel, modifier = modifier.fillMaxWidth())
-
     SpacerDp(modifier = modifier, height = EIGHT)
 
 
