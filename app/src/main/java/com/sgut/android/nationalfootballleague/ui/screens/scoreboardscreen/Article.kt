@@ -12,11 +12,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticleDomianModel
+import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
 
 
@@ -34,19 +36,21 @@ fun ArticleCard(
             .width(200.dp)
     ) {
         Box(modifier = modifier
-            .background(MaterialTheme.colorScheme.secondary)
+            .background(Color.White)
             .fillMaxSize()) {
             Column(
                 modifier = modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.secondary)
+                    .background(Color.White)
             ) {
                 if (articleModel.images.isNotEmpty()) {
                     GenericImageLoader(
                         obj = articleModel.images.first().url,
-                        modifier = modifier.width(200.dp)
+                        modifier = modifier.width(200.dp).padding(bottom = 6.dp)
                     )
                 }
+
+                NormalDivider()
 
                 Text(
                     text = articleModel.headline,
@@ -56,7 +60,7 @@ fun ArticleCard(
                     textAlign = TextAlign.Left,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    color = Color.Black,
                 )
             }
         }

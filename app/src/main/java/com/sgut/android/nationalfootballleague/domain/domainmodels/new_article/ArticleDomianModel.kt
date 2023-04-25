@@ -7,7 +7,8 @@ data class ArticleDomianModel(
     val description: String = "",
     val published: String = "",
     val headline: String = "",
-    val byline: String = "",
-    val links: ArticleLinks
+    val byline: String? = "",
+    val links: ArticleLinks = ArticleLinks(),
+    val dataSourceIdentifier: String = ""
 
     )

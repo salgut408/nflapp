@@ -39,7 +39,7 @@ class TeamDetailViewModel @Inject constructor(
             val stats = teamDetailsRepository.getTeamStats(sport, league, teamAbrv )
 
             setTeamDetailUiState(teamDetails, sport, league, teamSched, stats)
-            Log.d("TEAM_STATS VM", stats.toString())
+            Log.d("TEAM_STATS VM", teamSched.toString())
         }
 
 

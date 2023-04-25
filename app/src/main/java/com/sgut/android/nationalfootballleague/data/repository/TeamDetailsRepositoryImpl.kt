@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.repository
 
 import android.util.Log
 import com.sgut.android.nationalfootballleague.asDomain
+import com.sgut.android.nationalfootballleague.asDomainModel
 import com.sgut.android.nationalfootballleague.asGameDetailsAthlete
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
@@ -22,11 +23,12 @@ class TeamDetailsRepositoryImpl @Inject constructor(
     override suspend fun getSpecificTeam(sport: String, league: String, team: String,
     ): FullTeamDetailWithRosterModel {
         try {
-            val result = espnApi.getSpecificTeam(sport, league, team).body()?.fullTeam
-            return result?.asDomain() ?: FullTeamDetailWithRosterModel()
+            val result = espnApi.getSpecificTeam(sport, league, team)
+            Log.e("SPECIFIC_TEAM", result.toString())
+            return result.body()?.asDomainModel()?.fullTeam ?: FullTeamDetailWithRosterModel()
         }
         catch (e: Exception) {
-            Log.e("SPECIFIC_TEAM", e.stackTraceToString())
+            Log.e("SPECIFIC_TEAM", e.message.toString())
         }
         return espnApi.getSpecificTeam(sport, league, team).body()?.fullTeam?.asDomain() ?: FullTeamDetailWithRosterModel()
     }
@@ -35,6 +37,8 @@ class TeamDetailsRepositoryImpl @Inject constructor(
     ): List<GameDetailsAthleteDetailsModel> {
         try {
             val result = espnApi.getSpecificTeam(sport, league, team).body()?.fullTeam
+            Log.e("SPECIFIC_TEAM-deets", result.toString())
+
             return result?.athletes?.map { it.asGameDetailsAthlete() } ?: listOf()
         }
         catch (e: Exception) {
@@ -48,12 +52,14 @@ class TeamDetailsRepositoryImpl @Inject constructor(
     ): ScheduleDomainModel {
         try {
             val result = espnApi.getTeamSchedule(sport, league, teamId)
+            Log.e("TEAM_Sched", result.toString())
+
             if (result.isSuccessful) {
-                return result.body()?.asDomain() ?: ScheduleDomainModel()
+                return result.body()?.asDomain() !!
             }
         }
         catch (e: Exception) {
-            Log.e("TeamSchedule_ERR", e.toString())
+            Log.e("TeamSchedule_ERR", e.stackTrace.toString())
         }
         return espnApi.getTeamSchedule(sport, league, teamId).body()?.asDomain() ?: ScheduleDomainModel()
     }
@@ -66,10 +72,12 @@ class TeamDetailsRepositoryImpl @Inject constructor(
         try {
             val result = espnApi.getStats(sport, league, team)
             if(result.isSuccessful) {
+                Log.e("TEAM_ST", result.toString())
+
                 return result.body()?.asDomain() !!
             }
         } catch (e: Exception) {
-            Log.e("TeamSchedule_ERR", e.toString())
+            Log.e("TeamStats_ERR", e.toString())
         }
         return espnApi.getStats(sport, league, team).body()?.asDomain() ?: TeamStatsModel()
     }

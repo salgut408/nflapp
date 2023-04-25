@@ -9,6 +9,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
@@ -23,33 +24,33 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_te
 
 
 @Composable
-fun BasicCircleImage(
+fun BasicImage(
     imgUrl: String,
     contentDescription: String?,
     modifier: Modifier = Modifier,
     elevation: Dp,
     backgroundColor: Color,
     borderWidth: Dp,
-    borderColor: Color
+    borderColor: Color,
+    shape: Shape = CircleShape,
 ) {
-   SportSurface(
-       color = backgroundColor,
-       elevation = elevation,
-       shape = CircleShape,
-       modifier = modifier,
-       border = BorderStroke(borderWidth, borderColor)
-   ) {
-       AsyncImage(
-           model = ImageRequest.Builder(LocalContext.current)
-               .data(imgUrl)
-               .crossfade(true)
-               .build(),
-           contentDescription = contentDescription,
-       modifier = Modifier.fillMaxSize(),
-       contentScale = ContentScale.Crop
-       )
-
-   } 
+    SportSurface(
+        color = backgroundColor,
+        elevation = elevation,
+        shape = shape,
+        modifier = modifier,
+        border = BorderStroke(borderWidth, borderColor)
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(imgUrl)
+                .crossfade(true)
+                .build(),
+            contentDescription = contentDescription,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+    }
 }
 
 @Composable
@@ -62,8 +63,9 @@ fun TeamLogoDetailImageLoader(team: FullTeamDetailWithRosterModel) {
             CircularProgressIndicator()
         },
         contentDescription = team.displayName,
-        )
+    )
 }
+
 @Composable
 fun TeamLogoScoreboardImageLoader(team: ScoreboardTeamModel) {
     SubcomposeAsyncImage(
@@ -74,12 +76,8 @@ fun TeamLogoScoreboardImageLoader(team: ScoreboardTeamModel) {
             CircularProgressIndicator()
         },
         contentDescription = team.displayName,
-        )
+    )
 }
-
-
-
-
 
 
 @Composable
@@ -108,9 +106,6 @@ fun GeneralImageLoader(
 }
 
 
-
-
-
 @Composable
 fun GenericImageLoader(obj: String, modifier: Modifier) {
     SubcomposeAsyncImage(
@@ -127,7 +122,6 @@ fun GenericImageLoader(obj: String, modifier: Modifier) {
 }
 
 
-
 @Composable
 fun VenueCardImageLoader(venue: VenueModel) {
     SubcomposeAsyncImage(
@@ -138,12 +132,10 @@ fun VenueCardImageLoader(venue: VenueModel) {
             CircularProgressIndicator()
         },
         contentDescription = venue.fullName,
-        modifier=Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
 
-        )
+    )
 }
-
-
 
 
 @Composable
@@ -156,7 +148,7 @@ fun DetailVenueCardImageLoader(venue: GameDetailsVenueModel) {
             CircularProgressIndicator()
         },
         contentDescription = venue.fullName,
-        modifier=Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
 
     )
 }

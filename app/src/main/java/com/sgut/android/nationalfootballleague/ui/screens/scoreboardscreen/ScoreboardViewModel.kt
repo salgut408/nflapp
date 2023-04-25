@@ -1,10 +1,9 @@
 package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 
-import android.icu.util.Calendar
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticleDomianModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
@@ -42,23 +41,23 @@ class ScoreboardViewModel @Inject constructor(
 
             if (league.equals(NCAA_BASKETBALL)) {
 
-                val articlesListResult = getArticles(sport, league)
+                val news = getArticles(sport, league)
 
                 val currentScoreboardModelUiState = scoreboardRepository.getCollegeBasketballScoreboard(sport, league, "200")
 
                 setScoreboardUiState(
                     sport, league,
-                    currentScoreboardModelUiState, articlesListResult,
+                    currentScoreboardModelUiState, news,
                 )
             } else {
 
-                val articlesListResult = getArticles(sport, league)
+                val news = getArticles(sport, league)
 
                 val currentScoreboardModelUiState =
                     scoreboardRepository.getGeneralScoreboard(sport, league)
                 setScoreboardUiState(
                     sport, league,
-                    currentScoreboardModelUiState, articlesListResult)
+                    currentScoreboardModelUiState, news)
             }
         } catch (e: Exception) {
             Log.i("DEBUG-rc vm", e.stackTraceToString())
@@ -66,26 +65,19 @@ class ScoreboardViewModel @Inject constructor(
     }
 
 
-    fun getTodaysDate(): String {
-        val date = Calendar.getInstance()
-        val year = date.get(Calendar.YEAR).toString()
-        val month = (date.get(Calendar.MONTH) + 1).toString()
-        val day = date.get(Calendar.DAY_OF_MONTH).toString()
-        return year + month + day
-    }
 
     fun setScoreboardUiState(
         currentSport: String,
         currentLeague: String,
         currentScoreboardModelUiState: ScoreboardModel,
-        currentArticles: List<ArticleDomianModel>,
+        currentNews: ArticlesListModel,
     ) {
         _scoreboardUiState.update {
             it.copy(
                 currentSport = currentSport,
                 currentLeague = currentLeague,
                 scoreboardModelUiState = currentScoreboardModelUiState,
-                currentArticles = currentArticles
+                currentArticles = currentNews
             )
         }
     }

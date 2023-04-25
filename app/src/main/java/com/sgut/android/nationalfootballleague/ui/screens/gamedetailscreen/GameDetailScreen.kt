@@ -1060,7 +1060,7 @@ fun Player(player: GameDetailsAthleteDetailsModel, ) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            BasicCircleImage(
+            BasicImage(
                 imgUrl = player.headshot?.href ?:"",
                 contentDescription = player.displayName,
                 elevation = 2.dp,

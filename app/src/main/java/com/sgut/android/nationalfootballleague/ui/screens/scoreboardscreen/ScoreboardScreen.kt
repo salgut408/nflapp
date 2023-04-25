@@ -18,13 +18,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.di.TopAppBarWithLogo
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.*
-import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
 import com.sgut.android.nationalfootballleague.ui.commoncomps.EIGHT
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DefaultCard
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SpacerDp
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamLogoScoreboardImageLoader
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
+import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.NewsRow
 import com.sgut.android.nationalfootballleague.ui.screens.standings_screen.Standings
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.*
@@ -49,7 +50,7 @@ fun ScoreboardScreen(
 
 
     val newUiState by scoreboardViewModel.newScoreboardModelState.collectAsState()
-    val articles = newUiState.currentArticles
+    val news = newUiState.currentArticles
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
 
@@ -80,7 +81,7 @@ fun ScoreboardScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Row { ArticleRow(articleList = articles) }
+
 
 //              TODO take out nav navController
                 TeamsMatchUpListFromEvents(
@@ -90,6 +91,12 @@ fun ScoreboardScreen(
                     league,
                     navController
                 )
+                
+                Spacer(modifier = Modifier.height(16.dp))
+
+                NewsRow(news = news ?: ArticlesListModel(), modifier = Modifier.wrapContentSize())
+
+
                 Standings(
                     sport = sport,
                     league = league, type = "0"
@@ -199,6 +206,7 @@ fun Competition(competition: ScoreboardCompetitionModel) {
 
 @Composable
 fun HeadLine(headline: ScoreboardHeadlineModel) {
+
     Row() {
         Text(text = headline.type)
         Column() {

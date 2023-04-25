@@ -51,6 +51,6 @@
     <string name="la_liga">La Liga</string>
     <string name="premier_league">Premier League</string>
     <string name="euro_soccer">Euro Soccer</string>
-
+    <string name="atp">ATP Tennis</string>
 
 </resources>

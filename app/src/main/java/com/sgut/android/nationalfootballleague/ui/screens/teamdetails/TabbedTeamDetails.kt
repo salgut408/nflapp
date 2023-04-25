@@ -20,23 +20,7 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DefaultCard
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
 
-@Composable
-fun TabbedTeamScreen(
-    modifier: Modifier = Modifier,
-    teamDetailViewModel: TeamDetailViewModel = hiltViewModel(),
-    team: String,
-    sport: String,
-    league: String,
 
-    ) {
-
-    teamDetailViewModel.getFullTeamDetails(team, sport, league)
-    val teamDetailUiState by teamDetailViewModel.teamDetailUiState.collectAsState()
-    val team = teamDetailUiState.currentTeamDetails
-    val teamSchedule = teamDetailUiState.schedule
-
-
-}
 
 
 @Composable

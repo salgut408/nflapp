@@ -5,6 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -18,13 +21,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.R
 import com.sgut.android.nationalfootballleague.di.ToolBar3
-import com.sgut.android.nationalfootballleague.domain.domainmodels.FilterRepo
-import com.sgut.android.nationalfootballleague.domain.domainmodels.filters
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.TeamModel
-import com.sgut.android.nationalfootballleague.ui.commoncomps.FilterBar
+import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
+import com.sgut.android.nationalfootballleague.ui.commoncomps.CardHeaderText
+import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
 import com.sgut.android.nationalfootballleague.ui.commoncomps.SportScaffold
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicButton
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicCircleImage
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicImage
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DefaultCard
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportSurface
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
@@ -46,10 +51,11 @@ fun HomeTeamCardsListScreen(
 
     val sportStateLeagueName = uiState.fullTeamInfo?.sport?.league?.name
     val sportStateTeamsFullInfo = uiState.fullTeamInfo
+    
+    val news = uiState.currentNews
+    
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-
-    val categoryFilters = remember { FilterRepo.getFilters() }
     var filtersVisible by rememberSaveable { mutableStateOf(false) }
 
 
@@ -62,11 +68,12 @@ fun HomeTeamCardsListScreen(
                     title = sportStateLeagueName ?: "",
                     scrollBehavior = scrollBehavior
                 )
-                FilterBar(filters, onShowFilters = { filtersVisible = true })
             }
         },
         content = { padding ->
-            Column() {
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState())
+            ) {
 
 
                 LazyRow(
@@ -77,6 +84,20 @@ fun HomeTeamCardsListScreen(
                     item {
                         OutlinedButton(onClick = { homeListViewModel.setBaseballTeams() }) {
                             Text(stringResource(R.string.MLB_league),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { homeListViewModel.setCollegeBasketballTeams() }) {
+                            Text(stringResource(R.string.NCAA_mens_basketball),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { homeListViewModel.setCollegeBasketballTeams() }) {
+                            Text(stringResource(R.string.atp),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
@@ -209,17 +230,18 @@ fun HomeTeamCardsListScreen(
 
 
                 if (sportStateTeamsFullInfo != null) {
-                    TeamsListCircle(teams = uiState.fullTeamInfo?.sport?.league?.teams ?: listOf(),
-                        onTeamClick = {})
 
-
-
-                    ListOfTeams(
-                        currentTeams = uiState.fullTeamInfo?.sport?.league?.teams ?: listOf(),
-                        navController = navController,
-                        league = uiState.currentLeague,
+                    TeamsListCircleRow(
+                        teams = uiState.fullTeamInfo?.sport?.league?.teams ?: listOf(),
                         sport = uiState.currentSport,
+                        league = uiState.fullTeamInfo?.sport?.league?.shortName ?: "",
+                        onTeamClick = {},
+                        navController = navController
                     )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    NewsRow(news = news ?: ArticlesListModel(), modifier = Modifier.wrapContentSize())
 
                 }
             }
@@ -229,46 +251,92 @@ fun HomeTeamCardsListScreen(
 
 
 @Composable
-fun TeamsListCircle(
+fun TeamsListCircleRow(
     teams: List<TeamModel>,
     onTeamClick: (String) -> Unit,
     modifier: Modifier = Modifier,
+    sport: String,
+    league: String,
+    navController: NavController
 ) {
-    LazyRow(
-        modifier = modifier,
-        contentPadding = PaddingValues(start = 12.dp, end = 12.dp)
-    ) {
-        items(teams) { team ->
-            TeamItem(team = team, onTeamClick = onTeamClick)
+
+    DefaultCard(modifier = modifier) {
+
+            CardHeaderText(text = league)
+            NormalDivider()
+
+
+        LazyRow(
+            modifier = modifier,
+            contentPadding = PaddingValues(start = 12.dp, end = 12.dp)
+        ) {
+            items(teams) { team ->
+                TeamItem(
+                    team = team,
+                    onTeamClick = onTeamClick,
+                    modifier = modifier,
+                    sport = sport,
+                    league =league,
+                    navController = navController
+                )
+            }
         }
+
+    }
+
+
+}
+
+@Composable
+fun NewsRow(news: ArticlesListModel, modifier: Modifier) {
+
+    DefaultCard(modifier = modifier) {
+        CardHeaderText(text = news.header)
+        NormalDivider()
+        ArticleRow(articleList = news.articles)
     }
 }
+
+
 
 @Composable
 fun TeamItem(
     team: TeamModel,
     onTeamClick: (String) -> Unit,
     modifier: Modifier = Modifier,
+    sport: String,
+    league: String,
+    navController: NavController
 ) {
     val teamColor = HexToJetpackColor2.getColor(team.color)
     SportSurface(
         shape = MaterialTheme.shapes.medium,
+        color = Color.LightGray
 
         ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
-                .clickable(onClick = { onTeamClick(team.abbreviation) })
+                .clickable {
+                    navController.navigate(
+                        NavigationScreens.DetailScreenTeam.withArgs(
+                            team.abbreviation,
+                            sport,
+                            league
+                        )
+                    )
+                }
                 .padding(4.dp)
         ) {
-            BasicCircleImage(
+            BasicImage(
                 imgUrl = team.logos,
                 contentDescription = team.name,
                 modifier = modifier.size(100.dp),
                 elevation = 10.dp,
                 backgroundColor = teamColor,
                 borderColor = Color.Black,
-                borderWidth = 1.dp
+                borderWidth = 2.dp,
+                shape = RoundedCornerShape(8.dp)
             )
             Text(
                 text = team.abbreviation,

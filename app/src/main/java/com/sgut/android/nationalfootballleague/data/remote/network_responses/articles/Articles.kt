@@ -6,6 +6,8 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.A
 
 data class Articles(
 
+    @SerializedName("dataSourceIdentifier")
+    val dataSourceIdentifier: String,
     @SerializedName("images")
     val images: List<ArticleImages> = listOf(),
     @SerializedName("description")
@@ -23,7 +25,7 @@ data class Articles(
     @SerializedName("headline")
     val headline: String = "",
     @SerializedName("byline")
-    val byline: String = "",
+    val byline: String? = "",
 
     )
 
@@ -35,5 +37,6 @@ fun Articles.asDomain(): ArticleDomianModel {
       headline = headline,
       byline = byline,
         links = links,
+        dataSourceIdentifier = dataSourceIdentifier
     )
 }
