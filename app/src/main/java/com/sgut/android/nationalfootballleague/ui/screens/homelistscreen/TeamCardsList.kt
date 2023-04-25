@@ -10,7 +10,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,6 +31,7 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DefaultCard
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportSurface
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
+import com.sgut.android.nationalfootballleague.ui.screens.standings_screen.Standings
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.basicButton
 import com.sgut.android.nationalfootballleague.R.string as AppText
@@ -56,7 +56,6 @@ fun HomeTeamCardsListScreen(
     
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
-    var filtersVisible by rememberSaveable { mutableStateOf(false) }
 
 
     SportScaffold(
@@ -242,6 +241,15 @@ fun HomeTeamCardsListScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     NewsRow(news = news ?: ArticlesListModel(), modifier = Modifier.wrapContentSize())
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+
+                    Standings(
+                        sport = sport ?: "",
+                        league = league ?: "",
+                        type = "0"
+                    )
 
                 }
             }

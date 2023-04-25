@@ -108,15 +108,16 @@ fun GameDetailsScreen(
                 SpacerDp(modifier = modifier, height = EIGHT)
 
                 when (gameDetailUiState.currentSport) {
-                    "basketball" -> DoughnutChartForBasketball(
+                    "basketball" -> AnimatedCircle(
                         modifier = modifier,
                         gameDetailModel = gameDetailUiState.currentGameUiState
                             ?: GameDetailsModel(),
                     )
-                    "football" -> DoughnutChart2(
+                    "football" -> AnimatedCircle(
                         modifier = modifier,
                         gameDetailModel = gameDetailUiState.currentGameUiState
                             ?: GameDetailsModel(),
+
                     )
                     "baseball" -> BaseballSpecific(
                         modifier = modifier,
@@ -210,10 +211,15 @@ fun BaseballSpecific(
 
     SpacerDp(modifier = modifier, height = EIGHT)
 
-    DoughnutChart2(
+    AnimatedCircle(
         modifier = modifier,
         gameDetailModel = gameDetailsModel
     )
+
+    SpacerDp(modifier = modifier, height = EIGHT)
+
+
+    AnimatedCircle(gameDetailModel = gameDetailsModel, modifier = modifier.fillMaxWidth())
 
     SpacerDp(modifier = modifier, height = EIGHT)
 
@@ -1148,11 +1154,9 @@ fun DoughnutChart2(
     val sweepAngles = proportions.map { it * 360 / 100 }
 
     DefaultCard(modifier = modifier) {
-        Row(
-            modifier = modifier.fillMaxWidth()
-        ) {
+
             CardHeaderText(text = "Matchup Predictor")
-        }
+
         NormalDivider()
         Box(
             modifier = modifier
@@ -1767,6 +1771,7 @@ fun GameInfoCardVenueImage(
         }
     }
 }
+
 
 
 

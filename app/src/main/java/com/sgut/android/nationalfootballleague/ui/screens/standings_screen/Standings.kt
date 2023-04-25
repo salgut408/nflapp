@@ -1,13 +1,17 @@
 package com.sgut.android.nationalfootballleague.ui.screens.standings_screen
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -16,9 +20,7 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.standings_mod
 import com.sgut.android.nationalfootballleague.domain.domainmodels.standings_models.StandingsResponseModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.standings_models.TeamModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.CardHeaderText
-import com.sgut.android.nationalfootballleague.ui.commoncomps.EIGHT
 import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
-import com.sgut.android.nationalfootballleague.ui.commoncomps.THIRTYSIX
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DefaultCard
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
 
@@ -38,20 +40,31 @@ fun Standings(
     DefaultCard(modifier = modifier) {
         CardHeaderText(text = "Standings")
         NormalDivider()
-        Row {
-            standings.standingsUiState.children.map { child ->
+
+        LazyRow(
+            modifier = modifier,
+            contentPadding = PaddingValues(start = 8.dp, end = 8.dp)
+        ) {
+            items(standings.standingsUiState.children) { child ->
                 Children(child = child, modifier = modifier)
-                Spacer(modifier = modifier.width(THIRTYSIX.dp))
-                NormalDivider(
-                    color = Color.Black,
-                    modifier = modifier
-                        .fillMaxHeight(1f)
-                        .width(1.dp)
-                )
-                Spacer(modifier = modifier.width(EIGHT.dp))
 
             }
         }
+
+//        Row {
+//            standings.standingsUiState.children.map { child ->
+//                Children(child = child, modifier = modifier)
+//                Spacer(modifier = modifier.width(THIRTYSIX.dp))
+//                NormalDivider(
+//                    color = Color.Black,
+//                    modifier = modifier
+//                        .fillMaxHeight(1f)
+//                        .width(1.dp)
+//                )
+//                Spacer(modifier = modifier.width(EIGHT.dp))
+//
+//            }
+//        }
 //        Text(text = standings.standingsUiState.children.toString() )
     }
 }

@@ -26,7 +26,6 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamLogoScoreboardImageLoader
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.NewsRow
-import com.sgut.android.nationalfootballleague.ui.screens.standings_screen.Standings
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.*
 import java.util.*
@@ -74,7 +73,7 @@ fun ScoreboardScreen(
         },
         content = { innerPadding ->
             Column(
-                modifier
+               modifier = modifier
                     .verticalScroll(rememberScrollState())
                     .padding(innerPadding)
                     .background(MaterialTheme.colorScheme.background),
@@ -92,15 +91,13 @@ fun ScoreboardScreen(
                     navController
                 )
                 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = modifier.height(16.dp))
 
-                NewsRow(news = news ?: ArticlesListModel(), modifier = Modifier.wrapContentSize())
+                NewsRow(news = news ?: ArticlesListModel(), modifier = modifier.wrapContentSize())
+
+                Spacer(modifier = modifier.height(16.dp))
 
 
-                Standings(
-                    sport = sport,
-                    league = league, type = "0"
-                )
             }
         }
 
