@@ -18,6 +18,7 @@ import com.sgut.android.nationalfootballleague.utils.Constants.Companion.CHAMPIO
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.EPL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FIFA
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FRA
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.HOCKEY
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.LA_LIGA
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.MLB
@@ -79,12 +80,12 @@ class HomeListViewModel @Inject constructor(
     }
 
 
+    //            Default list Ui State set here
     fun loadAllNflTeams() = viewModelScope.launch {
         try {
             val fullTeamsList =
                 fullTeamsListRepository.getFullSportLeagueAndTeamsList(FOOTBALL, NFL)
             val news = getArticles(FOOTBALL, NFL)
-//            Default list Ui State set here
             addTeamsToDb(
                 teams = fullTeamsList.sport.league?.teams ?: listOf(),
                 sport = fullTeamsList.sport.name,
@@ -98,13 +99,10 @@ class HomeListViewModel @Inject constructor(
                 fullTeamInfo = fullTeamsList,
                 sportModel = fullTeamsList.sport,
                 news = news
-
             )
-
-
         }
         catch (e: Exception) {
-            Log.e("tag", e.message.toString())
+            Log.e("HOME_VM", e.message.toString())
         }
     }
 
@@ -145,7 +143,6 @@ class HomeListViewModel @Inject constructor(
             fullTeamInfo = fullTeamsList,
             sportModel = fullTeamsList.sport,
             news = news
-
         )
     }
 
@@ -190,6 +187,25 @@ class HomeListViewModel @Inject constructor(
     fun setEuroTeams() = viewModelScope.launch() {
         val fullTeamsList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(SOCCER, UEFA)
         val news = getArticles(SOCCER, UEFA)
+        addTeamsToDb(
+            teams = fullTeamsList.sport.league?.teams ?: listOf(),
+            sport = fullTeamsList.sport.name,
+            league = fullTeamsList.sport.league?.name ?: "",
+            leagueAbrv = fullTeamsList.sport.league?.abbreviation ?: ""
+        )
+        setListUiState(
+            currentTeams = fullTeamsList.sport.league?.teams ?: listOf(),
+            currentSport = fullTeamsList.sport.slug,
+            currentLeague = fullTeamsList.sport.league?.slug ?: "",
+            fullTeamInfo = fullTeamsList,
+            sportModel = fullTeamsList.sport,
+            news = news
+        )
+    }
+
+    fun setFrenchTeams() = viewModelScope.launch() {
+        val fullTeamsList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(SOCCER, FRA)
+        val news = getArticles(SOCCER, FRA)
         addTeamsToDb(
             teams = fullTeamsList.sport.league?.teams ?: listOf(),
             sport = fullTeamsList.sport.name,

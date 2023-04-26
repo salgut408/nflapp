@@ -95,6 +95,13 @@ fun HomeTeamCardsListScreen(
                     }
 
                     item {
+                        OutlinedButton(onClick = { homeListViewModel.setFrenchTeams() }) {
+                            Text(stringResource(R.string.fra),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
                         OutlinedButton(onClick = { homeListViewModel.setCollegeBasketballTeams() }) {
                             Text(stringResource(R.string.atp),
                                 style = MaterialTheme.typography.labelSmall)

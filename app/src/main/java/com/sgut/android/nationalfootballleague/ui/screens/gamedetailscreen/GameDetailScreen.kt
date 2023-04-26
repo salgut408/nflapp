@@ -80,13 +80,6 @@ fun GameDetailsScreen(
 
 //                LastPlay(play = gameDetailUiState.currentGameUiState?.plays?.last()?.text ?: "")
 
-                CompetitionStatus(
-                    modifier = modifier,
-                    competitions = gameDetailUiState.currentGameUiState?.header?.competitions
-                        ?: listOf()
-                )
-
-
 
 
 //                Text(text = gameDetailUiState.currentGameUiState.header.competitions.f)
@@ -96,13 +89,6 @@ fun GameDetailsScreen(
                 HeaderStatusSlot(
                     modifier = modifier,
                     gameDetailModel = gameDetailUiState.currentGameUiState ?: GameDetailsModel()
-                )
-
-                SpacerDp(modifier = modifier, height = EIGHT)
-
-                WeightedRows(
-                    modifier = modifier,
-                    header = gameDetailUiState.currentGameUiState ?: GameDetailsModel()
                 )
 
                 SpacerDp(modifier = modifier, height = EIGHT)
@@ -118,7 +104,7 @@ fun GameDetailsScreen(
                         gameDetailModel = gameDetailUiState.currentGameUiState
                             ?: GameDetailsModel(),
 
-                    )
+                        )
                     "baseball" -> BaseballSpecific(
                         modifier = modifier,
                         gameDetailSituation = gameDetailUiState.currentGameUiState?.baseballSituation
@@ -128,6 +114,21 @@ fun GameDetailsScreen(
                         teamMap = map
                     )
                 }
+
+                SpacerDp(modifier = modifier, height = EIGHT)
+
+                WeightedRows(
+                    modifier = modifier,
+                    header = gameDetailUiState.currentGameUiState ?: GameDetailsModel()
+                )
+
+                SpacerDp(modifier = modifier, height = EIGHT)
+
+                CompetitionStatus(
+                    modifier = modifier,
+                    competitions = gameDetailUiState.currentGameUiState?.header?.competitions
+                        ?: listOf()
+                )
 
                 SpacerDp(modifier = modifier, height = EIGHT)
 

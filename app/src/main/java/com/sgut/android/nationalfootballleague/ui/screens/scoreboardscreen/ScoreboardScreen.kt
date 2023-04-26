@@ -21,6 +21,8 @@ import com.sgut.android.nationalfootballleague.di.TopAppBarWithLogo
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.*
 import com.sgut.android.nationalfootballleague.ui.commoncomps.EIGHT
+import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicImage
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DefaultCard
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SpacerDp
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.TeamLogoScoreboardImageLoader
@@ -55,6 +57,7 @@ fun ScoreboardScreen(
 
     val sport = newUiState.currentSport
     val league = newUiState.currentLeague
+    val headlines = newUiState.scoreboardModelUiState.events
 
 
     Scaffold(
@@ -74,15 +77,16 @@ fun ScoreboardScreen(
         content = { innerPadding ->
             Column(
                modifier = modifier
-                    .verticalScroll(rememberScrollState())
-                    .padding(innerPadding)
-                    .background(MaterialTheme.colorScheme.background),
+                   .verticalScroll(rememberScrollState())
+                   .padding(innerPadding)
+                   .background(MaterialTheme.colorScheme.background),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
 
+//                Scoreboard(events = newUiState.scoreboardModelUiState.events, modifier = modifier)
 
-//              TODO take out nav navController
+////              TODO take out nav navController
                 TeamsMatchUpListFromEvents(
                     newUiState.scoreboardModelUiState.events,
                     modifier,
@@ -90,7 +94,8 @@ fun ScoreboardScreen(
                     league,
                     navController
                 )
-                
+
+
                 Spacer(modifier = modifier.height(16.dp))
 
                 NewsRow(news = news ?: ArticlesListModel(), modifier = modifier.wrapContentSize())
@@ -111,6 +116,56 @@ fun ScoreboardScreen(
 fun MatchPreview() {
 
 }
+@Composable
+fun Scoreboard(
+    events: List<ScoreboardEventModel>,
+    modifier: Modifier,
+
+) {
+    events.map { event ->
+        event.competitions.map { competition ->
+            Competition2(competition = competition, modifier = modifier)
+        }
+    }
+
+}
+
+@Composable
+fun Competition2(competition: ScoreboardCompetitionModel, modifier: Modifier) {
+    competition.competitors.map { competitor ->
+        CompetitorRow(competitor = competitor, modifier = modifier)
+    }
+    NormalDivider()
+
+}
+
+@Composable
+fun CompetitorRow(competitor: ScoreboardCompetitorsModel, modifier: Modifier ) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Start
+
+        ) {
+       BasicImage(
+           imgUrl = competitor.team.logo,
+           contentDescription = competitor.team.name,
+           elevation = 0.dp,
+           backgroundColor = Color.White,
+           borderWidth = 0.dp,
+           borderColor = Color.Transparent,
+           shape = MaterialTheme.shapes.small,
+           modifier = modifier.size(60.dp)
+       )
+        Spacer(modifier = modifier.width(8.dp))
+
+        Text(text = competitor.team.shortDisplayName)
+        Spacer(modifier = modifier.width(40.dp))
+        Text(text = competitor.score)
+
+    }
+}
+
 
 
 @Composable

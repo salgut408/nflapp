@@ -82,8 +82,6 @@ fun AnimatedCircle(
         }
     }
 
-
-
     DefaultCard(modifier = Modifier) {
         CardHeaderText(text = "Matchup Predictor")
         NormalDivider()

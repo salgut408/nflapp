@@ -122,8 +122,6 @@ fun DefaultCard(
     color: Color = Color.LightGray,
     contentColor: Color = Color.Black,
     content: @Composable () -> Unit,
-
-
 ) {
     Card(
         backgroundColor = color,

@@ -18,13 +18,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticleDomianModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardHeadlineModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DefaultCard
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
 
 
 @Composable
 fun ArticleCard(
-    articleModel: ArticleDomianModel,
+    article: ArticleDomianModel,
     modifier: Modifier,
 ) {
     Card(
@@ -42,18 +44,21 @@ fun ArticleCard(
                 modifier = modifier
                     .fillMaxWidth()
                     .background(Color.White)
+                    .padding(8.dp)
             ) {
-                if (articleModel.images.isNotEmpty()) {
+                if (article.images.isNotEmpty()) {
                     GenericImageLoader(
-                        obj = articleModel.images.first().url,
-                        modifier = modifier.width(200.dp).padding(bottom = 6.dp)
+                        obj = article.images.first().url,
+                        modifier = modifier
+                            .width(200.dp)
+                            .padding(bottom = 6.dp)
                     )
                 }
 
                 NormalDivider()
 
                 Text(
-                    text = articleModel.headline,
+                    text = article.headline,
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Bold,
                     modifier = modifier.padding(8.dp),
@@ -67,12 +72,13 @@ fun ArticleCard(
     }
 }
 
+
 // if list is needed
 @Composable
 fun ArticleList(articleList: List<ArticleDomianModel>, modifier: Modifier) {
     LazyColumn(contentPadding = PaddingValues(8.dp)) {
         items(items = articleList) { article ->
-            ArticleCard(articleModel = article, modifier = modifier.padding(8.dp))
+            ArticleCard(article = article, modifier = modifier.padding(8.dp))
         }
     }
 }
@@ -81,14 +87,14 @@ fun ArticleList(articleList: List<ArticleDomianModel>, modifier: Modifier) {
 fun ArticleRow(articleList: List<ArticleDomianModel>) {
     LazyRow(contentPadding = PaddingValues(8.dp)) {
         items(items = articleList) { article ->
-            ArticleCard(articleModel = article, modifier = Modifier)
+            ArticleCard(article = article, modifier = Modifier)
         }
     }
 }
 
 @Composable
-fun HeadLine(modifier: Modifier) {
-    Card(shape = RoundedCornerShape(10.dp)) {
+fun HeadLines(modifier: Modifier, headlines: List<ScoreboardHeadlineModel>) {
+    DefaultCard(modifier = modifier) {
         Box(modifier = modifier.width(350.dp)) {
             Column() {
                 Row(
@@ -96,16 +102,19 @@ fun HeadLine(modifier: Modifier) {
                 ) {
 
                     Icon(Icons.Default.MoreVert, contentDescription = null)
+                    headlines.map { headline ->
+                        Text(
+                            text = headline.description,
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(8.dp),
+                            textAlign = TextAlign.Left,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
 
-                    Text(
-                        text = "Sports world reacts to an amazing event in history. Griener Released",
-                        style = MaterialTheme.typography.bodySmall,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(8.dp),
-                        textAlign = TextAlign.Left,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
+
                 }
             }
         }

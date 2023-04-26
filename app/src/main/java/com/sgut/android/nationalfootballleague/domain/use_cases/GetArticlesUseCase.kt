@@ -14,7 +14,7 @@ open class GetArticlesUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(sport: String, league: String): ArticlesListModel =
         withContext(defaultDispatcher) {
-            val news = articleRepository.getArticles(sport,league )
+            val news = articleRepository.getArticles(sport, league )
             return@withContext news
         }
 }

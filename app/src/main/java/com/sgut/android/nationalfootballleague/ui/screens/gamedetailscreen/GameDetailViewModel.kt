@@ -82,6 +82,7 @@ class GameDetailViewModel @Inject constructor(
 
     }
 
+
     private fun setGameDetailsUiState(
         currentSport: String,
         currentLeague: String,
