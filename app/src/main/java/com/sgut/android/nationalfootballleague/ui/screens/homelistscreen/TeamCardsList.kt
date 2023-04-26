@@ -69,6 +69,9 @@ fun HomeTeamCardsListScreen(
                 )
             }
         },
+
+//        bottomBar = { BottomSportBar() },
+
         content = { padding ->
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState())

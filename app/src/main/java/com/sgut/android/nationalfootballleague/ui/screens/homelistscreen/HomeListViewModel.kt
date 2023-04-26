@@ -52,6 +52,7 @@ class HomeListViewModel @Inject constructor(
     private val _listUiState = MutableStateFlow(ListUiState())
     val listUiState: StateFlow<ListUiState> = _listUiState.asStateFlow()
 
+
 //     TODO STORE ALL TEAMS IN DB FIRST THEN READ FROM THERE BASED ON LEAGUE ?
 
     init {
@@ -94,7 +95,7 @@ class HomeListViewModel @Inject constructor(
             )
             setListUiState(
                 currentTeams = fullTeamsList.sport.league?.teams ?: listOf(),
-                currentSport = fullTeamsList.sport.slug,
+                currentSport = fullTeamsList.sport.name,
                 currentLeague = fullTeamsList.sport.league?.abbreviation ?: "",
                 fullTeamInfo = fullTeamsList,
                 sportModel = fullTeamsList.sport,

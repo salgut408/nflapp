@@ -24,11 +24,11 @@ class TeamDetailsRepositoryImpl @Inject constructor(
     ): FullTeamDetailWithRosterModel {
         try {
             val result = espnApi.getSpecificTeam(sport, league, team)
-            Log.e("SPECIFIC_TEAM", result.toString())
+//            Log.e("SPECIFIC_TEAM good", result.toString())
             return result.body()?.asDomainModel()?.fullTeam ?: FullTeamDetailWithRosterModel()
         }
         catch (e: Exception) {
-            Log.e("SPECIFIC_TEAM", e.message.toString())
+            Log.e("SPECIFIC_TEAM", e.cause .toString())
         }
         return espnApi.getSpecificTeam(sport, league, team).body()?.fullTeam?.asDomain() ?: FullTeamDetailWithRosterModel()
     }
@@ -37,12 +37,12 @@ class TeamDetailsRepositoryImpl @Inject constructor(
     ): List<GameDetailsAthleteDetailsModel> {
         try {
             val result = espnApi.getSpecificTeam(sport, league, team).body()?.fullTeam
-            Log.e("SPECIFIC_TEAM-deets", result.toString())
+//            Log.e("SPECIFIC_TEAM-deetsMap", result.toString())
 
             return result?.athletes?.map { it.asGameDetailsAthlete() } ?: listOf()
         }
         catch (e: Exception) {
-            Log.e("Athletes list err", e.stackTraceToString())
+            Log.e("Athletes list err-map", e.stackTraceToString())
         }
         return espnApi.getSpecificTeam(sport, league, team)
             .body()?.fullTeam?.athletes?.map { it.asGameDetailsAthlete() } ?: listOf()
@@ -52,7 +52,7 @@ class TeamDetailsRepositoryImpl @Inject constructor(
     ): ScheduleDomainModel {
         try {
             val result = espnApi.getTeamSchedule(sport, league, teamId)
-            Log.e("TEAM_Sched", result.toString())
+//            Log.e("TEAM_Sched good", result.toString())
 
             if (result.isSuccessful) {
                 return result.body()?.asDomain() !!
@@ -72,12 +72,12 @@ class TeamDetailsRepositoryImpl @Inject constructor(
         try {
             val result = espnApi.getStats(sport, league, team)
             if(result.isSuccessful) {
-                Log.e("TEAM_ST", result.toString())
+                Log.e("TEAM_STats Good", result.toString())
 
                 return result.body()?.asDomain() !!
             }
         } catch (e: Exception) {
-            Log.e("TeamStats_ERR", e.toString())
+            Log.e("TeamStats_ERR", e.message.toString())
         }
         return espnApi.getStats(sport, league, team).body()?.asDomain() ?: TeamStatsModel()
     }

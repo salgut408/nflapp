@@ -3,6 +3,7 @@ package com.sgut.android.nationalfootballleague.di
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -31,7 +32,9 @@ fun TopAppBarWithLogo(
             ) {
 
                 Text(text = title,  fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleLarge)
-                GenericImageLoader(obj = logo, modifier = modifier.size(80.dp).padding(8.dp))
+                GenericImageLoader(obj = logo, modifier = modifier
+                    .size(80.dp)
+                    .padding(8.dp))
             }
         },
         navigationIcon = {
@@ -102,6 +105,23 @@ fun BasicToolBar(
         title = { Text(title) },
 
         )
+}
+
+@Composable
+fun BottomSportBar() {
+    var selectedItem by remember { mutableStateOf(0) }
+    val items = listOf("Home", "Scores", "Whatever")
+    NavigationBar() {
+        items.forEachIndexed { index, item ->
+            NavigationBarItem(
+                icon = {Icon(Icons.Filled.Favorite, contentDescription = item)},
+                label = { Text(text = item)},
+                selected = selectedItem == index,
+                onClick = { selectedItem = index }
+            )
+        }
+    }
+
 }
 
 

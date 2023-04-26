@@ -74,7 +74,7 @@ fun TeamDetailCard(
 
         HeadingSection(
             modifier = Modifier,
-            title = "Atheletes",
+            title = "Athletes",
             subtitle =team.name,
            content = { AtheleteRow(team) }
         )

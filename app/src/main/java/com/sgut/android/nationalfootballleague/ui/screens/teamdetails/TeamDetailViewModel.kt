@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,12 +35,13 @@ class TeamDetailViewModel @Inject constructor(
     // able to just pass TeamModel ? or team id with room?
     fun getFullTeamDetails(teamAbrv: String, sport: String, league: String) =
         viewModelScope.launch {
-            val teamDetails = teamDetailsRepository.getSpecificTeam(sport, league, teamAbrv)
+            val teamDetails = teamDetailsRepository.getSpecificTeam(sport.lowercase(Locale.ROOT),
+                league.lowercase(Locale.ROOT), teamAbrv.lowercase(Locale.ROOT))
             val teamSched = teamDetailsRepository.getTeamSchedule(sport, league, teamAbrv )
             val stats = teamDetailsRepository.getTeamStats(sport, league, teamAbrv )
 
             setTeamDetailUiState(teamDetails, sport, league, teamSched, stats)
-            Log.d("TEAM_STATS VM", teamSched.toString())
+            Log.d("TEAM_deet VM", teamDetails.toString())
         }
 
 
