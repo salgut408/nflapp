@@ -5,5 +5,6 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.standings_mod
 data class StandingsUiState (
     val currentSport: String = "",
     val currentLeague: String = "",
-    val standingsUiState: StandingsModel = StandingsModel()
+    val standingsUiState: StandingsModel = StandingsModel(),
+//    val loading: Boolean = true
 )

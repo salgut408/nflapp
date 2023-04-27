@@ -107,6 +107,8 @@ fun Navigation(
                 sport = sportName,
                 league = leagueName,
                 event = event,
+                canNavigateBack = appState.navController.previousBackStackEntry != null,
+                navigateUp = { appState.navController.navigateUp() }
                 )
         }
 

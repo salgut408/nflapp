@@ -4,14 +4,49 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun GameDetailsTopBar(
+    eventName: String,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit,
+    scrollBehavior: TopAppBarScrollBehavior,
+) {
+    CenterAlignedTopAppBar(
+        title = { Text(text = eventName, fontSize = 20.sp, fontWeight = FontWeight.Bold) },
+        navigationIcon = {
+            if (canNavigateBack) {
+                IconButton(onClick = navigateUp) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = ""
+                    )
+                }
+            }
+        },
+        actions = {
+            IconButton(
+                onClick = { /*TODO*/ }) {
+                Icon(
+                    imageVector = Icons.Filled.Share,
+                    contentDescription = ""
+                )
+            }
+        },
+        scrollBehavior = scrollBehavior
+    )
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,17 +130,6 @@ fun ToolBar3(
     )
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BasicToolBar(
-    title: String,
-) {
-    TopAppBar(
-        title = { Text(title) },
-
-        )
-}
 
 @Composable
 fun BottomSportBar() {

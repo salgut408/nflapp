@@ -40,6 +40,7 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.di.GameDetailsTopBar
 import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.*
 import com.sgut.android.nationalfootballleague.ui.commoncomps.*
@@ -59,6 +60,8 @@ fun GameDetailsScreen(
     league: String,
     navController: NavController,
     event: String,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit,
     gameDetailViewModel: GameDetailViewModel = hiltViewModel(),
 ) {
 
@@ -67,19 +70,41 @@ fun GameDetailsScreen(
     val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
     val map by gameDetailViewModel.map.collectAsState()
 
+    val eventName = gameDetailViewModel.returnTeamNamesForTopBar()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
 
     SportScaffold(
+        topBar = {
+                 GameDetailsTopBar(eventName = eventName,
+                     canNavigateBack = canNavigateBack,
+                     navigateUp =  navigateUp ,
+                     scrollBehavior = scrollBehavior )
+        },
+
         content = { padding ->
+//            Box(modifier = Modifier.padding(padding)) {
+
+
             Column(
                 modifier
                     .verticalScroll(rememberScrollState())
-                    .padding(0.dp),
+                    .padding(padding),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
 
 //                LastPlay(play = gameDetailUiState.currentGameUiState?.plays?.last()?.text ?: "")
-
+//                DefaultCard(modifier = modifier) {
+//                    CardHeaderText(text = "Plays")
+//                    NormalDivider()
+//                    val plays = gameDetailUiState.currentGameUiState?.plays
+//                    if (plays?.isNotEmpty() ?: false) {
+//                        Text(text =plays?.get(plays.size -3) ?.text ?: "")
+//                        Text(text =plays?.get(plays.size -2) ?.text ?: "")
+//                        Text(text = plays?.last()?.text ?: "")
+//                    }
+//                }
 
 
 //                Text(text = gameDetailUiState.currentGameUiState.header.competitions.f)
@@ -154,9 +179,9 @@ fun GameDetailsScreen(
                 SpacerDp(modifier = modifier, height = EIGHT)
 
                 ExpandableGameArticle(
-                    modifier =  modifier,
+                    modifier = modifier,
                     gameDetailModel = gameDetailUiState.currentGameUiState ?: GameDetailsModel(),
-                    )
+                )
 
                 SpacerDp(modifier = modifier, height = EIGHT)
 
@@ -185,9 +210,10 @@ fun GameDetailsScreen(
                 TeamStatCard3(
                     modifier = modifier,
                     boxscore = gameDetailUiState.currentGameUiState?.boxscore
-                    ?: BoxScoreModel()
+                        ?: BoxScoreModel()
                 )
             }
+//        }
 
         }
     )

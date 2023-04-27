@@ -26,10 +26,7 @@ import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
 import com.sgut.android.nationalfootballleague.ui.commoncomps.CardHeaderText
 import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
 import com.sgut.android.nationalfootballleague.ui.commoncomps.SportScaffold
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicButton
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicImage
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DefaultCard
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportSurface
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.*
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.standings_screen.Standings
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
@@ -51,9 +48,9 @@ fun HomeTeamCardsListScreen(
 
     val sportStateLeagueName = uiState.fullTeamInfo?.sport?.league?.name
     val sportStateTeamsFullInfo = uiState.fullTeamInfo
-    
+
     val news = uiState.currentNews
-    
+
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
 
@@ -62,15 +59,12 @@ fun HomeTeamCardsListScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
 
         topBar = {
-            Column() {
-                ToolBar3(
-                    title = sportStateLeagueName ?: "",
-                    scrollBehavior = scrollBehavior
-                )
-            }
+            ToolBar3(
+                title = sportStateLeagueName ?: "",
+                scrollBehavior = scrollBehavior
+            )
         },
 
-//        bottomBar = { BottomSportBar() },
 
         content = { padding ->
             Column(
@@ -250,7 +244,8 @@ fun HomeTeamCardsListScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    NewsRow(news = news ?: ArticlesListModel(), modifier = Modifier.wrapContentSize())
+                    NewsRow(news = news ?: ArticlesListModel(),
+                        modifier = Modifier.wrapContentSize())
 
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -264,6 +259,9 @@ fun HomeTeamCardsListScreen(
                 }
             }
         },
+
+//        bottomBar = { BottomSportBar() },
+
     )
 }
 
@@ -271,22 +269,20 @@ fun HomeTeamCardsListScreen(
 @Composable
 fun TeamsListCircleRow(
     teams: List<TeamModel>,
-    onTeamClick: (String) -> Unit,
+    onTeamClick: () -> Unit,
     modifier: Modifier = Modifier,
     sport: String,
     league: String,
-    navController: NavController
+    navController: NavController,
 ) {
 
     DefaultCard(modifier = modifier) {
-
-            CardHeaderText(text = league)
-            NormalDivider()
-
+        CardHeaderText(text = league)
+        NormalDivider()
 
         LazyRow(
             modifier = modifier,
-            contentPadding = PaddingValues(start = 12.dp, end = 12.dp)
+            contentPadding = PaddingValues(8.dp)
         ) {
             items(teams) { team ->
                 TeamItem(
@@ -294,7 +290,7 @@ fun TeamsListCircleRow(
                     onTeamClick = onTeamClick,
                     modifier = modifier,
                     sport = sport,
-                    league =league,
+                    league = league,
                     navController = navController
                 )
             }
@@ -316,51 +312,60 @@ fun NewsRow(news: ArticlesListModel, modifier: Modifier) {
 }
 
 
-
 @Composable
 fun TeamItem(
     team: TeamModel,
-    onTeamClick: (String) -> Unit,
+    onTeamClick: () -> Unit,
     modifier: Modifier = Modifier,
     sport: String,
     league: String,
-    navController: NavController
+    navController: NavController,
 ) {
     val teamColor = HexToJetpackColor2.getColor(team.color)
+
     SportSurface(
         shape = MaterialTheme.shapes.medium,
         color = Color.LightGray
 
-        ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier
-                .clickable {
-                    navController.navigate(
-                        NavigationScreens.DetailScreenTeam.withArgs(
-                            team.abbreviation,
-                            sport,
-                            league
+    ) {
+        Box(modifier = modifier) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = modifier
+                    .clickable {
+                        navController.navigate(
+                            NavigationScreens.DetailScreenTeam.withArgs(
+                                team.abbreviation,
+                                sport,
+                                league
+                            )
                         )
-                    )
-                }
-                .padding(4.dp)
-        ) {
-            BasicImage(
-                imgUrl = team.logos,
-                contentDescription = team.name,
-                modifier = modifier.size(100.dp),
-                elevation = 10.dp,
-                backgroundColor = teamColor,
-                borderColor = Color.Black,
-                borderWidth = 2.dp,
-                shape = RoundedCornerShape(8.dp)
+                    }
+                    .padding(4.dp)
+            ) {
+                BasicImage(
+                    imgUrl = team.logos,
+                    contentDescription = team.name,
+                    modifier = modifier.size(100.dp),
+                    elevation = 1.dp,
+                    backgroundColor = teamColor,
+                    borderColor = Color.Black,
+                    borderWidth = 1.dp,
+                    shape = RoundedCornerShape(8.dp)
+                )
+                Text(
+                    text = team.displayName,
+                    style = MaterialTheme.typography.labelSmall,
+                    modifier = modifier.padding(top = 8.dp)
+                )
+
+            }
+            ToggleFollowIconButton(
+                isFollowed = team.isFavorite,
+                onClick = { onTeamClick },
+                modifier = Modifier.align(Alignment.TopEnd)
             )
-            Text(
-                text = team.abbreviation,
-                style = MaterialTheme.typography.labelSmall,
-                modifier = modifier.padding(top = 8.dp)
-            )
+
         }
     }
 }

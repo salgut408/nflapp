@@ -35,6 +35,7 @@ class GameDetailViewModel @Inject constructor(
     private val _map = MutableStateFlow(mapOf<String, GameDetailsAthleteDetailsModel> ())
     val map: StateFlow<Map<String, GameDetailsAthleteDetailsModel>> = _map.asStateFlow()
 
+    // should be done in vm ?
     private var teamMap: Map<String, GameDetailsAthleteDetailsModel> = mapOf()
 
 
@@ -82,11 +83,19 @@ class GameDetailViewModel @Inject constructor(
 
     }
 
+    fun returnTeamNamesForTopBar(): String {
+        val first = gameDetailUiState.value.currentGameUiState?.header?.competitions?.first()?.competitors?.last()?.team?.name ?: ""
+        val second = gameDetailUiState.value.currentGameUiState?.header?.competitions?.first()?.competitors?.first()?.team?.name ?: ""
+        return "$first @ $second"
+
+    }
+
 
     private fun setGameDetailsUiState(
         currentSport: String,
         currentLeague: String,
         currentGameUiState: GameDetailsModel,
+
     ) {
         _gameDetailUiState.update {
             it.copy(

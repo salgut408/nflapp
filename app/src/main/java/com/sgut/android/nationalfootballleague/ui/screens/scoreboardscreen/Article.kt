@@ -50,7 +50,7 @@ fun ArticleCard(
                     GenericImageLoader(
                         obj = article.images.first().url,
                         modifier = modifier
-                            .width(200.dp)
+                            .fillMaxWidth()
                             .padding(bottom = 6.dp)
                     )
                 }

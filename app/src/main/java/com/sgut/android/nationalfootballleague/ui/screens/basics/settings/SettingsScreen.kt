@@ -19,7 +19,6 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DialogCancelButton
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DialogConfirmButton
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.RegularCardEditor
-import com.sgut.android.nationalfootballleague.di.BasicToolBar
 import com.sgut.android.nationalfootballleague.utils.card
 import com.sgut.android.nationalfootballleague.utils.spacer
 import com.sgut.android.nationalfootballleague.R.string as AppText

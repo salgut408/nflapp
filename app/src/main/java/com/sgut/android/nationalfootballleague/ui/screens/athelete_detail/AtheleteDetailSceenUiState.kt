@@ -6,5 +6,6 @@ data class AtheleteDetailSceenUiState(
     val currentSport: String = "",
     val currentLeague: String = "",
     val currentAtheleteId: String = "",
-    val currentFullInfo: FullAthleteModel = FullAthleteModel()
+    val currentFullInfo: FullAthleteModel = FullAthleteModel(),
+//    val loading: Boolean = true
 )

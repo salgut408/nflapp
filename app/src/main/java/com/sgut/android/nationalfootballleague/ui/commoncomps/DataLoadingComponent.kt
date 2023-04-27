@@ -1,14 +1,14 @@
 package com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
+@Preview
 @Composable
 fun DataLoadingComponent() {
 
@@ -19,7 +19,7 @@ fun DataLoadingComponent() {
     ) {
 
         CircularProgressIndicator(
-            modifier = Modifier
+            modifier = Modifier.size(90.dp)
                 .wrapContentWidth(
                     Alignment.CenterHorizontally)
         )

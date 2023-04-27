@@ -12,5 +12,5 @@ data class ListUiState(
     val fullTeamInfo: FullTeamsListsModel? = null,
     val currentNews: ArticlesListModel? = null,
     val sportModel: SportModel? = null
-
+//    val loading: Boolean = true
     )

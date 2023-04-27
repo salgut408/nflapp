@@ -2,14 +2,15 @@ package com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -17,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -49,9 +52,9 @@ fun BasicButtonToNavigate(
     modifier: Modifier,
     sport: String,
     league: String,
-    onNavigateTo: (sport: String, league: String) -> Unit
+    onNavigateTo: (sport: String, league: String) -> Unit,
 ) {
-    val onNavTo = {onNavigateTo(sport, league)}
+    val onNavTo = { onNavigateTo(sport, league) }
     Button(
         onClick = onNavTo,
         modifier = modifier,
@@ -178,6 +181,39 @@ fun NewButton(text: @Composable () -> Unit) {
     }
 }
 
+
+@Composable
+fun ToggleFollowIconButton(
+    isFollowed: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val clickLabel = if (isFollowed) "Unfollow" else "Follow"
+    IconButton(
+        onClick = onClick,
+        modifier = modifier.semantics {
+            onClick(label = clickLabel, action = null)
+        }
+    ) {
+        Icon(
+            imageVector = when {
+                isFollowed -> Icons.Default.Check
+                else -> Icons.Default.Add
+            },
+            contentDescription = when {
+                isFollowed -> "Following"
+                else -> "Not following"
+            },
+            tint = animateColorAsState(
+                when  {
+                    isFollowed -> LocalContentColor.current
+                    else -> Color.White
+                }
+            ).value,
+            modifier = Modifier.padding(4.dp)
+        )
+    }
+}
 
 //private object RippleCustomTheme: RippleTheme {
 //    override fun defaultColor() = RippleTheme.defaultRippleColor(Color.Cyan, lightTheme = true)

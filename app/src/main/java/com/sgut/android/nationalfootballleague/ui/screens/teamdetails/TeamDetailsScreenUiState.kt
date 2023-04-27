@@ -14,4 +14,5 @@ data class TeamDetailsScreenUiState(
     val nextEvents: List<NextEventModel> = listOf(),
     val schedule: ScheduleDomainModel = ScheduleDomainModel(),
     val stats: TeamStatsModel = TeamStatsModel()
+//    val loading: Boolean = true
     )

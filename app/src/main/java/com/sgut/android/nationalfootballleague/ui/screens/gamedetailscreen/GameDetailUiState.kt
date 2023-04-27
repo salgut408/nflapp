@@ -5,5 +5,7 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_deta
 data class GameDetailsScreenUiState(
     val currentSport: String = "",
     val currentLeague: String = "",
-    val currentGameUiState: GameDetailsModel? = null
+    val currentGameUiState: GameDetailsModel? = null,
+//     val curentMap: Map<String, GameDetailsAthleteDetailsModel>? = null,
+//    val loading: Boolean = true
     )
