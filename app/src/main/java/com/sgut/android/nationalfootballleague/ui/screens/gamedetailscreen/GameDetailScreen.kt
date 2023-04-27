@@ -94,18 +94,6 @@ fun GameDetailsScreen(
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
 
-//                LastPlay(play = gameDetailUiState.currentGameUiState?.plays?.last()?.text ?: "")
-//                DefaultCard(modifier = modifier) {
-//                    CardHeaderText(text = "Plays")
-//                    NormalDivider()
-//                    val plays = gameDetailUiState.currentGameUiState?.plays
-//                    if (plays?.isNotEmpty() ?: false) {
-//                        Text(text =plays?.get(plays.size -3) ?.text ?: "")
-//                        Text(text =plays?.get(plays.size -2) ?.text ?: "")
-//                        Text(text = plays?.last()?.text ?: "")
-//                    }
-//                }
-
 
 //                Text(text = gameDetailUiState.currentGameUiState.header.competitions.f)
 
@@ -650,15 +638,20 @@ fun VideoPreview(
         Box(
             modifier = modifier.fillMaxSize()
         ) {
+            GenericImageLoader(
+                obj = video.thumbnail,
+                modifier = modifier.width(200.dp)
+            )
             Column(modifier = modifier.fillMaxWidth()) {
 
                 VideoPlayer(video)
-                Log.d("Video", video.links.source?.mezzanine?.href ?: "")
+                Log.d("Video_HREF", video.links.source?.mezzanine?.href ?: "")
+                Log.d("Video_HREF", video.headline)
+                Log.d("Video_HREF", video.description)
 
-                GenericImageLoader(
-                    obj = video.thumbnail,
-                    modifier = modifier.width(200.dp)
-                )
+
+
+
 
                 Text(
                     text = video.headline,
@@ -1121,9 +1114,9 @@ fun OutsBallsStrikes(
     gameDetailSituation: SituationModel,
     modifier: Modifier
 ) {
-    Row(
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically,
+    Column(
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.SpaceEvenly,
 
     ) {
 

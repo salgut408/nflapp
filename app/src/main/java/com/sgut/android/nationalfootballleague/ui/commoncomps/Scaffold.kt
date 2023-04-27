@@ -16,8 +16,6 @@ fun SportScaffold(
     floatingActionButtonPosition: FabPosition = FabPosition.End,
     bottomBar: @Composable (() -> Unit) = {},
     content: @Composable (PaddingValues) -> Unit
-
-
 ) {
     Scaffold(
         modifier = modifier,

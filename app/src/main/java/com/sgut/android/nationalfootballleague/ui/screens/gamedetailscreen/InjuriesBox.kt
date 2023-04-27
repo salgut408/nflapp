@@ -31,7 +31,7 @@ fun InjuriesBox(stats: String, team: FullTeamDetailWithRosterModel) {
             .background(Color.LightGray).fillMaxWidth(),
 
     ) {
-        Row(modifier = Modifier.padding(24.dp)) {
+        Row() {
             Column(modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
