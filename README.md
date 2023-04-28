@@ -6,8 +6,11 @@ This project is a personal sandbox of sorts, experimenting with the latest libra
 -UI wwritten in Jetpack Compose
 -Dependacy Injections with Hilt
 -AGSL rendering
-
-
+-Compose navigation For navigation in the app
+-ViewModel The ui layer uses the viewmodel pattern
+-ExoPlayer For playing videos
+-Coroutines For handling async work
+-Retrofit For networking tasks
 
 100% Jetpack compose && MVVM Architecture for sports.
 UDF & reactice programing with Kotlin Flow API
