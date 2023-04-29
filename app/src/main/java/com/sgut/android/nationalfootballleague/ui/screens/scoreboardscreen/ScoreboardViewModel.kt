@@ -23,16 +23,15 @@ class ScoreboardViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())
-    var scoreboardUiState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
 
-    var newScoreboardModelState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
+    var scoreboardModelState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
 
 
     init {
     }
 
 //    fun getCompetitionHomeTeam(): ScoreboardCompetitorsModel {
-//        return scoreboardUiState.value.scoreboardModelUiState.events.
+//        return scoreboardModelState.value.scoreboardModelUiState.events.
 //    }
 
 

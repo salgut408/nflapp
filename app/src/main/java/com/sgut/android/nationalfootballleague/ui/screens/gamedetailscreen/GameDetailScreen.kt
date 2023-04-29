@@ -95,8 +95,6 @@ fun GameDetailsScreen(
             ) {
 
 
-//                Text(text = gameDetailUiState.currentGameUiState.header.competitions.f)
-
                 SpacerDp(modifier = modifier, height = EIGHT)
 
                 HeaderStatusSlot(
@@ -644,7 +642,9 @@ fun VideoPreview(
             )
             Column(modifier = modifier.fillMaxWidth()) {
 
-                VideoPlayer(video)
+                NewVidPlayer(video = video)
+
+//                VideoPlayer(videos = video)
                 Log.d("Video_HREF", video.links.source?.mezzanine?.href ?: "")
                 Log.d("Video_HREF", video.headline)
                 Log.d("Video_HREF", video.description)

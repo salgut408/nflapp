@@ -132,7 +132,7 @@ fun DefaultCard(
     ) {
         Column(
             modifier = modifier
-                .padding(SIXTEEN.dp)
+                .padding(start = SIXTEEN.dp, end = SIXTEEN.dp)
         ) {
             content()
         }

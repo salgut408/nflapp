@@ -28,6 +28,9 @@ data class CompetitorScoreboard(
   val team: TeamScoreboard = TeamScoreboard(),
   @SerializedName("statistics")
   val statistics: List<StatisticsScoreboard> = listOf(),
+  @SerializedName("leaders")
+  val leaders: List<GameDetailsLeaders4> = listOf(),
+
 //  TODO Fix probables w Probable v probableS
 //  @SerializedName("probables")
 //  val probables: List<Probables> = listOf(),
@@ -71,8 +74,6 @@ fun CompetitorScoreboard.asDomain(): ScoreboardCompetitorsModel {
     records = records.map { it.asDomain() },
     team = team.asDomain(),
     statistics = statistics.map { it.asDomain() },
-//    probables = probables.map { it.asDomain() }
-
-
+    leaders = leaders.map { it.asDomain() }
   )
 }

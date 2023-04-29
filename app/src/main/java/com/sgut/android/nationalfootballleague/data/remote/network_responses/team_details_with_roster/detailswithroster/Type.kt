@@ -11,7 +11,7 @@ data class Type3(
   @SerializedName("name")
   val name: String? = null,
   @SerializedName("state")
-  val state: String? = null,
+  val state: StatusState? = null,
   @SerializedName("completed")
   val completed: Boolean? = null,
   @SerializedName("description")
@@ -26,7 +26,7 @@ data class Type3(
 fun Type3.asDomain(): CompetitionTypeModel {
   return  CompetitionTypeModel(
     id = id ?: "",
-    state = state ?: "",
+    state = state ?: StatusState.PRE,
     completed = completed,
     description = description ?: "",
     detail =  detail ?: "",

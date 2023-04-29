@@ -3,6 +3,7 @@ package com.sgut.android.nationalfootballleague
 import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.BatsModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsAthleteDetailsModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsAthleteDetailsModel4
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.ThrowModel
 
 
@@ -28,12 +29,47 @@ data class GameDetailsAthlete(
     val jersey: String? = null,
     @SerializedName("position")
     val position: GameDetailsPosition? = GameDetailsPosition(),
-//    @SerializedName("bats")
-//    val bats: Bats = Bats(),
-//    @SerializedName("throws")
-//    val throws: Throw = Throw(),
 
     )
+
+data class GameDetailsAthlete4(
+
+    @SerializedName("id")
+    val id: String? = null,
+    @SerializedName("uid")
+    val uid: String? = null,
+    @SerializedName("guid")
+    val guid: String? = null,
+    @SerializedName("lastName")
+    val lastName: String? = null,
+    @SerializedName("fullName")
+    val fullName: String? = null,
+    @SerializedName("displayName")
+    val displayName: String? = null,
+    @SerializedName("shortName")
+    val shortName: String? = null,
+    @SerializedName("headshot")
+    val headshot: String? = "",
+    @SerializedName("jersey")
+    val jersey: String? = null,
+    @SerializedName("position")
+    val position: GameDetailsPosition? = GameDetailsPosition(),
+)
+
+fun GameDetailsAthlete4.asDomain(): GameDetailsAthleteDetailsModel4 {
+    return GameDetailsAthleteDetailsModel4(
+        id = id ?: "",
+        uid = uid ?: "",
+        lastName = lastName ?: "",
+        fullName = fullName ?: "",
+        displayName = displayName ?: "",
+        shortName = shortName ?: "",
+        headshot = headshot ?: "",
+        jersey = jersey ?: "",
+        position = position?.asDomain(),
+    )
+}
+
 
 
 

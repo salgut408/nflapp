@@ -20,6 +20,7 @@ import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.di.TopAppBarWithLogo
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.*
+import com.sgut.android.nationalfootballleague.ui.commoncomps.CardHeaderText
 import com.sgut.android.nationalfootballleague.ui.commoncomps.EIGHT
 import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicImage
@@ -50,7 +51,7 @@ fun ScoreboardScreen(
 //    val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
 
 
-    val newUiState by scoreboardViewModel.newScoreboardModelState.collectAsState()
+    val newUiState by scoreboardViewModel.scoreboardModelState.collectAsState()
     val news = newUiState.currentArticles
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
@@ -80,21 +81,19 @@ fun ScoreboardScreen(
                    .verticalScroll(rememberScrollState())
                    .padding(innerPadding)
                    .background(MaterialTheme.colorScheme.background),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Center
             ) {
 
-//                Scoreboard(events = newUiState.scoreboardModelUiState.events, modifier = modifier)
+                Scoreboard(events = newUiState.scoreboardModelUiState.events, modifier = modifier)
 
-////              TODO take out nav navController
-                TeamsMatchUpListFromEvents(
-                    newUiState.scoreboardModelUiState.events,
-                    modifier,
-                    sport,
-                    league,
-                    navController
-                )
-
+//                TeamsMatchUpListFromEvents(
+//                    newUiState.scoreboardModelUiState.events,
+//                    modifier,
+//                    sport,
+//                    league,
+//                    navController
+//                )
 
                 Spacer(modifier = modifier.height(16.dp))
 
@@ -122,49 +121,37 @@ fun Scoreboard(
     modifier: Modifier,
 
 ) {
-    events.map { event ->
-        event.competitions.map { competition ->
-            Competition2(competition = competition, modifier = modifier)
+    DefaultCard(modifier = modifier
+    ) {
+        CardHeaderText(text = "Scoreboard")
+        NormalDivider()
+        events.map { event ->
+
+            event.competitions.map {  competition ->
+             CompColumn(competitors = competition.competitors)
+                Text(text = event.status.type?.state.toString())
+                Text(text = event.status.type?.shortDetail.toString())
+                Text(text = event.status.type?.description.toString())
+
+
+                NormalDivider()
+            }
         }
     }
-
 }
 
 @Composable
-fun Competition2(competition: ScoreboardCompetitionModel, modifier: Modifier) {
-    competition.competitors.map { competitor ->
-        CompetitorRow(competitor = competitor, modifier = modifier)
-    }
-    NormalDivider()
-
-}
-
-@Composable
-fun CompetitorRow(competitor: ScoreboardCompetitorsModel, modifier: Modifier ) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
-
-        ) {
-       BasicImage(
-           imgUrl = competitor.team.logo,
-           contentDescription = competitor.team.name,
-           elevation = 0.dp,
-           backgroundColor = Color.White,
-           borderWidth = 0.dp,
-           borderColor = Color.Transparent,
-           shape = MaterialTheme.shapes.small,
-           modifier = modifier.size(60.dp)
-       )
-        Spacer(modifier = modifier.width(8.dp))
-
-        Text(text = competitor.team.shortDisplayName)
-        Spacer(modifier = modifier.width(40.dp))
-        Text(text = competitor.score)
-
+fun CompColumn(competitors: List<ScoreboardCompetitorsModel>) {
+    Column(modifier = Modifier.padding(8.dp)) {
+       competitors.map { 
+           CompetitorRow(competitor = it, modifier = Modifier)
+       } 
     }
 }
+
+
+
+
 
 
 
@@ -177,23 +164,27 @@ fun TeamsMatchUpListFromEvents(
     navController: NavController,
 ) {
 
+    DefaultCard(modifier = modifier) {
+        CardHeaderText(text = "Scores")
+        events.map { event ->
 
-    events.map { event ->
+            event.competitions.map {  competition ->
 
-        event.competitions.map {
 
             TeamComponent2(
-                compScoreboard = it,
+                compScoreboard = competition,
                 modifier = modifier,
                 navController = navController,
                 sport = sport,
                 league = league,
             )
-            SpacerDp(modifier = modifier, height = 8)
+
+            }
 
         }
-
     }
+
+
 }
 
 
@@ -201,15 +192,10 @@ fun TeamsMatchUpListFromEvents(
 fun Record(record: ScoreboardRecordModel) {
     Row() {
         Text(text = record.name)
-        Text(text = " - ")
-        Text(text = record.summary)
     }
 }
 
-@Composable
-fun CompetitorRecords(records: List<ScoreboardRecordModel>) {
-    records.map { Record(record = it) }
-}
+
 
 @Composable
 fun EventName(event: ScoreboardEventModel) {
@@ -220,52 +206,12 @@ fun EventName(event: ScoreboardEventModel) {
 }
 
 
-@Composable
-fun Competitor(competitor: ScoreboardCompetitorsModel) {
-    Row() {
-        Text(text = competitor.team.name)
-        Text(text = " - ")
-        Text(text = competitor.score)
-    }
-
-}
-
-@Composable
-fun QuickGlance(competition: ScoreboardCompetitionModel) {
-    Card() {
-        Competition(competition = competition)
-
-    }
-}
-
-@Composable
-fun Competition(competition: ScoreboardCompetitionModel) {
-    Text(text = competition.status?.displayClock ?: "")
-    competition.competitors.map { competitor ->
-        Row(verticalAlignment = Alignment.Top) {
-            Competitor(competitor = competitor)
-            Spacer(modifier = Modifier.width(20.dp))
-            Column(verticalArrangement = Arrangement.Center) {
-                CompetitorRecords(competitor.records)
-
-            }
-        }
 
 
-    }
-}
 
 
-@Composable
-fun HeadLine(headline: ScoreboardHeadlineModel) {
 
-    Row() {
-        Text(text = headline.type)
-        Column() {
-            Text(text = headline.description)
-        }
-    }
-}
+
 
 
 @Composable
@@ -460,5 +406,59 @@ fun GameInfoColumn(description: String, date: String, id: String) {
     }
 }
 
+
+
+@Composable
+fun CompetitorRow(competitor: ScoreboardCompetitorsModel, modifier: Modifier, ) {
+    Column(modifier = Modifier) {
+
+    }
+    Row(
+        modifier = modifier
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            BasicImage(
+                imgUrl = competitor.team.logo,
+                contentDescription = competitor.team.name,
+                elevation = 0.dp,
+                backgroundColor = Color.Transparent,
+                borderWidth = 0.dp,
+                borderColor = Color.Transparent,
+                shape = MaterialTheme.shapes.extraSmall,
+                modifier = modifier
+                    .size(30.dp)
+            )
+            Spacer(modifier = modifier.width(8.dp))
+            Text(text = competitor.team.shortDisplayName, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+        }
+
+        Row() {
+            Text(text = competitor.records.first().summary ?: "-")
+        }
+
+    }
+}
+//
+//@Composable
+//fun CompetitorRow(event: EventScoreboard, modifier: Modifier) {
+//    Row(modifier = modifier) {
+//        BasicImage(
+//            imgUrl = event.competitions.first().competitors .team.logo,
+//            contentDescription = competitor.team.name,
+//            elevation = 0.dp,
+//            backgroundColor = Color.Transparent,
+//            borderWidth = 0.dp,
+//            borderColor = Color.Transparent,
+//            shape = MaterialTheme.shapes.extraSmall
+//        )
+//        Spacer(modifier = modifier.width(8.dp))
+//        Text(text = competitor.team.displayName)
+//    }
+//}
 
 

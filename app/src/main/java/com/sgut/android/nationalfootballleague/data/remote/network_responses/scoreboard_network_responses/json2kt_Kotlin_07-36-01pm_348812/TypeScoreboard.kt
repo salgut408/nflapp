@@ -11,7 +11,7 @@ data class TypeScoreboard(
   @SerializedName("name")
   val name: String? = null,
   @SerializedName("state")
-  val state: String? = null,
+  val state: StatusState? = null,
   @SerializedName("completed")
   val completed: Boolean? = null,
   @SerializedName("description")
@@ -20,13 +20,21 @@ data class TypeScoreboard(
   val detail: String? = null,
   @SerializedName("shortDetail")
   val shortDetail: String? = null,
-
   )
+
+enum class StatusState {
+    @SerializedName("post")
+    POST,
+    @SerializedName("in")
+    IN,
+    @SerializedName("pre")
+    PRE
+}
 
 fun TypeScoreboard.asDomain(): CompetitionTypeModel {
     return CompetitionTypeModel(
         id = id ?: "",
-        state = state ?: "",
+        state = state ?: StatusState.PRE,
         completed = completed,
         description = description ?: "",
         detail = detail ?: "",

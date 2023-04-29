@@ -11,9 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.sgut.android.nationalfootballleague.domain.domainmodels.filters
 import com.sgut.android.nationalfootballleague.ui.application.EspnAppState
-import com.sgut.android.nationalfootballleague.ui.commoncomps.FilterBar
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.Navigation
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import kotlinx.coroutines.CoroutineScope
@@ -35,13 +33,10 @@ fun EspnApp(
 
 
     Scaffold(
-        topBar = {
-            FilterBar(filters, onShowFilters = { })
-        }
+
     ) { innerPadding ->
         Navigation(appState, padding = innerPadding)
     }
-
 }
 
 

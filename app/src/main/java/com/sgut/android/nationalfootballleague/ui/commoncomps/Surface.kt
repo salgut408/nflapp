@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.sgut.android.nationalfootballleague.ui.commoncomps.SIXTEEN
 import kotlin.math.ln
 
 
@@ -31,6 +30,7 @@ fun SportSurface(
     contentColor: Color = MaterialTheme.colorScheme.onBackground,
     border: BorderStroke? = null,
     elevation: Dp = 0.dp,
+    padding: Dp = 0.dp,
     content: @Composable () -> Unit,
 
 ) {
@@ -43,7 +43,7 @@ fun SportSurface(
                 color = getBackgroundColorForElevation(color = color, elevation = elevation),
                 shape = shape
             )
-            .padding(SIXTEEN.dp)
+            .padding(padding)
             .clip(shape)
     ) {
         CompositionLocalProvider(LocalContentColor provides contentColor, content = content)

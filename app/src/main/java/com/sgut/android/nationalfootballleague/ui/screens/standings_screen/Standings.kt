@@ -73,7 +73,7 @@ fun Standings(
 @Composable
 fun TeamComp(team: TeamModel, modifier: Modifier) {
     Row(
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(text = team.abbreviation, fontSize = 10.sp, fontWeight = FontWeight.Bold)
         GenericImageLoader(obj = team.logos.first().href, modifier = modifier.size(30.dp))
@@ -88,22 +88,15 @@ fun Children(child: ChildrenModel, modifier: Modifier) {
         Text(text = child.name, fontWeight = FontWeight.Bold, fontSize = 10.sp)
         Standings(standings = child.standings, modifier)
     }
-
 }
 
 @Composable
 fun Standings(standings: StandingsResponseModel, modifier: Modifier) {
-
-
     Row(verticalAlignment = Alignment.CenterVertically) {
         Column {
             standings.entries.map { entry ->
                 TeamComp(team = entry.team, modifier = modifier)
-
             }
         }
-
     }
-
-
 }

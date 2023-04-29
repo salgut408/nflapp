@@ -37,22 +37,24 @@ fun BasicImage(
     borderWidth: Dp,
     borderColor: Color,
     shape: Shape = CircleShape,
+    padding: Dp = 0.dp
 ) {
     SportSurface(
         color = backgroundColor,
         elevation = elevation,
         shape = shape,
         modifier = modifier,
-        border = BorderStroke(borderWidth, borderColor)
+        border = BorderStroke(borderWidth, borderColor),
+        padding = padding
     ) {
-        AsyncImage(
+        SubcomposeAsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(imgUrl)
                 .crossfade(true)
                 .build(),
             contentDescription = contentDescription,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
+            modifier = modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop,
         )
     }
 }

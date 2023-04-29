@@ -1,5 +1,7 @@
 package com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard
 
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameLeadersModel4
+
 data class ScoreboardCompetitorsModel(
     val id: String = "",
     val uid: String = "",
@@ -11,5 +13,7 @@ data class ScoreboardCompetitorsModel(
     val records: List<ScoreboardRecordModel>,
     val team: ScoreboardTeamModel = ScoreboardTeamModel(),
     val statistics: List<ScoreboardStatisticModel>,
+    val leaders: List<GameLeadersModel4> = listOf(),
+
 //    val probables : List<ProbablesModel>
 )
