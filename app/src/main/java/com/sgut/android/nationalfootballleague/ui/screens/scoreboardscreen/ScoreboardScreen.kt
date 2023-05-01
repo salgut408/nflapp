@@ -58,7 +58,6 @@ fun ScoreboardScreen(
 
     val sport = newUiState.currentSport
     val league = newUiState.currentLeague
-    val headlines = newUiState.scoreboardModelUiState.events
 
 
     Scaffold(
@@ -85,7 +84,13 @@ fun ScoreboardScreen(
                 verticalArrangement = Arrangement.Center
             ) {
 
-                Scoreboard(events = newUiState.scoreboardModelUiState.events, modifier = modifier)
+                Scoreboard(
+                    events = newUiState.scoreboardModelUiState.events,
+                    modifier = modifier,
+                    sport = sport,
+                    league = league,
+                    navController = navController
+                )
 
 //                TeamsMatchUpListFromEvents(
 //                    newUiState.scoreboardModelUiState.events,
@@ -118,6 +123,9 @@ fun MatchPreview() {
 @Composable
 fun Scoreboard(
     events: List<ScoreboardEventModel>,
+    sport: String,
+    league: String,
+    navController: NavController,
     modifier: Modifier,
 
 ) {
@@ -127,27 +135,25 @@ fun Scoreboard(
         NormalDivider()
         events.map { event ->
 
-            event.competitions.map {  competition ->
-             CompColumn(competitors = competition.competitors)
-                Text(text = event.status.type?.state.toString())
-                Text(text = event.status.type?.shortDetail.toString())
-                Text(text = event.status.type?.description.toString())
+            NewEventMatchup(
+                event = event,
+                modifier = modifier,
+                sport = sport,
+                league = league,
+                navController = navController
+            )
+            NormalDivider()
 
-
-                NormalDivider()
-            }
+//            event.competitions.map {  competition ->
+//             CompColumn(competitors = competition.competitors)
+//                Text(text = event.status.type?.state.toString())
+//                Text(text = event.status.type?.description.toString())
+        //            }
         }
     }
 }
 
-@Composable
-fun CompColumn(competitors: List<ScoreboardCompetitorsModel>) {
-    Column(modifier = Modifier.padding(8.dp)) {
-       competitors.map { 
-           CompetitorRow(competitor = it, modifier = Modifier)
-       } 
-    }
-}
+
 
 
 
@@ -409,10 +415,7 @@ fun GameInfoColumn(description: String, date: String, id: String) {
 
 
 @Composable
-fun CompetitorRow(competitor: ScoreboardCompetitorsModel, modifier: Modifier, ) {
-    Column(modifier = Modifier) {
-
-    }
+fun CompetitorRowPre(competitor: ScoreboardCompetitorsModel, modifier: Modifier, ) {
     Row(
         modifier = modifier
             .fillMaxWidth(),
@@ -438,11 +441,100 @@ fun CompetitorRow(competitor: ScoreboardCompetitorsModel, modifier: Modifier, ) 
         }
 
         Row() {
-            Text(text = competitor.records.first().summary ?: "-")
+            Text(text = competitor.records.getOrNull(0)?.summary ?: "")
         }
 
     }
 }
+
+
+@Composable
+fun CompetitorRow(
+    competitor: ScoreboardCompetitorsModel,
+    modifier: Modifier,
+    content: @Composable () -> Unit,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            BasicImage(
+                imgUrl = competitor.team.logo,
+                contentDescription = competitor.team.name,
+                elevation = 0.dp,
+                backgroundColor = Color.Transparent,
+                borderWidth = 0.dp,
+                borderColor = Color.Transparent,
+                shape = MaterialTheme.shapes.extraSmall,
+                modifier = modifier
+                    .size(30.dp)
+            )
+            Spacer(modifier = modifier.width(8.dp))
+            Text(text = competitor.team.shortDisplayName, fontWeight = if(competitor.winner) FontWeight.Bold else FontWeight.Normal, fontSize = 16.sp )
+        }
+
+        Row(
+            modifier = modifier,
+        horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+//            Text(text = competitor.score,  fontSize = 16.sp)
+            content()
+        }
+
+    }
+}
+
+
+
+
+@Composable
+fun NewEventMatchup(
+    event: ScoreboardEventModel,
+    modifier: Modifier,
+    navController: NavController,
+    sport: String,
+    league: String
+) {
+
+
+    Column() {
+            Box(modifier = modifier.clickable {
+                navController.navigate(
+                    NavigationScreens.GameDetailScreen.withArgs(sport,league,event.id)
+                )
+            }) {
+                Column() {
+                    CompetitorRow(
+                        competitor = event.competitions.first().competitors.last(),
+                        modifier = modifier,
+                        content = { Text(
+                        text = if(event.status.type?.state == StatusState.PRE) event.competitions.first().competitors.last().records.getOrNull(0)?.summary ?:""
+                        else event.competitions.first().competitors.last().score)
+                        }
+                    )
+                    CompetitorRow(
+                        competitor = event.competitions.first().competitors.first(),
+                        modifier = modifier,
+                        content = { Text(
+                            text = if(event.status.type?.state == StatusState.PRE) event.competitions.first().competitors.first().records.getOrNull(0)?.summary ?: ""
+                            else event.competitions.first().competitors.first().score)
+                        }
+                    )
+                }
+                Text(text = event.competitions.first().status?.type?.shortDetail ?: "", modifier = Modifier.align(
+                    Alignment.TopCenter), fontWeight = FontWeight.Bold)
+
+            }
+
+
+    }
+}
+
 //
 //@Composable
 //fun CompetitorRow(event: EventScoreboard, modifier: Modifier) {
