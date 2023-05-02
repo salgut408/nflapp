@@ -1,5 +1,7 @@
 package com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details
 
+import com.sgut.android.nationalfootballleague.StatusState
+
 data class GameDetailsTypeModel(
     val id: String = "",
     val name: String = "",
@@ -9,5 +11,5 @@ data class GameDetailsTypeModel(
     val shortGameTimeDetail: String = "",
     val text: String = "",
     val abbreviation: String = "",
-
+    val statusState: StatusState = StatusState.PRE
     )

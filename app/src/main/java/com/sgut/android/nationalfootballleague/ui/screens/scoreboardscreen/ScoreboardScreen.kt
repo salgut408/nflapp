@@ -76,10 +76,10 @@ fun ScoreboardScreen(
         },
         content = { innerPadding ->
             Column(
-               modifier = modifier
-                   .verticalScroll(rememberScrollState())
-                   .padding(innerPadding)
-                   .background(MaterialTheme.colorScheme.background),
+                modifier = modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(innerPadding)
+                    .background(MaterialTheme.colorScheme.background),
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -120,6 +120,7 @@ fun ScoreboardScreen(
 fun MatchPreview() {
 
 }
+
 @Composable
 fun Scoreboard(
     events: List<ScoreboardEventModel>,
@@ -128,7 +129,7 @@ fun Scoreboard(
     navController: NavController,
     modifier: Modifier,
 
-) {
+    ) {
     DefaultCard(modifier = modifier
     ) {
         CardHeaderText(text = "Scoreboard")
@@ -148,17 +149,10 @@ fun Scoreboard(
 //             CompColumn(competitors = competition.competitors)
 //                Text(text = event.status.type?.state.toString())
 //                Text(text = event.status.type?.description.toString())
-        //            }
+            //            }
         }
     }
 }
-
-
-
-
-
-
-
 
 
 @Composable
@@ -174,16 +168,16 @@ fun TeamsMatchUpListFromEvents(
         CardHeaderText(text = "Scores")
         events.map { event ->
 
-            event.competitions.map {  competition ->
+            event.competitions.map { competition ->
 
 
-            TeamComponent2(
-                compScoreboard = competition,
-                modifier = modifier,
-                navController = navController,
-                sport = sport,
-                league = league,
-            )
+                TeamComponent2(
+                    compScoreboard = competition,
+                    modifier = modifier,
+                    navController = navController,
+                    sport = sport,
+                    league = league,
+                )
 
             }
 
@@ -202,7 +196,6 @@ fun Record(record: ScoreboardRecordModel) {
 }
 
 
-
 @Composable
 fun EventName(event: ScoreboardEventModel) {
     Text(
@@ -210,14 +203,6 @@ fun EventName(event: ScoreboardEventModel) {
         style = MaterialTheme.typography.headlineMedium
     )
 }
-
-
-
-
-
-
-
-
 
 
 @Composable
@@ -413,9 +398,8 @@ fun GameInfoColumn(description: String, date: String, id: String) {
 }
 
 
-
 @Composable
-fun CompetitorRowPre(competitor: ScoreboardCompetitorsModel, modifier: Modifier, ) {
+fun CompetitorRowPre(competitor: ScoreboardCompetitorsModel, modifier: Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth(),
@@ -437,7 +421,9 @@ fun CompetitorRowPre(competitor: ScoreboardCompetitorsModel, modifier: Modifier,
                     .size(30.dp)
             )
             Spacer(modifier = modifier.width(8.dp))
-            Text(text = competitor.team.shortDisplayName, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+            Text(text = competitor.team.shortDisplayName,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp)
         }
 
         Row() {
@@ -475,12 +461,14 @@ fun CompetitorRow(
                     .size(30.dp)
             )
             Spacer(modifier = modifier.width(8.dp))
-            Text(text = competitor.team.shortDisplayName, fontWeight = if(competitor.winner) FontWeight.Bold else FontWeight.Normal, fontSize = 16.sp )
+            Text(text = competitor.team.shortDisplayName,
+                fontWeight = if (competitor.winner) FontWeight.Bold else FontWeight.Normal,
+                fontSize = 16.sp)
         }
 
         Row(
             modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
 //            Text(text = competitor.score,  fontSize = 16.sp)
             content()
@@ -490,49 +478,53 @@ fun CompetitorRow(
 }
 
 
-
-
 @Composable
 fun NewEventMatchup(
     event: ScoreboardEventModel,
     modifier: Modifier,
     navController: NavController,
     sport: String,
-    league: String
+    league: String,
 ) {
 
 
     Column() {
-            Box(modifier = modifier.clickable {
-                navController.navigate(
-                    NavigationScreens.GameDetailScreen.withArgs(sport,league,event.id)
+        Box(modifier = modifier.clickable {
+            navController.navigate(
+                NavigationScreens.GameDetailScreen.withArgs(sport, league, event.id)
+            )
+        }) {
+            Column() {
+                CompetitorRow(
+                    competitor = event.competitions.first().competitors.last(),
+                    modifier = modifier,
+                    content = {
+                        Text(
+                            text = if (event.status.type?.state == StatusState.PRE) event.competitions.first().competitors.last().records.getOrNull(
+                                0)?.summary ?: ""
+                            else event.competitions.first().competitors.last().score)
+                    }
                 )
-            }) {
-                Column() {
-                    CompetitorRow(
-                        competitor = event.competitions.first().competitors.last(),
-                        modifier = modifier,
-                        content = { Text(
-                        text = if(event.status.type?.state == StatusState.PRE) event.competitions.first().competitors.last().records.getOrNull(0)?.summary ?:""
-                        else event.competitions.first().competitors.last().score)
-                        }
-                    )
-                    CompetitorRow(
-                        competitor = event.competitions.first().competitors.first(),
-                        modifier = modifier,
-                        content = { Text(
-                            text = if(event.status.type?.state == StatusState.PRE) event.competitions.first().competitors.first().records.getOrNull(0)?.summary ?: ""
+                CompetitorRow(
+                    competitor = event.competitions.first().competitors.first(),
+                    modifier = modifier,
+                    content = {
+                        Text(
+                            text = if (event.status.type?.state == StatusState.PRE) event.competitions.first().competitors.first().records.getOrNull(
+                                0)?.summary ?: ""
                             else event.competitions.first().competitors.first().score)
-                        }
-                    )
-                }
-                Text(text = event.competitions.first().status?.type?.shortDetail ?: "", modifier = Modifier.align(
-                    Alignment.TopCenter), fontWeight = FontWeight.Bold)
-
+                    }
+                )
             }
+            Text(text = event.competitions.first().status?.type?.shortDetail ?: "",
+                modifier = Modifier.align(
+                    Alignment.TopCenter),
+                fontWeight = FontWeight.Bold)
 
-
+        }
     }
+
+
 }
 
 //

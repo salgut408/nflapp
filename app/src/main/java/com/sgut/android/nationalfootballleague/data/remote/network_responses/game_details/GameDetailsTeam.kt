@@ -1,7 +1,6 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.DomainLogoModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsTeamInfoModel
 
 
@@ -47,7 +46,7 @@ fun GameDetailsTeam.asDomain(): GameDetailsTeamInfoModel {
         displayName = displayName ?: "",
         color = color ?: "",
         alternateColor = alternateColor ?: "",
-        logos = logos.getOrNull(0)?.asDomainLogo() ?: DomainLogoModel(),
+        logos = logos.map { it.asDomainLogo() },
         logo = logo,
         record = record.map { it.asDomain() }
             )

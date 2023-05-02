@@ -7,29 +7,29 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_te
 data class Type3(
 
   @SerializedName("id")
-  val id: String? = null,
+  val id: String = "",
   @SerializedName("name")
-  val name: String? = null,
+  val name: String = "",
   @SerializedName("state")
-  val state: StatusState? = null,
+  val state: StatusState = StatusState.PRE,
   @SerializedName("completed")
-  val completed: Boolean? = null,
+  val completed: Boolean = false,
   @SerializedName("description")
-  val description: String? = null,
+  val description: String = "",
   @SerializedName("detail")
-  val detail: String? = null,
+  val detail: String = "",
   @SerializedName("shortDetail")
-  val shortDetail: String? = null,
+  val shortDetail: String = "",
 
   )
 
 fun Type3.asDomain(): CompetitionTypeModel {
   return  CompetitionTypeModel(
-    id = id ?: "",
-    state = state ?: StatusState.PRE,
+    id = id,
+    state = state,
     completed = completed,
-    description = description ?: "",
-    detail =  detail ?: "",
-    shortDetail = shortDetail ?: ""
+    description = description,
+    detail = detail,
+    shortDetail = shortDetail
   )
 }

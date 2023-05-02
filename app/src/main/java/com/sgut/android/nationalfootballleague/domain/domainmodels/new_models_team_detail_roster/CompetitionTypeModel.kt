@@ -5,8 +5,8 @@ import com.sgut.android.nationalfootballleague.StatusState
 data class CompetitionTypeModel(
     var id: String = "",
     var name: String = "",
-    var state: StatusState? = null,
-    var completed: Boolean? = null,
+    var state: StatusState = StatusState.PRE,
+    var completed: Boolean = false,
     var description: String = "",
     var detail: String = "",
     var shortDetail: String = "",

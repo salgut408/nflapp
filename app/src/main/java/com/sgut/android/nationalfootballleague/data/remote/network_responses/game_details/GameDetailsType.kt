@@ -22,6 +22,8 @@ data class GameDetailsType(
   val text: String = "",
   @SerializedName("abbreviation")
   val abbreviation: String = "",
+  @SerializedName("state")
+  val state: StatusState = StatusState.PRE,
 
 
 
@@ -39,6 +41,6 @@ fun GameDetailsType.asDomain(): GameDetailsTypeModel {
     shortGameTimeDetail = shortGameTimeDetail,
     text = text,
     abbreviation = abbreviation,
-
+    statusState = state
   )
 }

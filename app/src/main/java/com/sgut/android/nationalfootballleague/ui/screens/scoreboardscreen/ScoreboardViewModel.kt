@@ -7,6 +7,8 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.A
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
+import com.sgut.android.nationalfootballleague.domain.use_cases.GetBaseballSituationUseCase
+import com.sgut.android.nationalfootballleague.domain.use_cases.GetScoresUseCase
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASKETBALL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +21,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ScoreboardViewModel @Inject constructor(
     private val scoreboardRepository: ScoreboardRepository,
-    private val getArticles: GetArticlesUseCase
+    private val getArticles: GetArticlesUseCase,
+    private val getScores: GetScoresUseCase,
+    private val getBaseballSituationUseCase: GetBaseballSituationUseCase
 ) : ViewModel() {
 
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())
@@ -41,7 +45,6 @@ class ScoreboardViewModel @Inject constructor(
             if (league.equals(NCAA_BASKETBALL)) {
 
                 val news = getArticles(sport, league)
-
                 val currentScoreboardModelUiState = scoreboardRepository.getCollegeBasketballScoreboard(sport, league, "200")
 
                 setScoreboardUiState(
@@ -51,9 +54,8 @@ class ScoreboardViewModel @Inject constructor(
             } else {
 
                 val news = getArticles(sport, league)
+                val currentScoreboardModelUiState = getScores(sport, league)
 
-                val currentScoreboardModelUiState =
-                    scoreboardRepository.getGeneralScoreboard(sport, league)
                 setScoreboardUiState(
                     sport, league,
                     currentScoreboardModelUiState, news)

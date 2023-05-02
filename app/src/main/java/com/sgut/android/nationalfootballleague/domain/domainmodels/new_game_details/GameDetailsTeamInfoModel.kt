@@ -9,7 +9,7 @@ data class GameDetailsTeamInfoModel(
     val displayName: String? = null,
     val color: String = "",
     val alternateColor: String = "",
-    val logos: DomainLogoModel = DomainLogoModel(),
+    val logos: List<DomainLogoModel> = listOf(),
     val logo: String = "",
     val record: List<GameDetailsRecordModel> = listOf(),
 )
