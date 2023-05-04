@@ -40,6 +40,7 @@ import com.sgut.android.nationalfootballleague.R.string as AppText
 fun HomeTeamCardsListScreen(
     navController: NavController,
     homeListViewModel: HomeListViewModel = hiltViewModel(),
+
 ) {
 
     val uiState by homeListViewModel.listUiState.collectAsState()
