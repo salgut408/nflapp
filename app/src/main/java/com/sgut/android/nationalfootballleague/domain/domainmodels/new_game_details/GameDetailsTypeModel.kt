@@ -11,5 +11,5 @@ data class GameDetailsTypeModel(
     val shortGameTimeDetail: String = "",
     val text: String = "",
     val abbreviation: String = "",
-    val statusState: StatusState = StatusState.PRE
+    val statusState: StatusState? = StatusState.PRE
     )

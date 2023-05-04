@@ -486,8 +486,6 @@ fun NewEventMatchup(
     sport: String,
     league: String,
 ) {
-
-
     Column() {
         Box(modifier = modifier.clickable {
             navController.navigate(
@@ -495,6 +493,8 @@ fun NewEventMatchup(
             )
         }) {
             Column() {
+//                Text(text = event.competitions.first().competitors.first().leaders.toString())
+                                Text(text = event.competitions.first().id.toString())
                 CompetitorRow(
                     competitor = event.competitions.first().competitors.last(),
                     modifier = modifier,
@@ -505,6 +505,7 @@ fun NewEventMatchup(
                             else event.competitions.first().competitors.last().score)
                     }
                 )
+
                 CompetitorRow(
                     competitor = event.competitions.first().competitors.first(),
                     modifier = modifier,
@@ -520,11 +521,8 @@ fun NewEventMatchup(
                 modifier = Modifier.align(
                     Alignment.TopCenter),
                 fontWeight = FontWeight.Bold)
-
         }
     }
-
-
 }
 
 //

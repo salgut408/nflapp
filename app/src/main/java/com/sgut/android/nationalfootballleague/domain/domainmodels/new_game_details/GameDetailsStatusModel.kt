@@ -1,7 +1,8 @@
 package com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details
 
+import com.sgut.android.nationalfootballleague.InningPrefix
+
 data class GameDetailsStatusModel (
     val type: GameDetailsTypeModel? = GameDetailsTypeModel(),
-//    TODO MAke enum
-    val periodPrefix: String = ""
+    val periodPrefix: InningPrefix? = InningPrefix.PRE
 )

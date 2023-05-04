@@ -22,9 +22,13 @@ fun GameDetailsTopBar(
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
-) {
+
+
+    ) {
     CenterAlignedTopAppBar(
-        title = { Text(text = eventName, fontSize = 20.sp, fontWeight = FontWeight.Bold) },
+        title = {
+                Text(text = eventName, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                },
         navigationIcon = {
             if (canNavigateBack) {
                 IconButton(onClick = navigateUp) {

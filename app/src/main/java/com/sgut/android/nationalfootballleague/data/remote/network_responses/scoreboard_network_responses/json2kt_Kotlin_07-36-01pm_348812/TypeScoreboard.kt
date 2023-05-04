@@ -11,7 +11,7 @@ data class TypeScoreboard(
   @SerializedName("name")
   val name: String = "",
   @SerializedName("state")
-  val state: StatusState = StatusState.PRE,
+  val state: StatusState? = StatusState.PRE,
   @SerializedName("completed")
   val completed: Boolean = false,
   @SerializedName("description")

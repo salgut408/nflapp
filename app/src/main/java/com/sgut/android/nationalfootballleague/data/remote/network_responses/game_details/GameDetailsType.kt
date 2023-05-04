@@ -23,11 +23,7 @@ data class GameDetailsType(
   @SerializedName("abbreviation")
   val abbreviation: String = "",
   @SerializedName("state")
-  val state: StatusState = StatusState.PRE,
-
-
-
-
+  val state: StatusState? = StatusState.PRE,
 
 
   )

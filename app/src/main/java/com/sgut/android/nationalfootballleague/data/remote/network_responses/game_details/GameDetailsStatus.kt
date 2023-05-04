@@ -9,10 +9,23 @@ data class GameDetailsStatus(
   @SerializedName("type")
   val type: GameDetailsType? = GameDetailsType(),
   @SerializedName("periodPrefix")
-  val periodPrefix: String = "",
-
-
+  val periodPrefix: InningPrefix? =InningPrefix.PRE,
   )
+
+enum class InningPrefix {
+  @SerializedName("Mid")
+  MID,
+  @SerializedName("Top")
+  TOP,
+  @SerializedName("Pre")
+  PRE,
+  @SerializedName("Bottom")
+  BOTTOM,
+  @SerializedName("End")
+  END,
+  @SerializedName("Start")
+  START
+}
 
 fun GameDetailsStatus.asDomain(): GameDetailsStatusModel {
   return GameDetailsStatusModel(

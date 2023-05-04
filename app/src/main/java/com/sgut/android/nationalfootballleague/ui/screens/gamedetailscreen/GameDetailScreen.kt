@@ -76,17 +76,56 @@ fun GameDetailsScreen(
 
     SportScaffold(
         topBar = {
-            GameDetailsTopBar(eventName = eventName,
-                canNavigateBack = canNavigateBack,
-                navigateUp = navigateUp,
-                scrollBehavior = scrollBehavior)
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                GameDetailsTopBar(
+                    eventName = eventName,
+                    canNavigateBack = canNavigateBack,
+                    navigateUp = navigateUp,
+                    scrollBehavior = scrollBehavior,
+                )
+
+                Header2(
+                    modifier = modifier.background(Color.White),
+                    headerModel = gameDetailUiState.currentGameUiState?.header ?: HeaderModel(),
+                    middle = {
+                        when (gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.type?.statusState) {
+                            StatusState.PRE -> {
+                                Column() {
+                                    Text(
+                                        text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.date?.toDate()
+                                            ?.formatTo("K:mm aa") ?: "",
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                    Text(text = gameDetailUiState.currentGameUiState?.pickcenter?.first()?.details
+                                        ?: "")
+                                }
+                            }
+                            StatusState.IN -> {
+                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.type?.description
+                                    ?: "")
+                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.type?.shortGameTimeDetail
+                                    ?: "")
+
+                            }
+                            StatusState.POST -> {
+                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.type?.description
+                                    ?: "")
+
+                            }
+                            else -> Text(text = "")
+                        }
+                    },
+                )
+            }
+
+
         },
         content = { padding ->
 //            Box(modifier = Modifier.padding(padding)) {
             Column(
-               modifier = modifier
-                   .verticalScroll(rememberScrollState())
-                   .padding(padding),
+                modifier = modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(padding),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
@@ -94,17 +133,11 @@ fun GameDetailsScreen(
 
                 SpacerDp(modifier = modifier, height = EIGHT)
 
-                HeaderStatusSlot(
-                    modifier = modifier,
-                    gameDetailModel = gameDetailUiState.currentGameUiState ?: GameDetailsModel()
-                )
 
-//                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.competitors.toString())
+                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.periodPrefix?.name ?: "l")
+                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.id ?: "l")
 
-                Header2(
-                    modifier = modifier,
-                    headerModel = gameDetailUiState.currentGameUiState?.header ?: HeaderModel(),
-                )
+
 
                 SpacerDp(modifier = modifier, height = EIGHT)
 
@@ -197,11 +230,52 @@ fun GameDetailsScreen(
 
                 SpacerDp(modifier = modifier, height = EIGHT)
 
+                Header2(
+                    modifier = modifier,
+                    headerModel = gameDetailUiState.currentGameUiState?.header ?: HeaderModel(),
+                    middle = {
+                        when (gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.type?.statusState) {
+                            StatusState.PRE -> {
+                                Column() {
+                                    Text(
+                                        text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.date?.toDate()
+                                            ?.formatTo("K:mm aa") ?: "",
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                    Text(text = gameDetailUiState.currentGameUiState?.pickcenter?.first()?.details
+                                        ?: "")
+                                }
+                            }
+                            StatusState.IN -> {
+                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.type?.description
+                                    ?: "")
+
+                            }
+                            StatusState.POST -> {
+                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.type?.description
+                                    ?: "")
+
+                            }
+                        }
+                    },
+                )
+
+                SpacerDp(modifier = modifier, height = EIGHT)
+
+
                 TeamStatCard3(
                     modifier = modifier,
                     boxscore = gameDetailUiState.currentGameUiState?.boxscore
                         ?: BoxScoreModel()
                 )
+                SpacerDp(modifier = modifier, height = EIGHT)
+
+
+                HeaderStatusSlot(
+                    modifier = modifier,
+                    gameDetailModel = gameDetailUiState.currentGameUiState ?: GameDetailsModel()
+                )
+
             }
 //        }
 
@@ -835,17 +909,57 @@ fun PitcherMatchUp(competitor: GameDetailsCompetitorModel, modifier: Modifier) {
 }
 
 @Composable
-fun Header2(headerModel: HeaderModel, modifier: Modifier) {
+fun Header2(
+    headerModel: HeaderModel,
+    modifier: Modifier,
+    middle: @Composable () -> Unit,
 
-    Row {
-        headerModel.competitions.map { competition ->
-            competition.competitors.map {
-                CompetitorHeader(competitor = it)
+    ) {
+
+//    Text(text = headerModel.id)
+
+    DefaultCard(
+        modifier = modifier,
+    ) {
+
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = modifier.fillMaxWidth()
+        ) {
+            headerModel.competitions.map { competition ->
+                CompetitorHeader(competitor = competition.competitors.first())
+                Spacer(modifier = modifier.width(24.dp))
+                DetailCol(
+                    content = middle
+                )
+                Spacer(modifier = modifier.width(24.dp))
+                RightToLeftLayout { CompetitorHeader(competitor = competition.competitors.last()) }
             }
-            CompetitorHeader(competitor = competition.competitors.first())
         }
     }
 
+}
+
+@Composable
+fun DetailCol(
+    content: @Composable () -> Unit,
+
+    ) {
+    Column(
+
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+//        Text(
+//            text = competition.date.toDate()?.formatTo("K:mm aa") ?: "",
+//
+//            )
+        content()
+
+
+    }
 }
 
 @Composable
@@ -994,7 +1108,8 @@ fun InjuryColumn(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(start = 8.dp, end = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 AthleteNameAndPosition(athlete = it.athlete, modifier = modifier)
                 Text(text = it.status, textAlign = TextAlign.Right)
@@ -1006,7 +1121,7 @@ fun InjuryColumn(
 
 @Composable
 fun AthleteNameAndPosition(athlete: GameDetailsAthleteDetailsModel, modifier: Modifier) {
-    Row() {
+    Row(verticalAlignment = Alignment.CenterVertically) {
         GenericImageLoader(obj = athlete.headshot?.href ?: "", modifier = modifier.size(40.dp))
         Spacer(modifier = Modifier.width(16.dp))
 
@@ -1047,7 +1162,7 @@ fun BaseballSituation(
         Divider()
 
         if (
-            competition.status?.periodPrefix.equals("End")) {
+            competition.status?.periodPrefix == InningPrefix.END) {
             Text(text = "Due up", fontWeight = FontWeight.Bold)
 
             gameDetailSituation.dueUp.map {
@@ -1184,7 +1299,7 @@ fun InningText(competition: GameDetailsCompetitionModel) {
     Text(text = competition.status?.type?.gameTimeDetail ?: "",
         style = MaterialTheme.typography.bodyMedium)
     NormalDivider()
-    Text(text = competition.status?.periodPrefix ?: "")
+    Text(text = competition.status?.periodPrefix?.name ?: "")
 
 }
 
@@ -1559,63 +1674,61 @@ fun FindTickets(
         Text(text = "")
     } else {
 
-        Card(
-            modifier = modifier
-                .fillMaxWidth()
-                .background(Color.LightGray),
+        DefaultCard(
+            modifier = modifier,
 
-            ) {
+            content = {
+                CardHeaderText(text = "Find Tickets")
 
-            CardHeaderText(text = "Find Tickets")
+                NormalDivider()
 
-
-            NormalDivider()
-
-            Row(
-                modifier = modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Text(
-                    text = "$team1 vs $team2",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
-            Row(
-                modifier = modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Text(
-                    text = "$venueName - $dateDay $shortDate",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = Color.Gray
-                )
-            }
-            Row(
-                modifier = modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Text(
-                    text = ticketsInfo.seatSituation?.summary ?: "",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = Color.Blue
-                )
-            }
-            NormalDivider()
-            Row(
-                modifier = modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Text(
-                    text = "Buy $team2 tickets with VividSeats",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Normal,
-                    color = Color.Blue
-                )
-            }
-            NormalDivider()
-            // dropdowm
-            DropDownFun(dropDownOptions)
-        }
+                Row(
+                ) {
+                    Text(
+                        text = "$team1 vs $team2",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Center
+                    )
+                }
+                Row(
+                ) {
+                    Text(
+                        text = "$venueName - $dateDay $shortDate",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal,
+                        letterSpacing = 2.sp,
+                        color = Color.Gray
+                    )
+                }
+                Row(
+//                modifier = modifier.align(Alignment.CenterHorizontally)
+                ) {
+                    Text(
+                        text = ticketsInfo.seatSituation?.summary ?: "",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Blue
+                    )
+                }
+                NormalDivider()
+                Row(
+//                modifier = modifier.align(Alignment.CenterHorizontally)
+                ) {
+                    Text(
+                        text = "Buy $team2 tickets with VividSeats",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Blue
+                    )
+                }
+                NormalDivider()
+                // dropdowm
+                DropDownFun(dropDownOptions)
+            })
     }
+
+
 }
 
 @Composable
