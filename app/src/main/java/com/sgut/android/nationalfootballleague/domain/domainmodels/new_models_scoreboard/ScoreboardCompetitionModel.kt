@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard
 
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.SituationScoreboard
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.StatusDomainModel
 
 data class ScoreboardCompetitionModel(
@@ -14,6 +15,7 @@ data class ScoreboardCompetitionModel(
     val details: List<ScoreboardDetailsModel> = listOf(),
     val headlines: List<ScoreboardHeadlineModel> = listOf(), // move to own obj
     val venue: ScoreboardVenueModel = ScoreboardVenueModel(),
+    val situation: SituationScoreboard = SituationScoreboard()
 ) {
     //return home Team
 

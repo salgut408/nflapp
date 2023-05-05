@@ -28,6 +28,30 @@ data class Situation(
     val onThird: OnThird? = OnThird(),
 )
 
+data class SituationScoreboard(
+
+    @SerializedName("lastPlay")
+    val lastPlay: LastPlay? = LastPlay(),
+    @SerializedName("balls")
+    val balls: Int? = null,
+    @SerializedName("strikes")
+    val strikes: Int? = null,
+    @SerializedName("outs")
+    val outs: Int? = null,
+    @SerializedName("pitcher")
+    val pitcher: Pitcher? = Pitcher(),
+    @SerializedName("batter")
+    val batter: Batter? = Batter(),
+    @SerializedName("dueUp")
+    val dueUp: List<DueUpItem> = listOf(),
+    @SerializedName("onSecond")
+    val onSecond: Boolean? = false,
+    @SerializedName("onFirst")
+    val onFirst: Boolean = false,
+    @SerializedName("onThird")
+    val onThird: Boolean? = false,
+)
+
 data class OnThird(
     val playerId: Int? = null,
 

@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.SituationScoreboard
 import com.sgut.android.nationalfootballleague.di.TopAppBarWithLogo
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.*
@@ -493,8 +494,13 @@ fun NewEventMatchup(
             )
         }) {
             Column() {
-//                Text(text = event.competitions.first().competitors.first().leaders.toString())
-                                Text(text = event.competitions.first().id.toString())
+                Text(text = event.competitions.first().id.toString())
+                if (sport.equals("baseball") && event.status.type?.state == StatusState.IN) {
+                    CompetitionSituation(
+                        event.competitions.first().situation,
+                        modifier = modifier
+                    )
+                }
                 CompetitorRow(
                     competitor = event.competitions.first().competitors.last(),
                     modifier = modifier,
@@ -505,6 +511,7 @@ fun NewEventMatchup(
                             else event.competitions.first().competitors.last().score)
                     }
                 )
+
 
                 CompetitorRow(
                     competitor = event.competitions.first().competitors.first(),
@@ -518,11 +525,21 @@ fun NewEventMatchup(
                 )
             }
             Text(text = event.competitions.first().status?.type?.shortDetail ?: "",
-                modifier = Modifier.align(
+                modifier = modifier.align(
                     Alignment.TopCenter),
                 fontWeight = FontWeight.Bold)
+
+
         }
     }
+}
+
+
+@Composable
+fun CompetitionSituation(situation: SituationScoreboard, modifier: Modifier) {
+
+    Text(text = "Balls: ${situation.balls.toString()} Strikes: ${situation.strikes.toString()} Outs: ${situation.outs.toString()}")
+
 }
 
 //
