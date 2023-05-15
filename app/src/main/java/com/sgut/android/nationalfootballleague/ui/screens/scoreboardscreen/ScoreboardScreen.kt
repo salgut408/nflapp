@@ -464,6 +464,8 @@ fun NewEventMatchup(
             )
         }) {
             Column() {
+                // leaders
+//                Text(text = event.competitions.first().competitors.first().leaders.toString())
                 Text(text = event.competitions.first().id.toString())
                 if (sport.equals("baseball") && event.status.type?.state == StatusState.IN) {
                     CompetitionSituation(

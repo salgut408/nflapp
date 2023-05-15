@@ -35,15 +35,13 @@ class GameDetailViewModel @Inject constructor(
     private val _map = MutableStateFlow(mapOf<String, GameDetailsAthleteDetailsModel> ())
     val map: StateFlow<Map<String, GameDetailsAthleteDetailsModel>> = _map.asStateFlow()
 
-    // should be done in vm ?
-    private var teamMap: Map<String, GameDetailsAthleteDetailsModel> = mapOf()
 
 
     init {
     }
 
     fun getPlayerFromId(id: String): GameDetailsAthleteDetailsModel {
-        return teamMap[id] ?: GameDetailsAthleteDetailsModel()
+        return map.value[id] ?: GameDetailsAthleteDetailsModel()
     }
 
     fun loadGameDetails(
@@ -61,7 +59,6 @@ class GameDetailViewModel @Inject constructor(
                 newGameDeetUiState.boxscore?.teams?.last()?.team?.abbreviation ?: "",
             )
 
-            teamMap = playersMap(sport, league, teams)
 
             _map.update {
                 it + playersMap(sport, league, teams)

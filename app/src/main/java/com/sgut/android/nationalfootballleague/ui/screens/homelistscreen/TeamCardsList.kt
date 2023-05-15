@@ -388,7 +388,7 @@ fun TeamItem(
                     shape = RoundedCornerShape(8.dp)
                 )
                 Text(
-                    text = team.displayName,
+                    text = team.shortDisplayName,
                     style = MaterialTheme.typography.labelSmall,
                     modifier = modifier.padding(top = 8.dp)
                 )
