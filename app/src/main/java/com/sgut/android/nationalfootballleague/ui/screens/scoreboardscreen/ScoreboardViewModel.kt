@@ -34,31 +34,24 @@ class ScoreboardViewModel @Inject constructor(
     init {
     }
 
-//    fun getCompetitionHomeTeam(): ScoreboardCompetitorsModel {
-//        return scoreboardModelState.value.scoreboardModelUiState.events.
-//    }
-
 
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
         try {
-
             if (league.equals(NCAA_BASKETBALL)) {
-
                 val news = getArticles(sport, league)
                 val currentScoreboardModelUiState = scoreboardRepository.getCollegeBasketballScoreboard(sport, league, "200")
-
                 setScoreboardUiState(
                     sport, league,
                     currentScoreboardModelUiState, news,
                 )
             } else {
-
                 val news = getArticles(sport, league)
                 val currentScoreboardModelUiState = getScores(sport, league)
 
                 setScoreboardUiState(
                     sport, league,
-                    currentScoreboardModelUiState, news)
+                    currentScoreboardModelUiState,
+                    news)
             }
         } catch (e: Exception) {
             Log.i("DEBUG-rc vm", e.stackTraceToString())

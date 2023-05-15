@@ -49,14 +49,10 @@ fun ScoreboardScreen(
 
     scoreboardViewModel.loadGenericScoreboard(sport, league)
 
-//    val scoreboardUiState by scoreboardViewModel.scoreboardUiState.collectAsState()
-
 
     val newUiState by scoreboardViewModel.scoreboardModelState.collectAsState()
     val news = newUiState.currentArticles
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-
-
     val sport = newUiState.currentSport
     val league = newUiState.currentLeague
 
@@ -84,6 +80,9 @@ fun ScoreboardScreen(
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Center
             ) {
+                Button(onClick = { }) {
+                    Text(text = "MLB")
+                }
 
                 Scoreboard(
                     events = newUiState.scoreboardModelUiState.events,
@@ -93,13 +92,6 @@ fun ScoreboardScreen(
                     navController = navController
                 )
 
-//                TeamsMatchUpListFromEvents(
-//                    newUiState.scoreboardModelUiState.events,
-//                    modifier,
-//                    sport,
-//                    league,
-//                    navController
-//                )
 
                 Spacer(modifier = modifier.height(16.dp))
 
@@ -146,11 +138,6 @@ fun Scoreboard(
             )
             NormalDivider()
 
-//            event.competitions.map {  competition ->
-//             CompColumn(competitors = competition.competitors)
-//                Text(text = event.status.type?.state.toString())
-//                Text(text = event.status.type?.description.toString())
-            //            }
         }
     }
 }
@@ -164,14 +151,10 @@ fun TeamsMatchUpListFromEvents(
     league: String,
     navController: NavController,
 ) {
-
     DefaultCard(modifier = modifier) {
         CardHeaderText(text = "Scores")
         events.map { event ->
-
             event.competitions.map { competition ->
-
-
                 TeamComponent2(
                     compScoreboard = competition,
                     modifier = modifier,
@@ -179,13 +162,9 @@ fun TeamsMatchUpListFromEvents(
                     sport = sport,
                     league = league,
                 )
-
             }
-
         }
     }
-
-
 }
 
 
@@ -194,15 +173,6 @@ fun Record(record: ScoreboardRecordModel) {
     Row() {
         Text(text = record.name)
     }
-}
-
-
-@Composable
-fun EventName(event: ScoreboardEventModel) {
-    Text(
-        event.shortName,
-        style = MaterialTheme.typography.headlineMedium
-    )
 }
 
 

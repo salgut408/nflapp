@@ -395,6 +395,7 @@ fun ExpandableGameArticle(
             ) { showMore = !showMore }) {
 
 
+
             if (gameDetailModel.singleGameArticle?.story?.isEmpty() == true) {
                 Text(text = "")
             } else {
@@ -1808,9 +1809,12 @@ fun TabsLastFiveGames(
 
     DefaultCard(modifier = modifier) {
 
-        TabRow(selectedTabIndex = tabIndex) {
+        TabRow(
+            selectedTabIndex = tabIndex,
+        ) {
             tabTitles.forEachIndexed { index, team ->
                 Tab(
+                    modifier = Modifier.background(Color.LightGray),
                     selected = tabIndex == index,
                     onClick = { tabIndex = index },
                     text = {
@@ -1818,9 +1822,10 @@ fun TabsLastFiveGames(
                             Row(horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-
-                                GenericImageLoader(obj = team?.logo.toString(),
-                                    modifier = modifier.size(30.dp))
+                                GenericImageLoader(
+                                    obj = team?.logo.toString(),
+                                    modifier = modifier.size(30.dp)
+                                )
                                 Spacer(modifier = modifier.width(8.dp))
                                 Text(text = team?.abbreviation ?: "")
 
@@ -1843,7 +1848,7 @@ fun TabsLastFiveGames(
 @Composable
 fun LastFiveGameRow(lastEvents: GameDetailsEventModel) {
     Row(
-        modifier = Modifier.fillMaxWidth(1f),
+        modifier = Modifier.fillMaxWidth(1f).background(Color.LightGray),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -1883,29 +1888,24 @@ fun LastFiveGames2(
     teamInt: Int,
 ) {
     val team1Info = lastFiveGames.getOrNull(teamInt)
-    val team2Info = lastFiveGames.getOrNull(1)
 
     if (lastFiveGames.isEmpty()) {
         Text(text = "")
     } else {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-        ) {
+
             CardHeaderText(text = "Last Five Games")
             NormalDivider()
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().background(Color.LightGray)
             ) {
                 Text(text = "DATE")
                 Text(text = "OPP")
                 Text(text = "RESULT")
             }
             team1Info?.lastEvents?.map { LastFiveGameRow(lastEvents = it) }
-        }
+
     }
 
 

@@ -30,6 +30,30 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.standings_screen.Standings
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.ATP
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASEBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASKETBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.CHAMPIONS
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.EPL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FIFA
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FRA
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.HOCKEY
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.LA_LIGA
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.MLB
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.MLS
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NBA
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASEBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASKETBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_FOOTBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NFL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NHL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.SOCCER
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.TENNIS
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.UEFA
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.WBC
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.WNBA
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.XFL
 import com.sgut.android.nationalfootballleague.utils.basicButton
 import com.sgut.android.nationalfootballleague.R.string as AppText
 
@@ -79,35 +103,42 @@ fun HomeTeamCardsListScreen(
                 ) {
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setBaseballTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(BASEBALL, MLB) }) {
                             Text(stringResource(R.string.MLB_league),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setCollegeBasketballTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(BASKETBALL, NCAA_BASKETBALL) }) {
                             Text(stringResource(R.string.NCAA_mens_basketball),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setFrenchTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(BASEBALL, MLB) }) {
+                            Text(text = " WILLd",
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(SOCCER, FRA) }) {
                             Text(stringResource(R.string.fra),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setCollegeBasketballTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(TENNIS, ATP) }) {
                             Text(stringResource(R.string.atp),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setCollegeBasketballTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(BASKETBALL, NCAA_BASKETBALL) }) {
                             Text(stringResource(R.string.NCAA_mens_basketball),
                                 style = MaterialTheme.typography.labelSmall)
                         }
@@ -116,7 +147,7 @@ fun HomeTeamCardsListScreen(
                     item {
                         OutlinedButton(
                             onClick = {
-                                homeListViewModel.setFootballTeams()
+                                homeListViewModel.setDifferentTeams(FOOTBALL, NFL)
                             }
                         ) {
                             Text(text = stringResource(R.string.NFL_League),
@@ -124,14 +155,14 @@ fun HomeTeamCardsListScreen(
                         }
                     }
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setHockeyTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(HOCKEY, NHL) }) {
                             Text(stringResource(R.string.NHL_league),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setWbc() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(BASEBALL, WBC) }) {
                             Text(stringResource(R.string.WBC_league),
                                 style = MaterialTheme.typography.labelSmall)
                         }
@@ -140,75 +171,77 @@ fun HomeTeamCardsListScreen(
 
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setBasketballTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(BASKETBALL, NBA) }) {
                             Text(stringResource(R.string.NBA_league),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setWnbaTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(BASKETBALL, WNBA) }) {
                             Text(stringResource(R.string.WNBA_league),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setChampionsTeam() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(SOCCER, CHAMPIONS)}) {
                             Text(stringResource(R.string.champions),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setCollegeTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(FOOTBALL, NCAA_FOOTBALL) }) {
                             Text(stringResource(R.string.NCAA_football),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setCollegeBaseballTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(BASEBALL, NCAA_BASEBALL) }) {
                             Text(stringResource(R.string.NCAA_baseball),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setMlsTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(SOCCER, MLS) }) {
                             Text(stringResource(R.string.MLS_league),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setWorldCupTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(SOCCER, FIFA) }) {
                             Text(stringResource(R.string.world_cup),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setLaLigaTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(SOCCER, LA_LIGA) }) {
                             Text(stringResource(R.string.la_liga),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
 
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setEnglishTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(SOCCER, EPL) }) {
                             Text(stringResource(R.string.premier_league),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setEuroTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(SOCCER,
+                            UEFA) }) {
                             Text(stringResource(R.string.euro_soccer),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
                     item {
-                        OutlinedButton(onClick = { homeListViewModel.setXflTeams() }) {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(FOOTBALL,
+                            XFL) }) {
                             Text(stringResource(R.string.XFL_League),
                                 style = MaterialTheme.typography.labelSmall)
                         }
