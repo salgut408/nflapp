@@ -10,7 +10,7 @@ data class ListUiState(
     val currentSport: String = "",
     val currentLeague: String = "",
     val fullTeamInfo: FullTeamsListsModel? = null,
-    val currentNews: ArticlesListModel? = null,
+    val currentNews: ArticlesListModel = ArticlesListModel(),
     val sportModel: SportModel? = null
 //    val loading: Boolean = true
     )

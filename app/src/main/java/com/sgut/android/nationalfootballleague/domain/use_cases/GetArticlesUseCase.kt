@@ -9,7 +9,8 @@ import javax.inject.Inject
 
 open class GetArticlesUseCase @Inject constructor(
     private val articleRepository: ArticleRepository,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
+
 
 ) {
     suspend operator fun invoke(sport: String, league: String): ArticlesListModel =

@@ -4,7 +4,7 @@ import com.sgut.android.nationalfootballleague.ArticleLinks
 
 data class ArticleDomianModel(
     val images: List<ArticleImageModel> = listOf(), // needs model
-    val description: String = "",
+    val description: String? = "",
     val published: String = "",
     val headline: String = "",
     val byline: String? = "",

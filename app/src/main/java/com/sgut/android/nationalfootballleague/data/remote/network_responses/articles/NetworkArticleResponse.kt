@@ -15,6 +15,5 @@ fun NetworkArticleResponse.asDomain(): ArticlesListModel {
   return ArticlesListModel(
     header = header,
     articles = articles.map { it.asDomain() }
-
   )
 }

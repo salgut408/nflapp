@@ -11,7 +11,7 @@ data class Articles(
     @SerializedName("images")
     val images: List<ArticleImages> = listOf(),
     @SerializedName("description")
-    val description: String = "",
+    val description: String? = "",
     @SerializedName("published")
     val published: String = "",
     @SerializedName("type")
@@ -31,7 +31,7 @@ data class Articles(
 
 fun Articles.asDomain(): ArticleDomianModel {
     return ArticleDomianModel(
-      images = images.map{ it.asDomain() },
+      images = images.map { it.asDomain() },
       description = description,
       published = published,
       headline = headline,
