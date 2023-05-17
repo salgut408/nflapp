@@ -3,13 +3,13 @@ package com.sgut.android.nationalfootballleague.data.repository
 import android.util.Log
 import com.sgut.android.nationalfootballleague.asDomain
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
-import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
+import com.sgut.android.nationalfootballleague.data.remote.api.SportsApi
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import javax.inject.Inject
 
 class ScoreboardRepositoryImpl @Inject constructor(
-    val espnApi: EspnApi,
+    val sportsApi: SportsApi,
     val sportsDataBase: SportsDataBase,
 ) : ScoreboardRepository {
 
@@ -20,13 +20,13 @@ class ScoreboardRepositoryImpl @Inject constructor(
         sport: String,
         league: String,
     ): ScoreboardModel {
-        val response = espnApi.getGeneralScoreboard(sport, league)
+        val response = sportsApi.getGeneralScoreboard(sport, league)
         if (response.isSuccessful) {
             return response.body()?.asDomain()!!
         } else {
             Log.e("scrbrdRepGen-FAIL", response.errorBody().toString())
         }
-        val result = espnApi.getGeneralScoreboard(sport, league)
+        val result = sportsApi.getGeneralScoreboard(sport, league)
         return result.body()?.asDomain()!!
     }
 
@@ -35,13 +35,13 @@ class ScoreboardRepositoryImpl @Inject constructor(
         league: String,
         limit: String,
     ): ScoreboardModel {
-        val response = espnApi.getCollegeBasketballScoreboard(sport, league, limit)
+        val response = sportsApi.getCollegeBasketballScoreboard(sport, league, limit)
         if (response.isSuccessful) {
             return response.body()?.asDomain()!!
         } else {
             Log.e("scrbrdRepmarch-FAIL", response.errorBody().toString())
         }
-        val result = espnApi.getCollegeBasketballScoreboard(sport, league, limit)
+        val result = sportsApi.getCollegeBasketballScoreboard(sport, league, limit)
         return result.body()?.asDomain()!!
     }
 
@@ -50,14 +50,14 @@ class ScoreboardRepositoryImpl @Inject constructor(
         league: String,
         date: String,
     ): ScoreboardModel {
-        val result = espnApi.getGeneralScoreboardWithDate(sport, league, date)
+        val result = sportsApi.getGeneralScoreboardWithDate(sport, league, date)
         if (result.isSuccessful){
             return result.body()?.asDomain()!!
         } else {
             Log.e("scrbrdRepGen-FAIL", result.errorBody().toString())
 
         }
-        val response = espnApi.getGeneralScoreboardWithDate(sport, league, date)
+        val response = sportsApi.getGeneralScoreboardWithDate(sport, league, date)
         return response.body()?.asDomain()!!
 
     }

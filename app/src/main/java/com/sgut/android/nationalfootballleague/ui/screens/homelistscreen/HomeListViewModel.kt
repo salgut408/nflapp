@@ -7,7 +7,6 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.A
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.FullTeamsListsModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.SportModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.TeamModel
-import com.sgut.android.nationalfootballleague.domain.repositories.ArticleRepository
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamsListsRepository
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
@@ -24,7 +23,6 @@ import javax.inject.Inject
 class HomeListViewModel @Inject constructor(
     private val fullTeamsListRepository: TeamsListsRepository,
     private val getArticles: GetArticlesUseCase,
-    private val articleRepository: ArticleRepository,
 ) : ViewModel() {
 
     private val _listUiState = MutableStateFlow(ListUiState())

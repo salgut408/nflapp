@@ -10,7 +10,7 @@ import com.google.firebase.ktx.Firebase
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.db.article.ArticleDao
 import com.sgut.android.nationalfootballleague.data.db.team.TeamsDao
-import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
+import com.sgut.android.nationalfootballleague.data.remote.api.SportsApi
 import com.sgut.android.nationalfootballleague.data.repository.*
 import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.data.service.LogService
@@ -61,48 +61,48 @@ object AppModule {
 
     @Provides
     fun provideEspnRepository(
-        espnApi: EspnApi,
+        sportsApi: SportsApi,
         sportsDataBase: SportsDataBase
-    ): EspnRepository = EspnRepositoryImpl(espnApi, sportsDataBase,)
+    ): EspnRepository = EspnRepositoryImpl(sportsApi, sportsDataBase,)
 
 
     @Provides
      fun provideTeamsListRepository(
-        espnApi: EspnApi,
+        sportsApi: SportsApi,
         sportsDataBase: SportsDataBase,
-    ): TeamsListsRepository = TeamsListRepositoryImpl(espnApi, sportsDataBase)
+    ): TeamsListsRepository = TeamsListRepositoryImpl(sportsApi, sportsDataBase)
 
     @Provides
     fun provideStandingsRepository(
-        espnApi: EspnApi,
+        sportsApi: SportsApi,
         sportsDataBase: SportsDataBase,
-    ): StandingsRepository = StandingsRepositoryImpl(espnApi, sportsDataBase)
+    ): StandingsRepository = StandingsRepositoryImpl(sportsApi, sportsDataBase)
 
 
     @Provides
     fun provideTeamsDetailRepository(
-        espnApi: EspnApi,
+        sportsApi: SportsApi,
         sportsDataBase: SportsDataBase
-    ): TeamDetailsRepository = TeamDetailsRepositoryImpl(espnApi, sportsDataBase)
+    ): TeamDetailsRepository = TeamDetailsRepositoryImpl(sportsApi, sportsDataBase)
 
     @Provides
     fun provideGameDetailsRepository(
-        espnApi: EspnApi,
+        sportsApi: SportsApi,
         sportsDataBase: SportsDataBase
-    ): GameDetailsRepository = GameDetailsRepositoryImpl(espnApi, sportsDataBase)
+    ): GameDetailsRepository = GameDetailsRepositoryImpl(sportsApi, sportsDataBase)
 
 
     @Provides
     fun provideScoreboardRepository(
-        espnApi: EspnApi,
+        sportsApi: SportsApi,
         sportsDataBase: SportsDataBase
-    ): ScoreboardRepository = ScoreboardRepositoryImpl(espnApi, sportsDataBase)
+    ): ScoreboardRepository = ScoreboardRepositoryImpl(sportsApi, sportsDataBase)
 
     @Provides
     fun provideArticleRepository(
-        espnApi: EspnApi,
+        sportsApi: SportsApi,
         sportsDataBase: SportsDataBase,
-    ): ArticleRepository = ArticleRepositoryImpl(espnApi, sportsDataBase)
+    ): ArticleRepository = ArticleRepositoryImpl(sportsApi, sportsDataBase)
 
 
     @Provides
@@ -132,13 +132,13 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideEspnApi(okHttpClient: OkHttpClient): EspnApi =
+    fun provideEspnApi(okHttpClient: OkHttpClient): SportsApi =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(EspnApi::class.java)
+            .create(SportsApi::class.java)
 
 
     //Firebase things
