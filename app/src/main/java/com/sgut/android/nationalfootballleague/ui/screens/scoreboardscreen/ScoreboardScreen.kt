@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -9,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -17,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.R
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.SituationScoreboard
 import com.sgut.android.nationalfootballleague.di.TopAppBarWithLogo
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
@@ -32,6 +35,8 @@ import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.NewsRow
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.*
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.XFL
 import java.util.*
 
 
@@ -52,6 +57,7 @@ fun ScoreboardScreen(
 
     val newUiState by scoreboardViewModel.scoreboardModelState.collectAsState()
     val news = newUiState.currentArticles
+//    val fuckUiState by remember { scoreboardViewModel.scoreboardModelState }.collectAsState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val sport = newUiState.currentSport
     val league = newUiState.currentLeague
@@ -80,8 +86,158 @@ fun ScoreboardScreen(
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Center
             ) {
-                Button(onClick = { }) {
-                    Text(text = "MLB")
+
+
+
+
+                LazyRow(
+                    contentPadding = PaddingValues(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.BASEBALL, Constants.MLB) }) {
+                            Text(stringResource(R.string.MLB_league),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.BASKETBALL, Constants.NCAA_BASKETBALL) }) {
+                            Text(stringResource(R.string.NCAA_mens_basketball),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.BASEBALL, Constants.MLB) }) {
+                            Text(text = " WILLd",
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.SOCCER, Constants.FRA) }) {
+                            Text(stringResource(R.string.fra),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.TENNIS, Constants.ATP) }) {
+                            Text(stringResource(R.string.atp),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.BASKETBALL, Constants.NCAA_BASKETBALL) }) {
+                            Text(stringResource(R.string.NCAA_mens_basketball),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(
+                            onClick = {
+                                scoreboardViewModel.loadGenericScoreboard(Constants.FOOTBALL, Constants.NFL)
+                            }
+                        ) {
+                            Text(text = stringResource(R.string.NFL_League),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+                    item {
+                        OutlinedButton(onClick = {scoreboardViewModel.loadGenericScoreboard(Constants.HOCKEY, Constants.NHL) }) {
+                            Text(stringResource(R.string.NHL_league),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.BASEBALL, Constants.WBC) }) {
+                            Text(stringResource(R.string.WBC_league),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+
+
+                    item {
+                        OutlinedButton(onClick = {scoreboardViewModel.loadGenericScoreboard(Constants.BASKETBALL, Constants.NBA) }) {
+                            Text(stringResource(R.string.NBA_league),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.BASKETBALL, Constants.WNBA) }) {
+                            Text(stringResource(R.string.WNBA_league),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.SOCCER, Constants.CHAMPIONS)}) {
+                            Text(stringResource(R.string.champions),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = {scoreboardViewModel.loadGenericScoreboard(Constants.FOOTBALL, Constants.NCAA_FOOTBALL) }) {
+                            Text(stringResource(R.string.NCAA_football),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.BASEBALL, Constants.NCAA_BASEBALL) }) {
+                            Text(stringResource(R.string.NCAA_baseball),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.SOCCER, Constants.MLS) }) {
+                            Text(stringResource(R.string.MLS_league),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.SOCCER, Constants.FIFA) }) {
+                            Text(stringResource(R.string.world_cup),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.SOCCER, Constants.LA_LIGA) }) {
+                            Text(stringResource(R.string.la_liga),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.SOCCER, Constants.EPL) }) {
+                            Text(stringResource(R.string.premier_league),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(Constants.SOCCER,
+                            Constants.UEFA) }) {
+                            Text(stringResource(R.string.euro_soccer),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+                    item {
+                        OutlinedButton(onClick = { scoreboardViewModel.loadGenericScoreboard(FOOTBALL, XFL)  }) {
+                            Text(stringResource(R.string.XFL_League),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
                 }
 
                 Scoreboard(
@@ -514,22 +670,5 @@ fun CompetitionSituation(situation: SituationScoreboard, modifier: Modifier) {
 
 }
 
-//
-//@Composable
-//fun CompetitorRow(event: EventScoreboard, modifier: Modifier) {
-//    Row(modifier = modifier) {
-//        BasicImage(
-//            imgUrl = event.competitions.first().competitors .team.logo,
-//            contentDescription = competitor.team.name,
-//            elevation = 0.dp,
-//            backgroundColor = Color.Transparent,
-//            borderWidth = 0.dp,
-//            borderColor = Color.Transparent,
-//            shape = MaterialTheme.shapes.extraSmall
-//        )
-//        Spacer(modifier = modifier.width(8.dp))
-//        Text(text = competitor.team.displayName)
-//    }
-//}
 
 

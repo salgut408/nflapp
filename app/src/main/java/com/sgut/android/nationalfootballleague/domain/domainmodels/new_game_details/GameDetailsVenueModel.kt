@@ -6,7 +6,7 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_sc
 data class GameDetailsVenueModel(
     val id: String = "",
     val fullName: String = "",
-    val address: AddressModel? = AddressModel(),
+    val address: AddressModel = AddressModel(),
     val capacity: Int = 0,
     val grass: Boolean = false,
     val images: List<GameDetailsImages> = listOf(),

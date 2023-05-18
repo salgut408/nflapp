@@ -58,13 +58,7 @@ object AppModule {
             "sports_db"
         ).fallbackToDestructiveMigration()
             .build()
-
-    @Provides
-    fun provideEspnRepository(
-        sportsApi: SportsApi,
-        sportsDataBase: SportsDataBase
-    ): EspnRepository = EspnRepositoryImpl(sportsApi, sportsDataBase,)
-
+    
 
     @Provides
      fun provideTeamsListRepository(

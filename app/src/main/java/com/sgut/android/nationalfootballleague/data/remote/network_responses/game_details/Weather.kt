@@ -7,28 +7,28 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_deta
 data class Weather(
 
   @SerializedName("temperature")
-  val temperature: String? = null,
+  val temperature: String = "",
   @SerializedName("highTemperature")
-  val highTemperature: Int? = null,
+  val highTemperature: Int = 0,
   @SerializedName("lowTemperature")
-  val lowTemperature: Int? = null,
+  val lowTemperature: Int = 0,
   @SerializedName("conditionId")
-  val conditionId: String? = null,
+  val conditionId: String = "",
   @SerializedName("gust")
-  val gust: Int? = null,
+  val gust: Int = 0,
   @SerializedName("precipitation")
-  val precipitation: Int? = null,
+  val precipitation: Int = 0,
   @SerializedName("link")
   val link: GameDetailsLink? = GameDetailsLink(),
 
   )
 fun Weather.asDomain(): WeatherModel {
   return WeatherModel(
-    temperature = temperature ?: "",
-    highTemperature = highTemperature ?: 0,
-    lowTemperature = lowTemperature ?: 0,
+    temperature = temperature,
+    highTemperature = highTemperature,
+    lowTemperature = lowTemperature,
     conditionId = conditionId ?: "",
-    gust = gust ?: 0,
+    gust = gust,
     precipitation = precipitation ?: 0
   )
 }

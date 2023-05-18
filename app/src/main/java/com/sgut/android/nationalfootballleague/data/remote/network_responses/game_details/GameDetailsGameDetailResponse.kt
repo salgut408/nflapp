@@ -22,7 +22,7 @@ data class GameDetailResponse(
     @SerializedName("format")
     val format: GameDetailsFormat? = GameDetailsFormat(),
     @SerializedName("gameInfo")
-    val gameInfo: GameInfo? = GameInfo(),
+    val gameInfo: GameInfo = GameInfo(),
     @SerializedName("lastFiveGames")
     val lastFiveGames: List<LastFiveGames> = listOf(),
     @SerializedName("leaders")
@@ -69,7 +69,7 @@ fun GameDetailResponse.asDomain(): GameDetailsModel {
         baseballSituation = situation?.asDomain(),
         boxscore = boxscore?.asDomain(),
         format = format?.asDomain(),
-        gameInfo = gameInfo?.asDomain(),
+        gameInfo = gameInfo.asDomain(),
         lastFiveGames = lastFiveGames.map { it.asDomain() },
         leaders = leaders.map { it.asDomain() },
         injuries = injuries.map { it.asDomain() },

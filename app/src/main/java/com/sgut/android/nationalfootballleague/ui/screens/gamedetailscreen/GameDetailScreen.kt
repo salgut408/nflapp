@@ -125,7 +125,6 @@ fun GameDetailsScreen(
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
 
-
                 SpacerDp(modifier = modifier, height = EIGHT)
                 Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.periodPrefix?.name ?: "l")
                 Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.id ?: "l")
@@ -159,6 +158,11 @@ fun GameDetailsScreen(
                     modifier = modifier,
                     header = gameDetailUiState.currentGameUiState ?: GameDetailsModel()
                 )
+                SpacerDp(modifier = modifier, height = EIGHT)
+
+                BoxScoreTeamStats(modifier = modifier, boxscore = gameDetailUiState.currentGameUiState?.boxscore ?: BoxScoreModel())
+
+                SpacerDp(modifier = modifier, height = EIGHT)
 
                 PickCenterList(modifier = Modifier, list = gameDetailUiState.currentGameUiState?.pickcenter ?: listOf())
 
@@ -190,6 +194,8 @@ fun GameDetailsScreen(
                     modifier = modifier,
                     lastFiveGames = gameDetailUiState.currentGameUiState?.lastFiveGames ?: listOf()
                 )
+                SpacerDp(modifier = modifier, height = EIGHT)
+
 
                 TabsSeasonLeaders(modifier = modifier, leaders = gameDetailUiState.currentGameUiState?.leaders ?: listOf())
 
@@ -722,11 +728,59 @@ fun Leads(
         Text(text = "")
     } else {
         leaders.map {
-            Text(text = it.displayName)
-            Text(text = it.leadersAthlete.first().athlete.displayName )
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = it.displayName)
+                Text(text = it.leadersAthlete.first().athlete.displayName )
+
+            }
+
 
         }
     }
+
+}
+
+
+@Composable
+fun BoxScoreTeamStats(boxscore: BoxScoreModel, modifier: Modifier) {
+    DefaultCard(modifier = modifier) {
+        CardHeaderText(text = "TeamStats")
+        boxscore.statistics.map { stats ->
+            Text(text = boxscore.toString())
+        }
+
+
+
+
+
+    }
+
+}
+
+@Composable
+fun Stat1(statistic: BoxscorePlayerStatisticModel, modifier: Modifier) {
+    DefaultCard(modifier = modifier) {
+
+        Text(text = statistic.athletes.first().athlete?.shortName ?: "")
+
+        Row() {
+            Column() {
+                statistic.descriptions.map { Text(text = it) }
+            }
+            Column() {
+                statistic.athletes.first().stats.map { Text(text = it) }
+            }
+        }
+    }
+
+}
+
+@Composable
+fun BoxScore(boxscorePlayer: BoxscorePlayerModel) {
+
 
 }
 
@@ -1707,10 +1761,14 @@ fun GameInformation(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            AddressComp(gameDetailModel = gameDetailModel)
+            AddressComp(
+                city = gameDetailModel.gameInfo.venue.address.city ,
+                state = gameDetailModel.gameInfo.venue.address.city
+            )
             Text(
                 text = gameDetailModel.gameInfo?.weather?.temperature ?: "",
-                fontWeight = FontWeight.Bold)
+                fontWeight = FontWeight.Bold
+            )
         }
         Divider()
         Row(
@@ -1724,11 +1782,12 @@ fun GameInformation(
 }
 
 @Composable
-fun AddressComp(gameDetailModel: GameDetailsModel) {
+fun AddressComp(
+    city: String,
+    state: String
+) {
     Row() {
-        Text(text = gameDetailModel.gameInfo?.venue?.address?.city ?: "")
-        Text(text = ", ")
-        Text(text = gameDetailModel.gameInfo?.venue?.address?.state ?: "")
+        Text(text = "${city} ${state}")
     }
 }
 

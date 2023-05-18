@@ -69,6 +69,12 @@ fun BasicButtonToNavigate(
 }
 
 @Composable
+fun RowOfButtons() {
+
+}
+
+
+@Composable
 fun BasicButton(
     @StringRes text: Int,
     modifier: Modifier,

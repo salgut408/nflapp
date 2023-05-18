@@ -12,8 +12,6 @@ import retrofit2.http.Query
 
 interface SportsApi {
 
-
-
     @GET("site/v2/sports/{sport}/{league}/news")
     suspend fun getArticles(
         @Path("sport")

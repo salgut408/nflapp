@@ -8,18 +8,18 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_sc
 data class GameDetailsAddress(
 
   @SerializedName("city")
-  val city: String? = null,
+  val city: String = "",
   @SerializedName("state")
-  val state: String? = null,
+  val state: String = "",
   @SerializedName("zipCode")
-  val zipCode: String? = null,
+  val zipCode: String = "",
 
   )
 
 fun GameDetailsAddress.asDomain(): AddressModel {
     return AddressModel(
-      city = city ?: "",
-      state = state ?: "",
-      zipCode = zipCode ?: ""
+      city = city ,
+      state = state ,
+      zipCode = zipCode
     )
 }

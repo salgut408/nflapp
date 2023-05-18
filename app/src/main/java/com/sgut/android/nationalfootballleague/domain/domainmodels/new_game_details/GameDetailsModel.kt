@@ -12,7 +12,7 @@ data class GameDetailsModel(
     val notes: List<String> = listOf(),
     val boxscore: BoxScoreModel? = BoxScoreModel(),
     val format: GameDetailsFormatModel? = GameDetailsFormatModel(),
-    val gameInfo: GameInfoModel? = GameInfoModel(),
+    val gameInfo: GameInfoModel = GameInfoModel(),
     val lastFiveGames: List<LastFiveGamesModel> = listOf(),
     val leaders: List<GameDetailsLeadersModel> = listOf(),
     val injuries: List<GameDetailsInjuriesListModel> = listOf(),
