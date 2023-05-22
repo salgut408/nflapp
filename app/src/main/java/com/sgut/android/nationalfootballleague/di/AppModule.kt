@@ -1,7 +1,10 @@
 package com.sgut.android.nationalfootballleague.di
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,6 +13,7 @@ import com.google.firebase.ktx.Firebase
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.db.article.ArticleDao
 import com.sgut.android.nationalfootballleague.data.db.team.TeamsDao
+import com.sgut.android.nationalfootballleague.data.location.DefaultLocationTrackerImpl
 import com.sgut.android.nationalfootballleague.data.remote.api.SportsApi
 import com.sgut.android.nationalfootballleague.data.repository.*
 import com.sgut.android.nationalfootballleague.data.service.AccountService
@@ -19,6 +23,7 @@ import com.sgut.android.nationalfootballleague.data.service.impl.AccountServiceI
 import com.sgut.android.nationalfootballleague.data.service.impl.LogServiceImpl
 import com.sgut.android.nationalfootballleague.data.service.impl.StorageServiceImpl
 import com.sgut.android.nationalfootballleague.domain.dtomappers.*
+import com.sgut.android.nationalfootballleague.domain.location.LocationTracker
 import com.sgut.android.nationalfootballleague.domain.repositories.*
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetBaseballSituationUseCase
@@ -65,6 +70,24 @@ object AppModule {
         sportsApi: SportsApi,
         sportsDataBase: SportsDataBase,
     ): TeamsListsRepository = TeamsListRepositoryImpl(sportsApi, sportsDataBase)
+
+    //Location
+
+    @Provides
+    @Singleton
+    fun provideFusedLocationProviderClient(
+        application: Application
+    ): FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(application)
+
+    @Provides
+    @Singleton
+    fun providesLocationTracker(
+        fusedLocationProviderClient: FusedLocationProviderClient,
+        application: Application
+    ): LocationTracker = DefaultLocationTrackerImpl(
+        fusedLocationProviderClient = fusedLocationProviderClient,
+        application = application
+    )
 
     @Provides
     fun provideStandingsRepository(

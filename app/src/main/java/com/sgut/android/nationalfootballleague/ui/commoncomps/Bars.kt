@@ -124,7 +124,6 @@ fun ToolBar3(
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior,
 ) {
-
     CenterAlignedTopAppBar(
         title = { Text(text = title, fontWeight = FontWeight.Bold) },
         navigationIcon = {

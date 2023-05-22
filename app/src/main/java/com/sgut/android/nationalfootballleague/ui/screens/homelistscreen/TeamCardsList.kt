@@ -248,6 +248,9 @@ fun HomeTeamCardsListScreen(
                     }
                 }
 
+//                LocationScreen()
+
+
                 BasicButton(
                     text = AppText.scores_games,
                     modifier = Modifier.basicButton(),
@@ -264,6 +267,7 @@ fun HomeTeamCardsListScreen(
 //                    sport = sport ?: "",
 //                    league = league?: ""
 //                )
+
 
 
                 if (sportStateTeamsFullInfo != null) {

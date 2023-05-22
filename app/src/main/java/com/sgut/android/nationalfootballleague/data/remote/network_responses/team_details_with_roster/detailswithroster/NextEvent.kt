@@ -3,6 +3,7 @@ package com.sgut.android.nationalfootballleague
 import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.NextEventModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.SeasonTypeModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.WeekModel
 
 
 data class NextEvent3(
@@ -28,7 +29,7 @@ fun NextEvent3.asDomain(): NextEventModel {
     shortName = shortName,
     season = season.asDomain(),
     seasonType = seasonType?.asDomain() ?: SeasonTypeModel(),
-    week = week?.asDomain(),
+    week = week.asDomain() ?: WeekModel(),
     competitions = competitions.map { it.asDomain() }
   )
 }
