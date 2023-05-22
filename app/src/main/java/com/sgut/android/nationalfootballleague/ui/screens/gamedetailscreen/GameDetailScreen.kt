@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.di.GameDetailsTopBar
@@ -66,8 +67,8 @@ fun GameDetailsScreen(
 
     gameDetailViewModel.loadGameDetails(sport, league, event)
 
-    val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsState()
-    val map by gameDetailViewModel.map.collectAsState()
+    val gameDetailUiState by gameDetailViewModel.gameDetailUiState.collectAsStateWithLifecycle()
+    val map by gameDetailViewModel.map.collectAsStateWithLifecycle()
 
     val eventName = gameDetailViewModel.returnTeamNamesForTopBar()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()

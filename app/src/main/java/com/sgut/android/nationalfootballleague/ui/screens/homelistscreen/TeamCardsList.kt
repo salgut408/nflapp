@@ -17,6 +17,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.R
 import com.sgut.android.nationalfootballleague.di.ToolBar3
@@ -67,7 +68,7 @@ fun HomeTeamCardsListScreen(
 
 ) {
 
-    val uiState by homeListViewModel.listUiState.collectAsState()
+    val uiState by homeListViewModel.listUiState.collectAsStateWithLifecycle()
     val sport = uiState.fullTeamInfo?.sport?.slug
     val league = uiState.fullTeamInfo?.sport?.league?.slug
 
