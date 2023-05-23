@@ -47,6 +47,7 @@ class ScoreboardViewModel @Inject constructor(
             } else {
                 val news = getArticles(sport, league)
                 val currentScoreboardModelUiState = getScores(sport, league)
+                Log.i("LOAD_GENERIC", currentScoreboardModelUiState.toString())
 
                 setScoreboardUiState(
                     sport, league,

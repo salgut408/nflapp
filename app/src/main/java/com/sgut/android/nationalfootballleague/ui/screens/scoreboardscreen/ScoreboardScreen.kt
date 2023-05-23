@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.R
@@ -52,12 +53,12 @@ fun ScoreboardScreen(
     navController: NavController,
 ) {
 
+//    TODO this causes the switch when clicking different sport on scoreboard screen
     scoreboardViewModel.loadGenericScoreboard(sport, league)
 
 
-    val newUiState by scoreboardViewModel.scoreboardModelState.collectAsState()
+    val newUiState by scoreboardViewModel.scoreboardModelState.collectAsStateWithLifecycle()
     val news = newUiState.currentArticles
-//    val fuckUiState by remember { scoreboardViewModel.scoreboardModelState }.collectAsState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val sport = newUiState.currentSport
     val league = newUiState.currentLeague
