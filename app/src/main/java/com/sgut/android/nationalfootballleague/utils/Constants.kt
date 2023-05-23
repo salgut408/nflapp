@@ -38,6 +38,7 @@ class Constants {
         const val F1 = "f1"
         const val TENNIS = "tennis"
         const val ATP = "atp"
+        const val CLUB_FRIENDLIES = "CLUB.FRIENDLY"
 
 
 
