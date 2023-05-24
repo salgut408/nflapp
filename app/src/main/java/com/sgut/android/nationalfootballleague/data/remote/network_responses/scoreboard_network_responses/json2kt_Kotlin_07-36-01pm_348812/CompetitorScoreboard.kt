@@ -5,13 +5,14 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_sc
 
 
 data class CompetitorScoreboard(
-
   @SerializedName("id")
   val id: String? = null,
   @SerializedName("uid")
   val uid: String? = null,
   @SerializedName("type")
   val type: String? = null,
+  @SerializedName("linescores")
+  val linescores: List<Linescore>? = listOf(),
   @SerializedName("order")
   val order: Int? = null,
   @SerializedName("homeAway")
@@ -36,6 +37,11 @@ data class CompetitorScoreboard(
 //  val probables: List<Probables> = listOf(),
 
   )
+
+data class Linescore(
+  @SerializedName("value")
+  val value: Double? = 0.0
+)
 
 data class Probable(
   @SerializedName("name")
@@ -74,6 +80,7 @@ fun CompetitorScoreboard.asDomain(): ScoreboardCompetitorsModel {
     records = records.map { it.asDomain() },
     team = team.asDomain(),
     statistics = statistics.map { it.asDomain() },
-    leaders = leaders.map { it.asDomain() }
+    leaders = leaders.map { it.asDomain() },
+    linescores = linescores
   )
 }

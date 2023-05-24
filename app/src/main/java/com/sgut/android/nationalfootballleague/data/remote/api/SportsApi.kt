@@ -1,6 +1,7 @@
 package com.sgut.android.nationalfootballleague.data.remote.api
 
 import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.baseball_scoreboard.BaseballScoreBoardNetwork
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.full_athelete.NetworkAthleteResponse
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.standings.StandingsNetworkResponse
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.team_schedule.ScheduleResponseNetwork
@@ -27,6 +28,14 @@ interface SportsApi {
         @Path("league")
         league: String? = null,
     ): Response<NetworkScoreboardResponse>
+
+    @GET("site/v2/sports/{sport}/{league}/scoreboard")
+    suspend fun getBaseballScoreboard(
+        @Path("sport")
+        sport: String? = null,
+        @Path("league")
+        league: String? = null,
+    ): Response<BaseballScoreBoardNetwork>
 
     @GET("site/v2/sports/{sport}/{league}/scoreboard")
     suspend fun getCollegeBasketballScoreboard(

@@ -7,7 +7,6 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_sc
 
 
 data class CompetitionScoreboard(
-
     @SerializedName("id")
     val id: String? = null,
     @SerializedName("uid")
@@ -24,7 +23,6 @@ data class CompetitionScoreboard(
     val venue: VenueScoreboard = VenueScoreboard(),
     @SerializedName("format")
     val format: FormatScoreboard? = FormatScoreboard(),
-
     @SerializedName("competitors")
     val competitors: List<CompetitorScoreboard> = listOf(),
     @SerializedName("details")

@@ -4,6 +4,7 @@ import android.util.Log
 import com.sgut.android.nationalfootballleague.asDomain
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.SportsApi
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.baseball_scoreboard.BaseballScoreBoardNetwork
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import javax.inject.Inject
@@ -45,6 +46,17 @@ class ScoreboardRepositoryImpl @Inject constructor(
         return result.body()?.asDomain()!!
     }
 
+    override suspend fun getBaseballScoreboard(
+        sport: String,
+        league: String,
+    ): BaseballScoreBoardNetwork {
+        val response = sportsApi.getBaseballScoreboard(sport, league)
+        if (response.isSuccessful) {
+            return response.body() ?: BaseballScoreBoardNetwork()
+        }
+        return BaseballScoreBoardNetwork()
+    }
+
     override suspend fun getGeneralScoreboardByDate(
         sport: String,
         league: String,
@@ -54,7 +66,7 @@ class ScoreboardRepositoryImpl @Inject constructor(
         if (result.isSuccessful){
             return result.body()?.asDomain()!!
         } else {
-            Log.e("scrbrdRepGen-FAIL", result.errorBody().toString())
+            Log.e("getGeneralScoreboardByDate-FAIL", result.errorBody().toString())
 
         }
         val response = sportsApi.getGeneralScoreboardWithDate(sport, league, date)

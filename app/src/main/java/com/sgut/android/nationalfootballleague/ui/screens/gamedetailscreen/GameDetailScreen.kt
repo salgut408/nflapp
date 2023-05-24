@@ -300,7 +300,7 @@ fun BaseballSpecific(
 ) {
 
 
-    if (gameDetailsModel.header?.competitions?.first()?.boxscoreAvailable ?: false) {
+    if (!gameDetailsModel.header?.competitions?.first()?.status?.type?.gameTimeDetail.equals("Final")) {
         BaseballSituation(
             modifier = modifier,
             gameDetailSituation = gameDetailSituation,
@@ -1747,13 +1747,22 @@ fun PickCenterList(
     DefaultCard(modifier = modifier) {
         CardHeaderText(text = "Pick Center")
 
+        NormalDivider()
+
         list.map { pickCenter ->
             Row(
-                modifier = modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier = modifier.fillMaxWidth(1f),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
             ) {
-                Text(text = pickCenter.provider.name)
-                Text(text = pickCenter.details)
+                Text(text = pickCenter.provider.name,)
+                Column(modifier = modifier) {
+
+                    Text(text = "Favorite: ${pickCenter.details}")
+                    Text(text = "O/U ${pickCenter.overUnder.toString()}")
+                    Text(text = "Spread ${pickCenter.spread}")
+
+                }
             }
         }
     }
