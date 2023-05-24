@@ -1748,13 +1748,15 @@ fun PickCenterList(
         CardHeaderText(text = "Pick Center")
 
         list.map { pickCenter ->
-            Text(text = pickCenter.provider.name)
-            Text(text = pickCenter.details)
-
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = pickCenter.provider.name)
+                Text(text = pickCenter.details)
+            }
         }
-
     }
-
 }
 
 
