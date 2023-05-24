@@ -22,7 +22,6 @@ import com.sgut.android.nationalfootballleague.data.service.StorageService
 import com.sgut.android.nationalfootballleague.data.service.impl.AccountServiceImpl
 import com.sgut.android.nationalfootballleague.data.service.impl.LogServiceImpl
 import com.sgut.android.nationalfootballleague.data.service.impl.StorageServiceImpl
-import com.sgut.android.nationalfootballleague.domain.dtomappers.*
 import com.sgut.android.nationalfootballleague.domain.location.LocationTracker
 import com.sgut.android.nationalfootballleague.domain.repositories.*
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase

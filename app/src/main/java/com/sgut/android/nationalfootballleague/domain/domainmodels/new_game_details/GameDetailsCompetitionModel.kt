@@ -8,9 +8,11 @@ data class GameDetailsCompetitionModel(
     val shotChartAvailable: Boolean = false,
     val timeoutsAvailable: Boolean = false,
     val possessionArrowAvailable: Boolean = false,
+    val boxscoreAvailable: Boolean = false,
 
 
-)
+
+    )
 
 
 

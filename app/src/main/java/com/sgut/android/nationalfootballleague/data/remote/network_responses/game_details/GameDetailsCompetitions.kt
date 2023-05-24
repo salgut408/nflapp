@@ -56,6 +56,7 @@ fun GameDetailsCompetitions.asDomain(): GameDetailsCompetitionModel {
         shotChartAvailable = shotChartAvailable ?: false,
         timeoutsAvailable = timeoutsAvailable ?: false,
         possessionArrowAvailable = possessionArrowAvailable ?: false,
+        boxscoreAvailable = boxscoreAvailable ?: false
 
 
     )

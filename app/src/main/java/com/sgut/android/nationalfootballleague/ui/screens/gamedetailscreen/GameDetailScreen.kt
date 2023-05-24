@@ -127,8 +127,10 @@ fun GameDetailsScreen(
             ) {
 
                 SpacerDp(modifier = modifier, height = EIGHT)
-                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.periodPrefix?.name ?: "l")
-                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.id ?: "l")
+                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.periodPrefix?.name
+                    ?: "l")
+                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.id
+                    ?: "l")
                 SpacerDp(modifier = modifier, height = EIGHT)
 
                 when (gameDetailUiState.currentSport) {
@@ -161,11 +163,13 @@ fun GameDetailsScreen(
                 )
                 SpacerDp(modifier = modifier, height = EIGHT)
 
-                BoxScoreTeamStats(modifier = modifier, boxscore = gameDetailUiState.currentGameUiState?.boxscore ?: BoxScoreModel())
+                BoxScoreTeamStats(modifier = modifier,
+                    boxscore = gameDetailUiState.currentGameUiState?.boxscore ?: BoxScoreModel())
 
                 SpacerDp(modifier = modifier, height = EIGHT)
 
-                PickCenterList(modifier = Modifier, list = gameDetailUiState.currentGameUiState?.pickcenter ?: listOf())
+                PickCenterList(modifier = Modifier,
+                    list = gameDetailUiState.currentGameUiState?.pickcenter ?: listOf())
 
                 SpacerDp(modifier = modifier, height = EIGHT)
 
@@ -198,7 +202,8 @@ fun GameDetailsScreen(
                 SpacerDp(modifier = modifier, height = EIGHT)
 
 
-                TabsSeasonLeaders(modifier = modifier, leaders = gameDetailUiState.currentGameUiState?.leaders ?: listOf())
+                TabsSeasonLeaders(modifier = modifier,
+                    leaders = gameDetailUiState.currentGameUiState?.leaders ?: listOf())
 
                 SpacerDp(modifier = modifier, height = EIGHT)
 
@@ -293,28 +298,47 @@ fun BaseballSpecific(
     gameDetailsModel: GameDetailsModel,
     teamMap: Map<String, GameDetailsAthleteDetailsModel>,
 ) {
-    BaseballSituation(
-        modifier = modifier,
-        gameDetailSituation = gameDetailSituation,
-        teamMap = teamMap,
-        competition = gameDetailsModel.header?.competitions?.first()
-            ?: GameDetailsCompetitionModel()
-    )
-
-    SpacerDp(modifier = modifier, height = EIGHT)
-
-    AnimatedCircle(
-        modifier = modifier,
-        gameDetailModel = gameDetailsModel
-    )
-
-    SpacerDp(modifier = modifier, height = EIGHT)
-
-    SpacerDp(modifier = modifier, height = EIGHT)
 
 
-    ProbablesList(list = gameDetailsModel.header?.competitions?.first()?.competitors ?: listOf(),
-        modifier = modifier)
+    if (gameDetailsModel.header?.competitions?.first()?.boxscoreAvailable ?: false) {
+        BaseballSituation(
+            modifier = modifier,
+            gameDetailSituation = gameDetailSituation,
+            teamMap = teamMap,
+            competition = gameDetailsModel.header?.competitions?.first()
+                ?: GameDetailsCompetitionModel()
+        )
+
+        SpacerDp(modifier = modifier, height = EIGHT)
+
+        AnimatedCircle(
+            modifier = modifier,
+            gameDetailModel = gameDetailsModel
+        )
+
+        SpacerDp(modifier = modifier, height = EIGHT)
+
+
+
+        ProbablesList(list = gameDetailsModel.header?.competitions?.first()?.competitors
+            ?: listOf(),
+            modifier = modifier)
+    } else {
+        AnimatedCircle(
+            modifier = modifier,
+            gameDetailModel = gameDetailsModel
+        )
+
+        SpacerDp(modifier = modifier, height = EIGHT)
+
+
+
+        ProbablesList(list = gameDetailsModel.header?.competitions?.first()?.competitors
+            ?: listOf(),
+            modifier = modifier)
+
+    }
+
 
 }
 
@@ -395,7 +419,6 @@ fun ExpandableGameArticle(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null
             ) { showMore = !showMore }) {
-
 
 
             if (gameDetailModel.singleGameArticle?.story?.isEmpty() == true) {
@@ -663,19 +686,19 @@ fun SeasonLeaders(
 fun SeasonLeadersTabs(
     seasonLeaders: List<GameDetailsLeaders>,
     teamInt: Int,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
-    var tabIndex by remember { mutableStateOf(0)}
+    var tabIndex by remember { mutableStateOf(0) }
     val tabTitles = listOf(
         seasonLeaders.getOrNull(0)?.team?.name,
         seasonLeaders.getOrNull(1)?.team?.name,
-        )
+    )
 }
 
 @Composable
 fun TabsSeasonLeaders(
     modifier: Modifier,
-    leaders:  List<GameDetailsLeadersModel>,
+    leaders: List<GameDetailsLeadersModel>,
 ) {
 
     var tabIndex by remember { mutableStateOf(0) }
@@ -726,16 +749,16 @@ fun Leads(
     teamInt: Int,
 ) {
     val teamInfo = leaders.getOrNull(teamInt)
-    if(leaders.isEmpty()) {
+    if (leaders.isEmpty()) {
         Text(text = "")
     } else {
         leaders.map {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = it.displayName)
-                Text(text = it.leadersAthlete.first().athlete.displayName )
+                Text(text = it.leadersAthlete.first().athlete.displayName)
 
             }
 
@@ -753,9 +776,6 @@ fun BoxScoreTeamStats(boxscore: BoxScoreModel, modifier: Modifier) {
         boxscore.statistics.map { stats ->
             Text(text = boxscore.toString())
         }
-
-
-
 
 
     }
@@ -785,7 +805,6 @@ fun BoxScore(boxscorePlayer: BoxscorePlayerModel) {
 
 
 }
-
 
 
 @Composable
@@ -856,9 +875,6 @@ fun VideoPreview(
                 NewVidPlayer(video = video)
 
 //                VideoPlayer(videos = video)
-
-
-
 
 
                 Text(
@@ -1241,7 +1257,6 @@ fun InjuryColumn(
     }
 
 }
-
 
 
 @Composable
@@ -1713,9 +1728,9 @@ fun DoughnutChartForBasketball(
 @Composable
 fun PickCenter(
     pickCenterInfo: PickcenterModel,
-    modifier: Modifier
+    modifier: Modifier,
 
-) {
+    ) {
     Column() {
         Row() {
             Text(text = pickCenterInfo.provider.name)
@@ -1727,7 +1742,7 @@ fun PickCenter(
 @Composable
 fun PickCenterList(
     modifier: Modifier,
-    list: List<PickcenterModel>
+    list: List<PickcenterModel>,
 ) {
     DefaultCard(modifier = modifier) {
         CardHeaderText(text = "Pick Center")
@@ -1764,7 +1779,7 @@ fun GameInformation(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             AddressComp(
-                city = gameDetailModel.gameInfo.venue.address.city ,
+                city = gameDetailModel.gameInfo.venue.address.city,
                 state = gameDetailModel.gameInfo.venue.address.city
             )
             Text(
@@ -1778,7 +1793,28 @@ fun GameInformation(
                 .fillMaxWidth()
         ) {
             Text(text = "CAPACITY: ", fontSize = 12.sp, fontWeight = FontWeight.Bold)
+
             Text(text = gameDetailModel.gameInfo?.venue?.capacity.toString(), fontSize = 12.sp)
+
+        }
+
+        NormalDivider()
+
+        Column() {
+
+            if (gameDetailModel.gameInfo.officials.isNotEmpty()) {
+                Text(text = "Officials", fontSize = 20.sp)
+            } else Text(text = "")
+
+            gameDetailModel.gameInfo.officials.map { official ->
+                Row(
+                    modifier = modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = official.displayName ?: "", fontWeight = FontWeight.Bold)
+                    Text(text = official.position.displayName ?: "")
+                }
+            }
         }
     }
 }
@@ -1786,7 +1822,7 @@ fun GameInformation(
 @Composable
 fun AddressComp(
     city: String,
-    state: String
+    state: String,
 ) {
     Row() {
         Text(text = "${city} ${state}")
@@ -2046,20 +2082,20 @@ fun LastFiveGames2(
         Text(text = "")
     } else {
 
-            CardHeaderText(text = "Last Five Games")
-            NormalDivider()
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.LightGray)
-            ) {
-                Text(text = "DATE")
-                Text(text = "OPP")
-                Text(text = "RESULT")
-            }
-            team1Info?.lastEvents?.map { LastFiveGameRow(lastEvents = it) }
+        CardHeaderText(text = "Last Five Games")
+        NormalDivider()
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.LightGray)
+        ) {
+            Text(text = "DATE")
+            Text(text = "OPP")
+            Text(text = "RESULT")
+        }
+        team1Info?.lastEvents?.map { LastFiveGameRow(lastEvents = it) }
 
     }
 
