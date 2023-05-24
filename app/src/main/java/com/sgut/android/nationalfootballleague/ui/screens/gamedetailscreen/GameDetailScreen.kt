@@ -299,7 +299,6 @@ fun BaseballSpecific(
     teamMap: Map<String, GameDetailsAthleteDetailsModel>,
 ) {
 
-
     if (!gameDetailsModel.header?.competitions?.first()?.status?.type?.gameTimeDetail.equals("Final")) {
         BaseballSituation(
             modifier = modifier,

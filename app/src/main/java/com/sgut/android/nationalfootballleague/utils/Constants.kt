@@ -1,8 +1,15 @@
 package com.sgut.android.nationalfootballleague.utils
 
+import android.util.Log
+
+fun Any?.printToLog(tag: String = "DEBUG_LOG") {
+    Log.d(tag, toString())
+}
+
 class Constants {
     companion object {
         const val BASE_URL = "https://site.api.espn.com/apis/"
+
 
 
         const val BASEBALL = "baseball"
