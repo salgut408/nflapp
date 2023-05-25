@@ -2,7 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.ba
 
 
 import com.google.gson.annotations.SerializedName
-//TODO MAKE MAODEL
+//TODO MAKE MODEL
 data class BaseballScoreBoardNetwork(
     @SerializedName("day")
     val day: Day? = Day(),

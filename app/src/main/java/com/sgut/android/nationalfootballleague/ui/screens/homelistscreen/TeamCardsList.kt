@@ -392,11 +392,7 @@ fun TeamItem(
                     borderWidth = 1.dp,
                     shape = RoundedCornerShape(8.dp)
                 )
-                Text(
-                    text = team.shortDisplayName,
-                    style = MaterialTheme.typography.labelSmall,
-                    modifier = modifier.padding(top = 8.dp)
-                )
+
 
             }
             ToggleFollowIconButton(

@@ -221,11 +221,4 @@ fun ToggleFollowIconButton(
     }
 }
 
-//private object RippleCustomTheme: RippleTheme {
-//    override fun defaultColor() = RippleTheme.defaultRippleColor(Color.Cyan, lightTheme = true)
-//
-//    override fun rippleAlpha(): RippleAlpha =
-//        RippleTheme.defaultRippleAlpha(Color.Blue, lightTheme = true)
-//
-//}
 

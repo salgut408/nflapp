@@ -146,12 +146,14 @@ fun GameDetailsScreen(
 
                         )
                     "baseball" -> BaseballSpecific(
+
                         modifier = modifier,
                         gameDetailSituation = gameDetailUiState.currentGameUiState?.baseballSituation
                             ?: SituationModel(),
                         gameDetailsModel = gameDetailUiState.currentGameUiState
                             ?: GameDetailsModel(),
-                        teamMap = map
+                        teamMap = map,
+                        gameState = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.type?.statusState,
                     )
                 }
 
@@ -183,7 +185,7 @@ fun GameDetailsScreen(
 
                 SeasonLeaders(
                     modifier = modifier,
-                    gameDetailModel = gameDetailUiState.currentGameUiState ?: GameDetailsModel()
+                    leaders = gameDetailUiState.currentGameUiState?.leaders ?: listOf()
                 )
 
                 SpacerDp(modifier = modifier, height = EIGHT)
@@ -297,47 +299,43 @@ fun BaseballSpecific(
     gameDetailSituation: SituationModel,
     gameDetailsModel: GameDetailsModel,
     teamMap: Map<String, GameDetailsAthleteDetailsModel>,
+    gameState: StatusState?,
 ) {
 
-    if (!gameDetailsModel.header?.competitions?.first()?.status?.type?.gameTimeDetail.equals("Final")) {
-        BaseballSituation(
-            modifier = modifier,
-            gameDetailSituation = gameDetailSituation,
-            teamMap = teamMap,
-            competition = gameDetailsModel.header?.competitions?.first()
-                ?: GameDetailsCompetitionModel()
-        )
-
-        SpacerDp(modifier = modifier, height = EIGHT)
-
-        AnimatedCircle(
-            modifier = modifier,
-            gameDetailModel = gameDetailsModel
-        )
-
-        SpacerDp(modifier = modifier, height = EIGHT)
-
-
-
-        ProbablesList(list = gameDetailsModel.header?.competitions?.first()?.competitors
-            ?: listOf(),
-            modifier = modifier)
-    } else {
-        AnimatedCircle(
-            modifier = modifier,
-            gameDetailModel = gameDetailsModel
-        )
-
-        SpacerDp(modifier = modifier, height = EIGHT)
-
-
-
-        ProbablesList(list = gameDetailsModel.header?.competitions?.first()?.competitors
-            ?: listOf(),
-            modifier = modifier)
-
+    when (gameState) {
+        StatusState.POST -> {
+            PostOrPre(gameDetailModel = gameDetailsModel, modifier = modifier)
+        }
+        StatusState.IN -> {
+            BaseballSituation(
+                modifier = modifier,
+                gameDetailSituation = gameDetailSituation,
+                teamMap = teamMap,
+                competition = gameDetailsModel.header?.competitions?.first()
+                    ?: GameDetailsCompetitionModel()
+            )
+            SpacerDp(modifier = modifier, height = EIGHT)
+            PostOrPre(gameDetailModel = gameDetailsModel, modifier = modifier)
+        }
+        StatusState.PRE -> {
+            PostOrPre(gameDetailModel = gameDetailsModel, modifier = modifier)
+        }
+        else -> {}
     }
 
+
+}
+
+@Composable
+fun PostOrPre(gameDetailModel: GameDetailsModel, modifier: Modifier) {
+    AnimatedCircle(
+        modifier = modifier,
+        gameDetailModel = gameDetailModel
+    )
+    SpacerDp(modifier = modifier, height = EIGHT)
+    ProbablesList(list = gameDetailModel.header?.competitions?.getOrNull(0)?.competitors ?: listOf()
+        ?: listOf(),
+        modifier = modifier)
 
 }
 
@@ -636,7 +634,7 @@ fun LastPlay(play: String) {
 @Composable
 fun SeasonLeaders(
     modifier: Modifier,
-    gameDetailModel: GameDetailsModel,
+    leaders: List<GameDetailsLeadersModel>,
 ) {
     DefaultCard(
         modifier = modifier,
@@ -645,7 +643,7 @@ fun SeasonLeaders(
             NormalDivider()
             Row(
             ) {
-                gameDetailModel.leaders.map { gameDetailsLeaders ->
+                leaders.map { gameDetailsLeaders ->
                     Row() {
                         Column(
                             horizontalAlignment = Alignment.Start
@@ -1007,7 +1005,7 @@ fun ProbablesList(list: List<GameDetailsCompetitorModel>, modifier: Modifier) {
     DefaultCard(modifier = Modifier) {
         CardHeaderText(text = "Probables")
         NormalDivider()
-        Text(text = list.first().probables.last().displayName,
+        Text(text = list.first().probables.getOrNull(1)?.displayName.toString(),
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold)
         Spacer(modifier = modifier.height(16.dp))
@@ -1038,9 +1036,9 @@ fun PitcherMatchUp(competitor: GameDetailsCompetitorModel, modifier: Modifier) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                GenericImageLoader(obj = competitor.probables.first().athlete?.headshot?.href ?: "",
+                GenericImageLoader(obj = competitor.probables.getOrNull(0)?.athlete?.headshot?.href ?: "",
                     modifier = modifier.fillMaxWidth())
-                Text(text = competitor.probables.first().athlete?.displayName ?: "",
+                Text(text = competitor.probables.getOrNull(0)?.athlete?.displayName ?: "TBD",
                     fontSize = 15.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Bold)
@@ -1754,7 +1752,7 @@ fun PickCenterList(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Top
             ) {
-                Text(text = pickCenter.provider.name,)
+                Text(text = pickCenter.provider.name)
                 Column(modifier = modifier) {
 
                     Text(text = "Favorite: ${pickCenter.details}")

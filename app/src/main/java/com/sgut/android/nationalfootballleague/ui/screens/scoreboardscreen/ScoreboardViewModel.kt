@@ -33,6 +33,7 @@ class ScoreboardViewModel @Inject constructor(
 
     private val _baseballScoreboard = MutableStateFlow(BaseballScoreBoardNetwork())
     var baseballScoreboard: StateFlow<BaseballScoreBoardNetwork> = _baseballScoreboard.asStateFlow()
+//    var lineScores =
 
 
     init {

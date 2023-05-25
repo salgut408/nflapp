@@ -12,11 +12,8 @@ import javax.inject.Inject
 class PlayersMapUseCase @Inject constructor(
     private val teamDetailsRepository: TeamDetailsRepository,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
-
     ) {
-
     val map: MutableMap<String, GameDetailsAthleteDetailsModel> = mutableMapOf()
-
 
     suspend operator fun invoke(
         sport: String,
