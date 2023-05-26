@@ -48,6 +48,10 @@ class HomeListViewModel @Inject constructor(
     //            Default list Ui State set here
     fun loadAllNflTeams() = viewModelScope.launch {
         try {
+
+
+
+
             val fullTeamsList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(FOOTBALL, NFL)
             val news = getArticles(FOOTBALL, NFL)
 

@@ -38,6 +38,15 @@ class GameDetailViewModel @Inject constructor(
 
 
     init {
+//        make2DArray()
+        val evens = Array(3) {3}
+        println(evens)
+    }
+
+    fun make2DArray(){
+
+//        evens.printToLog("EVENs")
+
     }
 
     fun getPlayerFromId(id: String): GameDetailsAthleteDetailsModel {
@@ -69,6 +78,11 @@ class GameDetailViewModel @Inject constructor(
                 _colorsTeamList.add(HexToJetpackColor2.getColor(i.team?.color ?: "Color"))
             }
             _colorsTeamList.add(Color.Black)
+
+
+
+
+
         }
         catch (e: Exception) {
             Log.e("DEBUG_COLOR", e.message.toString())

@@ -10,7 +10,6 @@ import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRep
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetBaseballSituationUseCase
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetScoresUseCase
-import com.sgut.android.nationalfootballleague.utils.printToLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -43,7 +42,6 @@ class ScoreboardViewModel @Inject constructor(
     fun loadBaseballScoreboard(sport: String, league: String) = viewModelScope.launch {
         val baseballScoreboard = scoreboardRepository.getBaseballScoreboard(sport, league )
         _baseballScoreboard.emit(baseballScoreboard)
-        _baseballScoreboard.value.printToLog()
     }
 
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {

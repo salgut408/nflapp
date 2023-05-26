@@ -134,6 +134,7 @@ dependencies {
     // GoogleMobileService
     implementation("com.google.android.gms:play-services-location:21.0.1")
     // Accompanist
-//    implementation("com.google.accompanist:accompanist-permissions:0.31.1-alpha")
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.31.1-alpha"
+    implementation "com.google.accompanist:accompanist-placeholder:0.31.1-alpha"
 
 }
