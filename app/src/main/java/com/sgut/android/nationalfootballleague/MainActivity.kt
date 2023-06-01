@@ -15,18 +15,15 @@ class MainActivity : ComponentActivity() {
             NationalFootballLeagueTheme {
                 EspnApp()
 
-                val evens = Array(3) {Array(3) {'*'} }
-//                evens.map { println(it.contentToString() )}
 
-                for (  i in 0.. evens.size-1){
-                    evens[evens.size-1][i] = 'S'
-
-                }
-                evens.map { println(it.contentToString() )}
-//                println(evens.contentToString())
             }
         }
     }
 }
+
+
+
+
+
 
 

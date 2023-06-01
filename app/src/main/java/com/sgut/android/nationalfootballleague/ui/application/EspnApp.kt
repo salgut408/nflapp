@@ -23,6 +23,8 @@ fun EspnApp(
     modifier: Modifier = Modifier,
 
     ) {
+
+
     val appState = rememberAppState()
     val backStackEntry by appState.navController.currentBackStackEntryAsState()
     val currentScreen =
@@ -33,6 +35,7 @@ fun EspnApp(
 
 
     Scaffold(
+        bottomBar = {}
 
     ) { innerPadding ->
         Navigation(appState, padding = innerPadding)

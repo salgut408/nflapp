@@ -593,38 +593,6 @@ fun HeaderTeamSlot(
 }
 
 
-@Composable
-fun GameArticle(gameDetailModel: GameDetailModel) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ) {
-
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(4.dp)) {
-            Text(
-                text = gameDetailModel.singleArticle?.headline ?: "",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-
-            Text(
-                text = gameDetailModel.singleArticle?.description ?: "",
-                fontSize = 14.sp
-            )
-
-            Row() {
-
-//                Text(text = gameDetailModel.singleArticle?.story ?: "") for expand anim
-                Text(text = gameDetailModel.singleArticle?.published ?: "")
-                Text(text = " - ")
-                Text(text = gameDetailModel.singleArticle?.source ?: "")
-            }
-        }
-    }
-}
 
 @Composable
 fun LastPlay(play: String) {
@@ -1844,15 +1812,7 @@ fun TeamVsComponent() {
 }
 
 
-fun getTeamsColorsList(gameDetailModel: GameDetailModel): List<Color?> {
-    var list = listOf<Color?>()
-    for (i in gameDetailModel.boxscore?.teams!!) {
-        list = listOf(HexToJetpackColor2.getColor(i.team?.color ?: "")
 
-        )
-    }
-    return list
-}
 
 
 @Composable

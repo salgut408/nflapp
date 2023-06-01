@@ -36,7 +36,8 @@ fun Navigation(
     NavHost(
         navController = appState.navController,
         startDestination = NavigationScreens.MainScreenTeamsList.route,
-        modifier = Modifier.padding(padding)
+        modifier = Modifier.padding(padding),
+
     ) {
 
         composable(
@@ -46,7 +47,6 @@ fun Navigation(
             val league = it.arguments?.getString("league")
             HomeTeamCardsListScreen(
                 navController = appState.navController,
-
             )
         }
         composable(
