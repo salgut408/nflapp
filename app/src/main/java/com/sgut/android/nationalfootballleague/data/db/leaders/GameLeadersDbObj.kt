@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.data.db.leaders
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.AthleteLeaderModel
@@ -19,6 +20,7 @@ data class GameLeadersDbObj(
 data class GameDetailsLeadersDb(
     @PrimaryKey(autoGenerate = false)
     val gameId: String = "",
+    @Embedded
     val team: GameDetailsTeamInfoModel,
     val leaders: List<GameLeadersModel>
 )

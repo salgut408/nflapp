@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.ui.screens.basics.log_in
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -10,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicButton
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicTextButton
@@ -56,6 +58,8 @@ fun LoginScreen(
         ) {
             viewModel.onSignInClick(openAndPopUp)
         }
+
+        Toast.makeText(LocalContext.current, "HELLO", Toast.LENGTH_SHORT).show()
 
         BasicTextButton(
             AppText.forgot_password,
