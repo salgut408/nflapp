@@ -16,6 +16,7 @@ data class GameLeadersDbObj(
     val leadersAthlete: List<AthleteLeaderModel> = listOf(),
 )
 
+
 @Entity(tableName = "leaders_season")
 data class GameDetailsLeadersDb(
     @PrimaryKey(autoGenerate = false)
