@@ -20,9 +20,9 @@ data class LeaguesScoreboard(
     val slug: String? = null,
     @SerializedName("logos")
     val logos: List<LogosScoreboard> = listOf(),
+)
 
 
-    )
 
 fun LeaguesScoreboard.asDomain(): EventLeagueModel {
     return EventLeagueModel(

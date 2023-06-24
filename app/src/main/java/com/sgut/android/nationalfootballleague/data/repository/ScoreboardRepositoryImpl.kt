@@ -21,14 +21,22 @@ class ScoreboardRepositoryImpl @Inject constructor(
         sport: String,
         league: String,
     ): ScoreboardModel {
-        val response = sportsApi.getGeneralScoreboard(sport, league)
-        if (response.isSuccessful) {
-            return response.body()?.asDomain()!!
-        } else {
-            Log.e("scrbrdRepGen-FAIL", response.errorBody().toString())
+
+        try {
+
+
+            val response = sportsApi.getGeneralScoreboard(sport, league)
+            if (response.isSuccessful) {
+                return response.body()?.asDomain()!!
+            } else {
+                Log.e("scrbrdRepGen-FAIL", response.errorBody().toString())
+            }
+            val result = sportsApi.getGeneralScoreboard(sport, league)
+            return result.body()?.asDomain()!!
+        } catch (e: Exception) {
+            Log.e("BAD ", e.stackTraceToString())
         }
-        val result = sportsApi.getGeneralScoreboard(sport, league)
-        return result.body()?.asDomain()!!
+        return ScoreboardModel()
     }
 
     override suspend fun getCollegeBasketballScoreboard(

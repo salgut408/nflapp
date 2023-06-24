@@ -6,8 +6,9 @@ import com.google.gson.annotations.SerializedName
 data class League(
     @SerializedName("abbreviation")
     val abbreviation: String? = "",
-    @SerializedName("calendar")
-    val calendar: List<String>? = listOf(),
+//    TODO FIX THIS
+//    @SerializedName("calendar")
+//    val calendar: List<String>? = listOf(),
     @SerializedName("calendarEndDate")
     val calendarEndDate: String? = "",
     @SerializedName("calendarIsWhitelist")

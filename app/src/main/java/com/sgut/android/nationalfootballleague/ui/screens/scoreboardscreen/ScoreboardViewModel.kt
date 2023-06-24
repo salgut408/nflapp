@@ -32,7 +32,6 @@ class ScoreboardViewModel @Inject constructor(
 
     private val _baseballScoreboard = MutableStateFlow(BaseballScoreBoardNetwork())
     var baseballScoreboard: StateFlow<BaseballScoreBoardNetwork> = _baseballScoreboard.asStateFlow()
-//    var lineScores =
 
 
     init {
@@ -51,7 +50,7 @@ class ScoreboardViewModel @Inject constructor(
                 val currentScoreboardModelUiState = getScores(sport, league)
                 Log.i("LOAD_GENERIC", currentScoreboardModelUiState.toString())
 
-            loadBaseballScoreboard(sport, league)
+//            loadBaseballScoreboard(sport, league)
 
                 setScoreboardUiState(
                     sport, league,
