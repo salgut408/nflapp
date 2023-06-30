@@ -38,18 +38,15 @@ class ScoreboardViewModel @Inject constructor(
     }
 
 
-    fun loadBaseballScoreboard(sport: String, league: String) = viewModelScope.launch {
-        val baseballScoreboard = scoreboardRepository.getBaseballScoreboard(sport, league )
-        _baseballScoreboard.emit(baseballScoreboard)
-    }
+//    fun loadBaseballScoreboard(sport: String, league: String) = viewModelScope.launch {
+//        val baseballScoreboard = scoreboardRepository.getBaseballScoreboard(sport, league )
+//        _baseballScoreboard.emit(baseballScoreboard).printToLog("BBAL")
+//    }
 
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
         try {
-
                 val news = getArticles(sport, league)
                 val currentScoreboardModelUiState = getScores(sport, league)
-                Log.i("LOAD_GENERIC", currentScoreboardModelUiState.toString())
-
 //            loadBaseballScoreboard(sport, league)
 
                 setScoreboardUiState(
