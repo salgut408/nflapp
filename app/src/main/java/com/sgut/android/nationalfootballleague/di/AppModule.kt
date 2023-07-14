@@ -1,23 +1,33 @@
 package com.sgut.android.nationalfootballleague.di
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.sgut.android.nationalfootballleague.data.db.ArticleDao
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
-import com.sgut.android.nationalfootballleague.data.dtomappers.*
-import com.sgut.android.nationalfootballleague.data.remote.api.EspnApi
+import com.sgut.android.nationalfootballleague.data.db.article.ArticleDao
+import com.sgut.android.nationalfootballleague.data.db.team.TeamsDao
+import com.sgut.android.nationalfootballleague.data.location.DefaultLocationTrackerImpl
+import com.sgut.android.nationalfootballleague.data.remote.api.SportsApi
+import com.sgut.android.nationalfootballleague.data.repository.*
 import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.data.service.LogService
 import com.sgut.android.nationalfootballleague.data.service.StorageService
 import com.sgut.android.nationalfootballleague.data.service.impl.AccountServiceImpl
 import com.sgut.android.nationalfootballleague.data.service.impl.LogServiceImpl
 import com.sgut.android.nationalfootballleague.data.service.impl.StorageServiceImpl
-import com.sgut.android.nationalfootballleague.data.repository.EspnRepository
+import com.sgut.android.nationalfootballleague.domain.location.LocationTracker
+import com.sgut.android.nationalfootballleague.domain.repositories.*
+import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
+import com.sgut.android.nationalfootballleague.domain.use_cases.GetBaseballSituationUseCase
+import com.sgut.android.nationalfootballleague.domain.use_cases.GetScoresUseCase
+import com.sgut.android.nationalfootballleague.domain.use_cases.PlayersMapUseCase
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASE_URL
 import dagger.Binds
 import dagger.Module
@@ -39,45 +49,97 @@ object AppModule {
     fun provideArticleDao(sportsDataBase: SportsDataBase): ArticleDao = sportsDataBase.getArticleDao()
 
     @Provides
+    fun provideTeamDao(sportsDataBase: SportsDataBase): TeamsDao = sportsDataBase.getTeamsDao()
+
+
+
+    @Provides
     @Singleton
     fun provideSportsDatabase(@ApplicationContext context: Context): SportsDataBase =
         Room.databaseBuilder(
             context,
             SportsDataBase::class.java,
             "sports_db"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
+    
 
     @Provides
-    fun provideEspnRepository(
-        espnApi: EspnApi,
-        articleMapper: NetworkToDomainArticleMapper,
-        nflMapper: NetworkToTeamDomainModelMapper,
-        teamDetailNetworkToModelMapper: TeamDetailNetworkToModelMapper,
-        rosterMapper: TeamDetailWithRosterMapper,
-        scoreboardMapper: NetworkScoreboardToDomainModelMapper,
-        gameDetailsToDomainModelMapper: NetworkGameDetailsToDomainModelMapper,
+     fun provideTeamsListRepository(
+        sportsApi: SportsApi,
+        sportsDataBase: SportsDataBase,
+    ): TeamsListsRepository = TeamsListRepositoryImpl(sportsApi, sportsDataBase)
+
+    //Location
+
+    @Provides
+    @Singleton
+    fun provideFusedLocationProviderClient(
+        application: Application
+    ): FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(application)
+
+    @Provides
+    @Singleton
+    fun providesLocationTracker(
+        fusedLocationProviderClient: FusedLocationProviderClient,
+        application: Application
+    ): LocationTracker = DefaultLocationTrackerImpl(
+        fusedLocationProviderClient = fusedLocationProviderClient,
+        application = application
+    )
+
+    @Provides
+    fun provideStandingsRepository(
+        sportsApi: SportsApi,
+        sportsDataBase: SportsDataBase,
+    ): StandingsRepository = StandingsRepositoryImpl(sportsApi, sportsDataBase)
+
+
+    @Provides
+    fun provideTeamsDetailRepository(
+        sportsApi: SportsApi,
         sportsDataBase: SportsDataBase
-    ): EspnRepository = EspnRepository(nflMapper, espnApi, sportsDataBase, articleMapper, teamDetailNetworkToModelMapper, rosterMapper, scoreboardMapper, gameDetailsToDomainModelMapper)
+    ): TeamDetailsRepository = TeamDetailsRepositoryImpl(sportsApi, sportsDataBase)
+
+    @Provides
+    fun provideGameDetailsRepository(
+        sportsApi: SportsApi,
+        sportsDataBase: SportsDataBase
+    ): GameDetailsRepository = GameDetailsRepositoryImpl(sportsApi, sportsDataBase)
 
 
     @Provides
-    fun provideNetworkGameDetailsToDomainModelMapper():  NetworkGameDetailsToDomainModelMapper = NetworkGameDetailsToDomainModelMapper()
+    fun provideScoreboardRepository(
+        sportsApi: SportsApi,
+        sportsDataBase: SportsDataBase
+    ): ScoreboardRepository = ScoreboardRepositoryImpl(sportsApi, sportsDataBase)
+
+    @Provides
+    fun provideArticleRepository(
+        sportsApi: SportsApi,
+        sportsDataBase: SportsDataBase,
+    ): ArticleRepository = ArticleRepositoryImpl(sportsApi, sportsDataBase)
 
 
     @Provides
-    fun provideNetworkToTeamDomMapper():  NetworkToTeamDomainModelMapper = NetworkToTeamDomainModelMapper()
+    fun provideArticleUseCase(
+        articleRepository: ArticleRepository,
+    ): GetArticlesUseCase = GetArticlesUseCase(articleRepository)
 
     @Provides
-    fun provideNetworkToDomainArticleMapper(): NetworkToDomainArticleMapper = NetworkToDomainArticleMapper()
+    fun provideGetBaseballSituationUseCase(
+        gameDetailsRepository: GameDetailsRepository,
+    ): GetBaseballSituationUseCase = GetBaseballSituationUseCase(gameDetailsRepository)
 
     @Provides
-    fun provideRosterMapper(): TeamDetailWithRosterMapper = TeamDetailWithRosterMapper()
+    fun providePlayersMapUseCase(
+        teamDetailsRepository: TeamDetailsRepository
+    ): PlayersMapUseCase = PlayersMapUseCase(teamDetailsRepository )
 
     @Provides
-    fun provideScoreboardMapper(): NetworkScoreboardToDomainModelMapper = NetworkScoreboardToDomainModelMapper()
-
-    @Provides
-    fun provideNetworkToTeamDetailMapper():  TeamDetailNetworkToModelMapper = TeamDetailNetworkToModelMapper()
+    fun provideGetScoresUseCase (
+        scoreboardRepository: ScoreboardRepository
+    ): GetScoresUseCase = GetScoresUseCase(scoreboardRepository)
 
     @Singleton
     @Provides
@@ -86,13 +148,13 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideEspnApi(okHttpClient: OkHttpClient): EspnApi =
+    fun provideEspnApi(okHttpClient: OkHttpClient): SportsApi =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(EspnApi::class.java)
+            .create(SportsApi::class.java)
 
 
     //Firebase things
@@ -101,8 +163,6 @@ object AppModule {
 
     @Provides
     fun firestore(): FirebaseFirestore = Firebase.firestore
-
-    // services things
 
     @Module
     @InstallIn(ViewModelComponent::class)

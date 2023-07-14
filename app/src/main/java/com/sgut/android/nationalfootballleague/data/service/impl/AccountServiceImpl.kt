@@ -2,7 +2,7 @@ package com.sgut.android.nationalfootballleague.data.service.impl
 
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.sgut.android.nationalfootballleague.data.domainmodels.User
+import com.sgut.android.nationalfootballleague.domain.domainmodels.User
 import com.sgut.android.nationalfootballleague.data.service.AccountService
 import com.sgut.android.nationalfootballleague.data.service.trace
 import kotlinx.coroutines.channels.awaitClose

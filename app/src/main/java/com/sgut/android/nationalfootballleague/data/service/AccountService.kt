@@ -1,6 +1,6 @@
 package com.sgut.android.nationalfootballleague.data.service
 
-import com.sgut.android.nationalfootballleague.data.domainmodels.User
+import com.sgut.android.nationalfootballleague.domain.domainmodels.User
 import kotlinx.coroutines.flow.Flow
 
 interface AccountService {
