@@ -23,13 +23,11 @@ class ScoreboardRepositoryImpl @Inject constructor(
     ): ScoreboardModel {
 
         try {
-
-
             val response = sportsApi.getGeneralScoreboard(sport, league)
             if (response.isSuccessful) {
                 return response.body()?.asDomain()!!
             } else {
-                Log.e("scrbrdRepGen-FAIL", response.errorBody().toString())
+                Log.e("getscrboard-FAIL", response.errorBody().toString())
             }
             val result = sportsApi.getGeneralScoreboard(sport, league)
             return result.body()?.asDomain()!!

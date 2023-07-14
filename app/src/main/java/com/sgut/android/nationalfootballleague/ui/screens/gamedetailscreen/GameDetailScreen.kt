@@ -41,7 +41,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.di.GameDetailsTopBar
-import com.sgut.android.nationalfootballleague.domain.domainmodels.GameDetailModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.*
 import com.sgut.android.nationalfootballleague.ui.commoncomps.*
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.*
@@ -973,9 +972,6 @@ fun ProbablesList(list: List<GameDetailsCompetitorModel>, modifier: Modifier) {
     DefaultCard(modifier = Modifier) {
         CardHeaderText(text = "Probables")
         NormalDivider()
-        Text(text = list.first().probables.getOrNull(1)?.displayName.toString(),
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold)
         Spacer(modifier = modifier.height(16.dp))
         PitcherMatchUp(competitor = list.first(), modifier = modifier)
         RightToLeftLayout {
