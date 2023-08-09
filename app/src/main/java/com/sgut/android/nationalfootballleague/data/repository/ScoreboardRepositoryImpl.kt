@@ -8,6 +8,7 @@ import com.sgut.android.nationalfootballleague.data.remote.network_responses.bas
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import javax.inject.Inject
+//TODO  - - Inject Dispatchers
 
 class ScoreboardRepositoryImpl @Inject constructor(
     val sportsApi: SportsApi,
@@ -73,7 +74,6 @@ class ScoreboardRepositoryImpl @Inject constructor(
             return result.body()?.asDomain()!!
         } else {
             Log.e("getGeneralScoreboardByDate-FAIL", result.errorBody().toString())
-
         }
         val response = sportsApi.getGeneralScoreboardWithDate(sport, league, date)
         return response.body()?.asDomain()!!

@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class GetScoresUseCase @Inject constructor(
      private val scoreboardRepository: ScoreboardRepository,
-     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     suspend operator fun invoke (sport: String, league: String): ScoreboardModel =
         withContext(defaultDispatcher) {

@@ -14,6 +14,7 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule
 import com.sgut.android.nationalfootballleague.domain.domainmodels.team_stats_models.TeamStatsModel
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamDetailsRepository
 import javax.inject.Inject
+//TODO  - - Inject Dispatchers
 
 class TeamDetailsRepositoryImpl @Inject constructor(
     val sportsApi: SportsApi,
@@ -24,7 +25,6 @@ class TeamDetailsRepositoryImpl @Inject constructor(
     ): FullTeamDetailWithRosterModel {
         try {
             val result = sportsApi.getSpecificTeam(sport, league, team)
-//            Log.e("SPECIFIC_TEAM good", result.toString())
             return result.body()?.asDomainModel()?.fullTeam ?: FullTeamDetailWithRosterModel()
         }
         catch (e: Exception) {
@@ -37,7 +37,6 @@ class TeamDetailsRepositoryImpl @Inject constructor(
     ): List<GameDetailsAthleteDetailsModel> {
         try {
             val result = sportsApi.getSpecificTeam(sport, league, team).body()?.fullTeam
-//            Log.e("SPECIFIC_TEAM-deetsMap", result.toString())
 
             return result?.athletes?.map { it.asGameDetailsAthlete() } ?: listOf()
         }
@@ -52,8 +51,6 @@ class TeamDetailsRepositoryImpl @Inject constructor(
     ): ScheduleDomainModel {
         try {
             val result = sportsApi.getTeamSchedule(sport, league, teamId)
-//            Log.e("TEAM_Sched good", result.toString())
-
             if (result.isSuccessful) {
                 return result.body()?.asDomain() !!
             }
@@ -72,7 +69,7 @@ class TeamDetailsRepositoryImpl @Inject constructor(
         try {
             val result = sportsApi.getStats(sport, league, team)
             if(result.isSuccessful) {
-                Log.e("TEAM_STats Good", result.toString())
+                Log.e("TEAM_Stats Good", result.toString())
 
                 return result.body()?.asDomain() !!
             }

@@ -11,7 +11,7 @@ import javax.inject.Inject
 //game details and full team information - > Athletes map
 class PlayersMapUseCase @Inject constructor(
     private val teamDetailsRepository: TeamDetailsRepository,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO,
     ) {
     val map: MutableMap<String, GameDetailsAthleteDetailsModel> = mutableMapOf()
 

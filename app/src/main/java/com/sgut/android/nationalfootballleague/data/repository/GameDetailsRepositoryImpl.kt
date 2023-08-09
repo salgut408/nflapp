@@ -7,6 +7,7 @@ import com.sgut.android.nationalfootballleague.data.remote.api.SportsApi
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsModel
 import com.sgut.android.nationalfootballleague.domain.repositories.GameDetailsRepository
 import javax.inject.Inject
+//TODO  - - Inject Dispatchers
 
 class GameDetailsRepositoryImpl @Inject constructor(
     val sportsApi: SportsApi,

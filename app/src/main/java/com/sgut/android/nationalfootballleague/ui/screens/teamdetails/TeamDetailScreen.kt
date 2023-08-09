@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sgut.android.nationalfootballleague.di.ToolBar2
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.RecordModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.*
@@ -40,14 +40,12 @@ fun TeamDetailScreen(
 
     teamDetailViewModel.getFullTeamDetails(team, sport, league)
 
-    val teamDetailUiState by teamDetailViewModel.teamDetailUiState.collectAsState()
+    val teamDetailUiState by teamDetailViewModel.teamDetailUiState.collectAsStateWithLifecycle()
     val teamDetail = teamDetailUiState.currentTeamDetails
     val teamSchedule = teamDetailUiState.schedule
     val roster = teamDetailUiState.atheletes
     val stats = teamDetailUiState.stats
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior (rememberTopAppBarState())
-
-
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -63,11 +61,11 @@ fun TeamDetailScreen(
             NewTeamDetailCard(
                 team = teamDetail,
                 roster= roster,
-                modifier = Modifier,
+                modifier = Modifier.padding(padding),
                 schedule = teamSchedule,
                 stats = stats
             )
-            padding.toString()
+
         }
     )
 

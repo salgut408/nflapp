@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class GetBaseballSituationUseCase @Inject constructor(
     private val gameDetailsRepository: GameDetailsRepository,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     suspend operator fun invoke(sport: String, league: String, event: String){
         withContext(defaultDispatcher) {

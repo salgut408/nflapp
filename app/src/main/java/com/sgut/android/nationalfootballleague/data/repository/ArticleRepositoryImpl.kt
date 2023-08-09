@@ -6,19 +6,30 @@ import com.sgut.android.nationalfootballleague.data.remote.api.SportsApi
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticleDomianModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ArticleRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
+//TODO  - - Inject Dispatchers
 class ArticleRepositoryImpl @Inject constructor(
     val sportsApi: SportsApi,
     val sportsDataBase: SportsDataBase,
+    val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+
 ) : ArticleRepository {
     override suspend fun getArticles(sport: String, league: String): ArticlesListModel {
-        val articleResponse = sportsApi.getArticles(sport, league)
+        withContext(ioDispatcher) {
 
-        if (articleResponse.isSuccessful) {
-            return articleResponse.body()?.asDomain() ?: ArticlesListModel()
+            val articleResponse = sportsApi.getArticles(sport, league)
+
+            if (articleResponse.isSuccessful) {
+                return@withContext articleResponse.body()?.asDomain() ?: ArticlesListModel()
+            }
+            return@withContext articleResponse.body()?.asDomain() ?: ArticlesListModel()
         }
-        return articleResponse.body()?.asDomain() ?: ArticlesListModel()    }
+        return sportsApi.getArticles(sport, league).body()?.asDomain() ?: ArticlesListModel()
+    }
+
 
     override suspend fun getGameArticle(sport: String, league: String): List<ArticleDomianModel> {
         TODO("Not yet implemented")

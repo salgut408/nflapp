@@ -17,5 +17,4 @@ abstract class SportsDataBase: RoomDatabase() {
     abstract fun  getArticleDao(): ArticleDao
 
     abstract fun  getTeamsDao(): TeamsDao
-
 }

@@ -36,6 +36,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -68,7 +70,8 @@ object AppModule {
      fun provideTeamsListRepository(
         sportsApi: SportsApi,
         sportsDataBase: SportsDataBase,
-    ): TeamsListsRepository = TeamsListRepositoryImpl(sportsApi, sportsDataBase)
+
+    ): TeamsListsRepository = TeamsListRepositoryImpl(sportsApi, sportsDataBase, )
 
     //Location
 
@@ -115,10 +118,14 @@ object AppModule {
     ): ScoreboardRepository = ScoreboardRepositoryImpl(sportsApi, sportsDataBase)
 
     @Provides
+    fun provideIODispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+    @Provides
     fun provideArticleRepository(
         sportsApi: SportsApi,
         sportsDataBase: SportsDataBase,
-    ): ArticleRepository = ArticleRepositoryImpl(sportsApi, sportsDataBase)
+        ioDispatcher: CoroutineDispatcher
+    ): ArticleRepository = ArticleRepositoryImpl(sportsApi, sportsDataBase, ioDispatcher)
 
 
     @Provides
