@@ -7,14 +7,13 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.A
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ArticleRepository
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-//TODO  - - Inject Dispatchers
+
 class ArticleRepositoryImpl @Inject constructor(
     val sportsApi: SportsApi,
     val sportsDataBase: SportsDataBase,
-    val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    val ioDispatcher: CoroutineDispatcher
 
 ) : ArticleRepository {
     override suspend fun getArticles(sport: String, league: String): ArticlesListModel {

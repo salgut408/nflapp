@@ -7,78 +7,80 @@ import com.sgut.android.nationalfootballleague.data.remote.api.SportsApi
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.baseball_scoreboard.BaseballScoreBoardNetwork
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
-//TODO  - - Inject Dispatchers
 
 class ScoreboardRepositoryImpl @Inject constructor(
     val sportsApi: SportsApi,
     val sportsDataBase: SportsDataBase,
-) : ScoreboardRepository {
-
-    //    TODO handle null check / try's better '
-
+    val ioDispatcher: CoroutineDispatcher,
+    ) : ScoreboardRepository {
 
     override suspend fun getGeneralScoreboard(
         sport: String,
         league: String,
-    ): ScoreboardModel {
-
+    ): ScoreboardModel  =
         try {
-            val response = sportsApi.getGeneralScoreboard(sport, league)
-            if (response.isSuccessful) {
-                return response.body()?.asDomain()!!
-            } else {
-                Log.e("getscrboard-FAIL", response.errorBody().toString())
+            withContext(ioDispatcher){
+                val response = sportsApi.getGeneralScoreboard(sport, league)
+                if (response.isSuccessful) {
+                    return@withContext response.body()?.asDomain()!!
+                } else {
+                    Log.e("getscrboard-FAIL", response.errorBody().toString())
+                    ScoreboardModel()
+                }
             }
-            val result = sportsApi.getGeneralScoreboard(sport, league)
-            return result.body()?.asDomain()!!
-        } catch (e: Exception) {
-            Log.e("BAD ", e.stackTraceToString())
         }
-        return ScoreboardModel()
-    }
+        catch (e: Exception) {
+            Log.e("BAD ", e.stackTraceToString())
+             ScoreboardModel()
+
+        }
+
 
     override suspend fun getCollegeBasketballScoreboard(
         sport: String,
         league: String,
         limit: String,
-    ): ScoreboardModel {
-        val response = sportsApi.getCollegeBasketballScoreboard(sport, league, limit)
-        if (response.isSuccessful) {
-            return response.body()?.asDomain()!!
-        } else {
-            Log.e("scrbrdRepmarch-FAIL", response.errorBody().toString())
+    ): ScoreboardModel =
+        withContext(ioDispatcher) {
+            val response = sportsApi.getCollegeBasketballScoreboard(sport, league, limit)
+            if (response.isSuccessful) {
+                return@withContext response.body()?.asDomain()!!
+            } else {
+                Log.e("scrbrdRepmarch-FAIL", response.errorBody().toString())
+                ScoreboardModel()
+            }
         }
-        val result = sportsApi.getCollegeBasketballScoreboard(sport, league, limit)
-        return result.body()?.asDomain()!!
-    }
+
+
 
     override suspend fun getBaseballScoreboard(
         sport: String,
         league: String,
-    ): BaseballScoreBoardNetwork {
+    ): BaseballScoreBoardNetwork =
+
+        withContext(ioDispatcher){
         val response = sportsApi.getBaseballScoreboard(sport, league)
         if (response.isSuccessful) {
-            return response.body() ?: BaseballScoreBoardNetwork()
+            return@withContext response.body() ?: BaseballScoreBoardNetwork()
         }
-        return BaseballScoreBoardNetwork()
+         BaseballScoreBoardNetwork()
     }
 
     override suspend fun getGeneralScoreboardByDate(
         sport: String,
         league: String,
         date: String,
-    ): ScoreboardModel {
-        val result = sportsApi.getGeneralScoreboardWithDate(sport, league, date)
-        if (result.isSuccessful){
-            return result.body()?.asDomain()!!
-        } else {
-            Log.e("getGeneralScoreboardByDate-FAIL", result.errorBody().toString())
+    ): ScoreboardModel  =
+        withContext(ioDispatcher) {
+            val result = sportsApi.getGeneralScoreboardWithDate(sport, league, date)
+            if (result.isSuccessful) {
+                return@withContext result.body()?.asDomain()!!
+            } else {
+                Log.e("getGeneralScoreboardByDate-FAIL", result.errorBody().toString())
+                ScoreboardModel()
+            }
         }
-        val response = sportsApi.getGeneralScoreboardWithDate(sport, league, date)
-        return response.body()?.asDomain()!!
-
-    }
-
-
 }

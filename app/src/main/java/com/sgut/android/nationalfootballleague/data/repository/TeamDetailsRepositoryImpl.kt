@@ -1,7 +1,6 @@
 package com.sgut.android.nationalfootballleague.data.repository
 
 import android.util.Log
-import com.sgut.android.nationalfootballleague.asDomain
 import com.sgut.android.nationalfootballleague.asDomainModel
 import com.sgut.android.nationalfootballleague.asGameDetailsAthlete
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
@@ -13,25 +12,31 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_te
 import com.sgut.android.nationalfootballleague.domain.domainmodels.team_schedule.ScheduleDomainModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.team_stats_models.TeamStatsModel
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamDetailsRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 //TODO  - - Inject Dispatchers
 
 class TeamDetailsRepositoryImpl @Inject constructor(
     val sportsApi: SportsApi,
     val sportsDataBase: SportsDataBase,
+    val ioDispatcher: CoroutineDispatcher
 ) : TeamDetailsRepository {
 
     override suspend fun getSpecificTeam(sport: String, league: String, team: String,
-    ): FullTeamDetailWithRosterModel {
+    ): FullTeamDetailWithRosterModel =
         try {
-            val result = sportsApi.getSpecificTeam(sport, league, team)
-            return result.body()?.asDomainModel()?.fullTeam ?: FullTeamDetailWithRosterModel()
+            withContext(ioDispatcher) {
+                val result = sportsApi.getSpecificTeam(sport, league, team)
+                return@withContext result.body()?.asDomainModel()?.fullTeam ?: FullTeamDetailWithRosterModel()
+            }
+
         }
         catch (e: Exception) {
             Log.e("SPECIFIC_TEAM", e.cause .toString())
+            FullTeamDetailWithRosterModel()
         }
-        return sportsApi.getSpecificTeam(sport, league, team).body()?.fullTeam?.asDomain() ?: FullTeamDetailWithRosterModel()
-    }
+
 
     override suspend fun getSpecificTeamRosterInGameDetails(sport: String, league: String, team: String,
     ): List<GameDetailsAthleteDetailsModel> {

@@ -53,8 +53,6 @@ object AppModule {
     @Provides
     fun provideTeamDao(sportsDataBase: SportsDataBase): TeamsDao = sportsDataBase.getTeamsDao()
 
-
-
     @Provides
     @Singleton
     fun provideSportsDatabase(@ApplicationContext context: Context): SportsDataBase =
@@ -64,61 +62,46 @@ object AppModule {
             "sports_db"
         ).fallbackToDestructiveMigration()
             .build()
-    
+
+    // repositories
 
     @Provides
      fun provideTeamsListRepository(
         sportsApi: SportsApi,
         sportsDataBase: SportsDataBase,
+        ioDispatcher: CoroutineDispatcher
+    ): TeamsListsRepository = TeamsListRepositoryImpl(sportsApi, sportsDataBase, ioDispatcher)
 
-    ): TeamsListsRepository = TeamsListRepositoryImpl(sportsApi, sportsDataBase, )
-
-    //Location
-
-    @Provides
-    @Singleton
-    fun provideFusedLocationProviderClient(
-        application: Application
-    ): FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(application)
-
-    @Provides
-    @Singleton
-    fun providesLocationTracker(
-        fusedLocationProviderClient: FusedLocationProviderClient,
-        application: Application
-    ): LocationTracker = DefaultLocationTrackerImpl(
-        fusedLocationProviderClient = fusedLocationProviderClient,
-        application = application
-    )
 
     @Provides
     fun provideStandingsRepository(
         sportsApi: SportsApi,
         sportsDataBase: SportsDataBase,
-    ): StandingsRepository = StandingsRepositoryImpl(sportsApi, sportsDataBase)
+        ioDispatcher: CoroutineDispatcher
+    ): StandingsRepository = StandingsRepositoryImpl(sportsApi, sportsDataBase, ioDispatcher)
 
 
     @Provides
     fun provideTeamsDetailRepository(
         sportsApi: SportsApi,
-        sportsDataBase: SportsDataBase
-    ): TeamDetailsRepository = TeamDetailsRepositoryImpl(sportsApi, sportsDataBase)
+        sportsDataBase: SportsDataBase,
+        ioDispatcher: CoroutineDispatcher
+    ): TeamDetailsRepository = TeamDetailsRepositoryImpl(sportsApi, sportsDataBase, ioDispatcher)
 
     @Provides
     fun provideGameDetailsRepository(
         sportsApi: SportsApi,
-        sportsDataBase: SportsDataBase
-    ): GameDetailsRepository = GameDetailsRepositoryImpl(sportsApi, sportsDataBase)
+        sportsDataBase: SportsDataBase,
+        ioDispatcher: CoroutineDispatcher
+    ): GameDetailsRepository = GameDetailsRepositoryImpl(sportsApi, sportsDataBase, ioDispatcher)
 
 
     @Provides
     fun provideScoreboardRepository(
         sportsApi: SportsApi,
-        sportsDataBase: SportsDataBase
-    ): ScoreboardRepository = ScoreboardRepositoryImpl(sportsApi, sportsDataBase)
-
-    @Provides
-    fun provideIODispatcher(): CoroutineDispatcher = Dispatchers.IO
+        sportsDataBase: SportsDataBase,
+        ioDispatcher: CoroutineDispatcher
+    ): ScoreboardRepository = ScoreboardRepositoryImpl(sportsApi, sportsDataBase, ioDispatcher)
 
     @Provides
     fun provideArticleRepository(
@@ -127,26 +110,35 @@ object AppModule {
         ioDispatcher: CoroutineDispatcher
     ): ArticleRepository = ArticleRepositoryImpl(sportsApi, sportsDataBase, ioDispatcher)
 
+    @Provides
+    fun provideIODispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+
+
 
     @Provides
     fun provideArticleUseCase(
         articleRepository: ArticleRepository,
-    ): GetArticlesUseCase = GetArticlesUseCase(articleRepository)
+        ioDispatcher: CoroutineDispatcher
+    ): GetArticlesUseCase = GetArticlesUseCase(articleRepository,ioDispatcher)
 
     @Provides
     fun provideGetBaseballSituationUseCase(
         gameDetailsRepository: GameDetailsRepository,
-    ): GetBaseballSituationUseCase = GetBaseballSituationUseCase(gameDetailsRepository)
+        ioDispatcher: CoroutineDispatcher
+    ): GetBaseballSituationUseCase = GetBaseballSituationUseCase(gameDetailsRepository, ioDispatcher)
 
     @Provides
     fun providePlayersMapUseCase(
-        teamDetailsRepository: TeamDetailsRepository
-    ): PlayersMapUseCase = PlayersMapUseCase(teamDetailsRepository )
+        teamDetailsRepository: TeamDetailsRepository,
+        ioDispatcher: CoroutineDispatcher
+    ): PlayersMapUseCase = PlayersMapUseCase(teamDetailsRepository, ioDispatcher )
 
     @Provides
     fun provideGetScoresUseCase (
-        scoreboardRepository: ScoreboardRepository
-    ): GetScoresUseCase = GetScoresUseCase(scoreboardRepository)
+        scoreboardRepository: ScoreboardRepository,
+        ioDispatcher: CoroutineDispatcher
+    ): GetScoresUseCase = GetScoresUseCase(scoreboardRepository, ioDispatcher)
 
     @Singleton
     @Provides
@@ -171,6 +163,24 @@ object AppModule {
     @Provides
     fun firestore(): FirebaseFirestore = Firebase.firestore
 
+    //Location
+
+    @Provides
+    @Singleton
+    fun provideFusedLocationProviderClient(
+        application: Application
+    ): FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(application)
+
+    @Provides
+    @Singleton
+    fun providesLocationTracker(
+        fusedLocationProviderClient: FusedLocationProviderClient,
+        application: Application
+    ): LocationTracker = DefaultLocationTrackerImpl(
+        fusedLocationProviderClient = fusedLocationProviderClient,
+        application = application
+    )
+
     @Module
     @InstallIn(ViewModelComponent::class)
     abstract class ServiceModule {
@@ -182,6 +192,8 @@ object AppModule {
 
 
     }
+
+
 
 
 

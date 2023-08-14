@@ -1,13 +1,12 @@
 package com.sgut.android.nationalfootballleague.data.repository
 
-import android.util.Log
 import com.sgut.android.nationalfootballleague.asDomainModel
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.SportsApi
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.*
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamsListsRepository
 import com.sgut.android.nationalfootballleague.toDomain
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 //TODO  - - Inject Dispatchers
@@ -16,21 +15,25 @@ import javax.inject.Inject
 class TeamsListRepositoryImpl @Inject constructor(
     val sportsApi: SportsApi,
     val sportsDataBase: SportsDataBase,
+    val ioDispatcher: CoroutineDispatcher
 ) : TeamsListsRepository {
+
+
 
     override suspend fun getFullSportLeagueAndTeamsList(
         sport: String,
         league: String,
-    ): FullTeamsListsModel {
+    ): FullTeamsListsModel =
         try {
-            val result = sportsApi.getTeamsListForLeague(sport, league).body()?.toDomain()!!
-            return result
+            withContext(ioDispatcher){
+                val result = sportsApi.getTeamsListForLeague(sport, league).body()?.toDomain()!!
+                return@withContext result
+            }
         } catch (e: Exception) {
-            Log.e("LISTS", e.message.toString())
+            FullTeamsListsModel(SportModel())
         }
-        val result = sportsApi.getTeamsListForLeague(sport, league).body()?.toDomain()!!
-        return result
-    }
+
+
 
     override suspend fun getSport(sport: String, league: String): SportModel {
         val result =
@@ -52,7 +55,7 @@ class TeamsListRepositoryImpl @Inject constructor(
     }
 
     override suspend fun storeTeamsInSportsDatabaseFullInfoTable(teams: List<TeamModel>, sport: String, league: String, leagueAbrv: String) {
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             sportsDataBase.getTeamsDao().addAllTeams(teams.map { it.asDbObj(sport, league, leagueAbrv) })
         }
     }

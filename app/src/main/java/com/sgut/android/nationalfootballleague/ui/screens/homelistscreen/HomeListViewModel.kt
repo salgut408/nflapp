@@ -11,6 +11,7 @@ import com.sgut.android.nationalfootballleague.domain.repositories.TeamsListsRep
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NFL
+import com.sgut.android.nationalfootballleague.utils.printToLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -75,6 +76,7 @@ class HomeListViewModel @Inject constructor(
     fun setDifferentTeams(sport: String, league: String) = viewModelScope.launch {
         val fullTeamsList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(sport, league)
         val news = getArticles(sport, league)
+        news.printToLog("NEWS ARTICLE")
         addTeamsToDb(
             teams = fullTeamsList.sport.league?.teams ?: listOf(),
             sport = fullTeamsList.sport.name,
