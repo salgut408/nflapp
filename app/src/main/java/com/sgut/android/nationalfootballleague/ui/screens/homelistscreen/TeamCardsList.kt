@@ -33,6 +33,7 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.standings_screen.Standings
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.ATP
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASEBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASKETBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.CHAMPIONS
@@ -51,6 +52,7 @@ import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_FO
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NFL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NHL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.SOCCER
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.TENNIS
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.UEFA
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.WBC
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.WNBA
@@ -131,12 +133,12 @@ fun HomeTeamCardsListScreen(
                         }
                     }
 
-//                    item {
-//                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(TENNIS, ATP) }) {
-//                            Text(stringResource(R.string.atp),
-//                                style = MaterialTheme.typography.labelSmall)
-//                        }
-//                    }
+                    item {
+                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(TENNIS, ATP) }) {
+                            Text(stringResource(R.string.atp),
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
 
                     item {
                         OutlinedButton(
