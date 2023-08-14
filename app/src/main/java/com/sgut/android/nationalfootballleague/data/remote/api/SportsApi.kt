@@ -126,13 +126,22 @@ interface SportsApi {
     @GET("site/v2/sports/{sport}/{league}/teams/{team}/statistics")
     suspend fun getStats(
         @Path("sport")
-
         sport: String? = null,
         @Path("league")
         league: String? = null,
         @Path("team")
         team: String? = null
     ): Response<NetworkStat>
+
+
+
+    @GET("v2/sports/{sport}/{league}/standings")
+    suspend fun getTennisScoreboard(
+        @Path("sport")
+        sport: String? = null,
+        @Path("league")
+        league: String? = null,
+    ): Response<StandingsNetworkResponse>
 
 //    TODO get standings - has type Parameters 0 = overall, 1 = wildcard, 2 = Expanded Standings, 3 = "Vs. Division Standings", 4 = Monthly Standings
 

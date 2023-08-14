@@ -38,6 +38,7 @@ import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASEBAL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASKETBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.CHAMPIONS
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.EPL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.F1
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FIFA
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FRA
@@ -51,6 +52,7 @@ import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BA
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_FOOTBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NFL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NHL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.RACING
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.SOCCER
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.TENNIS
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.UEFA
@@ -267,6 +269,13 @@ fun HomeTeamCardsListScreen(
                         }) {
                             LabelText(stringResId = R.string.XFL_League)
 
+                        }
+                    }
+                    item {
+                        OutlinedButton(onClick = {
+                            homeListViewModel.setDifferentTeams(RACING, F1)
+                        }) {
+                            LabelText(stringResId = R.string.F1_RACING)
                         }
                     }
                 }
