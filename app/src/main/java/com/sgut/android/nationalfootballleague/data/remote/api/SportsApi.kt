@@ -6,6 +6,7 @@ import com.sgut.android.nationalfootballleague.data.remote.network_responses.ful
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.standings.StandingsNetworkResponse
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.team_schedule.ScheduleResponseNetwork
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.team_stats.NetworkStat
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.tennis_scoreboard_response.TennisScoresNetwork
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -135,13 +136,13 @@ interface SportsApi {
 
 
 
-    @GET("v2/sports/{sport}/{league}/standings")
+    @GET("v2/sports/{sport}/{league}/scoreboard")
     suspend fun getTennisScoreboard(
         @Path("sport")
         sport: String? = null,
         @Path("league")
         league: String? = null,
-    ): Response<StandingsNetworkResponse>
+    ): Response<TennisScoresNetwork>
 
 //    TODO get standings - has type Parameters 0 = overall, 1 = wildcard, 2 = Expanded Standings, 3 = "Vs. Division Standings", 4 = Monthly Standings
 
