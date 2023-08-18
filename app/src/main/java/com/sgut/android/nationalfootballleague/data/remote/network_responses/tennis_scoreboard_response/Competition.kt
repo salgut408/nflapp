@@ -2,18 +2,15 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.CompetitionTennisModel
 
 data class Competition(
-    @SerializedName("broadcasts")
-    val broadcasts: List<Any> = listOf(),
     @SerializedName("competitors")
     val competitors: List<Competitor> = listOf(),
     @SerializedName("date")
     val date: String = "",
     @SerializedName("format")
     val format: Format = Format(),
-    @SerializedName("geoBroadcasts")
-    val geoBroadcasts: List<Any> = listOf(),
     @SerializedName("id")
     val id: String = "",
     @SerializedName("major")
@@ -43,3 +40,26 @@ data class Competition(
     @SerializedName("wasSuspended")
     val wasSuspended: Boolean = false
 )
+
+fun Competition.asDomain(): CompetitionTennisModel {
+    return CompetitionTennisModel(
+        competitors = competitors.map { it.asDomain() },
+        date = date,
+        format = format.asDomain(),
+        id = id,
+        major = major,
+        notes = notes.map { it.asDomain() },
+        recent = recent,
+        round = round.asDomain(),
+        situation = situation.asDomain(),
+        startDate = startDate,
+        status = status.asDomain(),
+        timeValid = timeValid,
+        tournamentId = tournamentId,
+        type = type.asDomain(),
+        uid = uid,
+        venue = venue.asDomain(),
+        wasSuspended = wasSuspended,
+
+    )
+}

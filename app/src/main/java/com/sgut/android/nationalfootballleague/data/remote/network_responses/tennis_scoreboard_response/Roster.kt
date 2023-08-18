@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.RosterTennisModel
 
 data class Roster(
     @SerializedName("athletes")
@@ -11,3 +12,11 @@ data class Roster(
     @SerializedName("shortDisplayName")
     val shortDisplayName: String = ""
 )
+
+fun Roster.asDomain(): RosterTennisModel{
+    return RosterTennisModel(
+        athletes = athletes.map { it.asDomain() },
+        displayName = displayName,
+        shortDisplayName = shortDisplayName
+    )
+}

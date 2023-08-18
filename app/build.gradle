@@ -98,6 +98,7 @@ dependencies {
     //hilt
     implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    annotationProcessor "com.google.dagger:dagger-android-processor:2.11"
 
     //network
     implementation 'com.google.code.gson:gson:2.9.0'
@@ -130,11 +131,17 @@ dependencies {
 
 //    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
+    // constraint layout
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+
+
 
     // GoogleMobileService
     implementation("com.google.android.gms:play-services-location:21.0.1")
     // Accompanist
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.31.1-alpha"
     implementation "com.google.accompanist:accompanist-placeholder:0.31.1-alpha"
+
+    
 
 }

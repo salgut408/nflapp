@@ -17,7 +17,17 @@ class GetScoresUseCase @Inject constructor(
                 val scoreboard = scoreboardRepository.getCollegeBasketballScoreboard(sport = sport, league = league, limit = "200")
                 return@withContext scoreboard
             }
+//            else if (league == ATP) {
+//                val scoreBoard = scoreboardRepository.getTennisScoreBoard(sport = sport, league = league)
+//                return@withContext scoreBoard
+//            }
             val scoreboard = scoreboardRepository.getGeneralScoreboard(sport = sport, league = league)
             return@withContext scoreboard
         }
+}
+
+
+sealed class RepoResult<out T : Any> {
+    data class Success<out T: Any>(val data: T): RepoResult<T>()
+    data class Error(val message: String): RepoResult<Nothing>()
 }

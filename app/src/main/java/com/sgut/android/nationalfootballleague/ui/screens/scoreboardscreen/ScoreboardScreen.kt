@@ -57,11 +57,15 @@ fun ScoreboardScreen(
     scoreboardViewModel.loadGenericScoreboard(sport, league)
 
 
+
     val newUiState by scoreboardViewModel.scoreboardModelState.collectAsStateWithLifecycle()
     val news = newUiState.currentArticles
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val sport = newUiState.currentSport
     val league = newUiState.currentLeague
+    
+    val tennis by scoreboardViewModel.tennis.collectAsStateWithLifecycle()
+
 
 
     Scaffold(
@@ -88,6 +92,10 @@ fun ScoreboardScreen(
                 verticalArrangement = Arrangement.Center
             ) {
 
+
+                
+                     
+                Text(text = tennis.league.name)
 
 
 

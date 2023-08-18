@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.FlagTennisModel
 
 data class Flag(
     @SerializedName("alt")
@@ -11,3 +12,10 @@ data class Flag(
     @SerializedName("rel")
     val rel: List<String> = listOf()
 )
+fun Flag.asDomain(): FlagTennisModel {
+    return FlagTennisModel(
+        alt = alt,
+        href = href,
+        rel = rel
+    )
+}

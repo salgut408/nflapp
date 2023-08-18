@@ -29,6 +29,9 @@ class HomeListViewModel @Inject constructor(
     private val _listUiState = MutableStateFlow(ListUiState())
     val listUiState: StateFlow<ListUiState> = _listUiState.asStateFlow()
 
+    private val _errorMessage = MutableStateFlow<String?>(null)
+    val errorMessage: StateFlow<String?> = _errorMessage
+
 
     init {
 //        to start
@@ -53,7 +56,7 @@ class HomeListViewModel @Inject constructor(
             val news = getArticles(FOOTBALL, NFL)
 
             addTeamsToDb(
-                teams = fullTeamsList.sport.league?.teams ?: listOf(),
+                teams = fullTeamsList .sport.league?.teams ?: listOf(),
                 sport = fullTeamsList.sport.name,
                 league = fullTeamsList.sport.league?.name ?: "",
                 leagueAbrv = fullTeamsList.sport.league?.abbreviation ?: ""
@@ -69,28 +72,38 @@ class HomeListViewModel @Inject constructor(
         }
         catch (e: Exception) {
             Log.e("HOME_VM", e.stackTraceToString())
+            _errorMessage.emit("An error happened loading all NFL Teams: ${e.message}")
         }
+
     }
 
 
     fun setDifferentTeams(sport: String, league: String) = viewModelScope.launch {
         val fullTeamsList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(sport, league)
         val news = getArticles(sport, league)
+
         news.printToLog("NEWS ARTICLE")
-        addTeamsToDb(
-            teams = fullTeamsList.sport.league?.teams ?: listOf(),
-            sport = fullTeamsList.sport.name,
-            league = fullTeamsList.sport.league?.name ?: "",
-            leagueAbrv = fullTeamsList.sport.league?.abbreviation ?: ""
-        )
-        setListUiState(
-            currentTeams = fullTeamsList.sport.league?.teams ?: listOf(),
-            currentSport = fullTeamsList.sport.name,
-            currentLeague = fullTeamsList.sport.league?.slug ?: "",
-            fullTeamInfo = fullTeamsList,
-            sportModel = fullTeamsList.sport,
-            news = news
-        )
+        try {
+            addTeamsToDb(
+                teams = fullTeamsList.sport.league?.teams ?: listOf(),
+                sport = fullTeamsList.sport.name,
+                league = fullTeamsList.sport.league?.name ?: "",
+                leagueAbrv = fullTeamsList.sport.league?.abbreviation ?: ""
+            )
+            setListUiState(
+                currentTeams = fullTeamsList.sport.league?.teams ?: listOf(),
+                currentSport = fullTeamsList.sport.name,
+                currentLeague = fullTeamsList.sport.league?.slug ?: "",
+                fullTeamInfo = fullTeamsList,
+                sportModel = fullTeamsList.sport,
+                news = news
+            )
+        } catch (e: Exception){
+            _errorMessage.emit("An error happened loading different  team: ${e.message}")
+
+        }
+
+
     }
 
 

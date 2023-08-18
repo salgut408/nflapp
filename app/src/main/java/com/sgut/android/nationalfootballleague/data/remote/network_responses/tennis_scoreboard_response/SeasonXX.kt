@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.SeasonTennisModelXX
 
 data class SeasonXX(
     @SerializedName("type")
@@ -9,3 +10,10 @@ data class SeasonXX(
     @SerializedName("year")
     val year: Int = 0
 )
+
+fun SeasonXX.asDomain(): SeasonTennisModelXX{
+    return SeasonTennisModelXX(
+        type = type,
+        year = year
+    )
+}

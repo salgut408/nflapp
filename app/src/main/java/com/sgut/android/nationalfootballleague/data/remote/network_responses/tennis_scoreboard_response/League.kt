@@ -2,6 +2,9 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.LeagueTennisModel
+import com.sgut.android.nationalfootballleague.utils.formatTo
+import com.sgut.android.nationalfootballleague.utils.toDate
 
 data class League(
     @SerializedName("abbreviation")
@@ -31,3 +34,21 @@ data class League(
     @SerializedName("uid")
     val uid: String = ""
 )
+
+fun League.asDomain(): LeagueTennisModel{
+    return LeagueTennisModel(
+        abbreviation = abbreviation,
+        calendar = calendar.map { it.toDate()?.formatTo("K:mm aa") ?: "" },
+        calendarEndDate = calendarEndDate,
+        calendarIsWhitelist = calendarIsWhitelist,
+        calendarStartDate = calendarStartDate,
+        calendarType = calendarType,
+        id = id,
+        logos = logos.map { it.asDomain() },
+        midsizeName = midsizeName,
+        name = name,
+        season = season.asDomain(),
+        slug = slug,
+        uid = uid
+    )
+}

@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.data.repository
 
+import android.util.Log
 import com.sgut.android.nationalfootballleague.asDomainModel
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.SportsApi
@@ -9,7 +10,6 @@ import com.sgut.android.nationalfootballleague.toDomain
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-//TODO  - - Inject Dispatchers
 
 // interatcs and gets sports id, league id
 class TeamsListRepositoryImpl @Inject constructor(
@@ -17,20 +17,20 @@ class TeamsListRepositoryImpl @Inject constructor(
     val sportsDataBase: SportsDataBase,
     val ioDispatcher: CoroutineDispatcher
 ) : TeamsListsRepository {
-
-
-
     override suspend fun getFullSportLeagueAndTeamsList(
         sport: String,
         league: String,
     ): FullTeamsListsModel =
+
         try {
             withContext(ioDispatcher){
                 val result = sportsApi.getTeamsListForLeague(sport, league).body()?.toDomain()!!
                 return@withContext result
             }
         } catch (e: Exception) {
-            FullTeamsListsModel(SportModel())
+            FullTeamsListsModel(SportModel()).apply {
+                Log.d("team_list_repo", e.stackTraceToString())
+            }
         }
 
 
@@ -61,4 +61,10 @@ class TeamsListRepositoryImpl @Inject constructor(
     }
 
 
+}
+
+
+sealed class Result<out T : Any>{
+    data class Success<out T : Any>(val data: T): Result<T>()
+    data class Error(val message: String): Result<Nothing>()
 }

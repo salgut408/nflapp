@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.EventTennisModel
 
 data class Event(
     @SerializedName("date")
@@ -12,14 +13,12 @@ data class Event(
     val groupings: List<Grouping> = listOf(),
     @SerializedName("id")
     val id: String = "",
-    @SerializedName("links")
-    val links: List<LinkXX> = listOf(),
     @SerializedName("name")
     val name: String = "",
     @SerializedName("previousWinners")
     val previousWinners: List<PreviousWinner> = listOf(),
     @SerializedName("season")
-    val season: SeasonX = SeasonX(),
+    val season: SeasonXX = SeasonXX(),
     @SerializedName("shortName")
     val shortName: String = "",
     @SerializedName("status")
@@ -29,3 +28,18 @@ data class Event(
     @SerializedName("venue")
     val venue: VenueX = VenueX()
 )
+
+fun Event.asDomain(): EventTennisModel {
+    return EventTennisModel(
+        date = date,
+        endDate = endDate,
+        groupings = groupings.map { it.asDomain() },
+        id = id,
+        previousWinners = previousWinners.map { it.asDomain() },
+        season = season.asDomain(),
+        shortName = shortName,
+        status = status.asDomain(),
+        uid = uid,
+        venue = venue.asDomain()
+    )
+}

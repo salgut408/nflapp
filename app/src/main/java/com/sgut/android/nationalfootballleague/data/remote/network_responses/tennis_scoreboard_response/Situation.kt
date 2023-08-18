@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.SituationTennisModel
 
 data class Situation(
     @SerializedName("onFirst")
@@ -11,3 +12,11 @@ data class Situation(
     @SerializedName("onThird")
     val onThird: Boolean = false
 )
+
+fun Situation.asDomain(): SituationTennisModel{
+    return SituationTennisModel(
+        onFirst = onFirst,
+        onSecond = onSecond,
+        onThird = onThird
+    )
+}

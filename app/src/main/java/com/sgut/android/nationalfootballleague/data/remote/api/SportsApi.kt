@@ -136,7 +136,7 @@ interface SportsApi {
 
 
 
-    @GET("v2/sports/{sport}/{league}/scoreboard")
+    @GET("site/v2/sports/{sport}/{league}/scoreboard")
     suspend fun getTennisScoreboard(
         @Path("sport")
         sport: String? = null,

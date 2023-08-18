@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.ui.screens.homelistscreen
 
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
@@ -82,6 +83,12 @@ fun HomeTeamCardsListScreen(
     val news = uiState.currentNews
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    
+    val errorMessage = homeListViewModel.errorMessage.collectAsStateWithLifecycle()
+    
+    if (errorMessage.value != null) {
+        showToast(message = errorMessage.value!!)
+    }
 
 
 
@@ -429,7 +436,10 @@ fun TeamItem(
     }
 }
 
-
+@Composable
+fun showToast(message: String) {
+    Toast.makeText(LocalContext.current, message, Toast.LENGTH_LONG).show()
+}
 
 
 

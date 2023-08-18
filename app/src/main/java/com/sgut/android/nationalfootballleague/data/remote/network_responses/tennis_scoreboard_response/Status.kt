@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.StatusTennisModel
 
 data class Status(
     @SerializedName("period")
@@ -9,3 +10,10 @@ data class Status(
     @SerializedName("type")
     val type: Type = Type()
 )
+
+fun Status.asDomain(): StatusTennisModel{
+    return StatusTennisModel(
+        period = period,
+        type = type.asDomain()
+    )
+}

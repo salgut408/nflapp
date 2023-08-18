@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.GroupingTennisModelX
 
 data class GroupingX(
     @SerializedName("displayName")
@@ -11,3 +12,11 @@ data class GroupingX(
     @SerializedName("slug")
     val slug: String = ""
 )
+
+fun GroupingX.asDomain(): GroupingTennisModelX {
+    return GroupingTennisModelX(
+        displayName = displayName,
+        id = id,
+        slug = slug
+    )
+}

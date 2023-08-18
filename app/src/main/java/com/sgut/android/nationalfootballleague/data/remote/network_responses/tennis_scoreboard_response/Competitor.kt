@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.CompetitorTennisModel
 
 data class Competitor(
     @SerializedName("athlete")
@@ -29,3 +30,20 @@ data class Competitor(
     @SerializedName("winner")
     val winner: Boolean = false
 )
+
+fun Competitor.asDomain(): CompetitorTennisModel{
+    return CompetitorTennisModel(
+        athlete = athlete.asDomain(),
+        curatedRank = curatedRank.asDomain(),
+        homeAway = homeAway,
+        id = id,
+        linescores = linescores.map { it.asDomain() },
+        order = order,
+        possession = possession,
+        roster = roster.asDomain(),
+        statistics = statistics,
+        type = type,
+        uid = uid,
+        winner = winner
+    )
+}

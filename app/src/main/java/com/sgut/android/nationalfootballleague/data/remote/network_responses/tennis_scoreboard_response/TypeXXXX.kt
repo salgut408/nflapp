@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.TypeTennisModelXXXX
 
 data class TypeXXXX(
     @SerializedName("abbreviation")
@@ -13,3 +14,11 @@ data class TypeXXXX(
     @SerializedName("type")
     val type: Int = 0
 )
+fun TypeXXXX.asDomain(): TypeTennisModelXXXX {
+    return TypeTennisModelXXXX(
+        abbreviation = abbreviation,
+        id = id,
+        name = name,
+        type = type
+    )
+}

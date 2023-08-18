@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.LogoTennisModel
 
 data class Logo(
     @SerializedName("alt")
@@ -12,8 +13,16 @@ data class Logo(
     val href: String = "",
     @SerializedName("lastUpdated")
     val lastUpdated: String = "",
-    @SerializedName("rel")
-    val rel: List<String> = listOf(),
     @SerializedName("width")
     val width: Int = 0
 )
+
+fun Logo.asDomain(): LogoTennisModel {
+    return LogoTennisModel(
+        alt = alt,
+        height = height,
+        href = href,
+        lastUpdated = lastUpdated,
+        width = width
+    )
+}

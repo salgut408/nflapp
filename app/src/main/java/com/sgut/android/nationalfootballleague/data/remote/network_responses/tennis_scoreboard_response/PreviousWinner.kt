@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.PreviousWinnerTennisModel
 
 data class PreviousWinner(
     @SerializedName("athletes")
@@ -15,3 +16,14 @@ data class PreviousWinner(
     @SerializedName("type")
     val type: TypeX = TypeX()
 )
+
+
+fun PreviousWinner.asDomain(): PreviousWinnerTennisModel {
+    return PreviousWinnerTennisModel(
+        athletes = athletes.map { it.asDomain() },
+        displayName = displayName,
+        headshot = headshot,
+        shortDisplayName = shortDisplayName,
+        type = type.asDomain()
+    )
+}

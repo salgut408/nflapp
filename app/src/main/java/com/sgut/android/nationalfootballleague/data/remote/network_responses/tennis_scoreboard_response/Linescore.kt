@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.LinescoreTennisModel
 
 data class Linescore(
     @SerializedName("tiebreak")
@@ -11,3 +12,11 @@ data class Linescore(
     @SerializedName("winner")
     val winner: Boolean = false
 )
+
+fun Linescore.asDomain(): LinescoreTennisModel{
+    return LinescoreTennisModel(
+        tiebreak = tiebreak,
+        value = value,
+        winner = winner
+    )
+}

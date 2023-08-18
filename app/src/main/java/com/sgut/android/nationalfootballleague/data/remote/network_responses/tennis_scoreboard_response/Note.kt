@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.NoteTennisModel
 
 data class Note(
     @SerializedName("text")
@@ -9,3 +10,10 @@ data class Note(
     @SerializedName("type")
     val type: String = ""
 )
+
+fun Note.asDomain(): NoteTennisModel{
+    return NoteTennisModel(
+        text = text,
+        type = type
+    )
+}

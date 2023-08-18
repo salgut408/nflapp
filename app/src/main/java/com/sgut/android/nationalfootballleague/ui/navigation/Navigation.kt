@@ -15,9 +15,6 @@ import androidx.navigation.navArgument
 import com.sgut.android.nationalfootballleague.ui.application.EspnAppState
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.athelete_detail.AthleteDetailScreen
-import com.sgut.android.nationalfootballleague.ui.screens.basics.log_in.LoginScreen
-import com.sgut.android.nationalfootballleague.ui.screens.basics.settings.SettingsScreen
-import com.sgut.android.nationalfootballleague.ui.screens.basics.sign_up.SignUpScreen
 import com.sgut.android.nationalfootballleague.ui.screens.gamedetailscreen.GameDetailsScreen
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeTeamCardsListScreen
 import com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen.ScoreboardScreen
@@ -136,33 +133,6 @@ fun Navigation(
             )
         }
 
-        // settings screens
-        composable(
-            route = NavigationScreens.SignUpScreen.route
-        ) {
-            SignUpScreen(
-                openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) }
-            )
-        }
-
-        composable(
-            route = NavigationScreens.LogInScreen.route
-        ) {
-            LoginScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
-        }
-
-        composable(
-            route = NavigationScreens.SettingsScreen.route
-        ) {
-            val restartRoute = NavigationScreens.MainScreenTeamsList.route
-            val openSignUpScreenRoute = NavigationScreens.SignUpScreen.route
-            val openLogInScreenRoute = NavigationScreens.LogInScreen.route
-            SettingsScreen(
-                restartApp = { route -> appState.clearAndNavigate(restartRoute) },
-                openSignUpScreen = { route -> appState.navigate(openSignUpScreenRoute) },
-                openLogInScreen = { route -> appState.navigate(openLogInScreenRoute) }
-            )
-        }
     }
 }
 
