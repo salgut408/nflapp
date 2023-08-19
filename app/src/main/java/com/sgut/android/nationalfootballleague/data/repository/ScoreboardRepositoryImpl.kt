@@ -6,8 +6,8 @@ import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.SportsApi
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.baseball_scoreboard.BaseballScoreBoardNetwork
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.tennis_scoreboard_response.asDomain
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.ScoreboardTennisModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.DefaultScoreboardModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.TennisScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import com.sgut.android.nationalfootballleague.utils.printToLog
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,7 +23,7 @@ class ScoreboardRepositoryImpl @Inject constructor(
     override suspend fun getGeneralScoreboard(
         sport: String,
         league: String,
-    ): ScoreboardModel =
+    ): DefaultScoreboardModel =
         try {
             withContext(ioDispatcher) {
                 val response = sportsApi.getGeneralScoreboard(sport, league)
@@ -31,13 +31,13 @@ class ScoreboardRepositoryImpl @Inject constructor(
                     return@withContext response.body()?.asDomain()!!
                 } else {
                     Log.e("getscrboard-FAIL", response.errorBody().toString())
-                    ScoreboardModel()
+                    DefaultScoreboardModel()
                 }
             }
         }
         catch (e: Exception) {
             Log.e("BAD ", e.stackTraceToString())
-            ScoreboardModel()
+            DefaultScoreboardModel()
 
         }
 
@@ -46,14 +46,14 @@ class ScoreboardRepositoryImpl @Inject constructor(
         sport: String,
         league: String,
         limit: String,
-    ): ScoreboardModel =
+    ): DefaultScoreboardModel =
         withContext(ioDispatcher) {
             val response = sportsApi.getCollegeBasketballScoreboard(sport, league, limit)
             if (response.isSuccessful) {
                 return@withContext response.body()?.asDomain()!!
             } else {
                 Log.e("scrbrdRepmarch-FAIL", response.errorBody().toString())
-                ScoreboardModel()
+                DefaultScoreboardModel()
             }
         }
 
@@ -71,7 +71,7 @@ class ScoreboardRepositoryImpl @Inject constructor(
             BaseballScoreBoardNetwork()
         }
 
-    override suspend fun getTennisScoreBoard(sport: String, league: String): ScoreboardTennisModel =
+    override suspend fun getTennisScoreBoard(sport: String, league: String): TennisScoreboardModel =
         try {
             withContext(ioDispatcher) {
                 val tennis = sportsApi.getTennisScoreboard(sport, league).body()?.asDomain()!!
@@ -81,7 +81,7 @@ class ScoreboardRepositoryImpl @Inject constructor(
         }
         catch (e: Exception) {
             Log.e("REPO-TENNIS", e.stackTraceToString())
-            ScoreboardTennisModel()
+            TennisScoreboardModel()
         }
 
 
@@ -91,14 +91,14 @@ class ScoreboardRepositoryImpl @Inject constructor(
         sport: String,
         league: String,
         date: String,
-    ): ScoreboardModel =
+    ): DefaultScoreboardModel =
         withContext(ioDispatcher) {
             val result = sportsApi.getGeneralScoreboardWithDate(sport, league, date)
             if (result.isSuccessful) {
                 return@withContext result.body()?.asDomain()!!
             } else {
                 Log.e("getGeneralScoreboardByDate-FAIL", result.errorBody().toString())
-                ScoreboardModel()
+                DefaultScoreboardModel()
             }
         }
 }

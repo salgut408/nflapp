@@ -2,7 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.CompetitionTennisModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.TennisCompetitionModel
 
 data class Competition(
     @SerializedName("competitors")
@@ -41,8 +41,8 @@ data class Competition(
     val wasSuspended: Boolean = false
 )
 
-fun Competition.asDomain(): CompetitionTennisModel {
-    return CompetitionTennisModel(
+fun Competition.asDomain(): TennisCompetitionModel {
+    return TennisCompetitionModel(
         competitors = competitors.map { it.asDomain() },
         date = date,
         format = format.asDomain(),

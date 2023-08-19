@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_s
 
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.CompetitionTypeModel
 
+
 data class ScoreboardDetailsModel(
     val type: CompetitionTypeModel?,
     val clock: ScoreboardClockModel? = ScoreboardClockModel(),

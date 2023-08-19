@@ -2,12 +2,17 @@ package com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_s
 
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.StatusDomainModel
 
-data class ScoreboardEventModel(
+interface DefaultEventInterface{
+    val competitions: List<DefaultCompetitionInterface>
+    val name: String
+}
+
+data class DefaultScoreboardEventModel(
     val id: String = "",
     val uid: String = "",
     val date: String = "",
-    val name: String = "",
+     val name: String = "",
     val shortName: String = "",
-    val competitions: List<ScoreboardCompetitionModel> = listOf(),// need model to b ScoreboardCompetitionModel
+     val competitions: List<ScoreboardCompetitionModel> = listOf(),// need model to b ScoreboardCompetitionModel
     val status: StatusDomainModel = StatusDomainModel(),
     )

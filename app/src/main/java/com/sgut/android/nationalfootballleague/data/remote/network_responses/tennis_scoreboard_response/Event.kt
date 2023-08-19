@@ -2,7 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.EventTennisModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.TennisEventModel
 
 data class Event(
     @SerializedName("date")
@@ -29,8 +29,8 @@ data class Event(
     val venue: VenueX = VenueX()
 )
 
-fun Event.asDomain(): EventTennisModel {
-    return EventTennisModel(
+fun Event.asDomain(): TennisEventModel {
+    return TennisEventModel(
         date = date,
         endDate = endDate,
         groupings = groupings.map { it.asDomain() },

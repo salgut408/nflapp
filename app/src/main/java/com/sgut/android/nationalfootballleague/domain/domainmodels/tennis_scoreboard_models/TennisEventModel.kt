@@ -1,6 +1,6 @@
 package com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models
 
-data class EventTennisModel(
+data class TennisEventModel(
     val date: String = "",
     val endDate: String = "",
     val groupings: List<GroupingTennisModel> = listOf(),
@@ -11,5 +11,5 @@ data class EventTennisModel(
     val shortName: String = "",
     val status: StatusTennisModelX = StatusTennisModelX(),
     val uid: String = "",
-    val venue: VenueTennisModelX = VenueTennisModelX()
+    val venue: VenueTennisModelX = VenueTennisModelX(),
 )

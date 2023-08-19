@@ -1,6 +1,6 @@
 package com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models
 
-data class CompetitionTennisModel(
+data class TennisCompetitionModel(
     val competitors: List<CompetitorTennisModel> = listOf(),
     val date: String = "",
     val format: FormatTennisModel = FormatTennisModel(),

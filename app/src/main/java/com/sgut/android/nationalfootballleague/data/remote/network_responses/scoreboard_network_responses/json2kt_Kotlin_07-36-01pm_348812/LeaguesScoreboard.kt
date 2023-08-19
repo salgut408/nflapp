@@ -1,7 +1,7 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.EventLeagueModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.DefaultLeagueModel
 
 
 data class LeaguesScoreboard(
@@ -24,8 +24,8 @@ data class LeaguesScoreboard(
 
 
 
-fun LeaguesScoreboard.asDomain(): EventLeagueModel {
-    return EventLeagueModel(
+fun LeaguesScoreboard.asDomain(): DefaultLeagueModel {
+    return DefaultLeagueModel(
         abbreviation = abbreviation ?: "",
         id = id ?: "",
         logos = logos.map { it.asDomain() },

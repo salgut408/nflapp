@@ -1,27 +1,27 @@
 package com.sgut.android.nationalfootballleague.domain.repositories
 
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.baseball_scoreboard.BaseballScoreBoardNetwork
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.ScoreboardTennisModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.DefaultScoreboardModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.TennisScoreboardModel
 
 interface ScoreboardRepository {
 
     suspend fun getGeneralScoreboard(
         sport: String,
         league: String,
-    ): ScoreboardModel
+    ): DefaultScoreboardModel
 
     suspend fun getGeneralScoreboardByDate(
         sport: String,
         league: String,
         date: String
-    ): ScoreboardModel
+    ): DefaultScoreboardModel
 
     suspend fun getCollegeBasketballScoreboard(
         sport: String,
         league: String,
         limit: String
-    ): ScoreboardModel
+    ): DefaultScoreboardModel
 
     suspend fun getBaseballScoreboard(
         sport: String,
@@ -32,7 +32,7 @@ interface ScoreboardRepository {
     suspend fun getTennisScoreBoard(
         sport: String,
         league: String
-    ): ScoreboardTennisModel
+    ): TennisScoreboardModel
 
 
 

@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.baseball_scoreboard.BaseballScoreBoardNetwork
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.ScoreboardModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.ScoreboardTennisModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.DefaultScoreboardModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.TennisScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetBaseballSituationUseCase
@@ -36,8 +36,8 @@ class ScoreboardViewModel @Inject constructor(
     private val _baseballScoreboard = MutableStateFlow(BaseballScoreBoardNetwork())
     var baseballScoreboard: StateFlow<BaseballScoreBoardNetwork> = _baseballScoreboard.asStateFlow()
 
-    private var _tennis = MutableStateFlow(ScoreboardTennisModel())
-    var tennis: StateFlow<ScoreboardTennisModel> =_tennis
+    private var _tennis = MutableStateFlow(TennisScoreboardModel())
+    var tennis: StateFlow<TennisScoreboardModel> =_tennis
 
 
     init {
@@ -74,14 +74,14 @@ class ScoreboardViewModel @Inject constructor(
     fun setScoreboardUiState(
         currentSport: String,
         currentLeague: String,
-        currentScoreboardModelUiState: ScoreboardModel,
+        currentDefaultScoreboardModelUiState: DefaultScoreboardModel,
         currentNews: ArticlesListModel,
     ) {
         _scoreboardUiState.update {
             it.copy(
                 currentSport = currentSport,
                 currentLeague = currentLeague,
-                scoreboardModelUiState = currentScoreboardModelUiState,
+                defaultScoreboardModelUiState = currentDefaultScoreboardModelUiState,
                 currentArticles = currentNews
             )
         }

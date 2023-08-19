@@ -3,20 +3,25 @@ package com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_s
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.SituationScoreboard
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_team_detail_roster.StatusDomainModel
 
+interface DefaultCompetitionInterface{
+    val id: String
+    val competitors: List<DefaultCompetitorsInterface>
+}
+
 data class ScoreboardCompetitionModel(
-    val id: String = "",
+   override val id: String = "",
     val uid: String = "",
     val date: String = "",
     val startDate: String = "",
     val attendance: Int = 0,
     val status: StatusDomainModel? = StatusDomainModel(),
     val format: ScoreboardFormatModel = ScoreboardFormatModel(),
-    val competitors: List<ScoreboardCompetitorsModel> = listOf(),
+    override val competitors: List<ScoreboardCompetitorsModel> = listOf(),
     val details: List<ScoreboardDetailsModel> = listOf(),
     val headlines: List<ScoreboardHeadlineModel> = listOf(), // move to own obj
     val venue: ScoreboardVenueModel = ScoreboardVenueModel(),
     val situation: SituationScoreboard = SituationScoreboard()
-) {
+): DefaultCompetitionInterface {
     //return home Team
 
     fun getHomeTeam(): ScoreboardCompetitorsModel {

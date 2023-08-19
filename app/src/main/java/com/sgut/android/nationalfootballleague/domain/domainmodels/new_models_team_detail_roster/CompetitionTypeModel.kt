@@ -2,12 +2,16 @@ package com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_t
 
 import com.sgut.android.nationalfootballleague.StatusState
 
+interface DefaultTypeInterface{
+    val id: String
+}
+
 data class CompetitionTypeModel(
-    var id: String = "",
+   override var id: String = "",
     var name: String = "",
     var state: StatusState? = StatusState.PRE,
     var completed: Boolean = false,
     var description: String = "",
     var detail: String = "",
     var shortDetail: String = "",
-    )
+    ) : DefaultTypeInterface

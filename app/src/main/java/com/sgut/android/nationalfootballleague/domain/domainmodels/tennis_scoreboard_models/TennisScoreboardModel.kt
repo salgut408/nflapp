@@ -1,8 +1,8 @@
 package com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models
 
-data class ScoreboardTennisModel(
+data class TennisScoreboardModel(
     val day: DayTennisModel = DayTennisModel(),
-    val events: List<EventTennisModel> = listOf(),
-    val league:LeagueTennisModel = LeagueTennisModel(),
+     val events: List<TennisEventModel> = listOf(),
+     val league: LeagueTennisModel = LeagueTennisModel(),
     val season: SeasonTennisModelXX = SeasonTennisModelXX()
 )

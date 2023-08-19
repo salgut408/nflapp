@@ -2,7 +2,7 @@ package com.sgut.android.nationalfootballleague.data.remote.network_responses.te
 
 
 import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.ScoreboardTennisModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.TennisScoreboardModel
 
 data class TennisScoresNetwork(
     @SerializedName("day")
@@ -15,8 +15,8 @@ data class TennisScoresNetwork(
     val season: SeasonXX = SeasonXX()
 )
 
-fun TennisScoresNetwork.asDomain(): ScoreboardTennisModel{
-    return ScoreboardTennisModel(
+fun TennisScoresNetwork.asDomain(): TennisScoreboardModel{
+    return TennisScoreboardModel(
         day = day.asDomain(),
         events = events.map { it.asDomain() },
         league = leagues.first().asDomain(),
