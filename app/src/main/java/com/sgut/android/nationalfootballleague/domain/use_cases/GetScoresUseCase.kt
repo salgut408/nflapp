@@ -1,6 +1,6 @@
 package com.sgut.android.nationalfootballleague.domain.use_cases
 
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.DefaultScoreboardModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.BasicScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASKETBALL
 import kotlinx.coroutines.CoroutineDispatcher
@@ -11,7 +11,7 @@ class GetScoresUseCase @Inject constructor(
      private val scoreboardRepository: ScoreboardRepository,
      private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend operator fun invoke (sport: String, league: String): DefaultScoreboardModel =
+    suspend operator fun invoke (sport: String, league: String): BasicScoreboardModel =
         withContext(ioDispatcher) {
             if (league == NCAA_BASKETBALL) {
                 val scoreboard = scoreboardRepository.getCollegeBasketballScoreboard(sport = sport, league = league, limit = "200")

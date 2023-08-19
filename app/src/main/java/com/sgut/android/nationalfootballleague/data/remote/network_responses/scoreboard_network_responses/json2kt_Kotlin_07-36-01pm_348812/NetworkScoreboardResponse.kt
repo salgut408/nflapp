@@ -1,7 +1,7 @@
 package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.DefaultScoreboardModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.BasicScoreboardModel
 
 
 data class NetworkScoreboardResponse(
@@ -19,8 +19,8 @@ data class NetworkScoreboardResponse(
 
 
 
-fun NetworkScoreboardResponse.asDomain(): DefaultScoreboardModel {
-    return DefaultScoreboardModel(
+fun NetworkScoreboardResponse.asDomain(): BasicScoreboardModel {
+    return BasicScoreboardModel(
         league = leagues.first().asDomain(),
         day = day?.date ,
         events = events.map { it.asDomain() },

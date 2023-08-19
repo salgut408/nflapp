@@ -8,7 +8,7 @@ interface ScoreboardDataInterface{
 
 
 
-data class DefaultScoreboardModel(
+data class BasicScoreboardModel(
     val league: DefaultLeagueModel = DefaultLeagueModel(),
     val day: String? = "",
     val events: List<DefaultScoreboardEventModel> = listOf(),

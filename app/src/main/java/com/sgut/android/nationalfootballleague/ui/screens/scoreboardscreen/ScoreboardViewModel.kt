@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.baseball_scoreboard.BaseballScoreBoardNetwork
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.DefaultScoreboardModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.BasicScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.TennisScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
@@ -74,7 +74,7 @@ class ScoreboardViewModel @Inject constructor(
     fun setScoreboardUiState(
         currentSport: String,
         currentLeague: String,
-        currentDefaultScoreboardModelUiState: DefaultScoreboardModel,
+        currentDefaultScoreboardModelUiState: BasicScoreboardModel,
         currentNews: ArticlesListModel,
     ) {
         _scoreboardUiState.update {
