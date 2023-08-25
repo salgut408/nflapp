@@ -14,7 +14,6 @@ class ArticleRepositoryImpl @Inject constructor(
     val sportsApi: SportsApi,
     val sportsDataBase: SportsDataBase,
     val ioDispatcher: CoroutineDispatcher
-
 ) : ArticleRepository {
     override suspend fun getArticles(sport: String, league: String): ArticlesListModel {
         withContext(ioDispatcher) {

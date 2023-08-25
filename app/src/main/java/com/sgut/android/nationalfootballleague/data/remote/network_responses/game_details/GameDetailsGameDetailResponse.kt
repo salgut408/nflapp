@@ -9,14 +9,10 @@ data class GameDetailResponse(
 
     @SerializedName("rosters")
     val rosters: List<Rosters> = listOf(),
-
-
     @SerializedName("situation")
     val situation: Situation? = Situation(),
     @SerializedName("notes")
     val notes: List<String> = listOf(),
-
-
     @SerializedName("boxscore")
     val boxscore: GameDetailsBoxscore? = GameDetailsBoxscore(),
     @SerializedName("format")

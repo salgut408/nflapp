@@ -2,6 +2,7 @@ package com.sgut.android.nationalfootballleague
 
 import com.google.gson.annotations.SerializedName
 import com.sgut.android.nationalfootballleague.data.db.sport.SportDbObj
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.LeagueModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.SportModel
 
 
@@ -27,7 +28,7 @@ fun Sports.toDomain(): SportModel {
     uid = uid,
     name = name,
     slug = slug,
-    league = leagues?.get(0)?.toDomain(),
+    league = leagues?.get(0)?.toDomain() ?: LeagueModel(),
   )
 }
 

@@ -872,7 +872,7 @@ fun TeamStatCard3(
     boxscore: BoxScoreModel,
 ) {
     DefaultCard(modifier = modifier) {
-        CardHeaderText(text = "Team Stats")
+        CardHeaderText(text = "TeamComm Stats")
         Row(
             modifier = modifier
                 .fillMaxWidth()

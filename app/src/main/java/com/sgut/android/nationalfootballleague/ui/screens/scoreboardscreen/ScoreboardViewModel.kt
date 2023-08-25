@@ -11,8 +11,10 @@ import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRep
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetBaseballSituationUseCase
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetScoresUseCase
+import com.sgut.android.nationalfootballleague.domain.use_cases.NewScoresUseCase
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.ATP
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.TENNIS
+import com.sgut.android.nationalfootballleague.utils.printToLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,6 +28,7 @@ class ScoreboardViewModel @Inject constructor(
     private val scoreboardRepository: ScoreboardRepository,
     private val getArticles: GetArticlesUseCase,
     private val getScores: GetScoresUseCase,
+    private val newScoressCase: NewScoresUseCase,
     private val getBaseballSituationUseCase: GetBaseballSituationUseCase
 ) : ViewModel() {
 
@@ -39,9 +42,10 @@ class ScoreboardViewModel @Inject constructor(
     private var _tennis = MutableStateFlow(TennisScoreboardModel())
     var tennis: StateFlow<TennisScoreboardModel> =_tennis
 
+//    private var _ABSTRACTS = MutableStateFlow<ScoreboardData>(DefaultScoreboardData())
+
 
     init {
-
     }
 
 //    fun loadBaseballScoreboard(sport: String, league: String) = viewModelScope.launch {
@@ -53,11 +57,15 @@ class ScoreboardViewModel @Inject constructor(
         try {
 
             _tennis.emit(scoreboardRepository.getTennisScoreBoard(TENNIS, ATP))
-//            tennis.printToLog("TENNIS_VM")
-
                 val news = getArticles(sport, league)
                 val currentScoreboardModelUiState = getScores(sport, league)
-//            loadBaseballScoreboard(sport, league)
+
+           val abstractScoresFromRepo = scoreboardRepository.getAbstractScoreBoard(sport, league)
+            abstractScoresFromRepo.printToLog("abstractScoresFromRepo")
+
+            val newAbstractScores = newScoressCase(sport, league)
+            newAbstractScores.printToLog("ABSTRACTSCORES_VIEWMODEL UC")
+
 
                 setScoreboardUiState(
                     sport, league,

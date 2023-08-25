@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.domain.repositories
 
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.abs_scores.a_common.ScoreboardData
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.baseball_scoreboard.BaseballScoreBoardNetwork
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.BasicScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.tennis_scoreboard_models.TennisScoreboardModel
@@ -34,6 +35,10 @@ interface ScoreboardRepository {
         league: String
     ): TennisScoreboardModel
 
+    suspend fun getAbstractScoreBoard(
+        sport: String,
+        league: String
+    ): ScoreboardData
 
 
 }

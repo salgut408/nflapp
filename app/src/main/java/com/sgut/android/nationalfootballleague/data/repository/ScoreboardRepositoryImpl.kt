@@ -4,6 +4,8 @@ import android.util.Log
 import com.sgut.android.nationalfootballleague.asDomain
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.SportsApi
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.abs_scores.a_common.DefaultScoreboardData
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.abs_scores.a_common.ScoreboardData
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.baseball_scoreboard.BaseballScoreBoardNetwork
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.tennis_scoreboard_response.asDomain
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.BasicScoreboardModel
@@ -30,7 +32,7 @@ class ScoreboardRepositoryImpl @Inject constructor(
                 if (response.isSuccessful) {
                     return@withContext response.body()?.asDomain()!!
                 } else {
-                    Log.e("getscrboard-FAIL", response.errorBody().toString())
+                    Log.e("getscoreboard-FAIL", response.errorBody().toString())
                     BasicScoreboardModel()
                 }
             }
@@ -62,7 +64,6 @@ class ScoreboardRepositoryImpl @Inject constructor(
         sport: String,
         league: String,
     ): BaseballScoreBoardNetwork =
-
         withContext(ioDispatcher) {
             val response = sportsApi.getBaseballScoreboard(sport, league)
             if (response.isSuccessful) {
@@ -84,7 +85,19 @@ class ScoreboardRepositoryImpl @Inject constructor(
             TennisScoreboardModel()
         }
 
+    override suspend fun getAbstractScoreBoard(sport: String, league: String): ScoreboardData {
+        try {
+            withContext(ioDispatcher){
+                val scores = sportsApi.getAbstractScoreboard(sport, league).body()
+                scores.printToLog("ABSTRACTSCORES_REPO")
+                return@withContext scores
+            }
+        } catch (e: Exception){
+            Log.e("ABSTRACT ERROR", e.stackTraceToString())
 
+        }
+       return DefaultScoreboardData()
+    }
 
 
     override suspend fun getGeneralScoreboardByDate(

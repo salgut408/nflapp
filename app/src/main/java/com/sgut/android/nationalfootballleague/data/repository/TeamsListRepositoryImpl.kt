@@ -24,6 +24,9 @@ class TeamsListRepositoryImpl @Inject constructor(
 
         try {
             withContext(ioDispatcher){
+                if (sport == "tennis") {
+                    return@withContext FullTeamsListsModel()
+                }
                 val result = sportsApi.getTeamsListForLeague(sport, league).body()?.toDomain()!!
                 return@withContext result
             }

@@ -7,6 +7,6 @@ data class LeagueModel(
     val abbreviation: String = "",
     val shortName: String = "",
     val slug: String = "",
-    val teams: List<TeamModel>
+    val teams: List<TeamModel> = listOf()
 )
 

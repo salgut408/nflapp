@@ -3,6 +3,7 @@ package com.sgut.android.nationalfootballleague.domain.use_cases
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.BasicScoreboardModel
 import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRepository
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASKETBALL
+import com.sgut.android.nationalfootballleague.utils.printToLog
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -22,6 +23,7 @@ class GetScoresUseCase @Inject constructor(
 //                return@withContext scoreBoard
 //            }
             val scoreboard = scoreboardRepository.getGeneralScoreboard(sport = sport, league = league)
+            scoreboard.printToLog("NRLMGETSCORES_USECSE")
             return@withContext scoreboard
         }
 }
