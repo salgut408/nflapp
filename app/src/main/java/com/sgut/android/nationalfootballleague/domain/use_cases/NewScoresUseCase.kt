@@ -18,3 +18,5 @@ class NewScoresUseCase @Inject constructor(
             return@withContext scores
         }
 }
+
+

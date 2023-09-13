@@ -15,6 +15,7 @@ import com.google.gson.*
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.db.article.ArticleDao
 import com.sgut.android.nationalfootballleague.data.db.team.TeamsDao
+import com.sgut.android.nationalfootballleague.data.help.GenNetworkFlow
 import com.sgut.android.nationalfootballleague.data.location.DefaultLocationTrackerImpl
 import com.sgut.android.nationalfootballleague.data.remote.api.SportsApi
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.abs_scores.a_common.*
@@ -143,6 +144,25 @@ object AppModule {
         articleRepository: ArticleRepository,
         ioDispatcher: CoroutineDispatcher,
     ): GetArticlesUseCase = GetArticlesUseCase(articleRepository, ioDispatcher)
+
+    @Provides
+    fun provideNewArticleRepository(
+         articleDao: ArticleDao,
+         sportsApi: SportsApi,
+        genericNetworkFlow: GenNetworkFlow,
+    ): NewArticleRepository = NewArticleRepository(articleDao, sportsApi, genericNetworkFlow)
+
+    @Provides
+    fun provideNewGetArticlesUseCase(
+        articleRepository: NewArticleRepository,
+        ioDispatcher: CoroutineDispatcher,
+        articleDao: ArticleDao
+    ): NewGetArticlesUseCase = NewGetArticlesUseCase(articleRepository, ioDispatcher, articleDao)
+
+    @Provides
+    fun provideGenericNetworkFlow(@ApplicationContext context: Context): GenNetworkFlow {
+        return GenNetworkFlow(context)
+    }
 
     @Provides
     fun provideGetBaseballSituationUseCase(
