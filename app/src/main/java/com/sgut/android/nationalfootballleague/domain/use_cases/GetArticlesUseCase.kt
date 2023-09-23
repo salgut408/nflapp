@@ -16,17 +16,8 @@ open class GetArticlesUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(sport: String, league: String): ArticlesListModel =
         withContext(defaultDispatcher) {
-            val news = articleRepository.getArticles(sport, league )
+            val news = articleRepository.getArticles(sport, league)
             return@withContext news
         }
 }
 
-class NewGetArticlesUseCase @Inject constructor(
-    private val newArticleRepository: NewArticleRepository,
-
-){
-    suspend operator fun invoke(sport: String, league: String) : Flow<NetworkResult<Flow<List<ArticleDbObject>>>> {
-        val news = newArticleRepository.getArticles(sport, league)
-        return news
-    }
-}

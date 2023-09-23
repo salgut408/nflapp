@@ -15,7 +15,6 @@ import com.sgut.android.nationalfootballleague.domain.repositories.TeamDetailsRe
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-//TODO  - - Inject Dispatchers
 
 class TeamDetailsRepositoryImpl @Inject constructor(
     val sportsApi: SportsApi,
@@ -30,7 +29,6 @@ class TeamDetailsRepositoryImpl @Inject constructor(
                 val result = sportsApi.getSpecificTeam(sport, league, team)
                 return@withContext result.body()?.asDomainModel()?.fullTeam ?: FullTeamDetailWithRosterModel()
             }
-
         }
         catch (e: Exception) {
             Log.e("SPECIFIC_TEAM", e.cause .toString())

@@ -18,9 +18,9 @@ class GetScoresUseCase @Inject constructor(
                 val scoreboard = scoreboardRepository.getCollegeBasketballScoreboard(sport = sport, league = league, limit = "200")
                 return@withContext scoreboard
             }
-//            else if (league == ATP) { TODO  use the interfaces to return basics eventually
+//            else if (league == ATP) { //TODO  use the interfaces to return basics eventually
 //                val scoreBoard = scoreboardRepository.getTennisScoreBoard(sport = sport, league = league)
-//                return@withContext scoreBoard
+//                return@withContext scoreBoard as BasicScoreboardModel
 //            }
             val scoreboard = scoreboardRepository.getGeneralScoreboard(sport = sport, league = league)
             scoreboard.printToLog("NRLMGETSCORES_USECSE")
@@ -29,7 +29,7 @@ class GetScoresUseCase @Inject constructor(
 }
 
 
-sealed class RepoResult<out T : Any> {
-    data class Success<out T: Any>(val data: T): RepoResult<T>()
-    data class Error(val message: String): RepoResult<Nothing>()
-}
+//sealed class RepoResult<out T : Any> {
+//    data class Success<out T: Any>(val data: T): RepoResult<T>()
+//    data class Error(val message: String): RepoResult<Nothing>()
+//}
