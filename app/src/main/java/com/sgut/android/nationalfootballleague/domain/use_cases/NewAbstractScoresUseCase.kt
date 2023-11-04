@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class NewScoresUseCase @Inject constructor(
+class NewAbstractScoresUseCase @Inject constructor(
     private val scoreboardRepository: ScoreboardRepository,
     private val ioDispatcher: CoroutineDispatcher,
 ) {

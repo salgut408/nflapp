@@ -18,7 +18,6 @@ class GetTeamPlayersWithStatsUseCase(
         for (player in players) {
             val player = playerDetailsRepository //.getPlayer
 //            response.add(PlayerWithStats(player, stats))
-
         }
         return response
     }

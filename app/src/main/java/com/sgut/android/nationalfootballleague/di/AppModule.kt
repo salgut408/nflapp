@@ -185,7 +185,7 @@ object AppModule {
     fun provideNewGetScoresUseCase(
         scoreboardRepository: ScoreboardRepository,
         ioDispatcher: CoroutineDispatcher,
-    ): NewScoresUseCase = NewScoresUseCase(scoreboardRepository, ioDispatcher)
+    ): NewAbstractScoresUseCase = NewAbstractScoresUseCase(scoreboardRepository, ioDispatcher)
 
     @Singleton
     @Provides

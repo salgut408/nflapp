@@ -62,7 +62,7 @@ fun ScoreboardScreen(
 
     val tennis by scoreboardViewModel.tennis.collectAsStateWithLifecycle()
 
-
+    val abstractInfo = scoreboardViewModel.abstractScoresInfo?.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -70,7 +70,7 @@ fun ScoreboardScreen(
         topBar = {
 
             TopAppBarWithLogo(
-                title = newUiState.defaultScoreboardModelUiState.league.abbreviation ?: "",
+                title = newUiState.defaultScoreboardModelUiState.league.abbreviation ,
                 logo = newUiState.defaultScoreboardModelUiState.league.logos.getOrNull(0)?.href
                     ?: "",
                 canNavigateBack = canNavigateBack,
@@ -89,6 +89,7 @@ fun ScoreboardScreen(
                 verticalArrangement = Arrangement.Center
             ) {
 
+                Text(text = abstractInfo?.value?.league?.first()?.name ?: "NOT WORKING" , modifier = Modifier.fillMaxWidth())
 
                 Text(text = tennis.league.name)
 //                val tennisImg = tennis.league.logos.getOrNull(0)?.href ?: ""

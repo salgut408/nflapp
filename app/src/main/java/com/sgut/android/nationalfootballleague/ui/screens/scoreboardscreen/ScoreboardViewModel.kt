@@ -3,6 +3,7 @@ package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.abs_scores.a_common.ScoreboardData
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.baseball_scoreboard.BaseballScoreBoardNetwork
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.BasicScoreboardModel
@@ -11,7 +12,7 @@ import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRep
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetBaseballSituationUseCase
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetScoresUseCase
-import com.sgut.android.nationalfootballleague.domain.use_cases.NewScoresUseCase
+import com.sgut.android.nationalfootballleague.domain.use_cases.NewAbstractScoresUseCase
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.ATP
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.TENNIS
 import com.sgut.android.nationalfootballleague.utils.printToLog
@@ -28,11 +29,12 @@ class ScoreboardViewModel @Inject constructor(
     private val scoreboardRepository: ScoreboardRepository,
     private val getArticles: GetArticlesUseCase,
     private val getScores: GetScoresUseCase,
-    private val newScoressCase: NewScoresUseCase,
+    private val newScoressCase: NewAbstractScoresUseCase,
     private val getBaseballSituationUseCase: GetBaseballSituationUseCase
 ) : ViewModel() {
 
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())
+
 
     var scoreboardModelState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
 
@@ -41,6 +43,8 @@ class ScoreboardViewModel @Inject constructor(
 
     private var _tennis = MutableStateFlow(TennisScoreboardModel())
     var tennis: StateFlow<TennisScoreboardModel> =_tennis
+
+     var abstractScoresInfo: MutableStateFlow<ScoreboardData>? = null
 
 //    private var _ABSTRACTS = MutableStateFlow<ScoreboardData>(DefaultScoreboardData())
 
@@ -57,11 +61,15 @@ class ScoreboardViewModel @Inject constructor(
         try {
 
             _tennis.emit(scoreboardRepository.getTennisScoreBoard(TENNIS, ATP))
-                val news = getArticles(sport, league)
-                val currentScoreboardModelUiState = getScores(sport, league)
+
+            val news = getArticles(sport, league)
+
+
+            val currentScoreboardModelUiState = getScores(sport, league)
 
            val abstractScoresFromRepo = scoreboardRepository.getAbstractScoreBoard(sport, league)
-            abstractScoresFromRepo.printToLog("abstractScoresFromRepo")
+            abstractScoresFromRepo.printToLog("abstractScoresFromRepoVM")
+            abstractScoresInfo?.emit(abstractScoresFromRepo)
 
             val newAbstractScores = newScoressCase(sport, league)
             newAbstractScores.printToLog("ABSTRACTSCORES_VIEWMODEL UC")
