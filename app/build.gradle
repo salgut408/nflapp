@@ -95,12 +95,12 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
 
     //navigation
-    def nav_version = "2.5.1"
+    def nav_version = "2.7.6"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
     //hilt
-    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("androidx.hilt:hilt-navigation-fragment:1.1.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     annotationProcessor "com.google.dagger:dagger-android-processor:2.11"
 
     //network
@@ -116,7 +116,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
 
     //Media 3
-    def media3_version = "1.2.0-alpha01"
+    def media3_version = "1.2.0"
 
     // For media playback using ExoPlayer
     implementation("androidx.media3:media3-exoplayer:$media3_version")
@@ -130,7 +130,7 @@ dependencies {
 
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
-    annotationProcessor("androidx.hilt:hilt-compiler:1.0.0")
+    annotationProcessor("androidx.hilt:hilt-compiler:1.1.0")
 
 //    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
