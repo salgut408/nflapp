@@ -95,18 +95,18 @@ fun GameDetailsScreen(
                                             ?.formatTo("K:mm aa") ?: "",
                                         fontWeight = FontWeight.Bold
                                     )
-                                    Text(text = gameDetailUiState.currentGameUiState?.pickcenter?.first()?.details
+                                    Text(text = gameDetailUiState.currentGameUiState?.pickcenter?.firstOrNull()?.details
                                         ?: "")
                                 }
                             }
                             StatusState.IN -> {
-                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.type?.description
+                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.firstOrNull()?.status?.type?.description
                                     ?: "")
-                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.type?.shortGameTimeDetail
+                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.firstOrNull()?.status?.type?.shortGameTimeDetail
                                     ?: "")
                             }
                             StatusState.POST -> {
-                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.type?.description
+                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.firstOrNull()?.status?.type?.description
                                     ?: "")
                             }
                             else -> Text(text = "")
@@ -241,25 +241,25 @@ fun GameDetailsScreen(
                     modifier = modifier,
                     headerModel = gameDetailUiState.currentGameUiState?.header ?: HeaderModel(),
                     middle = {
-                        when (gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.type?.statusState) {
+                        when (gameDetailUiState.currentGameUiState?.header?.competitions?.firstOrNull()?.status?.type?.statusState) {
                             StatusState.PRE -> {
                                 Column() {
                                     Text(
-                                        text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.date?.toDate()
+                                        text = gameDetailUiState.currentGameUiState?.header?.competitions?.firstOrNull()?.date?.toDate()
                                             ?.formatTo("K:mm aa") ?: "",
                                         fontWeight = FontWeight.Bold
                                     )
-                                    Text(text = gameDetailUiState.currentGameUiState?.pickcenter?.first()?.details
+                                    Text(text = gameDetailUiState.currentGameUiState?.pickcenter?.firstOrNull()?.details
                                         ?: "")
                                 }
                             }
                             StatusState.IN -> {
-                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.type?.description
+                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.firstOrNull()?.status?.type?.description
                                     ?: "")
 
                             }
                             StatusState.POST -> {
-                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.first()?.status?.type?.description
+                                Text(text = gameDetailUiState.currentGameUiState?.header?.competitions?.firstOrNull()?.status?.type?.description
                                     ?: "")
 
                             }
