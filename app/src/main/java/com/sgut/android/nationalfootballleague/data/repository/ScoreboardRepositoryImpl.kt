@@ -86,16 +86,21 @@ class ScoreboardRepositoryImpl @Inject constructor(
         }
 
     override suspend fun getAbstractScoreBoard(sport: String, league: String): ScoreboardData {
-        try {
-            withContext(ioDispatcher){
-                val scores = sportsApi.getAbstractScoreboard(sport, league).body()
-                scores.printToLog("ABSTRACTSCORES_REPO")
-                return@withContext scores
-            }
-        } catch (e: Exception){
-            Log.e("ABSTRACT ERROR", e.stackTraceToString())
-
+        val response = sportsApi.getAbstractScoreboard(sport, league)
+        if(response.isSuccessful) {
+            response.body().printToLog("ABSTRACT REPOSNE")
+            return response.body()!!
         }
+//        try {
+//            withContext(ioDispatcher){
+//                val scores = sportsApi.getAbstractScoreboard(sport, league).body()
+//                scores.printToLog("ABSTRACTSCORES_REPO")
+//                return@withContext scores
+//            }
+//        } catch (e: Exception){
+//            Log.e("ABSTRACT ERROR", e.stackTraceToString())
+//
+//        }
        return DefaultScoreboardData()
     }
 

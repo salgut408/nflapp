@@ -8,7 +8,6 @@ abstract class ScoreboardData{
      abstract val league: List<LeagueCommon>
      abstract val events: List<EventData>
      abstract val day: DayComm
-
 }
 
 

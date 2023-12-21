@@ -29,7 +29,7 @@ class ScoreboardViewModel @Inject constructor(
     private val scoreboardRepository: ScoreboardRepository,
     private val getArticles: GetArticlesUseCase,
     private val getScores: GetScoresUseCase,
-    private val newScoressCase: NewAbstractScoresUseCase,
+    private val newAbstractScoresUseCase: NewAbstractScoresUseCase,
     private val getBaseballSituationUseCase: GetBaseballSituationUseCase
 ) : ViewModel() {
 
@@ -44,9 +44,8 @@ class ScoreboardViewModel @Inject constructor(
     private var _tennis = MutableStateFlow(TennisScoreboardModel())
     var tennis: StateFlow<TennisScoreboardModel> =_tennis
 
-     var abstractScoresInfo: MutableStateFlow<ScoreboardData>? = null
-
-//    private var _ABSTRACTS = MutableStateFlow<ScoreboardData>(DefaultScoreboardData())
+    private var _abstractScoresInfo: MutableStateFlow<ScoreboardData>? = null
+     var abstractScores: StateFlow<ScoreboardData>? = _abstractScoresInfo
 
 
     init {
@@ -57,28 +56,30 @@ class ScoreboardViewModel @Inject constructor(
 //        _baseballScoreboard.emit(baseballScoreboard).printToLog("BBAL")
 //    }
 
+    fun whyWontgenericScoresLoad(sport: String, league: String) = viewModelScope.launch {
+        val abstractScoresFromRepo = scoreboardRepository.getAbstractScoreBoard(sport, league)
+        abstractScoresFromRepo.printToLog("abstractScoresFromRepoVM")
+        _abstractScoresInfo?.emit(abstractScoresFromRepo)
+
+        val newAbstractScores = newAbstractScoresUseCase(sport, league,)
+        newAbstractScores.printToLog("ABSTRACTSCORES_VIEWMODEL UC")
+    }
+
+    fun loadTennisTest(sport: String, league: String) = viewModelScope.launch {
+        _tennis.emit(scoreboardRepository.getTennisScoreBoard(TENNIS, ATP))
+    }
+
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
         try {
 
-            _tennis.emit(scoreboardRepository.getTennisScoreBoard(TENNIS, ATP))
-
             val news = getArticles(sport, league)
-
-
             val currentScoreboardModelUiState = getScores(sport, league)
-
-           val abstractScoresFromRepo = scoreboardRepository.getAbstractScoreBoard(sport, league)
-            abstractScoresFromRepo.printToLog("abstractScoresFromRepoVM")
-            abstractScoresInfo?.emit(abstractScoresFromRepo)
-
-            val newAbstractScores = newScoressCase(sport, league)
-            newAbstractScores.printToLog("ABSTRACTSCORES_VIEWMODEL UC")
-
-
+            val abstractScores = newAbstractScoresUseCase(sport, league)
                 setScoreboardUiState(
                     sport, league,
                     currentScoreboardModelUiState,
-                    news
+                    news,
+                    abstractScores
                 )
         } catch (e: Exception) {
             Log.i("DEBUG-rc vm", e.stackTraceToString())
@@ -92,13 +93,15 @@ class ScoreboardViewModel @Inject constructor(
         currentLeague: String,
         currentDefaultScoreboardModelUiState: BasicScoreboardModel,
         currentNews: ArticlesListModel,
+        abstractScores: ScoreboardData
     ) {
         _scoreboardUiState.update {
             it.copy(
                 currentSport = currentSport,
                 currentLeague = currentLeague,
                 defaultScoreboardModelUiState = currentDefaultScoreboardModelUiState,
-                currentArticles = currentNews
+                currentArticles = currentNews,
+                abstractScores = abstractScores
             )
         }
     }

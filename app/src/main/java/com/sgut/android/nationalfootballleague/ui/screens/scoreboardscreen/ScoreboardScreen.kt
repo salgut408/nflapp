@@ -33,9 +33,10 @@ import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.NewsRow
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.*
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.ATP
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.TENNIS
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.XFL
-import java.util.*
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,6 +53,8 @@ fun ScoreboardScreen(
 
 //    TODO this causes the switch when clicking different sport on scoreboard screen
     scoreboardViewModel.loadGenericScoreboard(sport, league)
+    scoreboardViewModel.whyWontgenericScoresLoad(sport, league)
+    scoreboardViewModel.loadTennisTest(TENNIS, ATP)
 
 
     val newUiState by scoreboardViewModel.scoreboardModelState.collectAsStateWithLifecycle()
@@ -61,8 +64,7 @@ fun ScoreboardScreen(
     val league = newUiState.currentLeague
 
     val tennis by scoreboardViewModel.tennis.collectAsStateWithLifecycle()
-
-    val abstractInfo = scoreboardViewModel.abstractScoresInfo?.collectAsStateWithLifecycle()
+    val abstractInfo = scoreboardViewModel.abstractScores?.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -89,9 +91,8 @@ fun ScoreboardScreen(
                 verticalArrangement = Arrangement.Center
             ) {
 
-                Text(text = abstractInfo?.value?.league?.first()?.name ?: "NOT WORKING" , modifier = Modifier.fillMaxWidth())
-
                 Text(text = tennis.league.name)
+                Text(text = newUiState.abstractScores?.league?.firstOrNull()?.name ?: "Wait...")
 //                val tennisImg = tennis.league.logos.getOrNull(0)?.href ?: ""
 //                GenericImageLoader(obj = tennisImg, modifier = Modifier)
 //                tennis.events.map { events ->
@@ -416,9 +417,11 @@ fun TeamComponent(team: ScoreboardCompetitorsModel, modifier: Modifier) {
 
     Box(modifier = modifier
         .padding(8.dp)
-        .background(Brush.horizontalGradient(
-            listOf(color, Color.White)
-        ))
+        .background(
+            Brush.horizontalGradient(
+                listOf(color, Color.White)
+            )
+        )
         .fillMaxWidth(3f)) {
 
 
@@ -490,9 +493,13 @@ fun TeamComponent2(
         modifier = modifier
             .fillMaxSize()
             .clickable {
-                navController.navigate(NavigationScreens.GameDetailScreen.withArgs(sport,
-                    league,
-                    compScoreboard.id))
+                navController.navigate(
+                    NavigationScreens.GameDetailScreen.withArgs(
+                        sport,
+                        league,
+                        compScoreboard.id
+                    )
+                )
             }) {
         Box(
             modifier = modifier

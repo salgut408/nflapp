@@ -37,7 +37,7 @@ interface ScoreboardRepository {
 
     suspend fun getAbstractScoreBoard(
         sport: String,
-        league: String
+        league: String,
     ): ScoreboardData
 
 
