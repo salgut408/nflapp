@@ -15,7 +15,6 @@ import com.sgut.android.nationalfootballleague.domain.use_cases.GetScoresUseCase
 import com.sgut.android.nationalfootballleague.domain.use_cases.NewAbstractScoresUseCase
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.ATP
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.TENNIS
-import com.sgut.android.nationalfootballleague.utils.printToLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,8 +33,6 @@ class ScoreboardViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _scoreboardUiState = MutableStateFlow(ScoreboardUiState())
-
-
     var scoreboardModelState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
 
     private val _baseballScoreboard = MutableStateFlow(BaseballScoreBoardNetwork())
@@ -56,31 +53,21 @@ class ScoreboardViewModel @Inject constructor(
 //        _baseballScoreboard.emit(baseballScoreboard).printToLog("BBAL")
 //    }
 
-    fun whyWontgenericScoresLoad(sport: String, league: String) = viewModelScope.launch {
-        val abstractScoresFromRepo = scoreboardRepository.getAbstractScoreBoard(sport, league)
-        abstractScoresFromRepo.printToLog("abstractScoresFromRepoVM")
-        _abstractScoresInfo?.emit(abstractScoresFromRepo)
-
-        val newAbstractScores = newAbstractScoresUseCase(sport, league,)
-        newAbstractScores.printToLog("ABSTRACTSCORES_VIEWMODEL UC")
-    }
-
     fun loadTennisTest(sport: String, league: String) = viewModelScope.launch {
         _tennis.emit(scoreboardRepository.getTennisScoreBoard(TENNIS, ATP))
     }
 
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
         try {
-
             val news = getArticles(sport, league)
             val currentScoreboardModelUiState = getScores(sport, league)
             val abstractScores = newAbstractScoresUseCase(sport, league)
-                setScoreboardUiState(
-                    sport, league,
-                    currentScoreboardModelUiState,
-                    news,
-                    abstractScores
-                )
+            setScoreboardUiState(
+                sport, league,
+                currentScoreboardModelUiState,
+                news,
+                abstractScores
+            )
         } catch (e: Exception) {
             Log.i("DEBUG-rc vm", e.stackTraceToString())
         }

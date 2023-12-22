@@ -32,7 +32,6 @@ class HomeListViewModel @Inject constructor(
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage
 
-
     init {
 //        to start
         loadAllNflTeams()
@@ -74,7 +73,6 @@ class HomeListViewModel @Inject constructor(
             Log.e("HOME_VM", e.stackTraceToString())
             _errorMessage.emit("An error happened loading all NFL Teams: ${e.message}")
         }
-
     }
 
 
@@ -100,13 +98,8 @@ class HomeListViewModel @Inject constructor(
             )
         } catch (e: Exception){
             _errorMessage.emit("An error happened loading different  team: ${e.message}")
-
         }
-
-
     }
-
-
 
     private fun setListUiState(
         currentSport: String,

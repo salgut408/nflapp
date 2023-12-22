@@ -4,18 +4,54 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,15 +75,55 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.sgut.android.nationalfootballleague.*
+import com.sgut.android.nationalfootballleague.AthleteLeaders
+import com.sgut.android.nationalfootballleague.GameDetailsBoxscore
+import com.sgut.android.nationalfootballleague.GameDetailsLeaders
+import com.sgut.android.nationalfootballleague.InningPrefix
+import com.sgut.android.nationalfootballleague.ScoringPlays
+import com.sgut.android.nationalfootballleague.StatusState
 import com.sgut.android.nationalfootballleague.di.GameDetailsTopBar
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.*
-import com.sgut.android.nationalfootballleague.ui.commoncomps.*
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.*
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.AthleteLeaderModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.BoxScoreModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.BoxscorePlayerModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.BoxscorePlayerStatisticModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsAthleteDetailsModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsCompetitionModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsCompetitorModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsEventModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsInjuriesListModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsLeadersModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsStatisticModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsTeamInfoModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameDetailsVenueModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.GameLeadersModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.HeaderModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.LastFiveGamesModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.PickcenterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.RosterModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.RostersModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.SituationModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.TicketModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.TicketsInfoModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.VideoModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_game_details.WinprobabilityModel
+import com.sgut.android.nationalfootballleague.ui.commoncomps.CardHeaderText
+import com.sgut.android.nationalfootballleague.ui.commoncomps.EIGHT
+import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
+import com.sgut.android.nationalfootballleague.ui.commoncomps.SIXTEEN
+import com.sgut.android.nationalfootballleague.ui.commoncomps.SportScaffold
+import com.sgut.android.nationalfootballleague.ui.commoncomps.THIRTYSIX
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicImage
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DefaultCard
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DetailVenueCardImageLoader
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.GenericImageLoader
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.NewVidPlayer
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.PressIconButton
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SpacerDp
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.formatTo
 import com.sgut.android.nationalfootballleague.utils.toDate
-import java.util.*
+import java.util.Locale
 import kotlin.math.nextUp
 
 
@@ -1083,7 +1159,7 @@ fun CompetitorHeader(competitor: GameDetailsCompetitorModel) {
                 modifier = Modifier.size(40.dp)
             )
             Text(text = competitor.team?.abbreviation ?: "")
-            Text(text = competitor.record.first().summary)
+            Text(text = competitor.record.firstOrNull()?.summary ?: " - ")
         }
         Text(text = competitor.score.toString(), style = MaterialTheme.typography.displaySmall)
     }

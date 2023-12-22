@@ -1,17 +1,44 @@
 package com.sgut.android.nationalfootballleague.ui.screens.homelistscreen
 
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.compose.animation.*
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.spring
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,7 +57,11 @@ import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
 import com.sgut.android.nationalfootballleague.ui.commoncomps.CardHeaderText
 import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
 import com.sgut.android.nationalfootballleague.ui.commoncomps.SportScaffold
-import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.*
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicButton
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.BasicImage
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.DefaultCard
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.SportSurface
+import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.ToggleFollowIconButton
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.standings_screen.Standings
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
@@ -76,33 +107,26 @@ fun HomeTeamCardsListScreen(
     val uiState by homeListViewModel.listUiState.collectAsStateWithLifecycle()
     val sport = uiState.fullTeamInfo?.sport?.slug
     val league = uiState.fullTeamInfo?.sport?.league?.slug
-
     val sportStateLeagueName = uiState.fullTeamInfo?.sport?.league?.name
     val sportStateTeamsFullInfo = uiState.fullTeamInfo
-
     val news = uiState.currentNews
-
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    
     val errorMessage = homeListViewModel.errorMessage.collectAsStateWithLifecycle()
     
     if (errorMessage.value != null) {
         showToast(message = errorMessage.value!!)
     }
 
-
+   Log.e("HomeTeamCardsListScreen", "HomeTeamCardsListScreen")
 
     SportScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-
         topBar = {
             ToolBar3(
                 title = sportStateLeagueName ?: "",
                 scrollBehavior = scrollBehavior
             )
         },
-
-
         content = { padding ->
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState())
@@ -113,42 +137,32 @@ fun HomeTeamCardsListScreen(
                 ) {
                     item {
                         OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(BASEBALL,
-                                MLB)
+                            homeListViewModel.setDifferentTeams(BASEBALL, MLB)
                         }) {
                             LabelText(stringResId = R.string.MLB_league)
-
                         }
                     }
-
                     item {
                         OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(BASKETBALL,
-                                NCAA_BASKETBALL)
+                            homeListViewModel.setDifferentTeams(BASKETBALL, NCAA_BASKETBALL)
                         }) {
                             Text(stringResource(R.string.NCAA_mens_basketball),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
-
-
                     item {
                         OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(SOCCER,
-                                FRA)
+                            homeListViewModel.setDifferentTeams(SOCCER, FRA)
                         }) {
                             LabelText(stringResId = R.string.fra)
-
                         }
                     }
-
                     item {
                         OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(TENNIS, ATP) }) {
                             Text(stringResource(R.string.atp),
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
-
                     item {
                         OutlinedButton(
                             onClick = {
@@ -164,10 +178,8 @@ fun HomeTeamCardsListScreen(
                                 NHL)
                         }) {
                             LabelText(stringResId = R.string.NHL_league)
-
                         }
                     }
-
                     item {
                         OutlinedButton(onClick = {
                             homeListViewModel.setDifferentTeams(BASEBALL,
@@ -189,8 +201,7 @@ fun HomeTeamCardsListScreen(
 
                     item {
                         OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(BASKETBALL,
-                                WNBA)
+                            homeListViewModel.setDifferentTeams(BASKETBALL, WNBA)
                         }) {
                             LabelText(stringResId = R.string.WNBA_league)
 
@@ -199,11 +210,9 @@ fun HomeTeamCardsListScreen(
 
                     item {
                         OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(SOCCER,
-                                CHAMPIONS)
+                            homeListViewModel.setDifferentTeams(SOCCER, CHAMPIONS)
                         }) {
                             LabelText(stringResId = R.string.champions)
-
                         }
                     }
 
@@ -222,27 +231,22 @@ fun HomeTeamCardsListScreen(
                                 NCAA_BASEBALL)
                         }) {
                             LabelText(stringResId = R.string.NCAA_baseball)
-
                         }
                     }
 
                     item {
                         OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(SOCCER,
-                                MLS)
+                            homeListViewModel.setDifferentTeams(SOCCER, MLS)
                         }) {
                             LabelText(stringResId = R.string.MLS_league)
-
                         }
                     }
 
                     item {
                         OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(SOCCER,
-                                FIFA)
+                            homeListViewModel.setDifferentTeams(SOCCER, FIFA)
                         }) {
                             LabelText(stringResId = R.string.world_cup)
-
                         }
                     }
                     item {
@@ -256,16 +260,14 @@ fun HomeTeamCardsListScreen(
 
                     item {
                         OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(SOCCER,
-                                EPL)
+                            homeListViewModel.setDifferentTeams(SOCCER, EPL)
                         }) {
                             LabelText(stringResId = R.string.premier_league)
                         }
                     }
                     item {
                         OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(SOCCER,
-                                UEFA)
+                            homeListViewModel.setDifferentTeams(SOCCER, UEFA)
                         }) {
                             LabelText(stringResId = R.string.euro_soccer)
                         }
@@ -275,7 +277,6 @@ fun HomeTeamCardsListScreen(
                             homeListViewModel.setDifferentTeams(FOOTBALL, XFL)
                         }) {
                             LabelText(stringResId = R.string.XFL_League)
-
                         }
                     }
                     item {
@@ -320,6 +321,8 @@ fun HomeTeamCardsListScreen(
                         league = league ?: "",
                         type = "0"
                     )
+
+                    ElasticDraggableBox()
 
                 }
             }
@@ -441,6 +444,35 @@ fun showToast(message: String) {
     Toast.makeText(LocalContext.current, message, Toast.LENGTH_LONG).show()
 }
 
+@Composable
+fun ElasticDraggableBox() {
+    var animatableOffset by remember { mutableStateOf(Animatable(0f)) }
 
+    Box(modifier = Modifier.fillMaxSize().background(Color(0xFFFFA732)), contentAlignment = Alignment.Center) {
+        Box(
+            modifier = Modifier
+                .offset(y = animatableOffset.value.dp)
+                .draggable(
+                    orientation = Orientation.Vertical,
+                    state = rememberDraggableState { delta ->
+                        animatableOffset = Animatable(animatableOffset.value + delta)
+                    },
+                    onDragStopped = {
+                        animatableOffset.animateTo(0f, animationSpec = spring())
+                    }
+                )
+                .size(350.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            // replace with an image lol
+            Icon(
+                Icons.Filled.Favorite,
+                contentDescription = "heart",
+                modifier = Modifier.size(animatableOffset.value.dp + 150.dp),
+                tint = Color.Red
+            )
+        }
+    }
+}
 
 

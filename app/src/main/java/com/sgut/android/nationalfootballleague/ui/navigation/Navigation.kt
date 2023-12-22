@@ -1,10 +1,7 @@
 package com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables
 
-import android.content.Context
-import android.content.Intent
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -22,7 +19,6 @@ import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.TeamDetail
 import kotlinx.coroutines.CoroutineScope
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Navigation(
     appState: EspnAppState,
@@ -34,9 +30,7 @@ fun Navigation(
         navController = appState.navController,
         startDestination = NavigationScreens.MainScreenTeamsList.route,
         modifier = Modifier.padding(padding),
-
     ) {
-
         composable(
             route = NavigationScreens.MainScreenTeamsList.route
         ) {
@@ -78,7 +72,6 @@ fun Navigation(
         ) {
             AthleteDetailScreen()
         }
-
 
 
         composable(
@@ -123,7 +116,6 @@ fun Navigation(
             val sportName = it.arguments?.getString("sport")!!
             val leagueName = it.arguments?.getString("league")!!
 
-
             ScoreboardScreen(
                 sport = sportName,
                 league = leagueName,
@@ -134,23 +126,4 @@ fun Navigation(
         }
 
     }
-}
-
-
-private fun shareTeamAndNextEvent(
-    context: Context,
-    subject: String,
-    summary: String,
-) {
-    val intent = Intent(Intent.ACTION_SEND).apply {
-        type = "text/plain"
-        putExtra(Intent.EXTRA_SUBJECT, subject)
-        putExtra(Intent.EXTRA_TEXT, summary)
-    }
-    context.startActivity(
-        Intent.createChooser(
-            intent,
-            "Check this out"
-        )
-    )
 }
