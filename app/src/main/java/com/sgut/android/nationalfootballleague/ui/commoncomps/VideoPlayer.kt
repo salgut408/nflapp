@@ -49,6 +49,7 @@ fun VideoPlayer(
         position = 0L
     }
 
+
     val playerView = remember {
         val playerView = PlayerView(context)
         lifecycle.addObserver(object: LifecycleObserver {

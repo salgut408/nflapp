@@ -4,9 +4,15 @@ import android.util.Log
 import com.sgut.android.nationalfootballleague.asDomainModel
 import com.sgut.android.nationalfootballleague.data.db.SportsDataBase
 import com.sgut.android.nationalfootballleague.data.remote.api.SportsApi
-import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.*
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.FullTeamsListsModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.LeagueModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.SportModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.TeamModel
+import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.asDbObj
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamsListsRepository
 import com.sgut.android.nationalfootballleague.toDomain
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.RACING
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.TENNIS
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -24,7 +30,7 @@ class TeamsListRepositoryImpl @Inject constructor(
 
         try {
             withContext(ioDispatcher){
-                if (sport == "tennis") {
+                if (sport == TENNIS || sport == RACING) {
                     return@withContext FullTeamsListsModel()
                 }
                 val result = sportsApi.getTeamsListForLeague(sport, league).body()?.toDomain()!!

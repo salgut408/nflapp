@@ -93,6 +93,7 @@ fun Navigation(
             val event = it.arguments?.getString("event")!!
 
             GameDetailsScreen(
+
                 navController = appState.navController,
                 sport = sportName,
                 league = leagueName,
