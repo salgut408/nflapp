@@ -11,7 +11,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-// interatcs and gets sports id, league id
+// interacts and gets sports id, league id
+
 class TeamsListRepositoryImpl @Inject constructor(
     val sportsApi: SportsApi,
     val sportsDataBase: SportsDataBase,
@@ -21,7 +22,6 @@ class TeamsListRepositoryImpl @Inject constructor(
         sport: String,
         league: String,
     ): FullTeamsListsModel =
-
         try {
             withContext(ioDispatcher){
                 if (sport == "tennis") {
@@ -39,14 +39,12 @@ class TeamsListRepositoryImpl @Inject constructor(
 
 
     override suspend fun getSport(sport: String, league: String): SportModel {
-        val result =
-            sportsApi.getTeamsListForLeague(sport, league).body()?.sports?.get(0)?.toDomain()!!
+        val result = sportsApi.getTeamsListForLeague(sport, league).body()?.sports?.get(0)?.toDomain()!!
         return result
     }
 
     override suspend fun getLeague(sport: String, league: String): LeagueModel {
-        val result =
-            sportsApi.getTeamsListForLeague(sport, league).body()?.sports?.get(0)?.leagues?.get(0)
+        val result = sportsApi.getTeamsListForLeague(sport, league).body()?.sports?.get(0)?.leagues?.get(0)
                 ?.toDomain()!!
         return result
     }

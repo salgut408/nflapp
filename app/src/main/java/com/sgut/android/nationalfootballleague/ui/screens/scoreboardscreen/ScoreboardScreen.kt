@@ -640,7 +640,7 @@ fun CompetitorRowPre(competitor: ScoreboardCompetitorsModel, modifier: Modifier)
 
 @Composable
 fun CompetitorRow(
-    competitor: ScoreboardCompetitorsModel,
+    competitor: ScoreboardCompetitorsModel?,
     modifier: Modifier,
     content: @Composable () -> Unit,
 ) {
@@ -654,8 +654,8 @@ fun CompetitorRow(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             BasicImage(
-                imgUrl = competitor.team.logo,
-                contentDescription = competitor.team.name,
+                imgUrl = competitor?.team?.logo ?: "",
+                contentDescription = competitor?.team?.name ?: "",
                 elevation = 0.dp,
                 backgroundColor = Color.Transparent,
                 borderWidth = 0.dp,
@@ -665,8 +665,8 @@ fun CompetitorRow(
                     .size(30.dp)
             )
             Spacer(modifier = modifier.width(8.dp))
-            Text(text = competitor.team.shortDisplayName,
-                fontWeight = if (competitor.winner) FontWeight.Bold else FontWeight.Normal,
+            Text(text = competitor?.team?.shortDisplayName ?: "",
+                fontWeight = if (competitor?.winner == true) FontWeight.Bold else FontWeight.Normal,
                 fontSize = 16.sp)
         }
 
@@ -699,37 +699,37 @@ fun NewEventMatchup(
             Column() {
                 // leaders
 //                Text(text = event.competitions.first().competitors.first().leaders.toString())
-                Text(text = event.competitions.first().id.toString())
+                Text(text = event.competitions.firstOrNull()?.id.toString())
                 if (sport.equals("baseball") && event.status.type?.state == StatusState.IN) {
                     CompetitionSituation(
-                        event.competitions.first().situation,
+                        event.competitions.firstOrNull()?.situation,
                         modifier = modifier
                     )
                 }
                 CompetitorRow(
-                    competitor = event.competitions.first().competitors.last(),
-                    modifier = modifier,
-                    content = {
-                        Text(
-                            text = if (event.status.type?.state == StatusState.PRE) event.competitions.first().competitors.last().records.getOrNull(
-                                0)?.summary ?: ""
-                            else event.competitions.first().competitors.last().score)
-                    }
-                )
+                    competitor = event.competitions.firstOrNull()?.competitors?.lastOrNull(),
+                    modifier = modifier
+                ) {
+                    Text(
+                        text = (if (event.status.type?.state == StatusState.PRE) event.competitions.firstOrNull()?.competitors?.last()?.records?.getOrNull(
+                            0
+                        )?.summary ?: ""
+                        else event.competitions.firstOrNull()?.competitors?.last()?.score).toString()
+                    )
+                }
 
 
                 CompetitorRow(
-                    competitor = event.competitions.first().competitors.first(),
-                    modifier = modifier,
-                    content = {
-                        Text(
-                            text = if (event.status.type?.state == StatusState.PRE) event.competitions.first().competitors.first().records.getOrNull(
-                                0)?.summary ?: ""
-                            else event.competitions.first().competitors.first().score)
-                    }
-                )
+                    competitor = event.competitions.firstOrNull()?.competitors?.firstOrNull(),
+                    modifier = modifier
+                ) {
+                    Text(
+                        text = (if (event.status.type?.state == StatusState.PRE) event.competitions.firstOrNull()?.competitors?.firstOrNull()?.records?.getOrNull(0
+                        )?.summary ?: ""
+                        else event.competitions.firstOrNull()?.competitors?.firstOrNull()?.score ?: ""))
+                }
             }
-            Text(text = event.competitions.first().status?.type?.shortDetail ?: "",
+            Text(text = event.competitions.firstOrNull()?.status?.type?.shortDetail ?: "",
                 modifier = modifier.align(
                     Alignment.TopCenter),
                 fontWeight = FontWeight.Bold)
@@ -741,9 +741,9 @@ fun NewEventMatchup(
 
 
 @Composable
-fun CompetitionSituation(situation: SituationScoreboard, modifier: Modifier) {
+fun CompetitionSituation(situation: SituationScoreboard?, modifier: Modifier) {
 
-    Text(text = "Balls: ${situation.balls.toString()} Strikes: ${situation.strikes.toString()} Outs: ${situation.outs.toString()}")
+    Text(text = "Balls: ${situation?.balls.toString()} Strikes: ${situation?.strikes.toString()} Outs: ${situation?.outs.toString()}")
 
 }
 

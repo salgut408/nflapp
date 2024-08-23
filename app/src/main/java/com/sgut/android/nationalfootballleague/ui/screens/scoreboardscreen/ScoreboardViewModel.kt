@@ -56,8 +56,10 @@ class ScoreboardViewModel @Inject constructor(
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
         try {
 
-            _tennis.emit(scoreboardRepository.getTennisScoreBoard(TENNIS, ATP))
-                val news = getArticles(sport, league)
+//            _tennis.emit(scoreboardRepository.getTennisScoreBoard(TENNIS, ATP))
+            _tennis.emit(scoreboardRepository.getTennisScoreBoard(TENNIS, ATP)) // this is just chekcing
+
+            val news = getArticles(sport, league)
                 val currentScoreboardModelUiState = getScores(sport, league)
 
            val abstractScoresFromRepo = scoreboardRepository.getAbstractScoreBoard(sport, league)
