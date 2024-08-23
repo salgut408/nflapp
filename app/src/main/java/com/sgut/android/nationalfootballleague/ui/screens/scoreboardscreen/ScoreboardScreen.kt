@@ -51,7 +51,7 @@ fun ScoreboardScreen(
 ) {
 
 //    TODO this causes the switch when clicking different sport on scoreboard screen
-    scoreboardViewModel.loadGenericScoreboard(sport, league)
+//    scoreboardViewModel.loadGenericScoreboard(sport, league)
 
 
     val newUiState by scoreboardViewModel.scoreboardModelState.collectAsStateWithLifecycle()

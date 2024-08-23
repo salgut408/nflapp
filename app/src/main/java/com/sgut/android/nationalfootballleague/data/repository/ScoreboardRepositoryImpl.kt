@@ -89,7 +89,7 @@ class ScoreboardRepositoryImpl @Inject constructor(
         try {
             withContext(ioDispatcher){
                 val scores = sportsApi.getAbstractScoreboard(sport, league).body()
-                scores.printToLog("ABSTRACTSCORES_REPO")
+                scores.printToLog("ABSTRACT SCORES_REPO")
                 return@withContext scores
             }
         } catch (e: Exception){

@@ -62,7 +62,11 @@ class ScoreboardViewModel @Inject constructor(
             val news = getArticles(sport, league)
                 val currentScoreboardModelUiState = getScores(sport, league)
 
-           val abstractScoresFromRepo = scoreboardRepository.getAbstractScoreBoard(sport, league)
+           val abstractScoresFromRepo =
+               viewModelScope.launch {
+                   scoreboardRepository.getAbstractScoreBoard(sport, league)
+               }
+
             abstractScoresFromRepo.printToLog("abstractScoresFromRepo")
 
             val newAbstractScores = newScoressCase(sport, league)
