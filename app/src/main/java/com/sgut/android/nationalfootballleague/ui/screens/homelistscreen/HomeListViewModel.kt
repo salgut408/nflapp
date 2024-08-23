@@ -35,7 +35,7 @@ class HomeListViewModel @Inject constructor(
 
     init {
 //        to start
-        loadAllNflTeams()
+//        loadAllNflTeams()
     }
 
     fun addTeamsToDb(teams: List<TeamModel>, sport: String, league: String, leagueAbrv: String) =

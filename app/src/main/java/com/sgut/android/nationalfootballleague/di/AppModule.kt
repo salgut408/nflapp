@@ -157,7 +157,10 @@ object AppModule {
         articleRepository: NewArticleRepository,
         ioDispatcher: CoroutineDispatcher,
         articleDao: ArticleDao
-    ): NewGetArticlesUseCase = NewGetArticlesUseCase(articleRepository, ioDispatcher, articleDao)
+    ): NewGetArticlesUseCase = NewGetArticlesUseCase(articleRepository,
+//        ioDispatcher,
+//        articleDao
+    )
 
     @Provides
     fun provideGenericNetworkFlow(@ApplicationContext context: Context): GenNetworkFlow {
