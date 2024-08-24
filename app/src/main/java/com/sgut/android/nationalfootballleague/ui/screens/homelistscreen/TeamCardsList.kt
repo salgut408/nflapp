@@ -93,14 +93,12 @@ fun HomeTeamCardsListScreen(
 
     SportScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-
         topBar = {
             ToolBar3(
                 title = sportStateLeagueName ?: "",
                 scrollBehavior = scrollBehavior
             )
         },
-
 
         content = { padding ->
             Column(
@@ -116,7 +114,6 @@ fun HomeTeamCardsListScreen(
                                 MLB)
                         }) {
                             LabelText(stringResId = R.string.MLB_league)
-
                         }
                     }
 

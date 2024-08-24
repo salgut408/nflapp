@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,6 +18,7 @@ import com.sgut.android.nationalfootballleague.ui.application.EspnAppState
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.athelete_detail.AthleteDetailScreen
 import com.sgut.android.nationalfootballleague.ui.screens.gamedetailscreen.GameDetailsScreen
+import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeListViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeTeamCardsListScreen
 import com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen.ScoreboardScreen
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.TeamDetailScreen
@@ -119,12 +122,17 @@ fun Navigation(
                     type = NavType.StringType
                 },
             )
-        ) {
-            val sportName = it.arguments?.getString("sport")!!
-            val leagueName = it.arguments?.getString("league")!!
+        ) { backStackEntry ->
+        val sportName = backStackEntry.arguments?.getString("sport")!!
+            val leagueName = backStackEntry.arguments?.getString("league")!!
+            val parentEntry = remember(backStackEntry) {
+                appState.navController.getBackStackEntry(NavigationScreens.MainScreenTeamsList.route )
+            }
+            val homeListViewModel: HomeListViewModel = hiltViewModel(parentEntry)
 
 
             ScoreboardScreen(
+                homeListViewModel = homeListViewModel,
                 sport = sportName,
                 league = leagueName,
                 navController = appState.navController,

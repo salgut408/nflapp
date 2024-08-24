@@ -142,8 +142,7 @@ object AppModule {
     @Provides
     fun provideArticleUseCase(
         articleRepository: ArticleRepository,
-        ioDispatcher: CoroutineDispatcher,
-    ): GetArticlesUseCase = GetArticlesUseCase(articleRepository, ioDispatcher)
+    ): GetArticlesUseCase = GetArticlesUseCase(articleRepository)
 
     @Provides
     fun provideNewArticleRepository(

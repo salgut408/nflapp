@@ -1,5 +1,6 @@
 package com.sgut.android.nationalfootballleague.homelistscreen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -54,11 +55,21 @@ fun ArticleCard(
                             .padding(bottom = 6.dp)
                     )
                 }
-
                 NormalDivider()
 
                 Text(
                     text = article.headline,
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Bold,
+                    modifier = modifier.padding(8.dp),
+                    textAlign = TextAlign.Left,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                    color = Color.Black,
+                )
+                        Log.d("SAL_GUT", "ARTICLE: ${article.toString()}")
+                Text(
+                    text = article.dataSourceIdentifier,
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Bold,
                     modifier = modifier.padding(8.dp),

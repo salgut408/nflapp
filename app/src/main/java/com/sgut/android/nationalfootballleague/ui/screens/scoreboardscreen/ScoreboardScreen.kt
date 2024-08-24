@@ -1,5 +1,7 @@
 package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 
+import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -10,14 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.R
@@ -30,6 +35,7 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.EIGHT
 import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.*
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
+import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeListViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.NewsRow
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.*
@@ -48,11 +54,19 @@ fun ScoreboardScreen(
     navigateUp: () -> Unit,
     scoreboardViewModel: ScoreboardViewModel = hiltViewModel(),
     navController: NavController,
+    homeListViewModel: HomeListViewModel
 ) {
 
 //    TODO this causes the switch when clicking different sport on scoreboard screen
 //    scoreboardViewModel.loadGenericScoreboard(sport, league)
+    val homeViewModelLeague = homeListViewModel.listUiState.value.currentLeague
+    val homeViewModelSport = homeListViewModel.listUiState.value.currentSport
 
+
+    Log.d("SAL_GUT", "HOME VM ${homeListViewModel.listUiState.value.currentLeague}")
+    Log.d("SAL_GUT", "HOME VM ${homeListViewModel.listUiState.value.currentSport}")
+
+//    scoreboardViewModel.loadGenericScoreboard(homeViewModelSport, homeViewModelLeague)
 
     val newUiState by scoreboardViewModel.scoreboardModelState.collectAsStateWithLifecycle()
     val news = newUiState.currentArticles
@@ -61,6 +75,7 @@ fun ScoreboardScreen(
     val league = newUiState.currentLeague
 
     val tennis by scoreboardViewModel.tennis.collectAsStateWithLifecycle()
+
 
 
 

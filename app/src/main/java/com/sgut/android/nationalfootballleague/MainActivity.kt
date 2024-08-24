@@ -14,8 +14,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             NationalFootballLeagueTheme {
                 EspnApp()
-
-
             }
         }
     }

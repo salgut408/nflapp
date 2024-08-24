@@ -12,18 +12,14 @@ import javax.inject.Inject
 
 open class GetArticlesUseCase @Inject constructor(
     private val articleRepository: ArticleRepository,
-    private val defaultDispatcher: CoroutineDispatcher,
 ) {
-    suspend operator fun invoke(sport: String, league: String): ArticlesListModel =
-        withContext(defaultDispatcher) {
-            val news = articleRepository.getArticles(sport, league )
-            return@withContext news
-        }
+    suspend operator fun invoke(sport: String, league: String): ArticlesListModel {
+        return articleRepository.getArticles(sport, league)
+    }
 }
 
 class NewGetArticlesUseCase @Inject constructor(
     private val newArticleRepository: NewArticleRepository,
-
 ){
     suspend operator fun invoke(sport: String, league: String) : Flow<NetworkResult<Flow<List<ArticleDbObject>>>> {
         val news = newArticleRepository.getArticles(sport, league)
