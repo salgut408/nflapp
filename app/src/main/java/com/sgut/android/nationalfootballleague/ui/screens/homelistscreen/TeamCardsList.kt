@@ -55,9 +55,10 @@ fun HomeTeamCardsListScreen(
     val uiStateFromHomeListVm by  homeListViewModel.listUiState.collectAsStateWithLifecycle()
     val uiStateBySelectionVm by selectionViewModel.selectionUiState.collectAsStateWithLifecycle()
 
-    val sport = uiStateBySelectionVm.slug
-    val league =  uiStateBySelectionVm.league.slug
+    val sport = uiStateFromHomeListVm.fullTeamInfo?.sport?.slug
+    val league =  uiStateFromHomeListVm.fullTeamInfo?.sport?.league?.slug
 
+    // Why wont this work if uiStateBySelectionVm is used ? maybe bc its BLANK
     val sportStateLeagueName = uiStateFromHomeListVm.fullTeamInfo?.sport?.league?.name
     val sportStateTeamsFullInfo =  uiStateFromHomeListVm.fullTeamInfo
 
