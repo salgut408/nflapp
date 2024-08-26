@@ -80,14 +80,14 @@ fun HomeTeamCardsListScreen(
 //    val sport = uiState.fullTeamInfo?.sport?.slug
 //    val league = uiState.fullTeamInfo?.sport?.league?.slug
 
-    val uiState by homeListViewModel.listUiState.collectAsStateWithLifecycle()
+    val uiState by  homeListViewModel.listUiState.collectAsStateWithLifecycle()
     val sport = uiState.fullTeamInfo?.sport?.slug
-    val league = uiState.fullTeamInfo?.sport?.league?.slug
+    val league =  uiState.fullTeamInfo?.sport?.league?.slug
 
     val sportStateLeagueName = uiState.fullTeamInfo?.sport?.league?.name
-    val sportStateTeamsFullInfo = uiState.fullTeamInfo
+    val sportStateTeamsFullInfo =  uiState.fullTeamInfo
 
-    val news = uiState.currentNews
+    val news =  uiState.currentNews
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     
