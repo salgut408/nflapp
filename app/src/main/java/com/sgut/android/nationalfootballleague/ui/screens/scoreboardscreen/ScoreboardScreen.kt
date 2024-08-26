@@ -41,6 +41,7 @@ import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpa
 import com.sgut.android.nationalfootballleague.utils.*
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.XFL
+import timber.log.Timber
 import java.util.*
 
 
@@ -59,12 +60,18 @@ fun ScoreboardScreen(
 
 //    TODO this causes the switch when clicking different sport on scoreboard screen
 //    scoreboardViewModel.loadGenericScoreboard(sport, league)
-    val homeViewModelLeague = homeListViewModel.listUiState.value.currentLeague
-    val homeViewModelSport = homeListViewModel.listUiState.value.currentSport
+    val homeViewModelUiState = homeListViewModel.listUiState.collectAsState()
+    val homeViewModelLeague = homeViewModelUiState.value.currentLeague.lowercase()
+    val homeViewModelSport =  homeViewModelUiState.value.currentSport.lowercase()
+    val sportAll = homeViewModelUiState.value.sportModel
+
+        scoreboardViewModel.loadGenericScoreboard(homeViewModelSport, homeViewModelLeague)
 
 
-    Log.d("SAL_GUT", "HOME VM ${homeListViewModel.listUiState.value.currentLeague}")
-    Log.d("SAL_GUT", "HOME VM ${homeListViewModel.listUiState.value.currentSport}")
+    Timber.d("homeViewModelLeague : $homeViewModelLeague")
+    Timber.d("homeViewModelSport : $homeViewModelSport")
+    Timber.d("sportAll : $sportAll")
+
 
 //    scoreboardViewModel.loadGenericScoreboard(homeViewModelSport, homeViewModelLeague)
 
@@ -430,9 +437,11 @@ fun TeamComponent(team: ScoreboardCompetitorsModel, modifier: Modifier) {
 
     Box(modifier = modifier
         .padding(8.dp)
-        .background(Brush.horizontalGradient(
-            listOf(color, Color.White)
-        ))
+        .background(
+            Brush.horizontalGradient(
+                listOf(color, Color.White)
+            )
+        )
         .fillMaxWidth(3f)) {
 
 
@@ -504,9 +513,13 @@ fun TeamComponent2(
         modifier = modifier
             .fillMaxSize()
             .clickable {
-                navController.navigate(NavigationScreens.GameDetailScreen.withArgs(sport,
-                    league,
-                    compScoreboard.id))
+                navController.navigate(
+                    NavigationScreens.GameDetailScreen.withArgs(
+                        sport,
+                        league,
+                        compScoreboard.id
+                    )
+                )
             }) {
         Box(
             modifier = modifier

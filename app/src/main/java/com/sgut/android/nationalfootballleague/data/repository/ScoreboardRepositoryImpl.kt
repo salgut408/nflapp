@@ -14,6 +14,7 @@ import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRep
 import com.sgut.android.nationalfootballleague.utils.printToLog
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 class ScoreboardRepositoryImpl @Inject constructor(
@@ -32,15 +33,14 @@ class ScoreboardRepositoryImpl @Inject constructor(
                 if (response.isSuccessful) {
                     return@withContext response.body()?.asDomain()!!
                 } else {
-                    Log.e("getscoreboard-FAIL", response.errorBody().toString())
+                    Timber.e("getScoreboard-FAIL, ${response.toString()}")
                     BasicScoreboardModel()
                 }
             }
         }
         catch (e: Exception) {
-            Log.e("BAD ", e.stackTraceToString())
+            Timber.e("getScoreboard fail , ${e.stackTraceToString()}")
             BasicScoreboardModel()
-
         }
 
 
@@ -54,7 +54,7 @@ class ScoreboardRepositoryImpl @Inject constructor(
             if (response.isSuccessful) {
                 return@withContext response.body()?.asDomain()!!
             } else {
-                Log.e("scrbrdRepmarch-FAIL", response.errorBody().toString())
+                Timber.e("scrbrdRepmarch-FAIL, ${response.errorBody().toString()}")
                 BasicScoreboardModel()
             }
         }
@@ -81,7 +81,7 @@ class ScoreboardRepositoryImpl @Inject constructor(
             }
         }
         catch (e: Exception) {
-            Log.e("REPO-TENNIS", e.stackTraceToString())
+            Timber.e("REPO-TENNIS, ${e.stackTraceToString()}")
             TennisScoreboardModel()
         }
 
@@ -89,11 +89,10 @@ class ScoreboardRepositoryImpl @Inject constructor(
         try {
             withContext(ioDispatcher){
                 val scores = sportsApi.getAbstractScoreboard(sport, league).body()
-                scores.printToLog("ABSTRACT SCORES_REPO")
                 return@withContext scores
             }
         } catch (e: Exception){
-            Log.e("ABSTRACT ERROR", e.stackTraceToString())
+            Timber.e("ABSTRACT ERROR ${e.stackTraceToString()}")
 
         }
        return DefaultScoreboardData()
@@ -110,7 +109,7 @@ class ScoreboardRepositoryImpl @Inject constructor(
             if (result.isSuccessful) {
                 return@withContext result.body()?.asDomain()!!
             } else {
-                Log.e("getGeneralScoreboardByDate-FAIL", result.errorBody().toString())
+                Timber.e("getGeneralScoreboardByDate-FAIL")
                 BasicScoreboardModel()
             }
         }

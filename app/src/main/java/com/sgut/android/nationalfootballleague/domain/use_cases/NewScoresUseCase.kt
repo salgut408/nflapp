@@ -5,6 +5,7 @@ import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRep
 import com.sgut.android.nationalfootballleague.utils.printToLog
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 class NewScoresUseCase @Inject constructor(
@@ -14,7 +15,7 @@ class NewScoresUseCase @Inject constructor(
     suspend operator fun invoke(sport: String, league: String): ScoreboardData =
         withContext(ioDispatcher) {
             val scores = scoreboardRepository.getAbstractScoreBoard(sport, league)
-            scores.printToLog("ABSTRACTSCORE_USECASE")
+           Timber.d("ABSTRACTSCORE_USECASE")
             return@withContext scores
         }
 }

@@ -6,6 +6,7 @@ import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BA
 import com.sgut.android.nationalfootballleague.utils.printToLog
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 class GetScoresUseCase @Inject constructor(
@@ -15,16 +16,15 @@ class GetScoresUseCase @Inject constructor(
     suspend operator fun invoke (sport: String, league: String): BasicScoreboardModel =
         withContext(ioDispatcher) {
             if (league == NCAA_BASKETBALL) {
-                val scoreboard = scoreboardRepository.getCollegeBasketballScoreboard(sport = sport, league = league, limit = "200")
-                return@withContext scoreboard
+                return@withContext scoreboardRepository.getCollegeBasketballScoreboard(
+                    sport = sport,
+                    league = league,
+                    limit = "200"
+                )
             }
-//            else if (league == ATP) { TODO  use the interfaces to return basics eventually
-//                val scoreBoard = scoreboardRepository.getTennisScoreBoard(sport = sport, league = league)
-//                return@withContext scoreBoard
-//            }
-            val scoreboard = scoreboardRepository.getGeneralScoreboard(sport = sport, league = league)
-            scoreboard.printToLog("NRLMGETSCORES_USECSE")
-            return@withContext scoreboard
+            return@withContext scoreboardRepository.getGeneralScoreboard(sport = sport, league = league). also {
+                Timber.d("GetScoresUseCase SUCCESS : $it")
+            }
         }
 }
 

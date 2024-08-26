@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,6 +47,7 @@ class ScoreboardViewModel @Inject constructor(
 
 
     init {
+
     }
 
 //    fun loadBaseballScoreboard(sport: String, league: String) = viewModelScope.launch {
@@ -62,16 +64,14 @@ class ScoreboardViewModel @Inject constructor(
             val news = getArticles(sport, league)
                 val currentScoreboardModelUiState = getScores(sport, league)
 
-           val abstractScoresFromRepo =
-               viewModelScope.launch {
+           val abstractScoresFromRepo = viewModelScope.launch {
                    scoreboardRepository.getAbstractScoreBoard(sport, league)
                }
 
-            abstractScoresFromRepo.printToLog("abstractScoresFromRepo")
+            Timber.d("abstractScoresFromRepo in vm $abstractScoresFromRepo")
 
             val newAbstractScores = newScoressCase(sport, league)
-            newAbstractScores.printToLog("ABSTRACTSCORES_VIEWMODEL UC")
-
+            Timber.d("newAbstractScores in vm $newAbstractScores")
 
                 setScoreboardUiState(
                     sport, league,
@@ -79,13 +79,13 @@ class ScoreboardViewModel @Inject constructor(
                     news
                 )
         } catch (e: Exception) {
-            Log.i("DEBUG-rc vm", e.stackTraceToString())
+            Timber.e("ERROR loadGenericScoreboard")
         }
     }
 
 
 
-    fun setScoreboardUiState(
+    private fun setScoreboardUiState(
         currentSport: String,
         currentLeague: String,
         currentDefaultScoreboardModelUiState: BasicScoreboardModel,
