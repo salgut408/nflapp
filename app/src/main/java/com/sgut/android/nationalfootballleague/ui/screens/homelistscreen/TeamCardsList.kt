@@ -2,7 +2,6 @@ package com.sgut.android.nationalfootballleague.ui.screens.homelistscreen
 
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -22,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.sgut.android.nationalfootballleague.R
 import com.sgut.android.nationalfootballleague.di.ToolBar3
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.TeamModel
@@ -36,33 +34,7 @@ import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.selection.SelectionViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.standings_screen.Standings
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.ATP
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASEBALL
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.BASKETBALL
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.CHAMPIONS
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.EPL
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.F1
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FIFA
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FRA
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.HOCKEY
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.LA_LIGA
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.LIST_OF_LEAGUE_PAIRS
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.MLB
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.MLS
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NBA
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASEBALL
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_BASKETBALL
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NCAA_FOOTBALL
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NFL
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NHL
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.RACING
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.SOCCER
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.TENNIS
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.UEFA
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.WBC
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.WNBA
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.XFL
 import com.sgut.android.nationalfootballleague.utils.basicButton
 import com.sgut.android.nationalfootballleague.R.string as AppText
 
@@ -80,14 +52,16 @@ fun HomeTeamCardsListScreen(
 //    val sport = uiState.fullTeamInfo?.sport?.slug
 //    val league = uiState.fullTeamInfo?.sport?.league?.slug
 
-    val uiState by  homeListViewModel.listUiState.collectAsStateWithLifecycle()
-    val sport = uiState.fullTeamInfo?.sport?.slug
-    val league =  uiState.fullTeamInfo?.sport?.league?.slug
+    val uiStateFromHomeListVm by  homeListViewModel.listUiState.collectAsStateWithLifecycle()
+    val uiStateBySelectionVm by selectionViewModel.selectionUiState.collectAsStateWithLifecycle()
 
-    val sportStateLeagueName = uiState.fullTeamInfo?.sport?.league?.name
-    val sportStateTeamsFullInfo =  uiState.fullTeamInfo
+    val sport = uiStateBySelectionVm.slug
+    val league =  uiStateBySelectionVm.league.slug
 
-    val news =  uiState.currentNews
+    val sportStateLeagueName = uiStateFromHomeListVm.fullTeamInfo?.sport?.league?.name
+    val sportStateTeamsFullInfo =  uiStateFromHomeListVm.fullTeamInfo
+
+    val news =  uiStateFromHomeListVm.currentNews
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     
@@ -132,9 +106,9 @@ fun HomeTeamCardsListScreen(
                 sportStateTeamsFullInfo.let {
 
                     TeamsListCircleRow(
-                        teams = uiState.fullTeamInfo?.sport?.league?.teams ?: listOf(),
-                        sport = uiState.currentSport,
-                        league = uiState.fullTeamInfo?.sport?.league?.shortName ?: "",
+                        teams = uiStateFromHomeListVm.fullTeamInfo?.sport?.league?.teams ?: listOf(),
+                        sport = uiStateFromHomeListVm.currentSport,
+                        league = uiStateFromHomeListVm.fullTeamInfo?.sport?.league?.shortName ?: "",
                         onTeamClick = {},
                         navController = navController
                     )
