@@ -24,20 +24,22 @@ class SelectionViewModel @Inject constructor(
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage
 
-    private suspend fun loadSport(sport: String, league: String) {
+     suspend fun loadSport(sport: String, league: String) {
+         viewModelScope.launch {
 
-        val sport =  fullTeamsListRepository.getSport(sport, league)
+             val sport =  fullTeamsListRepository.getSport(sport, league)
 
-        _selectionUiState.update {
-            it.copy(
-                id = sport.id,
-                uid = sport.uid,
-                name = sport.name,
-                slug = sport.slug,
-                league = sport.league
-            )
-        }
-        Timber.d("SAL_GUT SPORT SELECTED: ${selectionUiState.value}")
+             _selectionUiState.update {
+                 it.copy(
+                     id = sport.id,
+                     uid = sport.uid,
+                     name = sport.name,
+                     slug = sport.slug,
+                     league = sport.league
+                 )
+             }
+             Timber.d("SAL_GUT SPORT SELECTED: ${selectionUiState.value}")
+         }
     }
 
     fun setDifferentSport(sport: String, league: String) = viewModelScope.launch {

@@ -76,6 +76,10 @@ fun HomeTeamCardsListScreen(
     homeListViewModel: HomeListViewModel = hiltViewModel(),
 
     ) {
+//    val uiState by homeListViewModel.listUiState.collectAsStateWithLifecycle()
+//    val sport = uiState.fullTeamInfo?.sport?.slug
+//    val league = uiState.fullTeamInfo?.sport?.league?.slug
+
     val uiState by homeListViewModel.listUiState.collectAsStateWithLifecycle()
     val sport = uiState.fullTeamInfo?.sport?.slug
     val league = uiState.fullTeamInfo?.sport?.league?.slug
@@ -88,6 +92,8 @@ fun HomeTeamCardsListScreen(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     
     val errorMessage = homeListViewModel.errorMessage.collectAsStateWithLifecycle()
+
+    selectionViewModel.setDifferentSport(sport ?: "baseball", league ?: "mlb")
     
     if (errorMessage.value != null) {
         ShowToast(message = errorMessage.value!!)
