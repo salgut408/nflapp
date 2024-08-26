@@ -119,8 +119,6 @@ fun HomeTeamCardsListScreen(
                         homeListViewModel.setDifferentTeams(sport, league)
                     }
                 )
-
-
                 BasicButton(
                     text = AppText.scores_games,
                     modifier = Modifier.basicButton(),
