@@ -28,10 +28,12 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.A
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.TeamModel
 import com.sgut.android.nationalfootballleague.homelistscreen.ArticleRow
 import com.sgut.android.nationalfootballleague.ui.commoncomps.CardHeaderText
+import com.sgut.android.nationalfootballleague.ui.commoncomps.LeagueSelectionRow
 import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
 import com.sgut.android.nationalfootballleague.ui.commoncomps.SportScaffold
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.*
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
+import com.sgut.android.nationalfootballleague.ui.screens.selection.SelectionViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.standings_screen.Standings
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.ATP
@@ -45,6 +47,7 @@ import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBAL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FRA
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.HOCKEY
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.LA_LIGA
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.LIST_OF_LEAGUE_PAIRS
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.MLB
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.MLS
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NBA
@@ -68,10 +71,11 @@ import com.sgut.android.nationalfootballleague.R.string as AppText
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTeamCardsListScreen(
+    selectionViewModel: SelectionViewModel,
     navController: NavController,
     homeListViewModel: HomeListViewModel = hiltViewModel(),
-    ) {
 
+    ) {
     val uiState by homeListViewModel.listUiState.collectAsStateWithLifecycle()
     val sport = uiState.fullTeamInfo?.sport?.slug
     val league = uiState.fullTeamInfo?.sport?.league?.slug
@@ -86,10 +90,8 @@ fun HomeTeamCardsListScreen(
     val errorMessage = homeListViewModel.errorMessage.collectAsStateWithLifecycle()
     
     if (errorMessage.value != null) {
-        showToast(message = errorMessage.value!!)
+        ShowToast(message = errorMessage.value!!)
     }
-
-
 
     SportScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -104,184 +106,13 @@ fun HomeTeamCardsListScreen(
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
-                LazyRow(
-                    contentPadding = padding,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(BASEBALL,
-                                MLB)
-                        }) {
-                            LabelText(stringResId = R.string.MLB_league)
-                        }
+                LeagueSelectionRow(
+                    leagues = LIST_OF_LEAGUE_PAIRS,
+                    padding = padding,
+                    onLeagueSelected = {sport, league ->
+                        homeListViewModel.setDifferentTeams(sport, league)
                     }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(BASKETBALL,
-                                NCAA_BASKETBALL)
-                        }) {
-                            Text(stringResource(R.string.NCAA_mens_basketball),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(SOCCER,
-                                FRA)
-                        }) {
-                            LabelText(stringResId = R.string.fra)
-
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = { homeListViewModel.setDifferentTeams(TENNIS, ATP) }) {
-                            Text(stringResource(R.string.atp),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(
-                            onClick = {
-                                homeListViewModel.setDifferentTeams(FOOTBALL, NFL)
-                            }
-                        ) {
-                            LabelText(stringResId = R.string.NFL_League)
-                        }
-                    }
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(HOCKEY,
-                                NHL)
-                        }) {
-                            LabelText(stringResId = R.string.NHL_league)
-
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(BASEBALL,
-                                WBC)
-                        }) {
-                            LabelText(stringResId = R.string.WBC_league)
-
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(BASKETBALL,
-                                NBA)
-                        }) {
-                            LabelText(stringResId = R.string.NBA_league)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(BASKETBALL,
-                                WNBA)
-                        }) {
-                            LabelText(stringResId = R.string.WNBA_league)
-
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(SOCCER,
-                                CHAMPIONS)
-                        }) {
-                            LabelText(stringResId = R.string.champions)
-
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(FOOTBALL,
-                                NCAA_FOOTBALL)
-                        }) {
-                            LabelText(stringResId = R.string.NCAA_football)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(BASEBALL,
-                                NCAA_BASEBALL)
-                        }) {
-                            LabelText(stringResId = R.string.NCAA_baseball)
-
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(SOCCER,
-                                MLS)
-                        }) {
-                            LabelText(stringResId = R.string.MLS_league)
-
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(SOCCER,
-                                FIFA)
-                        }) {
-                            LabelText(stringResId = R.string.world_cup)
-
-                        }
-                    }
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(SOCCER,
-                                LA_LIGA)
-                        }) {
-                            LabelText(stringResId = R.string.la_liga)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(SOCCER,
-                                EPL)
-                        }) {
-                            LabelText(stringResId = R.string.premier_league)
-                        }
-                    }
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(SOCCER,
-                                UEFA)
-                        }) {
-                            LabelText(stringResId = R.string.euro_soccer)
-                        }
-                    }
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(FOOTBALL, XFL)
-                        }) {
-                            LabelText(stringResId = R.string.XFL_League)
-
-                        }
-                    }
-                    item {
-                        OutlinedButton(onClick = {
-                            homeListViewModel.setDifferentTeams(RACING, F1)
-                        }) {
-                            LabelText(stringResId = R.string.F1_RACING)
-                        }
-                    }
-                }
+                )
 
 
                 BasicButton(
@@ -293,7 +124,8 @@ fun HomeTeamCardsListScreen(
                         )
                     })
 
-                if (sportStateTeamsFullInfo != null) {
+
+                sportStateTeamsFullInfo.let {
 
                     TeamsListCircleRow(
                         teams = uiState.fullTeamInfo?.sport?.league?.teams ?: listOf(),
@@ -305,22 +137,18 @@ fun HomeTeamCardsListScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    NewsRow(news = news ?: ArticlesListModel(),
-                        modifier = Modifier.wrapContentSize())
+                    NewsRow(news = news, modifier = Modifier.wrapContentSize())
 
                     Spacer(modifier = Modifier.height(16.dp))
-
 
                     Standings(
                         sport = sport ?: "",
                         league = league ?: "",
                         type = "0"
                     )
-
                 }
             }
         },
-
         )
 }
 
@@ -356,8 +184,6 @@ fun TeamsListCircleRow(
         }
 
     }
-
-
 }
 
 @Composable
@@ -419,8 +245,6 @@ fun TeamItem(
                     borderWidth = 1.dp,
                     shape = RoundedCornerShape(8.dp)
                 )
-
-
             }
             ToggleFollowIconButton(
                 isFollowed = team.isFavorite,
@@ -433,7 +257,7 @@ fun TeamItem(
 }
 
 @Composable
-fun showToast(message: String) {
+fun ShowToast(message: String) {
     Toast.makeText(LocalContext.current, message, Toast.LENGTH_LONG).show()
 }
 

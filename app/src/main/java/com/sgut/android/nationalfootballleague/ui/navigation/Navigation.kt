@@ -21,6 +21,7 @@ import com.sgut.android.nationalfootballleague.ui.screens.gamedetailscreen.GameD
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeListViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeTeamCardsListScreen
 import com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen.ScoreboardScreen
+import com.sgut.android.nationalfootballleague.ui.screens.selection.SelectionViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.TeamDetailScreen
 import kotlinx.coroutines.CoroutineScope
 
@@ -42,11 +43,18 @@ fun Navigation(
 
         composable(
             route = NavigationScreens.MainScreenTeamsList.route
-        ) {
-            val sport = it.arguments?.getString("sport")
-            val league = it.arguments?.getString("league")
+        ) { backStackEntry ->
+            val sport = backStackEntry.arguments?.getString("sport")
+            val league = backStackEntry.arguments?.getString("league")
+            val parentEntry = remember(backStackEntry) {
+                appState.navController.getBackStackEntry(NavigationScreens.MainScreenTeamsList.route )
+            }
+            val selectionViewModel: SelectionViewModel = hiltViewModel(parentEntry)
+
             HomeTeamCardsListScreen(
+                selectionViewModel = selectionViewModel,
                 navController = appState.navController,
+
             )
         }
         composable(
@@ -129,6 +137,7 @@ fun Navigation(
                 appState.navController.getBackStackEntry(NavigationScreens.MainScreenTeamsList.route )
             }
             val homeListViewModel: HomeListViewModel = hiltViewModel(parentEntry)
+            val selectionViewModel: SelectionViewModel = hiltViewModel(parentEntry)
 
 
             ScoreboardScreen(

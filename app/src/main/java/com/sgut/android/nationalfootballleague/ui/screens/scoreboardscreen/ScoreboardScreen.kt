@@ -1,7 +1,5 @@
 package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 
-import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -65,7 +63,7 @@ fun ScoreboardScreen(
     val homeViewModelSport =  homeViewModelUiState.value.currentSport.lowercase()
     val sportAll = homeViewModelUiState.value.sportModel
 
-        scoreboardViewModel.loadGenericScoreboard(homeViewModelSport, homeViewModelLeague)
+    scoreboardViewModel.loadGenericScoreboard(homeViewModelSport, homeViewModelLeague)
 
 
     Timber.d("homeViewModelLeague : $homeViewModelLeague")
