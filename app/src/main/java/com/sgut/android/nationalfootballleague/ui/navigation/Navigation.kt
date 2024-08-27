@@ -147,6 +147,7 @@ fun Navigation(
                 navController = appState.navController,
                 canNavigateBack = appState.navController.previousBackStackEntry != null,
                 navigateUp = { appState.navController.navigateUp() },
+                selectionViewModel = selectionViewModel
             )
         }
 

@@ -76,7 +76,7 @@ fun TeamComp(team: TeamModel, modifier: Modifier) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(text = team.abbreviation, fontSize = 10.sp, fontWeight = FontWeight.Bold)
-        GenericImageLoader(obj = team.logos.first().href, modifier = modifier.size(30.dp))
+        GenericImageLoader(obj = team.logos.firstOrNull()?.href ?: "", modifier = modifier.size(30.dp))
     }
 
 }

@@ -36,6 +36,7 @@ import com.sgut.android.nationalfootballleague.ui.screens.standings_screen.Stand
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.LIST_OF_LEAGUE_PAIRS
 import com.sgut.android.nationalfootballleague.utils.basicButton
+import timber.log.Timber
 import com.sgut.android.nationalfootballleague.R.string as AppText
 
 
@@ -59,10 +60,10 @@ fun HomeTeamCardsListScreen(
     val league =  uiStateFromHomeListVm.fullTeamInfo?.sport?.league?.slug
 
     // Why wont this work if uiStateBySelectionVm is used ? maybe bc its BLANK
-    val sportStateLeagueName = uiStateFromHomeListVm.fullTeamInfo?.sport?.league?.name
+    val sportStateLeagueName = uiStateFromHomeListVm.fullTeamInfo?.sport?.league?.slug
     val sportStateTeamsFullInfo =  uiStateFromHomeListVm.fullTeamInfo
 
-    val news =  uiStateFromHomeListVm.currentNews
+    val news = selectionViewModel.articleList
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     
@@ -90,7 +91,8 @@ fun HomeTeamCardsListScreen(
                 LeagueSelectionRow(
                     leagues = LIST_OF_LEAGUE_PAIRS,
                     padding = padding,
-                    onLeagueSelected = {sport, league ->
+                    onLeagueSelected = { sport, league ->
+                        Timber.d("SAL_GUT LEAGUE SELECTED SPORT: $sport LEAGUE: $league")
                         homeListViewModel.setDifferentTeams(sport, league)
                     }
                 )
@@ -107,16 +109,16 @@ fun HomeTeamCardsListScreen(
                 sportStateTeamsFullInfo.let {
 
                     TeamsListCircleRow(
-                        teams = uiStateFromHomeListVm.fullTeamInfo?.sport?.league?.teams ?: listOf(),
-                        sport = uiStateFromHomeListVm.currentSport,
-                        league = uiStateFromHomeListVm.fullTeamInfo?.sport?.league?.shortName ?: "",
+                        teams = it?.sport?.league?.teams ?: listOf(),
+                        sport = uiStateBySelectionVm.slug,//uiStateFromHomeListVm.currentSport,
+                        league = uiStateBySelectionVm.league.slug,//uiStateFromHomeListVm.fullTeamInfo?.sport?.league?.shortName ?: "",
                         onTeamClick = {},
                         navController = navController
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    NewsRow(news = news, modifier = Modifier.wrapContentSize())
+                    NewsRow(news = news.value, modifier = Modifier.wrapContentSize())
 
                     Spacer(modifier = Modifier.height(16.dp))
 

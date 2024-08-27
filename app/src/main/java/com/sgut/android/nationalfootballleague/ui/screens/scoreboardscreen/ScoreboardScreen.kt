@@ -35,6 +35,7 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeListViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.NewsRow
+import com.sgut.android.nationalfootballleague.ui.screens.selection.SelectionViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.*
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
@@ -53,7 +54,8 @@ fun ScoreboardScreen(
     navigateUp: () -> Unit,
     scoreboardViewModel: ScoreboardViewModel = hiltViewModel(),
     navController: NavController,
-    homeListViewModel: HomeListViewModel
+    homeListViewModel: HomeListViewModel,
+    selectionViewModel: SelectionViewModel
 ) {
 
 //    TODO this causes the switch when clicking different sport on scoreboard screen
@@ -61,9 +63,13 @@ fun ScoreboardScreen(
     val homeViewModelUiState = homeListViewModel.listUiState.collectAsState()
     val homeViewModelLeague = homeViewModelUiState.value.currentLeague.lowercase()
     val homeViewModelSport =  homeViewModelUiState.value.currentSport.lowercase()
+    val selectionUiState by selectionViewModel.selectionUiState.collectAsStateWithLifecycle()
+    val selectionUiSport = selectionUiState.slug
+    val selectionUiLeague = selectionUiState.league.slug
+
     val sportAll = homeViewModelUiState.value.sportModel
 
-    scoreboardViewModel.loadGenericScoreboard(homeViewModelSport, homeViewModelLeague)
+    scoreboardViewModel.loadGenericScoreboard(selectionUiSport, selectionUiLeague)
 
 
     Timber.d("homeViewModelLeague : $homeViewModelLeague")

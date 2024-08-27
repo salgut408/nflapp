@@ -21,7 +21,6 @@ class ArticleRepositoryImpl @Inject constructor(
         return  withContext(ioDispatcher) {
             val articleResponse = sportsApi.getArticles(sport, league)
             if (articleResponse.isSuccessful) {
-                Timber.d("SAL_GUT GET ARTICLES REPO SUCCESS")
                 return@withContext articleResponse.body()?.asDomain() ?: ArticlesListModel()
             } else {
                 ArticlesListModel()

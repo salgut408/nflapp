@@ -67,7 +67,6 @@ fun ArticleCard(
                     overflow = TextOverflow.Ellipsis,
                     color = Color.Black,
                 )
-                        Log.d("SAL_GUT", "ARTICLE: ${article.toString()}")
                 Text(
                     text = article.dataSourceIdentifier,
                     style = MaterialTheme.typography.bodySmall,
