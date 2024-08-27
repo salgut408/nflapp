@@ -21,7 +21,7 @@ import com.sgut.android.nationalfootballleague.ui.screens.gamedetailscreen.GameD
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeListViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeTeamCardsListScreen
 import com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen.ScoreboardScreen
-import com.sgut.android.nationalfootballleague.ui.screens.selection.SelectionViewModel
+import com.sgut.android.nationalfootballleague.ui.screens.shared_viewmodels.SelectionViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.TeamDetailScreen
 import kotlinx.coroutines.CoroutineScope
 
@@ -133,6 +133,7 @@ fun Navigation(
         ) { backStackEntry ->
         val sportName = backStackEntry.arguments?.getString("sport")!!
             val leagueName = backStackEntry.arguments?.getString("league")!!
+
             val parentEntry = remember(backStackEntry) {
                 appState.navController.getBackStackEntry(NavigationScreens.MainScreenTeamsList.route )
             }

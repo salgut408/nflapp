@@ -1,4 +1,4 @@
-package com.sgut.android.nationalfootballleague.ui.screens.selection
+package com.sgut.android.nationalfootballleague.ui.screens.shared_viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,8 +20,8 @@ class SelectionViewModel @Inject constructor(
     private val fullTeamsListRepository: TeamsListsRepository,
     private val getArticles: GetArticlesUseCase,
 ): ViewModel() {
-    private val _selectionUiState = MutableStateFlow(SportModel())
-    val selectionUiState: StateFlow<SportModel> = _selectionUiState.asStateFlow()
+    private val _selectionFullSportUiState = MutableStateFlow(SportModel())
+    val selectionUiFullSportState: StateFlow<SportModel> = _selectionFullSportUiState.asStateFlow()
 
     private val _articleList = MutableStateFlow(ArticlesListModel())
     val articleList: StateFlow<ArticlesListModel> = _articleList.asStateFlow()
@@ -29,13 +29,13 @@ class SelectionViewModel @Inject constructor(
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage
 
-     suspend fun loadSport(sport: String, league: String) {
+     private suspend fun loadSport(sport: String, league: String) {
          viewModelScope.launch {
 
              val sportModel =  fullTeamsListRepository.getSport(sport, league)
              loadNews(sport, league)
 
-             _selectionUiState.update {
+             _selectionFullSportUiState.update {
                  it.copy(
                      id = sportModel.id,
                      uid = sportModel.uid,
@@ -44,7 +44,7 @@ class SelectionViewModel @Inject constructor(
                      league = sportModel.league
                  )
              }
-             Timber.d("SAL_GUT SPORT SELECTED: ${selectionUiState.value}")
+             Timber.d("SAL_GUT SPORT SELECTED: ${selectionUiFullSportState.value}")
          }
     }
 

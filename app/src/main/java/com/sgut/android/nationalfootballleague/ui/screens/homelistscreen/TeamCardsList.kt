@@ -31,7 +31,7 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
 import com.sgut.android.nationalfootballleague.ui.commoncomps.SportScaffold
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.*
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
-import com.sgut.android.nationalfootballleague.ui.screens.selection.SelectionViewModel
+import com.sgut.android.nationalfootballleague.ui.screens.shared_viewmodels.SelectionViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.standings_screen.Standings
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.LIST_OF_LEAGUE_PAIRS
@@ -49,19 +49,9 @@ fun HomeTeamCardsListScreen(
     homeListViewModel: HomeListViewModel = hiltViewModel(),
 
     ) {
-//    val uiState by homeListViewModel.listUiState.collectAsStateWithLifecycle()
-//    val sport = uiState.fullTeamInfo?.sport?.slug
-//    val league = uiState.fullTeamInfo?.sport?.league?.slug
+    val uiStateFromHomeListVm by  homeListViewModel.listUiState.collectAsStateWithLifecycle() // TODO REMOVE HOME LIST VIEWMODEL
+    val uiStateBySelectionVm by selectionViewModel.selectionUiFullSportState.collectAsStateWithLifecycle()
 
-    val uiStateFromHomeListVm by  homeListViewModel.listUiState.collectAsStateWithLifecycle()
-    val uiStateBySelectionVm by selectionViewModel.selectionUiState.collectAsStateWithLifecycle()
-
-    val sport = uiStateFromHomeListVm.fullTeamInfo?.sport?.slug
-    val league =  uiStateFromHomeListVm.fullTeamInfo?.sport?.league?.slug
-
-    // Why wont this work if uiStateBySelectionVm is used ? maybe bc its BLANK
-    val sportStateLeagueName = uiStateFromHomeListVm.fullTeamInfo?.sport?.league?.slug
-    val sportStateTeamsFullInfo =  uiStateFromHomeListVm.fullTeamInfo
 
     val news = selectionViewModel.articleList
 
@@ -69,7 +59,7 @@ fun HomeTeamCardsListScreen(
     
     val errorMessage = homeListViewModel.errorMessage.collectAsStateWithLifecycle()
 
-    selectionViewModel.setDifferentSport(sport ?: "baseball", league ?: "mlb")
+//    selectionViewModel.setDifferentSport(sport ?: "baseball", league ?: "mlb")
     
     if (errorMessage.value != null) {
         ShowToast(message = errorMessage.value!!)
@@ -79,7 +69,7 @@ fun HomeTeamCardsListScreen(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             ToolBar3(
-                title = sportStateLeagueName ?: "",
+                title = uiStateBySelectionVm.league.name ?: "",
                 scrollBehavior = scrollBehavior
             )
         },
@@ -93,7 +83,7 @@ fun HomeTeamCardsListScreen(
                     padding = padding,
                     onLeagueSelected = { sport, league ->
                         Timber.d("SAL_GUT LEAGUE SELECTED SPORT: $sport LEAGUE: $league")
-                        homeListViewModel.setDifferentTeams(sport, league)
+                        selectionViewModel.setDifferentSport(sport, league)
                     }
                 )
                 BasicButton(
@@ -101,21 +91,17 @@ fun HomeTeamCardsListScreen(
                     modifier = Modifier.basicButton(),
                     action = {
                         navController.navigate(
-                            NavigationScreens.ScoreboardScreen.withArgs(sport ?: "", league ?: "")
+                            NavigationScreens.ScoreboardScreen.withArgs(uiStateBySelectionVm.slug, uiStateBySelectionVm.league.slug)
                         )
                     })
 
-
-                sportStateTeamsFullInfo.let {
-
                     TeamsListCircleRow(
-                        teams = it?.sport?.league?.teams ?: listOf(),
-                        sport = uiStateBySelectionVm.slug,//uiStateFromHomeListVm.currentSport,
-                        league = uiStateBySelectionVm.league.slug,//uiStateFromHomeListVm.fullTeamInfo?.sport?.league?.shortName ?: "",
+                        teams = uiStateBySelectionVm.league.teams,
+                        sport = uiStateBySelectionVm.slug,
+                        league = uiStateBySelectionVm.league.slug,
                         onTeamClick = {},
                         navController = navController
                     )
-
                     Spacer(modifier = Modifier.height(16.dp))
 
                     NewsRow(news = news.value, modifier = Modifier.wrapContentSize())
@@ -123,11 +109,10 @@ fun HomeTeamCardsListScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Standings(
-                        sport = sport ?: "",
-                        league = league ?: "",
+                        sport = uiStateBySelectionVm.slug,
+                        league = uiStateBySelectionVm.league.slug,
                         type = "0"
                     )
-                }
             }
         },
         )

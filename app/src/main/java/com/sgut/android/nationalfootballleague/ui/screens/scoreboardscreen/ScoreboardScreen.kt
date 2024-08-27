@@ -10,17 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.R
@@ -35,13 +32,12 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeListViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.NewsRow
-import com.sgut.android.nationalfootballleague.ui.screens.selection.SelectionViewModel
+import com.sgut.android.nationalfootballleague.ui.screens.shared_viewmodels.SelectionViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.*
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.XFL
 import timber.log.Timber
-import java.util.*
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,9 +57,7 @@ fun ScoreboardScreen(
 //    TODO this causes the switch when clicking different sport on scoreboard screen
 //    scoreboardViewModel.loadGenericScoreboard(sport, league)
     val homeViewModelUiState = homeListViewModel.listUiState.collectAsState()
-    val homeViewModelLeague = homeViewModelUiState.value.currentLeague.lowercase()
-    val homeViewModelSport =  homeViewModelUiState.value.currentSport.lowercase()
-    val selectionUiState by selectionViewModel.selectionUiState.collectAsStateWithLifecycle()
+    val selectionUiState by selectionViewModel.selectionUiFullSportState.collectAsStateWithLifecycle()
     val selectionUiSport = selectionUiState.slug
     val selectionUiLeague = selectionUiState.league.slug
 
@@ -71,11 +65,7 @@ fun ScoreboardScreen(
 
     scoreboardViewModel.loadGenericScoreboard(selectionUiSport, selectionUiLeague)
 
-
-    Timber.d("homeViewModelLeague : $homeViewModelLeague")
-    Timber.d("homeViewModelSport : $homeViewModelSport")
     Timber.d("sportAll : $sportAll")
-
 
 //    scoreboardViewModel.loadGenericScoreboard(homeViewModelSport, homeViewModelLeague)
 

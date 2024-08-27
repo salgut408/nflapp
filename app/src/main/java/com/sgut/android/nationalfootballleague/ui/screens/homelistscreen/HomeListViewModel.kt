@@ -8,7 +8,6 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_te
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_teams_list.TeamModel
 import com.sgut.android.nationalfootballleague.domain.repositories.TeamsListsRepository
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
-import com.sgut.android.nationalfootballleague.ui.screens.selection.SelectionViewModel
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.NFL
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,9 +31,6 @@ class HomeListViewModel @Inject constructor(
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage
 
-    init {
-
-    }
 
     private fun addTeamsToDb(teams: List<TeamModel>, sport: String, league: String, leagueAbrv: String) =
         viewModelScope.launch {
