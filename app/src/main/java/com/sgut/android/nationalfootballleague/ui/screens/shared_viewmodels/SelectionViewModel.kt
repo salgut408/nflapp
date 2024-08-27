@@ -34,6 +34,7 @@ class SelectionViewModel @Inject constructor(
 
              val sportModel =  fullTeamsListRepository.getSport(sport, league)
              loadNews(sport, league)
+             Timber.d("SAL_GUT TENNIS? : $sportModel")
 
              _selectionFullSportUiState.update {
                  it.copy(
@@ -44,7 +45,7 @@ class SelectionViewModel @Inject constructor(
                      league = sportModel.league
                  )
              }
-             Timber.d("SAL_GUT SPORT SELECTED: ${selectionUiFullSportState.value}")
+             Timber.d("SAL_GUT SPORT SELECTED: ${selectionUiFullSportState.value.toString()}")
          }
     }
 

@@ -27,8 +27,9 @@ class ArticleRepositoryImpl @Inject constructor(
             }
         }
     }
-    override suspend fun getGameArticle(sport: String, league: String): List<ArticleDomianModel> {
-        TODO("Not yet implemented")
+    override suspend fun getGameArticle(sport: String, league: String, articleId: String): ArticleDomianModel {
+       sportsApi.getArticleDetail(articleId)
+        return ArticleDomianModel()
     }
 
     override fun getArticlesListAsFlow(sport: String, league: String): Flow<ArticlesListModel> {

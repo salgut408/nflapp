@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface ArticleRepository {
     suspend fun getArticles(sport: String, league: String): ArticlesListModel
     // use game details article api part
-    suspend fun getGameArticle(sport: String, league: String): List<ArticleDomianModel>
+    suspend fun getGameArticle(sport: String, league: String, articleId: String): ArticleDomianModel
 
     fun getArticlesListAsFlow(sport: String, league: String): Flow<ArticlesListModel>
 

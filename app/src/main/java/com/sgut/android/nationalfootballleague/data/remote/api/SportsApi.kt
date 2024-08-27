@@ -160,6 +160,7 @@ interface SportsApi {
 //    TODO add player info
 //    https://site.web.api.espn.com/apis/common/v3/sports/:sport/:league_abbrev/athletes/:athlete_id
 //    https://site.web.api.espn.com/apis/common/v3/sports/baseball/mlb/athletes/36928
+
 //    player stats
 //    http://www.espn.com/mlb/player/stats/_/id/36928/austin-hays",
 
