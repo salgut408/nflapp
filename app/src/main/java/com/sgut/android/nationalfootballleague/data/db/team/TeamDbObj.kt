@@ -12,6 +12,9 @@ data class TeamDbObj(
     val abbreviation: String = "",
     val displayName: String = "",
     val color: String = "",
+    val alternateColor: String = "",
     var isFavorite: Boolean = false,
     val logo: String = "",
+    val sport: String = "",
+    val league: String = ""
     )
