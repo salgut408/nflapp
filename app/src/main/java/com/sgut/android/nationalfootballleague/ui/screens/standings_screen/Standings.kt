@@ -85,7 +85,8 @@ fun TeamComp(team: TeamModel, modifier: Modifier) {
 fun Children(child: ChildrenModel, modifier: Modifier) {
 
     Column (horizontalAlignment = Alignment.End){
-        Text(text = child.name, fontWeight = FontWeight.Bold, fontSize = 10.sp)
+        Text(text = child.abbreviation, fontWeight = FontWeight.Bold, fontSize = 10.sp)
+        Text(text = child.standings.displayName, fontWeight = FontWeight.Bold, fontSize = 10.sp)
         Standings(standings = child.standings, modifier)
     }
 }
