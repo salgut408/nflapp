@@ -74,7 +74,7 @@ fun ScoreboardScreen(
     val newUiState by scoreboardViewModel.scoreboardModelState.collectAsStateWithLifecycle()
     val news = newUiState.currentArticles
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    val sport = selectionUiSport//newUiState.currentSport
+    val sport = selectionUiSport//newUiState.currentSport TODO MAYBE CHECK IF THIS WORKS
     val league = selectionUiLeague//newUiState.currentLeague
 
     val tennis by scoreboardViewModel.tennis.collectAsStateWithLifecycle()
