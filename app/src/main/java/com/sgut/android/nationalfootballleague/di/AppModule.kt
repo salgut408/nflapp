@@ -64,6 +64,7 @@ import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 import java.lang.reflect.Type
 import javax.inject.Singleton
 
@@ -258,7 +259,7 @@ class InterfaceAdapter : JsonDeserializer<ScoreboardData> {
         val jsonObject = json.asJsonObject
         val leagues = jsonObject.get("leagues").asJsonArray.first()
         val slug = leagues.asJsonObject.get("slug").asString
-        Log.e("SLUG", slug)
+        Timber.d("SAL_GUT INTERFACE ADAPTER SLUG - $slug")
         return when (slug) { // TODO rest of leagues or figure out sport
             NFL ->             context.deserialize(jsonObject, DefaultScoreboardData::class.java)
             NBA ->             context.deserialize(jsonObject, DefaultScoreboardData::class.java)
@@ -284,7 +285,7 @@ class InterfaceAdapter : JsonDeserializer<ScoreboardData> {
             CLUB_FRIENDLIES -> context.deserialize(jsonObject, SoccerScoreboard::class.java)
 
 
-            else -> throw IllegalArgumentException("Unknown type: $slug")
+            else -> throw IllegalArgumentException("SAL_GUT APP MOD INTERFACE ADAPTER Unknown type: $slug")
         }
     }
 }

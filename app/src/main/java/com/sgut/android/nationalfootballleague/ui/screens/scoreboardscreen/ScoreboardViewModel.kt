@@ -1,8 +1,11 @@
 package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.abs_scores.a_common.ScoreboardData
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.baseball_scoreboard.BaseballScoreBoardNetwork
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.BasicScoreboardModel
@@ -12,6 +15,7 @@ import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCa
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetBaseballSituationUseCase
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetScoresUseCase
 import com.sgut.android.nationalfootballleague.domain.use_cases.NewScoresUseCase
+import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.ShowToast
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.ATP
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.TENNIS
 import com.sgut.android.nationalfootballleague.utils.printToLog
@@ -37,6 +41,10 @@ class ScoreboardViewModel @Inject constructor(
 
     var scoreboardModelState: StateFlow<ScoreboardUiState> = _scoreboardUiState.asStateFlow()
 
+    private val _abstractScoreboard = MutableLiveData<ScoreboardData>()
+    val abstractScoreboard: LiveData<ScoreboardData> get() = _abstractScoreboard
+
+
     private val _baseballScoreboard = MutableStateFlow(BaseballScoreBoardNetwork())
     var baseballScoreboard: StateFlow<BaseballScoreBoardNetwork> = _baseballScoreboard.asStateFlow()
 
@@ -57,23 +65,25 @@ class ScoreboardViewModel @Inject constructor(
 
     fun loadGenericScoreboard(sport: String, league: String) = viewModelScope.launch {
         try {
-
+            fetchAbstractScoreboard(sport, league)
 //            _tennis.emit(scoreboardRepository.getTennisScoreBoard(TENNIS, ATP))
             _tennis.emit(scoreboardRepository.getTennisScoreBoard(TENNIS, ATP)) // this is just chekcing
 
             val news = getArticles(sport, league)
                 val currentScoreboardModelUiState = getScores(sport, league)
 
-           val abstractScoresFromRepo = viewModelScope.launch {
-                   scoreboardRepository.getAbstractScoreBoard(sport, league)
-               }
+           val abstractScoresFromRepo = scoreboardRepository.getAbstractScoreBoard(sport, league)
 
-            Timber.d("abstractScoresFromRepo in vm $abstractScoresFromRepo")
+
+            Timber.d("abstractScoresFromRepo in vm ${abstractScoresFromRepo.toString()}")
 
             val newAbstractScores = newScoressCase(sport, league)
-            Timber.d("newAbstractScores in vm $newAbstractScores")
+            _abstractScoreboard.value = newAbstractScores
+            Timber.d("SAL_GUT newAbstractScores in vm $newAbstractScores")
+            Timber.d("SAL_GUT newAbstractScores in vm ${_abstractScoreboard.value}")
 
-                setScoreboardUiState(
+
+            setScoreboardUiState(
                     sport, league,
                     currentScoreboardModelUiState,
                     news
@@ -84,6 +94,13 @@ class ScoreboardViewModel @Inject constructor(
     }
 
 
+    fun fetchAbstractScoreboard(sport: String, league: String) {
+        viewModelScope.launch {
+            val scores = scoreboardRepository.getAbstractScoreBoard(sport, league)
+            _abstractScoreboard.postValue(scores)
+            Timber.d("SAL_GUT VIEWMODEL ABSTRACT SCOREBOARD: $scores")
+        }
+    }
 
     private fun setScoreboardUiState(
         currentSport: String,

@@ -32,6 +32,7 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeListViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.NewsRow
+import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.ShowToast
 import com.sgut.android.nationalfootballleague.ui.screens.shared_viewmodels.SelectionViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.*
@@ -107,6 +108,8 @@ fun ScoreboardScreen(
 
 
                 Text(text = tennis.league.name)
+                ShowToast(message = scoreboardViewModel.abstractScoreboard.value?.league.toString())
+
 //                val tennisImg = tennis.league.logos.getOrNull(0)?.href ?: ""
 //                GenericImageLoader(obj = tennisImg, modifier = Modifier)
 //                tennis.events.map { events ->
