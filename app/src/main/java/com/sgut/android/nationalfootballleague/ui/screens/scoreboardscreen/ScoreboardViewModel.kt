@@ -1,6 +1,5 @@
 package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,11 +13,9 @@ import com.sgut.android.nationalfootballleague.domain.repositories.ScoreboardRep
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetArticlesUseCase
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetBaseballSituationUseCase
 import com.sgut.android.nationalfootballleague.domain.use_cases.GetScoresUseCase
-import com.sgut.android.nationalfootballleague.domain.use_cases.NewScoresUseCase
-import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.ShowToast
+import com.sgut.android.nationalfootballleague.domain.use_cases.AbstractScoresUseCase
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.ATP
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.TENNIS
-import com.sgut.android.nationalfootballleague.utils.printToLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,7 +30,7 @@ class ScoreboardViewModel @Inject constructor(
     private val scoreboardRepository: ScoreboardRepository,
     private val getArticles: GetArticlesUseCase,
     private val getScores: GetScoresUseCase,
-    private val newScoressCase: NewScoresUseCase,
+    private val newScoressCase: AbstractScoresUseCase,
     private val getBaseballSituationUseCase: GetBaseballSituationUseCase
 ) : ViewModel() {
 
@@ -44,14 +41,11 @@ class ScoreboardViewModel @Inject constructor(
     private val _abstractScoreboard = MutableLiveData<ScoreboardData>()
     val abstractScoreboard: LiveData<ScoreboardData> get() = _abstractScoreboard
 
-
     private val _baseballScoreboard = MutableStateFlow(BaseballScoreBoardNetwork())
     var baseballScoreboard: StateFlow<BaseballScoreBoardNetwork> = _baseballScoreboard.asStateFlow()
 
     private var _tennis = MutableStateFlow(TennisScoreboardModel())
     var tennis: StateFlow<TennisScoreboardModel> =_tennis
-
-//    private var _ABSTRACTS = MutableStateFlow<ScoreboardData>(DefaultScoreboardData())
 
 
     init {
@@ -72,22 +66,23 @@ class ScoreboardViewModel @Inject constructor(
             val news = getArticles(sport, league)
                 val currentScoreboardModelUiState = getScores(sport, league)
 
-           val abstractScoresFromRepo = scoreboardRepository.getAbstractScoreBoard(sport, league)
-
-
-            Timber.d("abstractScoresFromRepo in vm ${abstractScoresFromRepo.toString()}")
-
             val newAbstractScores = newScoressCase(sport, league)
-            _abstractScoreboard.value = newAbstractScores
+
             Timber.d("SAL_GUT newAbstractScores in vm $newAbstractScores")
             Timber.d("SAL_GUT newAbstractScores in vm ${_abstractScoreboard.value}")
-
 
             setScoreboardUiState(
                     sport, league,
                     currentScoreboardModelUiState,
-                    news
+                    news,
+                    newAbstractScores
                 )
+
+
+
+            Timber.d("SAL_GUT WHOLE SCOREBOARD UI STATE : ${_scoreboardUiState.value.abstractScoreData}")
+
+
         } catch (e: Exception) {
             Timber.e("ERROR loadGenericScoreboard")
         }
@@ -107,13 +102,15 @@ class ScoreboardViewModel @Inject constructor(
         currentLeague: String,
         currentDefaultScoreboardModelUiState: BasicScoreboardModel,
         currentNews: ArticlesListModel,
+        abstractScoreData: ScoreboardData?,
     ) {
         _scoreboardUiState.update {
             it.copy(
                 currentSport = currentSport,
                 currentLeague = currentLeague,
                 defaultScoreboardModelUiState = currentDefaultScoreboardModelUiState,
-                currentArticles = currentNews
+                currentArticles = currentNews,
+                abstractScoreData = abstractScoreData
             )
         }
     }

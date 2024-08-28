@@ -2,7 +2,6 @@ package com.sgut.android.nationalfootballleague.di
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.room.Room
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -190,7 +189,7 @@ object AppModule {
     fun provideNewGetScoresUseCase(
         scoreboardRepository: ScoreboardRepository,
         ioDispatcher: CoroutineDispatcher,
-    ): NewScoresUseCase = NewScoresUseCase(scoreboardRepository, ioDispatcher)
+    ): AbstractScoresUseCase = AbstractScoresUseCase(scoreboardRepository, ioDispatcher)
 
     @Singleton
     @Provides

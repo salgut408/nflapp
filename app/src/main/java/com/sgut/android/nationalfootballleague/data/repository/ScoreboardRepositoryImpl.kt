@@ -84,33 +84,6 @@ class ScoreboardRepositoryImpl @Inject constructor(
             Timber.e("REPO-TENNIS, ${e.stackTraceToString()}")
             TennisScoreboardModel()
         }
-//
-//    override suspend fun getAbstractScoreBoard(sport: String, league: String): ScoreboardData {
-//        try {
-//            withContext(ioDispatcher){
-//                val scores = sportsApi.getAbstractScoreboard(sport, league).body()
-//                Timber.d("SAL_GUT GET ABSTRACT SCORE REPO SCORES: $scores")
-//                return@withContext scores
-//            }
-//        } catch (e: Exception){
-//            Timber.e("ABSTRACT ERROR ${e.stackTraceToString()}")
-//        }
-//       return DefaultScoreboardData()
-//    }
-
-
-//    override suspend fun getAbstractScoreBoard(sport: String, league: String): ScoreboardData {
-//        try {
-//            withContext(ioDispatcher){
-//                val scores = sportsApi.getAbstractScoreboard(sport, league).body()
-//                Timber.d("SAL_GUT GET ABSTRACT SCORE REPO SCORES: $scores")
-//                return@withContext scores
-//            }
-//        } catch (e: Exception){
-//            Timber.e("ABSTRACT ERROR ${e.stackTraceToString()}")
-//        }
-//        return DefaultScoreboardData()
-//    }
 
     override suspend fun getAbstractScoreBoard(sport: String, league: String): ScoreboardData {
         return withContext(ioDispatcher) {
@@ -124,7 +97,6 @@ class ScoreboardRepositoryImpl @Inject constructor(
             }
         }
     }
-
 
 
     override suspend fun getGeneralScoreboardByDate(

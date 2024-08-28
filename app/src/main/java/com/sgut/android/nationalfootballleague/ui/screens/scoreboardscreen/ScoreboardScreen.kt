@@ -27,6 +27,7 @@ import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.A
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_models_scoreboard.*
 import com.sgut.android.nationalfootballleague.ui.commoncomps.CardHeaderText
 import com.sgut.android.nationalfootballleague.ui.commoncomps.EIGHT
+import com.sgut.android.nationalfootballleague.ui.commoncomps.LeagueSelectionRow
 import com.sgut.android.nationalfootballleague.ui.commoncomps.NormalDivider
 import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.*
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
@@ -73,8 +74,8 @@ fun ScoreboardScreen(
     val newUiState by scoreboardViewModel.scoreboardModelState.collectAsStateWithLifecycle()
     val news = newUiState.currentArticles
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    val sport = newUiState.currentSport
-    val league = newUiState.currentLeague
+    val sport = selectionUiSport//newUiState.currentSport
+    val league = selectionUiLeague//newUiState.currentLeague
 
     val tennis by scoreboardViewModel.tennis.collectAsStateWithLifecycle()
 
@@ -110,231 +111,15 @@ fun ScoreboardScreen(
                 Text(text = tennis.league.name)
                 ShowToast(message = scoreboardViewModel.abstractScoreboard.value?.league.toString())
 
-//                val tennisImg = tennis.league.logos.getOrNull(0)?.href ?: ""
-//                GenericImageLoader(obj = tennisImg, modifier = Modifier)
-//                tennis.events.map { events ->
-//                    events.groupings.map { grouping ->
-//                        Text(text = grouping.grouping.displayName)
-//
-//                        grouping.competitions.map { competitions ->
-//                            competitions.competitors.map { competitors ->
-//
-//                                Text(text = competitors.athlete.displayName)
-//                                GenericImageLoader(obj = competitors.athlete.flag.href,
-//                                    modifier = Modifier.size(100.dp))
-//                            }
-//                        }
-//
-//                    }
-//                }
 
-
-                LazyRow(
-                    contentPadding = PaddingValues(8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.BASEBALL,
-                                Constants.MLB)
-                        }) {
-                            Text(stringResource(R.string.MLB_league),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
+                LeagueSelectionRow(
+                    leagues = Constants.LIST_OF_LEAGUE_PAIRS,
+                    padding = innerPadding,
+                    onLeagueSelected = { sport, league ->
+                        Timber.d("SAL_GUT LEAGUE SELECTED SPORT: $sport LEAGUE: $league")
+                        selectionViewModel.setDifferentSport(sport, league)
                     }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.BASKETBALL,
-                                Constants.NCAA_BASKETBALL)
-                        }) {
-                            Text(stringResource(R.string.NCAA_mens_basketball),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.BASEBALL,
-                                Constants.MLB)
-                        }) {
-                            Text(text = " WILLd",
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.SOCCER,
-                                Constants.FRA)
-                        }) {
-                            Text(stringResource(R.string.fra),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.TENNIS,
-                                Constants.ATP)
-                        }) {
-                            Text(stringResource(R.string.atp),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.BASKETBALL,
-                                Constants.NCAA_BASKETBALL)
-                        }) {
-                            Text(stringResource(R.string.NCAA_mens_basketball),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(
-                            onClick = {
-                                scoreboardViewModel.loadGenericScoreboard(Constants.FOOTBALL,
-                                    Constants.NFL)
-                            }
-                        ) {
-                            Text(text = stringResource(R.string.NFL_League),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.HOCKEY,
-                                Constants.NHL)
-                        }) {
-                            Text(stringResource(R.string.NHL_league),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.BASEBALL,
-                                Constants.WBC)
-                        }) {
-                            Text(stringResource(R.string.WBC_league),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.BASKETBALL,
-                                Constants.NBA)
-                        }) {
-                            Text(stringResource(R.string.NBA_league),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.BASKETBALL,
-                                Constants.WNBA)
-                        }) {
-                            Text(stringResource(R.string.WNBA_league),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.SOCCER,
-                                Constants.CHAMPIONS)
-                        }) {
-                            Text(stringResource(R.string.champions),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.FOOTBALL,
-                                Constants.NCAA_FOOTBALL)
-                        }) {
-                            Text(stringResource(R.string.NCAA_football),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.BASEBALL,
-                                Constants.NCAA_BASEBALL)
-                        }) {
-                            Text(stringResource(R.string.NCAA_baseball),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.SOCCER,
-                                Constants.MLS)
-                        }) {
-                            Text(stringResource(R.string.MLS_league),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.SOCCER,
-                                Constants.FIFA)
-                        }) {
-                            Text(stringResource(R.string.world_cup),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.SOCCER,
-                                Constants.LA_LIGA)
-                        }) {
-                            Text(stringResource(R.string.la_liga),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.SOCCER,
-                                Constants.EPL)
-                        }) {
-                            Text(stringResource(R.string.premier_league),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(Constants.SOCCER,
-                                Constants.UEFA)
-                        }) {
-                            Text(stringResource(R.string.euro_soccer),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-                    item {
-                        OutlinedButton(onClick = {
-                            scoreboardViewModel.loadGenericScoreboard(FOOTBALL,
-                                XFL)
-                        }) {
-                            Text(stringResource(R.string.XFL_League),
-                                style = MaterialTheme.typography.labelSmall)
-                        }
-                    }
-                }
+                )
 
                 Scoreboard(
                     events = newUiState.defaultScoreboardModelUiState.events,
