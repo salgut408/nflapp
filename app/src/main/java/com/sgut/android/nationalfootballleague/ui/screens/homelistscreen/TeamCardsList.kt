@@ -59,8 +59,6 @@ fun HomeTeamCardsListScreen(
     
     val errorMessage = homeListViewModel.errorMessage.collectAsStateWithLifecycle()
 
-//    selectionViewModel.setDifferentSport(sport ?: "baseball", league ?: "mlb")
-    
     if (errorMessage.value != null) {
         ShowToast(message = errorMessage.value!!)
     }

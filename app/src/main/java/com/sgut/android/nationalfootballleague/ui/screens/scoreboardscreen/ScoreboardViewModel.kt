@@ -64,11 +64,10 @@ class ScoreboardViewModel @Inject constructor(
             _tennis.emit(scoreboardRepository.getTennisScoreBoard(TENNIS, ATP)) // this is just chekcing
 
             val news = getArticles(sport, league)
-                val currentScoreboardModelUiState = getScores(sport, league)
+            val currentScoreboardModelUiState = getScores(sport, league)
 
             val newAbstractScores = newScoressCase(sport, league)
 
-            Timber.d("SAL_GUT newAbstractScores in vm $newAbstractScores")
             Timber.d("SAL_GUT newAbstractScores in vm ${_abstractScoreboard.value}")
 
             setScoreboardUiState(
@@ -77,12 +76,7 @@ class ScoreboardViewModel @Inject constructor(
                     news,
                     newAbstractScores
                 )
-
-
-
             Timber.d("SAL_GUT WHOLE SCOREBOARD UI STATE : ${_scoreboardUiState.value.abstractScoreData}")
-
-
         } catch (e: Exception) {
             Timber.e("ERROR loadGenericScoreboard")
         }
@@ -94,6 +88,16 @@ class ScoreboardViewModel @Inject constructor(
             val scores = scoreboardRepository.getAbstractScoreBoard(sport, league)
             _abstractScoreboard.postValue(scores)
             Timber.d("SAL_GUT VIEWMODEL ABSTRACT SCOREBOARD: $scores")
+            val news = getArticles(sport, league)
+            val currentScoreboardModelUiState = getScores(sport, league)
+            val newAbstractScores = newScoressCase(sport, league)
+            setScoreboardUiState(
+                sport,
+                league,
+                currentScoreboardModelUiState,
+                news,
+                newAbstractScores
+                )
         }
     }
 

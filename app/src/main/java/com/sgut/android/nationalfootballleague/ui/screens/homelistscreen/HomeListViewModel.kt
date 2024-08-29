@@ -43,27 +43,12 @@ class HomeListViewModel @Inject constructor(
         }
 
 
-    //            Default list Ui State set here
-    fun loadAllNflTeams() = viewModelScope.launch {
-        loadTeamsAndSetUiState(FOOTBALL, NFL)
-    }
-
-
-    fun setDifferentTeams(sport: String, league: String) = viewModelScope.launch {
-        loadTeamsAndSetUiState(sport, league)
-    }
-
     private suspend fun loadTeamsAndSetUiState(sport: String, league: String) {
         try {
             val fullTeamsList = fullTeamsListRepository.getFullSportLeagueAndTeamsList(sport, league)
             val news = getArticles(sport, league)
 
-            addTeamsToDb(
-                teams = fullTeamsList.sport.league?.teams ?: listOf(),
-                sport = fullTeamsList.sport.name,
-                league = fullTeamsList.sport.league?.name ?: "",
-                leagueAbrv = fullTeamsList.sport.league?.abbreviation ?: ""
-            )
+
             setListUiState(
                 currentTeams = fullTeamsList.sport.league?.teams ?: listOf(),
                 currentSport = fullTeamsList.sport.name,

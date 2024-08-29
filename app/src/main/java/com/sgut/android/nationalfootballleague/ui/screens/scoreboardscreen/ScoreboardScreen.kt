@@ -38,6 +38,7 @@ import com.sgut.android.nationalfootballleague.ui.screens.shared_viewmodels.Sele
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.*
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
+import com.sgut.android.nationalfootballleague.utils.Constants.Companion.TENNIS
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.XFL
 import timber.log.Timber
 
@@ -56,46 +57,37 @@ fun ScoreboardScreen(
     selectionViewModel: SelectionViewModel
 ) {
 
-//    TODO this causes the switch when clicking different sport on scoreboard screen
-//    scoreboardViewModel.loadGenericScoreboard(sport, league)
-    val homeViewModelUiState = homeListViewModel.listUiState.collectAsState()
     val selectionUiState by selectionViewModel.selectionUiFullSportState.collectAsStateWithLifecycle()
     val selectionUiSport = selectionUiState.slug
     val selectionUiLeague = selectionUiState.league.slug
 
-    val sportAll = homeViewModelUiState.value.sportModel
+//    TODO this causes the switch when clicking different sport on scoreboard screen figure out what to do with selection viewmodel when selected tennis and errors bc tennis is different
+    if (selectionUiLeague.isNotBlank()) {
+        scoreboardViewModel.loadGenericScoreboard(selectionUiSport, selectionUiLeague)
+    }
 
-    scoreboardViewModel.loadGenericScoreboard(selectionUiSport, selectionUiLeague)
-
-    Timber.d("sportAll : $sportAll")
+    Timber.d("sportAll : $selectionUiSport")
 
 //    scoreboardViewModel.loadGenericScoreboard(homeViewModelSport, homeViewModelLeague)
 
     val newUiState by scoreboardViewModel.scoreboardModelState.collectAsStateWithLifecycle()
     val news = newUiState.currentArticles
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    val sport = selectionUiSport//newUiState.currentSport TODO MAYBE CHECK IF THIS WORKS
-    val league = selectionUiLeague//newUiState.currentLeague
+    val sport = newUiState.currentSport // TODO MAYBE CHECK IF THIS WORKS
+    val league = newUiState.currentLeague
 
     val tennis by scoreboardViewModel.tennis.collectAsStateWithLifecycle()
 
-
-
-
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-
         topBar = {
-
             TopAppBarWithLogo(
                 title = newUiState.defaultScoreboardModelUiState.league.abbreviation ?: "",
-                logo = newUiState.defaultScoreboardModelUiState.league.logos.getOrNull(0)?.href
-                    ?: "",
+                logo = newUiState.abstractScoreData?.league?.firstOrNull()?.logos?.firstOrNull()?.href ?: newUiState.defaultScoreboardModelUiState.league.logos.getOrNull(0)?.href ?: "",
                 canNavigateBack = canNavigateBack,
                 navigateUp = navigateUp,
                 scrollBehavior = scrollBehavior
             )
-
         },
         content = { innerPadding ->
             Column(
@@ -107,17 +99,21 @@ fun ScoreboardScreen(
                 verticalArrangement = Arrangement.Center
             ) {
 
-
                 Text(text = tennis.league.name)
-                ShowToast(message = scoreboardViewModel.abstractScoreboard.value?.league.toString())
-
 
                 LeagueSelectionRow(
                     leagues = Constants.LIST_OF_LEAGUE_PAIRS,
                     padding = innerPadding,
                     onLeagueSelected = { sport, league ->
                         Timber.d("SAL_GUT LEAGUE SELECTED SPORT: $sport LEAGUE: $league")
-                        selectionViewModel.setDifferentSport(sport, league)
+                        if (sport == TENNIS) {
+                            // TODO FIX bc first we call setDifferentSport so it can be null and show tennis
+                            selectionViewModel.setDifferentSport(sport, league)
+                            scoreboardViewModel.fetchAbstractScoreboard(sport, league)
+                        } else {
+                            selectionViewModel.setDifferentSport(sport, league)
+                        }
+
                     }
                 )
 
