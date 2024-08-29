@@ -2,7 +2,8 @@ package com.sgut.android.nationalfootballleague.ui.screens.scoreboardscreen
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -10,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -20,7 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
-import com.sgut.android.nationalfootballleague.R
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.abs_scores.a_common.ScoreboardData
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.SituationScoreboard
 import com.sgut.android.nationalfootballleague.di.TopAppBarWithLogo
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
@@ -33,13 +33,10 @@ import com.sgut.android.nationalfootballleague.ui.commoncomps.commoncomposables.
 import com.sgut.android.nationalfootballleague.ui.navigation.NavigationScreens
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.HomeListViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.NewsRow
-import com.sgut.android.nationalfootballleague.ui.screens.homelistscreen.ShowToast
 import com.sgut.android.nationalfootballleague.ui.screens.shared_viewmodels.SelectionViewModel
 import com.sgut.android.nationalfootballleague.ui.screens.teamdetails.HexToJetpackColor2
 import com.sgut.android.nationalfootballleague.utils.*
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.FOOTBALL
 import com.sgut.android.nationalfootballleague.utils.Constants.Companion.TENNIS
-import com.sgut.android.nationalfootballleague.utils.Constants.Companion.XFL
 import timber.log.Timber
 
 
@@ -99,8 +96,6 @@ fun ScoreboardScreen(
                 verticalArrangement = Arrangement.Center
             ) {
 
-                Text(text = tennis.league.name)
-
                 LeagueSelectionRow(
                     leagues = Constants.LIST_OF_LEAGUE_PAIRS,
                     padding = innerPadding,
@@ -122,7 +117,8 @@ fun ScoreboardScreen(
                     modifier = modifier,
                     sport = sport,
                     league = league,
-                    navController = navController
+                    navController = navController,
+                    scoreboardData = newUiState.abstractScoreData
                 )
 
 
@@ -154,6 +150,7 @@ fun Scoreboard(
     league: String,
     navController: NavController,
     modifier: Modifier,
+    scoreboardData: ScoreboardData?
 
     ) {
     DefaultCard(modifier = modifier
@@ -161,19 +158,92 @@ fun Scoreboard(
         CardHeaderText(text = "Scoreboard")
         NormalDivider()
         events.map { event ->
-
-            NewEventMatchup(
-                event = event,
-                modifier = modifier,
-                sport = sport,
-                league = league,
-                navController = navController
-            )
+            if (event.competitions.isEmpty()) {
+                TennisScoreboardHeader(scoreboardData)
+            } else {
+                NewEventMatchup(
+                    event = event,
+                    modifier = modifier,
+                    sport = sport,
+                    league = league,
+                    navController = navController
+                )
+            }
             NormalDivider()
-
         }
     }
 }
+
+//@Composable // TODO FIX THIS
+//fun TennisScoreboardHeader(scoreboardData: ScoreboardData?) {
+//    Row(
+//        modifier = Modifier.fillMaxWidth(),
+//        horizontalArrangement = Arrangement.SpaceEvenly
+//    ) {
+//        Text(text = scoreboardData?.league?.firstOrNull()?.name ?: "")
+//        Text(text = scoreboardData?.day?.date ?: "")
+//        Text(text = scoreboardData?.events?.firstOrNull()?.name ?: "")
+//    }
+//    Column (
+//        modifier = Modifier.fillMaxWidth(),
+//    ) {
+//        scoreboardData?.events?.map { eventData ->
+//            eventData.competitions?.map { competitions ->
+//                Text(text = competitions.startDate)
+//                Row {
+//                    Text(text = competitions.competitors.firstOrNull()?.team?.name ?: "null")
+//                    Text(text = competitions.competitors.firstOrNull()?.team?.name ?: "null")
+//                }
+//            }
+//        }
+//    }
+
+@Composable
+fun TennisScoreboardHeader(scoreboardData: ScoreboardData?) {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Text(text = scoreboardData?.league?.firstOrNull()?.name ?: "")
+            Text(text = scoreboardData?.day?.date ?: "")
+            Text(text = scoreboardData?.events?.firstOrNull()?.name ?: "")
+        }
+
+        scoreboardData?.events?.forEach { eventData ->
+            eventData.competitions?.forEach { competition ->
+                Text(text = competition.startDate)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = competition.competitors.firstOrNull()?.team?.name ?: "null")
+                    Text(text = competition.competitors.getOrNull(1)?.team?.name ?: "null")
+                }
+            }
+        }
+    }
+}
+
+
+
+
+//@Composable
+//fun TennisScoreboardHeader(scoreboardData: ScoreboardData?) {
+//    Row(
+//        modifier = Modifier.fillMaxWidth(),
+//        horizontalArrangement = Arrangement.SpaceEvenly
+//    ) {
+//        Text(text = scoreboardData?.league?.firstOrNull()?.name ?: "")
+//        Text(text = scoreboardData?.day?.date ?: "")
+//        Text(text = scoreboardData?.events?.firstOrNull()?.name ?: "")
+//    }
+//}
+
+
+
 
 
 @Composable
