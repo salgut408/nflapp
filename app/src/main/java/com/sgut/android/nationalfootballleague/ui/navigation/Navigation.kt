@@ -137,12 +137,10 @@ fun Navigation(
             val parentEntry = remember(backStackEntry) {
                 appState.navController.getBackStackEntry(NavigationScreens.MainScreenTeamsList.route )
             }
-            val homeListViewModel: HomeListViewModel = hiltViewModel(parentEntry)
             val selectionViewModel: SelectionViewModel = hiltViewModel(parentEntry)
 
 
             ScoreboardScreen(
-                homeListViewModel = homeListViewModel,
                 sport = sportName,
                 league = leagueName,
                 navController = appState.navController,

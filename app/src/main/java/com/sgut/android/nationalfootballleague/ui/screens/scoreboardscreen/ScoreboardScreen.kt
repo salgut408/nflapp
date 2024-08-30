@@ -21,6 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.sgut.android.nationalfootballleague.*
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.abs_scores.a_common.ScoreboardData
+import com.sgut.android.nationalfootballleague.data.remote.network_responses.abs_scores.a_common.TennisScoreboard
 import com.sgut.android.nationalfootballleague.data.remote.network_responses.game_details.SituationScoreboard
 import com.sgut.android.nationalfootballleague.di.TopAppBarWithLogo
 import com.sgut.android.nationalfootballleague.domain.domainmodels.new_article.ArticlesListModel
@@ -50,7 +51,6 @@ fun ScoreboardScreen(
     navigateUp: () -> Unit,
     scoreboardViewModel: ScoreboardViewModel = hiltViewModel(),
     navController: NavController,
-    homeListViewModel: HomeListViewModel,
     selectionViewModel: SelectionViewModel
 ) {
 
@@ -90,7 +90,7 @@ fun ScoreboardScreen(
             Column(
                 modifier = modifier
                     .verticalScroll(rememberScrollState())
-                    .padding(innerPadding)
+//                    .padding(innerPadding)
                     .background(MaterialTheme.colorScheme.background),
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Center
@@ -100,7 +100,7 @@ fun ScoreboardScreen(
                     leagues = Constants.LIST_OF_LEAGUE_PAIRS,
                     padding = innerPadding,
                     onLeagueSelected = { sport, league ->
-                        Timber.d("SAL_GUT LEAGUE SELECTED SPORT: $sport LEAGUE: $league")
+                        Timber.d("SAL_GUT SOMETHING SELECTED SPORT: $sport LEAGUE: $league")
                         if (sport == TENNIS) {
                             // TODO FIX bc first we call setDifferentSport so it can be null and show tennis
                             selectionViewModel.setDifferentSport(sport, league)
@@ -108,7 +108,6 @@ fun ScoreboardScreen(
                         } else {
                             selectionViewModel.setDifferentSport(sport, league)
                         }
-
                     }
                 )
 
@@ -198,35 +197,63 @@ fun Scoreboard(
 //        }
 //    }
 
+//@Composable
+//fun TennisScoreboardHeader(scoreboardData: ScoreboardData?) {
+//        scoreboardData?.events?.map { eventData ->
+//            eventData.competitions?.map { competition ->
+//                Text(text = competition.startDate)
+//                Row(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    horizontalArrangement = Arrangement.SpaceBetween
+//                ) {
+//                    Timber.d("SAL_WTF ${competition.competitors.firstOrNull()?.team?.name }")
+//
+//                    Text(text = competition.competitors.firstOrNull()?.team?.name ?: "null")
+//                    Text(text = competition.competitors.getOrNull(1)?.team?.name ?: "null")
+//                }
+//            }
+//        }
+//        Row(
+//            modifier = Modifier.fillMaxWidth(),
+//            horizontalArrangement = Arrangement.SpaceEvenly
+//        ) {
+//            Text(text = scoreboardData?.league?.firstOrNull()?.name ?: "")
+//            Text(text = scoreboardData?.day?.date ?: "")
+//            Text(text = scoreboardData?.events?.firstOrNull()?.name ?: "")
+//
+//        }
+//}
+
 @Composable
 fun TennisScoreboardHeader(scoreboardData: ScoreboardData?) {
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            Text(text = scoreboardData?.league?.firstOrNull()?.name ?: "")
-            Text(text = scoreboardData?.day?.date ?: "")
-            Text(text = scoreboardData?.events?.firstOrNull()?.name ?: "")
-        }
+    val tennisScoreboard = scoreboardData as? TennisScoreboard
 
-        scoreboardData?.events?.forEach { eventData ->
-            eventData.competitions?.forEach { competition ->
-                Text(text = competition.startDate)
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(text = competition.competitors.firstOrNull()?.team?.name ?: "null")
-                    Text(text = competition.competitors.getOrNull(1)?.team?.name ?: "null")
+//    Text(text = tennisScoreboard?.events?.getOrNull(0)?.groupings .toString())
+    tennisScoreboard?.events?.forEach { eventData ->
+        eventData.groupings.forEach { groupingData ->
+            groupingData.grouping.displayName
+            Text(text = groupingData.grouping.displayName)
+            groupingData.competitions.forEach { competitionsData ->
+                competitionsData.competitors.forEach { competitor ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(text = competitor.athlete.shortName ?: "null")
+//                        BasicImage(
+//                            imgUrl = competitor.athlete.flag.href,
+//                            contentDescription = "",
+//                            elevation = 2.dp,
+//                            backgroundColor = Color.White,
+//                            borderWidth = 0.dp,
+//                            borderColor = Color.Black
+//                        )
+                    }
                 }
             }
         }
     }
 }
-
 
 
 
